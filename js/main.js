@@ -1,12 +1,17 @@
 "use strict"
 
-var LeafletMap = function(mapId){
+var LeafletMap = function(mapId, opt){
     
     if (!mapId && !$("#"+mapId)){ return }
     this.mapId = mapId;
 
     this.mapData;
     this.mapTylesLayer;
+
+    if (!opt) { 
+        console.log("There is no options in LeafletMap, check this.");
+        return;
+    }
 
     this.appendMapOptions = function(data){
 
@@ -42,7 +47,7 @@ var LeafletMap = function(mapId){
 
  }
 
-var LeafletTiles = function(){
+var LeafletTiles = function(opt){
 
     parent = this;
 
@@ -52,6 +57,11 @@ var LeafletTiles = function(){
     this.tilesURL;
     this.maxZoom;
     this.minZoom;
+
+    if (!opt) { 
+        console.log("There is no options in LeafletTiles, check this.");
+        return;
+    }
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){
@@ -87,7 +97,11 @@ var LeafletTiles = function(){
         }
      }
 
-    this.setLayerOptions = function(data){
+    this.setLayerOptions = function(mapName){
+
+        var data = opt.maps[mapName];
+
+        if (!data) { return }
 
         this.server = this._validateServer(data.server);
         this.tilesURL = this._validateTilesURL(data.tilesURL);
@@ -106,7 +120,7 @@ var LeafletTiles = function(){
         this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
 
         this._validateZoomBounds();
-        
+
         if (this.server && this.server === "wms"){
             // TODO: server wms type
         }
@@ -122,6 +136,11 @@ var LeafletTiles = function(){
 
 var Options = function(){
 
+    this.global = {
+        "mapDefaultCenterLatLng": [54.31727, 48.3946],
+        "mapDefaultZoom": 12,
+     };
+
     this.maps = {
         "cloudmate": {
             tags: ["0. Современные онлайн карты"],
@@ -133,17 +152,17 @@ var Options = function(){
             minZoom: 0,
             startZoom: 13,        
         },
-    };
+     };
 
 }
 
 var opt = new Options();
 
-var layer = new LeafletTiles();
-layer.setLayerOptions(opt.maps.cloudmate);
+var layer = new LeafletTiles(opt);
+layer.setLayerOptions("cloudmate");
 layer.setLayer();
 
-var map = new LeafletMap("map1");
+var map = new LeafletMap("map1", opt);
 map.createMap();
 map.setMapCenter();
 map.setMapZoom();
