@@ -44,6 +44,8 @@ var LeafletMap = function(mapId){
 
 var LeafletTiles = function(){
 
+    parent = this;
+
     this.layer;
 
     this.server;
@@ -65,20 +67,39 @@ var LeafletTiles = function(){
         return server && server in ["img", "wms"] ? server : "img";
      }
 
-    this.setLayerOptions = function(data){
-        this.server = this._validateServer(data.server);
-        this.tilesURL = this._validateTilesURL(data.tilesURL);
-        this.maxZoom = data.maxZoom ? data.maxZoom : 18;
-        this.minZoom = data.minZoom ? data.minZoom : 1;
+    this._validateMinZoom = function(minZoom){
+        return minZoom ? minZoom : 1; // If return 0 exept 1 all crashed
      }
 
-    this.setLayer = function(url){
-        url = url ? url : this.tilesURL ? this.tilesURL : this._validateTilesURL();
+    this._validateMaxZoom = function(maxZoom){
+        return maxZoom ? maxZoom : 18;
+     }
+
+    this.setLayerOptions = function(data){
+
+        this.server = this._validateServer(data.server);
+        this.tilesURL = this._validateTilesURL(data.tilesURL);
+        this.maxZoom = this._validateMaxZoom(data.maxZoom);
+        this.minZoom = this._validateMinZoom(data.minZoom);
+
+     }
+
+    this.setLayer = function(url, minZoom, maxZoom){
+
+        // WMS server always set using the setLayerOptions
+        this.server = this.server ? this.server : this._validateServer();
+        this.tilesURL = url ? this._validateTilesURL(url): this.tilesURL;
+        this.maxZoom = maxZoom ? his._validateMinZoom(maxZoom): this.maxZoom;
+        this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
+
         if (this.server && this.server === "wms"){
             // TODO: server wms type
         }
         else {
-            this.layer = L.tileLayer(url);
+            this.layer = L.tileLayer(this.tilesURL, {
+                maxZoom: this.maxZoom,
+                minZoom: this.minZoom,
+            });
         }
      }
 
@@ -113,3 +134,6 @@ map.setMapCenter();
 map.setMapZoom();
 map.setMapTilesLayer(layer);
 
+console.log(opt)
+console.log(layer)
+console.log(map)
