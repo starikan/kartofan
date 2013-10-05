@@ -16,7 +16,6 @@ var LeafletMap = function(mapId, opt){
             "lng": undefined
         },
         "zoom": undefined,
-        "title": undefined,
      }; 
 
     this.mapTilesLayer; // copy of LeafletTiles class
@@ -51,7 +50,7 @@ var LeafletMap = function(mapId, opt){
         if (opt.global.viewControlsInfoName){
             var infoControll = L.control.attribution({
                 position: opt.global.viewControlsInfoNamePosition,
-                prefix: this.mapData.title,
+                prefix: this.mapTilesLayer.title,
             })
             this.map.addControl(infoControll);
          }  
@@ -234,6 +233,7 @@ var Options = function(){
     // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
 
     this.global = {
+
         "mapDefaultCenterLatLng": [54.31727, 48.3946],
         "mapDefaultZoom": 12,
 
@@ -249,6 +249,9 @@ var Options = function(){
         "viewControlsInfoCopyright": true,
         "viewControlsInfoCopyrightPosition": "bottomright",
         "viewControlsInfoCopyrightText": "Copyleft by Starik",
+
+        "hashChange": true,
+
      };
 
     this.maps = {
@@ -266,7 +269,44 @@ var Options = function(){
 
  }
 
+var Hash = function(opt){
+
+    // Hash format: #latlng
+
+    this.latlng;
+
+    if (!opt) { 
+        console.log("There is no options in Hash, check this.");
+        return;
+     }    
+
+    this.setHash = function(){
+        
+        if (!opt.global.hashChange) { return }
+
+     }
+
+    this.getHash = function(){
+        
+        if (!opt.global.hashChange) { return }
+
+        var hash = window.location.hash;
+
+        try {
+            var latlng = L.latLng(hash.split("#").pop().split(","))
+            this.latlng = [latlng.lat, latlng.lng];
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+     }     
+}
+
 var opt = new Options();
+
+var hash = new Hash(opt);
+hash.getHash();
 
 var layer = new LeafletTiles(opt);
 layer.setLayerOptions("cloudmate");
@@ -274,11 +314,12 @@ layer.setLayer();
 
 var map = new LeafletMap("map1", opt);
 map.createMap();
-map.setMapCenter();
+map.setMapCenter(hash.latlng);
 map.setMapZoom();
 map.setMapTilesLayer(layer);
 map.setMapControls();
 
 console.log(opt)
+console.log(hash)
 console.log(layer)
 console.log(map)
