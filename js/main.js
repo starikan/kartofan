@@ -68,11 +68,23 @@ var LeafletTiles = function(){
      }
 
     this._validateMinZoom = function(minZoom){
-        return minZoom ? minZoom : 1; // If return 0 exept 1 all crashed
+        minZoom = parseInt(minZoom, 10);
+        minZoom = minZoom<=18 && minZoom>0 ? minZoom : minZoom>18 ? 18 : 1; // If return 0 exept 1 all crashed
+        return minZoom;
      }
 
     this._validateMaxZoom = function(maxZoom){
-        return maxZoom ? maxZoom : 18;
+        maxZoom = parseInt(maxZoom, 10);
+        maxZoom = maxZoom<=18 && maxZoom>0 ? maxZoom : 18;
+        return maxZoom;
+     }
+
+    this._validateZoomBounds = function(){
+        if (!this.maxZoom || !this.minZoom) { return }
+
+        if (this.maxZoom < this.minZoom) {
+            this.maxZoom = this.minZoom;
+        }
      }
 
     this.setLayerOptions = function(data){
@@ -82,6 +94,7 @@ var LeafletTiles = function(){
         this.maxZoom = this._validateMaxZoom(data.maxZoom);
         this.minZoom = this._validateMinZoom(data.minZoom);
 
+        this._validateZoomBounds();
      }
 
     this.setLayer = function(url, minZoom, maxZoom){
@@ -92,6 +105,8 @@ var LeafletTiles = function(){
         this.maxZoom = maxZoom ? his._validateMinZoom(maxZoom): this.maxZoom;
         this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
 
+        this._validateZoomBounds();
+        
         if (this.server && this.server === "wms"){
             // TODO: server wms type
         }
