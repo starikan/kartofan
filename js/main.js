@@ -6,6 +6,7 @@ var LeafletMap = function(mapId){
     this.mapId = mapId;
 
     this.mapData;
+    this.mapTylesLayer;
 
     this.appendMapData = function(data){
 
@@ -25,8 +26,14 @@ var LeafletMap = function(mapId){
         this.map.setZoom(zoom);
      }
     
-    this.setMapTiles = function(){
+    this.setMapTilesLayer = function(layerObj){
 
+        if (this.mapTylesLayer && this.map.hasLayer(this.mapTylesLayer)){
+            this.map.removeLayer(this.mapTylesLayer)
+        }
+
+        this.mapTylesLayer = layerObj.layer;
+        this.map.addLayer(this.mapTylesLayer);
      }
 
     this.refreshMapAfterResize = function(){
@@ -35,7 +42,25 @@ var LeafletMap = function(mapId){
 
  }
 
+var LeafletTiles = function(){
+
+    this.layer;
+
+    this.setLayer = function(url){
+        url = url ? url : 'http://tile.openstreetmap.org/{z}/{x}/{y}.png';
+        this.layer = L.tileLayer(url);
+    }
+
+}
+
 var map = new LeafletMap("map1");
 map.createMap();
 map.setMapCenter();
 map.setMapZoom();
+
+var layer = new LeafletTiles();
+layer.setLayer();
+map.setMapTilesLayer(layer);
+
+layer.setLayer("http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png");
+map.setMapTilesLayer(layer);
