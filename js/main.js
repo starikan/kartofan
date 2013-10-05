@@ -8,14 +8,16 @@ var LeafletMap = function(mapId, opt){
     if (!opt) { 
         console.log("There is no options in LeafletMap, check this.");
         return;
-    }
+     }
 
     this.mapData = { // dict with main states of map
         "center": {
             "lat": undefined,
             "lng": undefined
-        }
-    }; 
+        },
+        "zoom": undefined,
+     }; 
+
     this.mapTylesLayer; // copy of LeafletTiles class
     this.marksLayer; 
 
@@ -31,7 +33,22 @@ var LeafletMap = function(mapId, opt){
         }
 
         return latlng;
-    }
+     }
+
+    this._validateZoom = function(zoom){
+
+        if (!this.mapTylesLayer){ return opt.global.mapDefaultZoom }
+
+        zoom = zoom ? zoom : opt.global.mapDefaultZoom;
+
+        var minZoom = this.mapTylesLayer.minZoom;
+        var maxZoom = this.mapTylesLayer.maxZoom;
+
+        zoom = zoom>=minZoom && zoom<=maxZoom ? zoom : opt.global.mapDefaultZoom;
+
+        return zoom;
+        
+     }
 
     this.createMap = function(){
         this.map = L.map(this.mapId);
@@ -48,8 +65,10 @@ var LeafletMap = function(mapId, opt){
      }
 
     this.setMapZoom = function(zoom){
-        zoom = zoom ? zoom : 13;
+        zoom = this._validateZoom(zoom);
         this.map.setZoom(zoom);
+
+        this.mapData.zoom = zoom;
      }
     
     this.setMapTilesLayer = function(layerObj){
