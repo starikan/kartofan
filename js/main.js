@@ -16,10 +16,55 @@ var LeafletMap = function(mapId, opt){
             "lng": undefined
         },
         "zoom": undefined,
+        "title": undefined,
      }; 
 
-    this.mapTylesLayer; // copy of LeafletTiles class
+    this.mapTilesLayer; // copy of LeafletTiles class
     this.marksLayer; 
+
+    this.map;
+
+    this.setMapControls = function(){
+
+        if (!this.map) { return }
+
+        if (opt.global.viewControlsZoom){
+            this.map.addControl(L.control.zoom(opt.global.viewControlsZoomPosition));
+         }
+
+        if (opt.global.viewControlsScale){
+            var scaleControll = L.control.scale({
+                position: opt.global.viewControlsScalePosition,
+                imperial: opt.global.viewControlsScaleMiles,
+            })
+            this.map.addControl(scaleControll);
+         }
+
+        if (opt.global.viewControlsInfoCopyright){
+            var infoControll = L.control.attribution({
+                position: opt.global.viewControlsInfoCopyrightPosition,
+                prefix: opt.global.viewControlsInfoCopyrightText,
+            })
+            this.map.addControl(infoControll);
+         }   
+
+        if (opt.global.viewControlsInfoName){
+            var infoControll = L.control.attribution({
+                position: opt.global.viewControlsInfoNamePosition,
+                prefix: this.mapData.title,
+            })
+            this.map.addControl(infoControll);
+         }  
+
+        if (opt.global.viewControlsInfoZoom){
+            var infoControll = L.control.attribution({
+                position: opt.global.viewControlsInfoZoomPosition,
+                prefix: this.mapData.zoom,
+            })
+            this.map.addControl(infoControll);
+         }                   
+
+     }
 
     this._validateLatLng = function(latlng){
 
@@ -37,21 +82,24 @@ var LeafletMap = function(mapId, opt){
 
     this._validateZoom = function(zoom){
 
-        if (!this.mapTylesLayer){ return opt.global.mapDefaultZoom }
+        if (!this.mapTilesLayer){ return opt.global.mapDefaultZoom }
 
         zoom = zoom ? zoom : opt.global.mapDefaultZoom;
 
-        var minZoom = this.mapTylesLayer.minZoom;
-        var maxZoom = this.mapTylesLayer.maxZoom;
+        var minZoom = this.mapTilesLayer.minZoom;
+        var maxZoom = this.mapTilesLayer.maxZoom;
 
         zoom = zoom>=minZoom && zoom<=maxZoom ? zoom : opt.global.mapDefaultZoom;
 
         return zoom;
-        
+
      }
 
     this.createMap = function(){
-        this.map = L.map(this.mapId);
+        this.map = L.map(this.mapId, {
+            zoomControl: false,
+            attributionControl: false,
+        });
      }
 
     this.setMapCenter = function(latlng){
@@ -73,12 +121,15 @@ var LeafletMap = function(mapId, opt){
     
     this.setMapTilesLayer = function(layerObj){
 
-        if (this.mapTylesLayer && this.map.hasLayer(this.mapTylesLayer)){
-            this.map.removeLayer(this.mapTylesLayer)
+        if (this.mapTilesLayer && this.map.hasLayer(this.mapTilesLayer)){
+            this.map.removeLayer(this.mapTilesLayer)
         }
 
-        this.mapTylesLayer = layerObj.layer;
-        this.map.addLayer(this.mapTylesLayer);
+        this.mapTilesLayer = layerObj;
+        this.map.addLayer(this.mapTilesLayer.layer);
+
+        this.mapData.title = this.mapTilesLayer.title;
+
      }
 
     this.refreshMapAfterResize = function(){
@@ -97,11 +148,12 @@ var LeafletTiles = function(opt){
     this.tilesURL;
     this.maxZoom;
     this.minZoom;
+    this.title;
 
     if (!opt) { 
         console.log("There is no options in LeafletTiles, check this.");
         return;
-    }
+     }
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){
@@ -147,6 +199,7 @@ var LeafletTiles = function(opt){
         this.tilesURL = this._validateTilesURL(data.tilesURL);
         this.maxZoom = this._validateMaxZoom(data.maxZoom);
         this.minZoom = this._validateMinZoom(data.minZoom);
+        this.title = data.title ? data.title : "Unknown Map";
 
         this._validateZoomBounds();
      }
@@ -158,6 +211,7 @@ var LeafletTiles = function(opt){
         this.tilesURL = url ? this._validateTilesURL(url): this.tilesURL;
         this.maxZoom = maxZoom ? his._validateMinZoom(maxZoom): this.maxZoom;
         this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
+        this.title = this.title ? this.title : "Unknown Map";
 
         this._validateZoomBounds();
 
@@ -176,9 +230,25 @@ var LeafletTiles = function(opt){
 
 var Options = function(){
 
+    // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
+    // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
+
     this.global = {
         "mapDefaultCenterLatLng": [54.31727, 48.3946],
         "mapDefaultZoom": 12,
+
+        "viewControlsZoom": true,
+        "viewControlsZoomPosition": "topleft",
+        "viewControlsScale": true,
+        "viewControlsScalePosition": "bottomleft",
+        "viewControlsScaleMiles": false,
+        "viewControlsInfoName": true,
+        "viewControlsInfoNamePosition": "bottomright",        
+        "viewControlsInfoZoom": true,
+        "viewControlsInfoZoomPosition": "bottomright",
+        "viewControlsInfoCopyright": true,
+        "viewControlsInfoCopyrightPosition": "bottomright",
+        "viewControlsInfoCopyrightText": "Copyleft by Starik",
      };
 
     this.maps = {
@@ -194,7 +264,7 @@ var Options = function(){
         },
      };
 
-}
+ }
 
 var opt = new Options();
 
@@ -207,6 +277,7 @@ map.createMap();
 map.setMapCenter();
 map.setMapZoom();
 map.setMapTilesLayer(layer);
+map.setMapControls();
 
 console.log(opt)
 console.log(layer)
