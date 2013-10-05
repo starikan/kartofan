@@ -61,16 +61,25 @@ var LeafletTiles = function(){
         }
      }
 
+    this._validateServer = function(server){
+        return server && server in ["img", "wms"] ? server : "img";
+     }
+
     this.setLayerOptions = function(data){
-        this.server = data.server && data.server in ["img", "wms"] ? data.server : "img";
+        this.server = this._validateServer(data.server);
         this.tilesURL = this._validateTilesURL(data.tilesURL);
         this.maxZoom = data.maxZoom ? data.maxZoom : 18;
         this.minZoom = data.minZoom ? data.minZoom : 1;
      }
 
     this.setLayer = function(url){
-        url = url ? url : this.tilesURL? this.tilesURL : this._validateTilesURL();
-        this.layer = L.tileLayer(url);
+        url = url ? url : this.tilesURL ? this.tilesURL : this._validateTilesURL();
+        if (this.server && this.server === "wms"){
+            // TODO: server wms type
+        }
+        else {
+            this.layer = L.tileLayer(url);
+        }
      }
 
 }
