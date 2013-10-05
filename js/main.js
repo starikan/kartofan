@@ -1,7 +1,7 @@
 "use strict"
 
 var LeafletMap = function(mapId, opt){
-    
+
     if (!mapId && !$("#"+mapId)){ return }
     this.mapId = mapId;
 
@@ -10,11 +10,10 @@ var LeafletMap = function(mapId, opt){
         return;
      }
 
+    parent = this;
+
     this.mapData = { // dict with main states of map
-        "center": {
-            "lat": undefined,
-            "lng": undefined
-        },
+        "center": [undefined, undefined],
         "zoom": undefined,
      }; 
 
@@ -22,6 +21,15 @@ var LeafletMap = function(mapId, opt){
     this.marksLayer; 
 
     this.map;
+
+    this.onMapDragging = function(){
+        var latlng = parent.map.getCenter();
+
+        parent.mapData.center = [latlng.lat, latlng.lng];      
+        opt.current.mapCenterLatLng = parent.mapData.center;
+
+        opt.setHash();
+     }
 
     this.setMapControls = function(){
 
@@ -99,16 +107,15 @@ var LeafletMap = function(mapId, opt){
             zoomControl: false,
             attributionControl: false,
         });
+
+        this.map.on("dragend", this.onMapDragging);
      }
 
     this.setMapCenter = function(latlng){
         latlng = this._validateLatLng(latlng);
         this.map.panTo(latlng);
 
-        this.mapData.center = {
-            "lat": latlng.lat,
-            "lng": latlng.lng,
-        }
+        this.mapData.center = [latlng.lat, latlng.lng];
      }
 
     this.setMapZoom = function(zoom){
@@ -229,6 +236,8 @@ var LeafletTiles = function(opt){
 
 var Options = function(){
 
+    parent = this;
+
     // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
     // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
 
@@ -236,6 +245,8 @@ var Options = function(){
 
         "mapDefaultCenterLatLng": [54.31727, 48.3946],
         "mapDefaultZoom": 12,
+        "mapSyncMoving": true,
+        "mapSyncZooming": false,
 
         "viewControlsZoom": true,
         "viewControlsZoomPosition": "topleft",
@@ -254,6 +265,10 @@ var Options = function(){
 
      };
 
+    this.current = {
+        "mapCenterLatLng": [],
+    }
+
     this.maps = {
         "cloudmate": {
             tags: ["0. Современные онлайн карты"],
@@ -267,22 +282,14 @@ var Options = function(){
         },
      };
 
- }
-
-var Hash = function(opt){
-
-    // Hash format: #latlng
-
-    this.latlng;
-
-    if (!opt) { 
-        console.log("There is no options in Hash, check this.");
-        return;
-     }    
-
     this.setHash = function(){
         
-        if (!opt.global.hashChange) { return }
+        if (!opt.global.hashChange || !opt.global.mapSyncMoving) { 
+            window.location.hash = "";
+            return 
+        }
+
+        window.location.hash = this.current.mapCenterLatLng.join(",");
 
      }
 
@@ -294,19 +301,16 @@ var Hash = function(opt){
 
         try {
             var latlng = L.latLng(hash.split("#").pop().split(","))
-            this.latlng = [latlng.lat, latlng.lng];
+            this.current.mapCenterLatLng = [latlng.lat, latlng.lng];
         }
-        catch (e) {
-            console.log(e)
-        }
+        catch (e) {}
 
-     }     
-}
+     }    
+
+ }
 
 var opt = new Options();
-
-var hash = new Hash(opt);
-hash.getHash();
+opt.getHash();
 
 var layer = new LeafletTiles(opt);
 layer.setLayerOptions("cloudmate");
@@ -314,12 +318,11 @@ layer.setLayer();
 
 var map = new LeafletMap("map1", opt);
 map.createMap();
-map.setMapCenter(hash.latlng);
+map.setMapCenter(opt.current.mapCenterLatLng);
 map.setMapZoom();
 map.setMapTilesLayer(layer);
 map.setMapControls();
 
 console.log(opt)
-console.log(hash)
 console.log(layer)
 console.log(map)
