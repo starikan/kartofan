@@ -25,8 +25,9 @@ var LeafletMap = function(mapId, opt){
     this.onMapDragging = function(){
         var latlng = parent.map.getCenter();
 
-        parent.mapData.center = [latlng.lat, latlng.lng];      
-        opt.current.mapCenterLatLng = parent.mapData.center;
+        parent.mapData.center = [latlng.lat, latlng.lng]; 
+
+        opt.setOption("current", "mapCenterLatLng", parent.mapData.center);   
 
         opt.setHash();
      }
@@ -285,6 +286,15 @@ var Options = function(){
             startZoom: 13,        
         },
      };
+
+    this.setOption = function(collection, option, value){
+        this[collection][option] = value;
+        // TODO: Update in localstorage and files in dropbox
+     }
+
+    this.getOption = function(collection, option){
+        return this[collection][option];
+     }
 
     this.setHash = function(){
         
