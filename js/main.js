@@ -145,8 +145,8 @@ var LeafletMap = function(mapId, opt){
         this.map = L.map(this.mapId, {
             zoomControl: false,
             attributionControl: false,
-            center: opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng"),
-            zoom: opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom"),
+            center: this._validateLatLng(opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng")),
+            zoom: this._validateZoom(opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom")),
             inertia: false,
         });
 
@@ -414,15 +414,21 @@ var StageMaps = function(container, opt){
 
     this.initStage = function(){
         this._clearHTML();
-        this.$container.append(this.createStageHTML());
-
+        this.$container.append(this._createStageHTML());
+        this._createMaps();
      }
+
+
 
     this._clearHTML = function(){
         this.$container.empty();
      }
 
-    this.createStageHTML = function(){
+    this._createMaps = function(){
+
+     }
+
+    this._createStageHTML = function(){
         var stageCurr = opt.getOption("current", "stage");
         var divs = "";
         if (!stageCurr.stageMapsGrid || !stageCurr.stageMapsGrid.length){ return $divs }
@@ -447,7 +453,7 @@ String.prototype.format = function() {
             : match
         ;
     });
-};
+ };
 
 var opt = new Options();
 opt.getHash();
