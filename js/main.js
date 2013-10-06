@@ -12,68 +12,97 @@ var LeafletMap = function(mapId, opt){
 
     parent = this;
 
-    this.mapData = { // dict with main states of map
-        "center": [undefined, undefined],
-        "zoom": undefined,
-     }; 
-
     this.mapTilesLayer; // copy of LeafletTiles class
     this.marksLayer; 
 
     this.map;
 
-    this.onMapMoveEnd = function(){
+    this.zoomControl;
+    this.scaleControl;
+    this.copyrightControl;
+    this.nameControl;
+    this.zoomLevelControl;
+
+
+    this.onMapMoveEnd = function(e){
         var latlng = parent.map.getCenter();
-
-        parent.mapData.center = [latlng.lat, latlng.lng]; 
-
-        opt.setOption("current", "mapCenterLatLng", parent.mapData.center);   
-
+        opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);   
         opt.setHash();
      }
 
-    this.omZoomEnd = function(){
-        parent.setMapZoom(parent.map.getZoom());
+    this.onZoomEnd = function(e){
+        if (!this.map) { return }
+
+        this.setMapZoom(parent.map.getZoom());
      }
 
-    this.setMapControls = function(){
+    this.updateMapControls = function(){
+        if (!this.map) { return }
+
+        if (this.zoomLevelControl){
+            this.zoomLevelControl.setPrefix(this.map.getZoom());
+        }
+
+        var title;
+        try { title = this.mapTilesLayer.title; }
+        catch (e) { title = "No title" }
+
+        if (this.nameControl){
+            this.nameControl.setPrefix(title);
+        }
+     }
+
+    this._setMapControls = function(){
 
         if (!this.map) { return }
 
+        // Zoom Control
         if (opt.getOption("global", "viewControlsZoom")){
-            this.map.addControl(L.control.zoom(opt.getOption("global", "viewControlsZoomPosition")));
+            this.zoomControl = L.control.zoom(opt.getOption("global", "viewControlsZoomPosition"))
+            this.map.addControl(this.zoomControl);
          }
 
+        // Scale Control
         if (opt.getOption("global", "viewControlsScale")){
-            var scaleControll = L.control.scale({
+            this.scaleControl = L.control.scale({
                 position: opt.getOption("global", "viewControlsScalePosition"),
                 imperial: opt.getOption("global", "viewControlsScaleMiles"),
             })
-            this.map.addControl(scaleControll);
+            this.map.addControl(this.scaleControl);
          }
 
+        // Cporyright
         if (opt.getOption("global", "viewControlsInfoCopyright")){
-            var infoControll = L.control.attribution({
+            this.copyrightControl = L.control.attribution({
                 position: opt.getOption("global", "viewControlsInfoCopyrightPosition"),
                 prefix: opt.getOption("global", "viewControlsInfoCopyrightText"),
             })
-            this.map.addControl(infoControll);
+            this.map.addControl(this.copyrightControl);
          }   
 
+        // Map Title
         if (opt.getOption("global", "viewControlsInfoName")){
-            var infoControll = L.control.attribution({
+            var title;
+            try {
+                title = this.mapTilesLayer.title;
+            }
+            catch (e) {
+                title = "No title"
+            }
+            this.nameControl = L.control.attribution({
                 position: opt.getOption("global", "viewControlsInfoNamePosition"),
-                prefix: this.mapTilesLayer.title,
+                prefix: title,
             })
-            this.map.addControl(infoControll);
+            this.map.addControl(this.nameControl);
          }  
 
+        // Zoom Level
         if (opt.getOption("global", "viewControlsInfoZoom")){
-            var infoControll = L.control.attribution({
+            this.zoomLevelControl = L.control.attribution({
                 position: opt.getOption("global", "viewControlsInfoZoomPosition"),
-                prefix: this.mapData.zoom,
+                prefix: this.map.getZoom(),
             })
-            this.map.addControl(infoControll);
+            this.map.addControl(this.zoomLevelControl);
          }                   
 
      }
@@ -115,22 +144,22 @@ var LeafletMap = function(mapId, opt){
             zoom: opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom"),
         });
 
+        this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
+        // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work ??????
         this.map.on("moveend", this.onMapMoveEnd);
-        this.map.on("zoomend", this.omZoomEnd);
+
+        this._setMapControls();
      }
 
     this.setMapCenter = function(latlng){
         latlng = this._validateLatLng(latlng);
         this.map.panTo(latlng);
-
-        this.mapData.center = [latlng.lat, latlng.lng];
      }
 
     this.setMapZoom = function(zoom){
         zoom = this._validateZoom(zoom);
         this.map.setZoom(zoom);
-
-        this.mapData.zoom = zoom;
+        this.updateMapControls();
      }
     
     this.setMapTilesLayer = function(layerObj){
@@ -142,7 +171,7 @@ var LeafletMap = function(mapId, opt){
         this.mapTilesLayer = layerObj;
         this.map.addLayer(this.mapTilesLayer.layer);
 
-        this.mapData.title = this.mapTilesLayer.title;
+        this.updateMapControls();
 
      }
 
@@ -369,7 +398,7 @@ map.createMap();
 map.setMapTilesLayer(layer);
 map.setMapCenter(opt.getOption("current","mapCenterLatLng"));
 map.setMapZoom(layer.startZoom);
-map.setMapControls();
+// map.setMapControls();
 
 console.log(opt)
 console.log(layer)
