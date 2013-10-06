@@ -22,7 +22,7 @@ var LeafletMap = function(mapId, opt){
 
     this.map;
 
-    this.onMapDragging = function(){
+    this.onMapMoveEnd = function(){
         var latlng = parent.map.getCenter();
 
         parent.mapData.center = [latlng.lat, latlng.lng]; 
@@ -30,6 +30,10 @@ var LeafletMap = function(mapId, opt){
         opt.setOption("current", "mapCenterLatLng", parent.mapData.center);   
 
         opt.setHash();
+     }
+
+    this.omZoomEnd = function(){
+        parent.setMapZoom(parent.map.getZoom());
      }
 
     this.setMapControls = function(){
@@ -90,14 +94,14 @@ var LeafletMap = function(mapId, opt){
 
     this._validateZoom = function(zoom){
 
-        if (!this.mapTilesLayer){ return opt.global.mapDefaultZoom }
+        if (!this.mapTilesLayer){ return opt.getOption("global", "mapDefaultZoom") }
 
-        zoom = zoom ? zoom : opt.global.mapDefaultZoom;
+        zoom = zoom ? zoom : opt.getOption("global", "mapDefaultZoom");
 
         var minZoom = this.mapTilesLayer.minZoom;
         var maxZoom = this.mapTilesLayer.maxZoom;
 
-        zoom = zoom>=minZoom && zoom<=maxZoom ? zoom : opt.global.mapDefaultZoom;
+        zoom = zoom>=minZoom && zoom<=maxZoom ? zoom : opt.getOption("global", "mapDefaultZoom");
 
         return zoom;
 
@@ -107,9 +111,12 @@ var LeafletMap = function(mapId, opt){
         this.map = L.map(this.mapId, {
             zoomControl: false,
             attributionControl: false,
+            center: opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng"),
+            zoom: opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom"),
         });
 
-        this.map.on("moveend", this.onMapDragging);
+        this.map.on("moveend", this.onMapMoveEnd);
+        this.map.on("zoomend", this.omZoomEnd);
      }
 
     this.setMapCenter = function(latlng){
@@ -155,6 +162,7 @@ var LeafletTiles = function(opt){
     this.tilesURL;
     this.maxZoom;
     this.minZoom;
+    this.startZoom;
     this.title;
 
     if (!opt) { 
@@ -188,6 +196,12 @@ var LeafletTiles = function(opt){
         return maxZoom;
      }
 
+    this._validateStartZoom = function(startZoom){
+        startZoom = parseInt(startZoom, 10);
+        startZoom = startZoom<=18 && startZoom>0 ? startZoom : opt.getOption("global", "mapDefaultZoom");
+        return startZoom;
+     }     
+
     this._validateZoomBounds = function(){
         if (!this.maxZoom || !this.minZoom) { return }
 
@@ -206,18 +220,20 @@ var LeafletTiles = function(opt){
         this.tilesURL = this._validateTilesURL(data.tilesURL);
         this.maxZoom = this._validateMaxZoom(data.maxZoom);
         this.minZoom = this._validateMinZoom(data.minZoom);
+        this.startZoom = this._validateStartZoom(data.startZoom);
         this.title = data.title ? data.title : "Unknown Map";
 
         this._validateZoomBounds();
      }
 
-    this.setLayer = function(url, minZoom, maxZoom){
+    this.setLayer = function(url, minZoom, maxZoom, startZoom){
 
         // WMS server always set using the setLayerOptions
         this.server = this.server ? this.server : this._validateServer();
         this.tilesURL = url ? this._validateTilesURL(url): this.tilesURL;
         this.maxZoom = maxZoom ? his._validateMinZoom(maxZoom): this.maxZoom;
         this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
+        this.startZoom = startZoom ? this._validateStartZoom(startZoom): this.startZoom;
         this.title = this.title ? this.title : "Unknown Map";
 
         this._validateZoomBounds();
@@ -268,6 +284,7 @@ var Options = function(){
 
     this.current = {
         "mapCenterLatLng": [],
+        "mapZoom": undefined,
 
         "stageMapsGrid": {},
         "stageMapsNames": ["cloudmate", "cloudmate"],
@@ -281,9 +298,9 @@ var Options = function(){
             server: "img",
             title: 'Cloudmate',
             tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-            maxZoom: 18,
+            maxZoom: 15,
             minZoom: 0,
-            startZoom: 13,        
+            startZoom: 5,        
         },
      };
 
@@ -349,9 +366,9 @@ layer.setLayer();
 
 var map = new LeafletMap("map1", opt);
 map.createMap();
-map.setMapCenter(opt.current.mapCenterLatLng);
-map.setMapZoom();
 map.setMapTilesLayer(layer);
+map.setMapCenter(opt.getOption("current","mapCenterLatLng"));
+map.setMapZoom(layer.startZoom);
 map.setMapControls();
 
 console.log(opt)
