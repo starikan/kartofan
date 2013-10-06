@@ -36,37 +36,37 @@ var LeafletMap = function(mapId, opt){
 
         if (!this.map) { return }
 
-        if (opt.global.viewControlsZoom){
-            this.map.addControl(L.control.zoom(opt.global.viewControlsZoomPosition));
+        if (opt.getOption("global", "viewControlsZoom")){
+            this.map.addControl(L.control.zoom(opt.getOption("global", "viewControlsZoomPosition")));
          }
 
-        if (opt.global.viewControlsScale){
+        if (opt.getOption("global", "viewControlsScale")){
             var scaleControll = L.control.scale({
-                position: opt.global.viewControlsScalePosition,
-                imperial: opt.global.viewControlsScaleMiles,
+                position: opt.getOption("global", "viewControlsScalePosition"),
+                imperial: opt.getOption("global", "viewControlsScaleMiles"),
             })
             this.map.addControl(scaleControll);
          }
 
-        if (opt.global.viewControlsInfoCopyright){
+        if (opt.getOption("global", "viewControlsInfoCopyright")){
             var infoControll = L.control.attribution({
-                position: opt.global.viewControlsInfoCopyrightPosition,
-                prefix: opt.global.viewControlsInfoCopyrightText,
+                position: opt.getOption("global", "viewControlsInfoCopyrightPosition"),
+                prefix: opt.getOption("global", "viewControlsInfoCopyrightText"),
             })
             this.map.addControl(infoControll);
          }   
 
-        if (opt.global.viewControlsInfoName){
+        if (opt.getOption("global", "viewControlsInfoName")){
             var infoControll = L.control.attribution({
-                position: opt.global.viewControlsInfoNamePosition,
+                position: opt.getOption("global", "viewControlsInfoNamePosition"),
                 prefix: this.mapTilesLayer.title,
             })
             this.map.addControl(infoControll);
          }  
 
-        if (opt.global.viewControlsInfoZoom){
+        if (opt.getOption("global", "viewControlsInfoZoom")){
             var infoControll = L.control.attribution({
-                position: opt.global.viewControlsInfoZoomPosition,
+                position: opt.getOption("global", "viewControlsInfoZoomPosition"),
                 prefix: this.mapData.zoom,
             })
             this.map.addControl(infoControll);
@@ -76,13 +76,13 @@ var LeafletMap = function(mapId, opt){
 
     this._validateLatLng = function(latlng){
 
-        latlng = latlng ? latlng : opt.global.mapDefaultCenterLatLng;
+        latlng = latlng ? latlng : opt.getOption("global", "mapDefaultCenterLatLng");
 
         try {
             latlng = L.latLng(latlng);
         }
         catch(e) {
-            latlng = L.latLng(opt.global.mapDefaultCenterLatLng);
+            latlng = L.latLng(opt.getOption("global", "mapDefaultCenterLatLng"));
         }
 
         return latlng;
@@ -198,7 +198,7 @@ var LeafletTiles = function(opt){
 
     this.setLayerOptions = function(mapName){
 
-        var data = opt.maps[mapName];
+        var data = opt.getOption("maps", mapName);
 
         if (!data) { return }
 
@@ -298,24 +298,24 @@ var Options = function(){
 
     this.setHash = function(){
         
-        if (!opt.global.hashChange || !opt.global.mapSyncMoving) { 
+        if (!this.getOption("global", "hashChange") || !this.getOption("global", "mapSyncMoving")) { 
             window.location.hash = "";
             return 
         }
 
-        window.location.hash = this.current.mapCenterLatLng.join(",");
+        window.location.hash = this.getOption("current", "mapCenterLatLng").join(",");
 
      }
 
     this.getHash = function(){
         
-        if (!opt.global.hashChange) { return }
+        if (!this.getOption("global", "hashChange")) { return }
 
         var hash = window.location.hash;
 
         try {
             var latlng = L.latLng(hash.split("#").pop().split(","))
-            this.current.mapCenterLatLng = [latlng.lat, latlng.lng];
+            this.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);
         }
         catch (e) {}
 
