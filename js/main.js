@@ -23,17 +23,22 @@ var LeafletMap = function(mapId, opt){
     this.nameControl;
     this.zoomLevelControl;
 
-
     this.onMapMoveEnd = function(e){
+        if (!parent.map){return}
+
         var latlng = parent.map.getCenter();
         opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);   
         opt.setHash();
+
+        for (var i = 0; i < parent.instances.length; i++) {
+            parent.instances[i].setMapCenter(latlng);
+        };
      }
 
     this.onZoomEnd = function(e){
-        if (!this.map) { return }
-
+        if (!parent.map) { return }
         this.setMapZoom(parent.map.getZoom());
+        this.onMapMoveEnd();
      }
 
     this.updateMapControls = function(){
@@ -142,21 +147,24 @@ var LeafletMap = function(mapId, opt){
             attributionControl: false,
             center: opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng"),
             zoom: opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom"),
+            inertia: false,
         });
 
         this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
-        // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work ??????
-        this.map.on("moveend", this.onMapMoveEnd);
+        // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
+        this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
 
         this._setMapControls();
      }
 
     this.setMapCenter = function(latlng){
+        if (!this.map){return}
         latlng = this._validateLatLng(latlng);
         this.map.panTo(latlng);
      }
 
     this.setMapZoom = function(zoom){
+        if (!this.map){return}
         zoom = this._validateZoom(zoom);
         this.map.setZoom(zoom);
         this.updateMapControls();
@@ -179,7 +187,12 @@ var LeafletMap = function(mapId, opt){
         this.map.invalidateSize();
      }
 
+    this.instances.push(this);
+
  }
+
+LeafletMap.prototype.instances = []; // Collect all instanses of class
+
 
 var LeafletTiles = function(opt){
 
@@ -417,8 +430,6 @@ var StageMaps = function(container, opt){
         for (var i=0, grid=stageCurr.stageMapsGrid; i<grid.length; i++){
             divs += "<div id='map{0}' class='maps' style='left:{1}%; top:{2}%; width:{3}%; height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
         }
-        console.log(divs)   
-
         return divs;
      }
 
