@@ -284,9 +284,6 @@ var Options = function(){
 
     parent = this;
 
-    // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
-    // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
-
     this.global = {
 
         "mapDefaultCenterLatLng": [54.31727, 48.3946],
@@ -315,9 +312,16 @@ var Options = function(){
         "mapCenterLatLng": [],
         "mapZoom": undefined,
 
-        "stageMapsGrid": {},
-        "stageMapsNames": ["cloudmate", "cloudmate"],
-        "stageMapsZooms": [12, 8],
+        "stage": {
+            "stageName": "current",
+            "stageMapsGrid": [
+                [0, 0, 100, 50],
+                [0, 50, 100, 50],
+            ],
+            "stageMapsNames": ["cloudmate", "cloudmate"],
+            "stageMapsZooms": [12, 8],            
+        },
+
      }
 
     this.maps = {
@@ -332,6 +336,17 @@ var Options = function(){
             startZoom: 5,        
         },
      };
+
+    // TODO: написать
+    this.initOptions = function(){
+
+     }
+
+    // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
+    // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
+    this.checkOptions = function(){
+
+     }     
 
     this.setOption = function(collection, option, value){
         this[collection][option] = value;
@@ -367,9 +382,11 @@ var Options = function(){
 
      }    
 
+    this.initOptions();
+
  }
 
-var StageMaps = function(opt){
+var StageMaps = function(container, opt){
     parent = this;
 
     if (!opt) { 
@@ -377,29 +394,79 @@ var StageMaps = function(opt){
         return;
      }
 
-    this.getStage = function(){
+    if (!container) { return }
+    this.$container = $("#"+container);
+
+    this.stageCurr;
+
+    this.initStage = function(){
+        this._clearHTML();
+
+        this.$container.append(this.createStageHTML());
+
+     }
+
+    this._clearHTML = function(){
+        this.$container.empty();
+     }
+
+    this.createStageHTML = function(){
+        var stageCurr = opt.getOption("current", "stage");
+        var divs = "";
+        if (!stageCurr.stageMapsGrid || !stageCurr.stageMapsGrid.length){ return $divs }
+
+        for (var i=0, grid=stageCurr.stageMapsGrid; i<grid.length; i++){
+            divs += "<div id='map{0}' class='maps' style='left:{1}%; top:{2}%; width:{3}%; height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
+        }
+        console.log(divs)   
+
+        return divs;
+     }
+
+    this.setStageOptions = function(){
 
      }
 
  }
 
+String.prototype.format = function() {
+    var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) { 
+        return typeof args[number] != 'undefined'
+            ? args[number]
+            : match
+        ;
+    });
+};
+
 var opt = new Options();
 opt.getHash();
 
-var stage = new StageMaps(opt);
-stage.getStage();
+var stage = new StageMaps("container", opt);
+stage.initStage();
 
-var layer = new LeafletTiles(opt);
-layer.setLayerOptions("cloudmate");
-layer.setLayer();
+var layer0 = new LeafletTiles(opt);
+layer0.setLayerOptions("cloudmate");
+layer0.setLayer();
 
-var map = new LeafletMap("map1", opt);
-map.createMap();
-map.setMapTilesLayer(layer);
-map.setMapCenter(opt.getOption("current","mapCenterLatLng"));
-map.setMapZoom(layer.startZoom);
-// map.setMapControls();
+var layer1 = new LeafletTiles(opt);
+layer1.setLayerOptions("cloudmate");
+layer1.setLayer();
+
+var map0 = new LeafletMap("map0", opt);
+map0.createMap();
+map0.setMapTilesLayer(layer0);
+map0.setMapCenter(opt.getOption("current","mapCenterLatLng"));
+map0.setMapZoom(layer0.startZoom);
+
+var map1 = new LeafletMap("map1", opt);
+map1.createMap();
+map1.setMapTilesLayer(layer1);
+map1.setMapCenter(opt.getOption("current","mapCenterLatLng"));
+map1.setMapZoom(layer1.startZoom);
 
 console.log(opt)
-console.log(layer)
-console.log(map)
+console.log(layer0)
+console.log(layer1)
+console.log(map0)
+console.log(map1)
