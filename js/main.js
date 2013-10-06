@@ -10,7 +10,7 @@ var LeafletMap = function(mapId, opt){
         return;
      }
 
-    parent = this;
+    var parent = this;
 
     this.mapTilesLayer; // copy of LeafletTiles class
     this.marksLayer; 
@@ -183,7 +183,7 @@ var LeafletMap = function(mapId, opt){
 
 var LeafletTiles = function(opt){
 
-    parent = this;
+    var parent = this;
 
     this.layer;
 
@@ -282,7 +282,7 @@ var LeafletTiles = function(opt){
 
 var Options = function(){
 
-    parent = this;
+    var parent = this;
 
     this.global = {
 
@@ -387,7 +387,7 @@ var Options = function(){
  }
 
 var StageMaps = function(container, opt){
-    parent = this;
+    var parent = this;
 
     if (!opt) { 
         console.log("There is no options in StageMaps, check this.");
@@ -401,7 +401,6 @@ var StageMaps = function(container, opt){
 
     this.initStage = function(){
         this._clearHTML();
-
         this.$container.append(this.createStageHTML());
 
      }
