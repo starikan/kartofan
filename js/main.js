@@ -108,7 +108,7 @@ var LeafletMap = function(mapId, opt){
             attributionControl: false,
         });
 
-        this.map.on("dragend", this.onMapDragging);
+        this.map.on("moveend", this.onMapDragging);
      }
 
     this.setMapCenter = function(latlng){
