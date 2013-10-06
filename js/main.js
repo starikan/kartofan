@@ -414,27 +414,48 @@ var StageMaps = function(container, opt){
 
     this.initStage = function(){
         this._clearHTML();
+        this._getCurrentStage();
         this.$container.append(this._createStageHTML());
         this._createMaps();
      }
 
-
+    this._getCurrentStage = function(){
+        this.stageCurr = opt.getOption("current", "stage");
+     }
 
     this._clearHTML = function(){
         this.$container.empty();
      }
 
     this._createMaps = function(){
+        if (!this.stageCurr.stageMapsGrid || !this.stageCurr.stageMapsGrid.length){ return }
+
+        var names = this.stageCurr.stageMapsNames;
+        var zooms = this.stageCurr.stageMapsZooms;
+        var grid = this.stageCurr.stageMapsGrid;
+        for (var i=0; i<grid.length; i++){
+            window["layer"+i] = new LeafletTiles(opt);
+            window["layer"+i].setLayerOptions(names[i]);
+            window["layer"+i].setLayer();
+
+            window["map"+i] = new LeafletMap("map"+i, opt);
+            window["map"+i].createMap();
+            window["map"+i].setMapTilesLayer(window["layer"+i]);
+            window["map"+i].setMapCenter(opt.getOption("current","mapCenterLatLng"));
+            window["map"+i].setMapZoom(zooms[i] || window["layer"+i].startZoom);
+        }
 
      }
 
     this._createStageHTML = function(){
-        var stageCurr = opt.getOption("current", "stage");
         var divs = "";
-        if (!stageCurr.stageMapsGrid || !stageCurr.stageMapsGrid.length){ return $divs }
+        if (!this.stageCurr.stageMapsGrid || !this.stageCurr.stageMapsGrid.length){ return divs }
 
-        for (var i=0, grid=stageCurr.stageMapsGrid; i<grid.length; i++){
-            divs += "<div id='map{0}' class='maps' style='left:{1}%; top:{2}%; width:{3}%; height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
+        var grid = this.stageCurr.stageMapsGrid;
+        for (var i=0; i<grid.length; i++){
+            divs += "<div id='map{0}' class='maps' \
+                    style='left:{1}%; top:{2}%; width:{3}%; \
+                    height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
         }
         return divs;
      }
@@ -461,28 +482,4 @@ opt.getHash();
 var stage = new StageMaps("container", opt);
 stage.initStage();
 
-var layer0 = new LeafletTiles(opt);
-layer0.setLayerOptions("cloudmate");
-layer0.setLayer();
-
-var layer1 = new LeafletTiles(opt);
-layer1.setLayerOptions("cloudmate");
-layer1.setLayer();
-
-var map0 = new LeafletMap("map0", opt);
-map0.createMap();
-map0.setMapTilesLayer(layer0);
-map0.setMapCenter(opt.getOption("current","mapCenterLatLng"));
-map0.setMapZoom(layer0.startZoom);
-
-var map1 = new LeafletMap("map1", opt);
-map1.createMap();
-map1.setMapTilesLayer(layer1);
-map1.setMapCenter(opt.getOption("current","mapCenterLatLng"));
-map1.setMapZoom(layer1.startZoom);
-
 console.log(opt)
-console.log(layer0)
-console.log(layer1)
-console.log(map0)
-console.log(map1)
