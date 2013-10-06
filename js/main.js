@@ -267,7 +267,11 @@ var Options = function(){
 
     this.current = {
         "mapCenterLatLng": [],
-    }
+
+        "stageMapsGrid": {},
+        "stageMapsNames": ["cloudmate", "cloudmate"],
+        "stageMapsZooms": [12, 8],
+     }
 
     this.maps = {
         "cloudmate": {
@@ -309,8 +313,25 @@ var Options = function(){
 
  }
 
+var StageMaps = function(opt){
+    parent = this;
+
+    if (!opt) { 
+        console.log("There is no options in StageMaps, check this.");
+        return;
+     }
+
+    this.getStage = function(){
+
+     }
+
+ }
+
 var opt = new Options();
 opt.getHash();
+
+var stage = new StageMaps(opt);
+stage.getStage();
 
 var layer = new LeafletTiles(opt);
 layer.setLayerOptions("cloudmate");
