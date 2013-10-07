@@ -193,6 +193,14 @@ var LeafletMap = function(mapId, opt){
 
 LeafletMap.prototype.instances = []; // Collect all instanses of class
 
+(function(){
+    window.onresize = function(){
+        for (var i=0; i<LeafletMap.prototype.instances.length; i++){
+            LeafletMap.prototype.instances[i].refreshMapAfterResize();
+        }
+    }
+ })()
+
 
 var LeafletTiles = function(opt){
 
@@ -473,7 +481,7 @@ String.prototype.format = function() {
             ? args[number]
             : match
         ;
-    });
+     });
  };
 
 var opt = new Options();
