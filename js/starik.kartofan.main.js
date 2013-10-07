@@ -23,16 +23,22 @@ var LeafletMap = function(mapId, opt){
     this.nameControl;
     this.zoomLevelControl;
 
+    this.moveAllMaps = function(latlng){
+        for (var i = 0; i < parent.instances.length; i++) {
+            parent.instances[i].setMapCenter(latlng);
+        };        
+    }
+
     this.onMapMoveEnd = function(e){
         if (!parent.map){return}
 
         var latlng = parent.map.getCenter();
         opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);   
         opt.setHash();
-
-        for (var i = 0; i < parent.instances.length; i++) {
-            parent.instances[i].setMapCenter(latlng);
-        };
+        
+        if (opt.getOption("global", "mapSyncMoving")){
+            parent.moveAllMaps(latlng);
+        }
      }
 
     this.onZoomEnd = function(e){
