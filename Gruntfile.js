@@ -10,10 +10,20 @@ module.exports = function(grunt) {
         jshint: {},
 
         //Склеивание файлов
-        concat: {}
+        concat: {},
 
         jade: {
-
+            compile: {
+                options: {
+                    data: {
+                        debug: false,
+                    },
+                    pretty: true,
+                },
+                files: {
+                    "index.html": ["index.jade"]
+                }
+            }
         }
     });
 
@@ -24,5 +34,5 @@ module.exports = function(grunt) {
 
     //Эти задания будут выполнятся сразу же когда вы в консоли напечатание grunt, и нажмете Enter
     // grunt.registerTask('default', ['jshint', 'concat']);
-    grunt.registerTask('default', []);
+    grunt.registerTask('default', ["jade"]);
  };
