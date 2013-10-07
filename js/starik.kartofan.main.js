@@ -201,7 +201,6 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
     }
  })()
 
-
 var LeafletTiles = function(opt){
 
     var parent = this;
