@@ -33,18 +33,25 @@ module.exports = function(grunt) {
                 livereload: true 
             },   
                      
-            // all: {
-            //     options: { 
-            //         livereload: true 
-            //     },
-            //     files: ['*index.jade', "*index.html"],
-            //     tasks: ['jade'],
-            // },
+            all: {
+                files: ['index.jade'],
+                tasks: ['jade'],
+            },
 
             html: {
                 files: ['index.html'],
                 livereload: true,
             },            
+
+            js: {
+                files: ['js/*.js'],
+                livereload: true,
+            },  
+
+            css: {
+                files: ['css/*.css'],
+                livereload: true,
+            },
         },
 
         connect: {
