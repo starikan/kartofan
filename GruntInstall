@@ -1,0 +1,70 @@
+https://gist.github.com/trey/6679792
+
+=======================================
+
+1. Create package.json:
+{
+  "name": "my-project-name",
+  "version": "0.1.0"
+}
+
+2. Then:
+
+npm update -g npm
+npm install -g grunt-cli
+
+npm install grunt --save-dev
+npm install grunt-contrib-watch --save-dev
+npm install grunt-contrib-connect --save-dev
+npm install grunt-contrib-jshint --save-dev
+npm install grunt-contrib-uglify --save-dev
+npm install grunt-contrib-jade --save-dev
+npm install matchdep --save-dev
+
+3. Download livereload.js and put into project:
+
+https://github.com/livereload/livereload-js/tree/master/dist
+
+4. Grintfile.js:
+
+//Стандартный экспорт модуля в nodejs
+module.exports = function(grunt) {
+
+     // Load Grunt tasks declared in the package.json file
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+    // Инициализация конфига GruntJS
+    grunt.initConfig({
+
+        watch: {
+
+            options: { 
+                livereload: true 
+            },   
+                     
+            html: {
+                files: ['index.html'],
+                livereload: true,
+            },            
+        },
+
+        connect: {
+            server: {
+                options: {
+                    // port: 35729,
+                    // base: ".",
+                    open: true,
+                    livereload: true,
+                },
+            }
+        },
+    });
+
+    // Creates the `server` task
+    grunt.registerTask('server', [
+        "connect",
+        "watch",
+    ]);    
+ };
+
+5. grunt server

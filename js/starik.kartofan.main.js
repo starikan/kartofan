@@ -485,4 +485,4 @@ opt.getHash();
 var stage = new StageMaps("container", opt);
 stage.initStage();
 
-console.log(opt)
+// console.log(opt)
