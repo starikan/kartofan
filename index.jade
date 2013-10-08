@@ -1,7 +1,6 @@
 doctype html
 head
     title
-    link(href="css/starik.kartofan.main.css", rel="stylesheet")
     link(href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css", rel="stylesheet")
     
     |<!--[if lte IE 8]>
@@ -13,7 +12,19 @@ head
 
     script(src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js")
 
+    link(href="css/starik.kartofan.main.css", rel="stylesheet")
+
 body
+
+    ul#menu
+        li
+            a(href="#") Раздел 1
+            ul
+                li
+                    a(href="#") 1
+                li
+                    a(href="#") 2
+
     div.mapContainer#container
 
     script(src="js/starik.kartofan.fn.js")

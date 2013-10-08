@@ -27,7 +27,7 @@ var LeafletMap = function(mapId, opt){
         for (var i = 0; i < parent.instances.length; i++) {
             parent.instances[i].setMapCenter(latlng);
         };        
-    }
+     }
 
     this.onMapMoveEnd = function(e){
         if (!parent.map){return}
