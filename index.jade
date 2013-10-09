@@ -13,17 +13,32 @@ head
     script(src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js")
 
     link(href="css/starik.kartofan.main.css", rel="stylesheet")
+    link(href="css/starik.kartofan.menu.css", rel="stylesheet")
 
 body
 
-    ul#menu
-        li
-            a(href="#") Раздел 1
-            ul
-                li
-                    a(href="#") 1
-                li
-                    a(href="#") 2
+    div#cssmenu
+        ul
+            li
+                a
+                    span Первонах
+            li.has-sub
+                a
+                    span Много меню
+                ul
+                    li
+                        a
+                            span Подменю 1
+                    li
+                        a
+                            span Подменю 2
+                    li
+                        a(href="")
+                            span Подменю 3
+            li
+                a(href="")
+                    span Всенах
+
 
     div.mapContainer#container
 
