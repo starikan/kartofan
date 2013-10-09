@@ -246,16 +246,18 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
         });
      }
 
-    // Resize events
-    window.onresize = function(){
+    var eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
         }
      }
 
+    window.onresize = eventResizeWindow
     document.oncontextmenu = openContextMenu;
+    // TODO: touch event to context menu
     $("#container").bind("click", closeContextMenu);
     document.click = closeContextMenu
+
     initMainMenu();
  })()
 
