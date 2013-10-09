@@ -3,6 +3,21 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
 @charset 'UTF-8';
 /* Base Styles */
+
+#mainmenu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+#cssmenu {
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);    
+}
+
 #cssmenu,
 #cssmenu ul,
 #cssmenu li,
