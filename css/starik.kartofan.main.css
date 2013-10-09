@@ -14,3 +14,7 @@ body {
 .maps {
     position: absolute !important;
 }
+
+.hide {
+    display: none;
+}

@@ -200,11 +200,63 @@ var LeafletMap = function(mapId, opt){
 LeafletMap.prototype.instances = []; // Collect all instanses of class
 
 (function(){
+
+    var openContextMenu = function(e){
+        // http://www.quirksmode.org/dom/events/contextmenu.html
+        var $mainmenu = $("#mainmenu");
+        if (!$mainmenu.is(":visible")){
+            $mainmenu.removeClass("hide");
+        }
+        return false;        
+     }
+
+    var closeContextMenu = function(e){
+        var $mainmenu = $("#mainmenu");
+        if ($mainmenu.is(":visible")){
+            $mainmenu.addClass("hide");
+        }
+        return false; 
+     }
+
+    var initMainMenu = function(){
+        $('#cssmenu > ul > li ul').each(function(index, e){
+          var count = $(e).find('li').length;
+          var content = '<span class="cnt">' + count + '</span>';
+          $(e).closest('li').children('a').append(content);
+        });
+        $('#cssmenu ul ul li:odd').addClass('odd');
+        $('#cssmenu ul ul li:even').addClass('even');
+        $('#cssmenu > ul > li > a').click(function() {
+          $('#cssmenu li').removeClass('active');
+          $(this).closest('li').addClass('active'); 
+          var checkElement = $(this).next();
+          if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+            $(this).closest('li').removeClass('active');
+            checkElement.slideUp('normal');
+          }
+          if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+            $('#cssmenu ul ul:visible').slideUp('normal');
+            checkElement.slideDown('normal');
+          }
+          if($(this).closest('li').find('ul').children().length == 0) {
+            return true;
+          } else {
+            return false;   
+          }     
+        });
+     }
+
+    // Resize events
     window.onresize = function(){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
         }
-    }
+     }
+
+    document.oncontextmenu = openContextMenu;
+    $("#container").bind("click", closeContextMenu);
+    document.click = closeContextMenu
+    initMainMenu();
  })()
 
 var LeafletTiles = function(opt){
@@ -479,31 +531,6 @@ var StageMaps = function(container, opt){
 
  }
 
-$('#cssmenu > ul > li ul').each(function(index, e){
-  var count = $(e).find('li').length;
-  var content = '<span class="cnt">' + count + '</span>';
-  $(e).closest('li').children('a').append(content);
-});
-$('#cssmenu ul ul li:odd').addClass('odd');
-$('#cssmenu ul ul li:even').addClass('even');
-$('#cssmenu > ul > li > a').click(function() {
-  $('#cssmenu li').removeClass('active');
-  $(this).closest('li').addClass('active'); 
-  var checkElement = $(this).next();
-  if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-    $(this).closest('li').removeClass('active');
-    checkElement.slideUp('normal');
-  }
-  if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-    $('#cssmenu ul ul:visible').slideUp('normal');
-    checkElement.slideDown('normal');
-  }
-  if($(this).closest('li').find('ul').children().length == 0) {
-    return true;
-  } else {
-    return false;   
-  }     
-});
 
 
 
