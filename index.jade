@@ -14,6 +14,7 @@ head
 
     link(href="css/starik.kartofan.main.css", rel="stylesheet")
     link(href="css/starik.kartofan.menu.css", rel="stylesheet")
+    link(href="css/starik.kartofan.forms.css", rel="stylesheet")
 
 body
 
@@ -40,6 +41,17 @@ body
                     a(href="")
                         span Всенах
 
+
+    div#settings-form
+        div.form-flat
+            div.form-header Header
+            dir.form-content
+                form
+                    input(type="text", placeholder="Text")
+                    input(type="text", placeholder="Text")
+                    input(type="text", placeholder="Text")
+                    input(type="text", placeholder="Text")
+                    input.button(type="submit", value="Сохранить")
 
     div.mapContainer#container
 

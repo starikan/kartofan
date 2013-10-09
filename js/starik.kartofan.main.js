@@ -246,6 +246,28 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
         });
      }
 
+    var initFormsBehavior = function(){
+        $('.tabs').on('click', 'li a', function(e){
+          e.preventDefault();
+          var $tab = $(this),
+               href = $tab.attr('href');
+
+           $('.active').removeClass('active');
+           $tab.addClass('active');
+
+           $('.show')
+              .removeClass('show')
+              .addClass('hide')
+              .hide();
+          
+            $(href)
+              .removeClass('hide')
+              .addClass('show')
+              .hide()
+              .fadeIn(550);
+        });        
+    }
+
     var eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
@@ -259,6 +281,7 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
     document.click = closeContextMenu
 
     initMainMenu();
+    initFormsBehavior();
  })()
 
 var LeafletTiles = function(opt){
