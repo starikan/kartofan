@@ -252,11 +252,11 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
         }
      }
 
-    window.onresize = eventResizeWindow
+    window.onresize = eventResizeWindow;
     document.oncontextmenu = openContextMenu;
     // TODO: touch event to context menu
     $("#container").bind("click", closeContextMenu);
-    document.click = closeContextMenu
+    document.click = closeContextMenu;
 
     initMainMenu();
  })()
@@ -533,7 +533,67 @@ var StageMaps = function(container, opt){
 
  }
 
+var EditableForm = function(id){
+    
+    if (!id) { return; }
 
+    this.$form;
+    this.$formHeader;
+    this.$formContent;
+
+    this._initForm = function(id){
+
+        var $id = "#"+id;
+
+        if (!$("div").is($id)){
+            $("<div></div>").appendTo($("body")).attr("id", id);
+        }
+
+        this.$form = $("div"+$id);
+
+        this.$form.addClass("form-flat hide");
+
+        if (!this.$form.find(".form-header").length){
+            $("<div></div>").appendTo(this.$form).addClass("form-header");
+        }
+
+        if (!this.$form.find("div.form-content").length){
+            $("<div></div>").appendTo(this.$form).addClass("form-content").append("<form/>");
+        }
+
+        this.$formHeader = $("div").find(".form-header");
+        this.$formContent = $("div").find(".form-content > form");
+
+        // console.log(this.$form, this.$formHeader, this.$formContent);
+     }
+
+    this.addHeader = function(header){
+        if (!header){ return }
+        this.$formHeader.append(header);
+     }
+
+    this.addInput = function(val, placeholder){
+
+        if (!val){ val=undefined }
+
+        $("<input/>").appendTo(this.$formContent).attr({
+            "type": "text",
+            "placeholder": placeholder,
+            "value": val,
+        });
+     }
+
+    this.showForm = function(){
+        this.$form.removeClass("hide");
+     }
+
+    this.hideForm = function(){
+        this.$form.addClass("hide");
+     }
+
+    this._initForm(id);
+
+ }
 
 
 var opt = new Options();
@@ -542,4 +602,7 @@ opt.getHash();
 var stage = new StageMaps("container", opt);
 stage.initStage();
 
-// console.log(opt)
+var form = new EditableForm("eform");
+form.addHeader("Заголовок");
+form.addInput("", "Text");
+form.showForm();

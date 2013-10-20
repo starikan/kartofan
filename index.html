@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <head>
   <title></title>
-  <link href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" rel="stylesheet"><!--[if lte IE 8]>
-     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <link href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" rel="stylesheet">
+  <!--[if lt IE 8]>
+  <link href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" rel="stylesheet">
   <![endif]-->
   <script src="lib/jquery-2.0.3.min.js"></script>
   <script src="lib/lodash.js"></script>
@@ -16,29 +17,22 @@
     <div id="cssmenu">
       <ul>
         <li><a><span>Первонах</span></a></li>
-        <li class="has-sub"><a><span>Много меню</span></a>
+        <li class="has-sub"><a><span>Настройки</span></a>
           <ul>
-            <li><a><span>Подменю 1</span></a></li>
-            <li><a><span>Подменю 2</span></a></li>
-            <li><a href=""><span>Подменю 3</span></a></li>
+            <li><a id="optionsGlobal"><span>Глобальные настройки</span></a></li>
+            <li><a id="optionsLocal"><span>Настройки вида карты</span></a></li>
+            <li><a id="optionsReset"><span>Сброс настроек</span></a></li>
           </ul>
         </li>
-        <li><a href=""><span>Всенах</span></a></li>
       </ul>
     </div>
   </div>
-  <div class="form-flat hide">
-    <div class="form-header">Header</div>
-    <dir class="form-content">
-      <form>
-        <input type="text" placeholder="Text">
-        <input type="text" placeholder="Text">
-        <input type="text" placeholder="Text">
-        <input type="text" placeholder="Text">
-        <input type="submit" value="Сохранить" class="button">
-      </form>
-    </dir>
-  </div>
+  <!--div.form-flat.hide#eform-->
+  <!--    div.form-header Header-->
+  <!--    dir.form-content-->
+  <!--        form-->
+  <!--            input(type="text", placeholder="Text")-->
+  <!--            input.button(type="submit", value="Сохранить")-->
   <div id="container" class="mapContainer"></div>
   <script src="js/starik.kartofan.fn.js"></script>
   <script src="js/starik.kartofan.main.js"></script>

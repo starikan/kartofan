@@ -3,10 +3,9 @@ head
     title
     link(href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css", rel="stylesheet")
     
-    |<!--[if lte IE 8]>
-    |    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    |<![endif]-->
-
+    //if lt IE 8
+        link(href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css", rel="stylesheet")
+        
     script(src="lib/jquery-2.0.3.min.js")
     script(src="lib/lodash.js")
 
@@ -26,31 +25,25 @@ body
                         span Первонах
                 li.has-sub
                     a
-                        span Много меню
+                        span Настройки
                     ul
                         li
-                            a
-                                span Подменю 1
+                            a#optionsGlobal
+                                span Глобальные настройки
                         li
-                            a
-                                span Подменю 2
+                            a#optionsLocal
+                                span Настройки вида карты
                         li
-                            a(href="")
-                                span Подменю 3
-                li
-                    a(href="")
-                        span Всенах
+                            a#optionsReset
+                                span Сброс настроек
 
 
-    div.form-flat.hide
-        div.form-header Header
-        dir.form-content
-            form
-                input(type="text", placeholder="Text")
-                input(type="text", placeholder="Text")
-                input(type="text", placeholder="Text")
-                input(type="text", placeholder="Text")
-                input.button(type="submit", value="Сохранить")
+    //div.form-flat.hide#eform
+    //    div.form-header Header
+    //    dir.form-content
+    //        form
+    //            input(type="text", placeholder="Text")
+    //            input.button(type="submit", value="Сохранить")
 
     div.mapContainer#container
 
