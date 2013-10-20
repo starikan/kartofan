@@ -564,8 +564,17 @@ var EditableForm = function(id){
         this.$formHeader = $("div").find(".form-header");
         this.$formContent = $("div").find(".form-content > form");
 
-        // console.log(this.$form, this.$formHeader, this.$formContent);
      }
+
+    this.clearForm = function(){
+        if (this.$formHeader){
+            this.$formHeader.empty();
+        }
+
+        if (this.$formContent){
+            this.$formContent.empty();
+        }
+    }
 
     this.addHeader = function(header){
         if (!header){ return }
