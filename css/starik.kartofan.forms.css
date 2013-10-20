@@ -1,0 +1,60 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+.form-flat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);  
+  background: #0fbf70;
+  width: 250px;
+  font-family: 'Roboto';
+  z-index: 1000;
+  padding: 0;
+}
+
+.form-header {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  height: 40px;
+  color: white;
+  background: #0b9054;
+  font-size: 30px;
+}
+
+.form-content {
+  padding: 10px;
+  margin: 10px;
+  margin-top: 0px;
+}
+
+.form-content input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+  color: black;
+  outline: none;
+}
+
+.button {
+  border: none;
+  text-align: center;
+  background: #0b9054;
+  display: block;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+}
+
+.button:hover {
+  background: #0f8060;
+}
+
+.button:focus {
+  background: #0f8060;
+}
