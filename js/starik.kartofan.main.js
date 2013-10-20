@@ -218,6 +218,11 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
         return false; 
      }
 
+    // TODO: it`s bad realization. Need more independance from class name
+    var closeAllForms = function(){
+        $(".form-flat").addClass("hide");
+    }
+
     var initMainMenu = function(){
         $('#cssmenu > ul > li ul').each(function(index, e){
           var count = $(e).find('li').length;
@@ -255,8 +260,10 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
     window.onresize = eventResizeWindow;
     document.oncontextmenu = openContextMenu;
     // TODO: touch event to context menu
-    $("#container").bind("click", closeContextMenu);
-    document.click = closeContextMenu;
+    $("#container").bind("click", function(){
+        closeContextMenu();
+        closeAllForms();
+    });
 
     initMainMenu();
  })()
@@ -655,7 +662,7 @@ var EditableForm = function(id){
             this.addSubmit(v[i].val, v[i].id, v[i].extclass);
         }
      }
-    
+
     this.showForm = function(){
         this.$form.removeClass("hide");
      }
@@ -665,9 +672,7 @@ var EditableForm = function(id){
      }
 
     this._initForm(id);
-
  }
-
 
 var opt = new Options();
 opt.getHash();
