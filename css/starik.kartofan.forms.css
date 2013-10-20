@@ -32,13 +32,19 @@
   margin-top: 0px;
 }
 
-.form-content input {
+.form-content input,
+.form-content select {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
   border: none;
   color: black;
   outline: none;
+}
+
+.form-content input:focus,
+.form-content select:focus {
+  background: #badbad;
 }
 
 .button {
@@ -55,6 +61,16 @@
   background: #0f8060;
 }
 
-.button:focus {
-  background: #0f8060;
+.form-content .select2-container {
+  width: 100%;
+  margin: 2px 0 2px 0;
+}
+
+.form-content .select2-container .select2-choice {
+  border-radius: 0px;
+}
+
+.form-content .select2-container-active .select2-choice,
+.form-content .select2-container-active .select2-choices {
+  background: #badbad;
 }

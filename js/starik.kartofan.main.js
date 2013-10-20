@@ -221,7 +221,7 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
     // TODO: it`s bad realization. Need more independance from class name
     var closeAllForms = function(){
         $(".form-flat").addClass("hide");
-    }
+     }
 
     var initMainMenu = function(){
         $('#cssmenu > ul > li ul').each(function(index, e){
@@ -263,7 +263,7 @@ LeafletMap.prototype.instances = []; // Collect all instanses of class
     $("#container").bind("click", function(){
         closeContextMenu();
         closeAllForms();
-    });
+     });
 
     initMainMenu();
  })()
@@ -620,26 +620,49 @@ var EditableForm = function(id){
         this.$formHeader.append(header);
      }
 
-    this.addInput = function(val, placeholder){
+    this.addInput = function(val, placeholder, tabindex){
 
         if (!val){ val=undefined }
+        if (!tabindex && tabindex!==0){ tabindex=undefined }
 
         $("<input/>").appendTo(this.$formContent).attr({
             "type": "text",
             "placeholder": placeholder,
             "value": val,
+            "tabindex": tabindex,
         });
      }
 
-    this.addSubmit = function(val, id, extclass){
+    this.addSelect = function(val, placeholder, tabindex){
+
+        if (!val || !val.length){ val=[] }
+        if (!tabindex && tabindex!==0){ tabindex=undefined }
+
+        var $select = $("<select/>").appendTo(this.$formContent).attr({
+            "tabindex": tabindex,    
+        });;
+
+        $.each(val, function(i,v){
+            var $elem = $("<option/>")
+            $elem.append(v);
+            $select.append($elem);
+        });
+
+        $select.select2();
+
+     }
+
+    this.addSubmit = function(val, id, extclass, tabindex){
         if (!val){ val=undefined }
         if (!id){ id=undefined }
         if (!extclass){ extclass=undefined }
+        if (!tabindex && tabindex!==0){ tabindex=undefined }
 
         $("<input/>").appendTo(this.$formContent).attr({
             "type": "submit",
             "value": val,
             "id": id,
+            "tabindex": tabindex,
         }).addClass("button").addClass(extclass);        
      }
 
@@ -651,15 +674,25 @@ var EditableForm = function(id){
         }
 
         if (!json.header){json.header = ""}
-        if (!json.inputs || !json.inputs.length){json.inputs = []}
+        if (!json.rows || !json.rows.length){json.rows = []}
         if (!json.submit){json.header.val = ""}
 
         this.addHeader(json.header);
-        for (var i=0, v=json.inputs; i<json.inputs.length; i++){
-            this.addInput(v[i].val, v[i].placeholder);
+
+        var tabindex = 0;
+        for (var i=0, v=json.rows; i<json.rows.length; i++){
+            if (v[i].type === "input"){
+                this.addInput(v[i].val, v[i].placeholder, tabindex);
+                tabindex++;
+            }
+            else if (v[i].type === "select"){
+                this.addSelect(v[i].val, v[i].placeholder, tabindex);
+                tabindex++;
+            }
         }
         for (var i=0, v=json.submit; i<json.submit.length; i++){
-            this.addSubmit(v[i].val, v[i].id, v[i].extclass);
+            this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex);
+            tabindex++;
         }
      }
 
@@ -682,11 +715,13 @@ stage.initStage();
 
 var formJSON = {
     header: "Заголовок",
-    inputs: [
-        {val: "", placeholder: "text"},
-        {val: "", placeholder: "text"},
-        {val: "", placeholder: "text"},
-        {val: "", placeholder: "text"},
+    rows: [
+        {type: "input", val: "", placeholder: "text"},
+        {type: "input", val: "", placeholder: "text"},
+        {type: "input", val: "", placeholder: "text"},
+        {type: "input", val: "", placeholder: "text"},
+        {type: "select", val: ["123", "321"], placeholder: "text"},
+        {type: "select", val: ["123", "321"], placeholder: "text"},
     ],
     submit: [
         {val: "send", id: "sendForm", extclass: "sendForm"},
