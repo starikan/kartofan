@@ -583,6 +583,38 @@ var EditableForm = function(id){
         });
      }
 
+    this.addSubmit = function(val, id, extclass){
+        if (!val){ val=undefined }
+        if (!id){ id=undefined }
+        if (!extclass){ extclass=undefined }
+
+        $("<input/>").appendTo(this.$formContent).attr({
+            "type": "submit",
+            "value": val,
+            "id": id,
+        }).addClass("button").addClass(extclass);        
+     }
+
+    this.makeFromJSON = function(str){
+        try {
+            var json = JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+
+        if (!json.header){json.header = ""}
+        if (!json.inputs || !json.inputs.length){json.inputs = []}
+        if (!json.submit){json.header.val = ""}
+
+        this.addHeader(json.header);
+        for (var i=0, v=json.inputs; i<json.inputs.length; i++){
+            this.addInput(v[i].val, v[i].placeholder);
+        }
+        for (var i=0, v=json.submit; i<json.submit.length; i++){
+            this.addSubmit(v[i].val, v[i].id, v[i].extclass);
+        }
+     }
+    
     this.showForm = function(){
         this.$form.removeClass("hide");
      }
@@ -602,7 +634,20 @@ opt.getHash();
 var stage = new StageMaps("container", opt);
 stage.initStage();
 
+var formJSON = {
+    header: "Заголовок",
+    inputs: [
+        {val: "", placeholder: "text"},
+        {val: "", placeholder: "text"},
+        {val: "", placeholder: "text"},
+        {val: "", placeholder: "text"},
+    ],
+    submit: [
+        {val: "send", id: "sendForm", extclass: "sendForm"},
+        {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
+    ]
+}
+
 var form = new EditableForm("eform");
-form.addHeader("Заголовок");
-form.addInput("", "Text");
+form.makeFromJSON(JSON.stringify(formJSON));
 form.showForm();
