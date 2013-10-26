@@ -648,7 +648,9 @@ var EditableForm = function(id){
             $select.append($elem);
         });
 
-        $select.select2();
+        $select.select2({
+            "placeholder": placeholder,
+        });
 
      }
 
