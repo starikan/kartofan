@@ -42,10 +42,8 @@ var StageMaps = function(container, opt){
             window["map"+i] = new LeafletMap("map"+i, opt);
             var latlng = opt.getOption("current","mapCenterLatLng");
             var zoom = zooms[i] || window["layer"+i].startZoom;
-            window["map"+i].createMap();
+            window["map"+i].createMap(latlng, zoom);
             window["map"+i].setMapTilesLayer(window["layer"+i]);
-            window["map"+i].setMapCenter(latlng);
-            window["map"+i].setMapZoom(zoom);
         }
      }
 

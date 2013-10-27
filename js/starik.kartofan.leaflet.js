@@ -134,25 +134,33 @@ var LeafletMap = function(mapId, opt){
 
     this._validateZoom = function(zoom){
 
-        if (!this.mapTilesLayer){ return opt.getOption("global", "mapDefaultZoom") }
+        var minZoom = 0;
+        var maxZoom = 20;
+
+        if (this.mapTilesLayer){ 
+            minZoom = this.mapTilesLayer.minZoom;
+            maxZoom = this.mapTilesLayer.maxZoom;            
+        }
 
         zoom = zoom ? zoom : opt.getOption("global", "mapDefaultZoom");
-
-        var minZoom = this.mapTilesLayer.minZoom;
-        var maxZoom = this.mapTilesLayer.maxZoom;
-
         zoom = zoom>=minZoom && zoom<=maxZoom ? zoom : opt.getOption("global", "mapDefaultZoom");
 
         return zoom;
 
      }
 
-    this.createMap = function(latlang, zoom){
+    this.createMap = function(latlng, zoom){
+        zoom = zoom || opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom");
+        zoom = this._validateZoom(zoom);
+
+        latlng = latlng || opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng");
+        latlng = this._validateLatLng(latlng);
+
         this.map = L.map(this.mapId, {
             zoomControl: false,
             attributionControl: false,
-            center: this._validateLatLng(latlang || opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng")),
-            zoom: this._validateZoom(zoom || opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom")),
+            center: latlng,
+            zoom: zoom,
             inertia: false,
         });
 
@@ -168,6 +176,7 @@ var LeafletMap = function(mapId, opt){
         if (!this.map){return}
         latlng = this._validateLatLng(latlng);
         this.map.panTo(latlng);
+        this.updateMapControls();
      }
 
     this.setMapZoom = function(zoom){
