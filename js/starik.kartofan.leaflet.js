@@ -147,12 +147,12 @@ var LeafletMap = function(mapId, opt){
 
      }
 
-    this.createMap = function(){
+    this.createMap = function(latlang, zoom){
         this.map = L.map(this.mapId, {
             zoomControl: false,
             attributionControl: false,
-            center: this._validateLatLng(opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng")),
-            zoom: this._validateZoom(opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom")),
+            center: this._validateLatLng(latlang || opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng")),
+            zoom: this._validateZoom(zoom || opt.getOption("current", "mapZoom") || opt.getOption("global", "mapDefaultZoom")),
             inertia: false,
         });
 
@@ -161,6 +161,7 @@ var LeafletMap = function(mapId, opt){
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
 
         this._setMapControls();
+        this.updateMapControls();
      }
 
     this.setMapCenter = function(latlng){
@@ -174,6 +175,13 @@ var LeafletMap = function(mapId, opt){
         zoom = this._validateZoom(zoom);
         this.map.setZoom(zoom);
         this.updateMapControls();
+     }
+
+    this.setMapView = function(latlng, zoom){
+        if (!this.map){return}
+        latlng = this._validateLatLng(latlng);
+        zoom = this._validateZoom(zoom);
+        this.map.setView(latlng, zoom);
      }
     
     this.setMapTilesLayer = function(layerObj){

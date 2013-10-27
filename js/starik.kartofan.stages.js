@@ -40,12 +40,13 @@ var StageMaps = function(container, opt){
             window["layer"+i].setLayer();
 
             window["map"+i] = new LeafletMap("map"+i, opt);
+            var latlng = opt.getOption("current","mapCenterLatLng");
+            var zoom = zooms[i] || window["layer"+i].startZoom;
             window["map"+i].createMap();
             window["map"+i].setMapTilesLayer(window["layer"+i]);
-            window["map"+i].setMapCenter(opt.getOption("current","mapCenterLatLng"));
-            window["map"+i].setMapZoom(zooms[i] || window["layer"+i].startZoom);
+            window["map"+i].setMapCenter(latlng);
+            window["map"+i].setMapZoom(zoom);
         }
-
      }
 
     this._createStageHTML = function(){
