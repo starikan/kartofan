@@ -11,3 +11,7 @@ http://ivaynberg.github.io/select2/
 
 https://github.com/mapbox/leaflet-image - экспорт изображения карты
 https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
+
+
+TODO:
+- сделать Events и Options синглтонами

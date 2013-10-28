@@ -10,6 +10,11 @@ var Events = function(opt){
         opt = window.opt;
      }
 
+    if (typeof eform === "undefined" || !(eform instanceof EditableForm)){
+        window.eform = new EditableForm();
+        eform = window.eform;
+     }
+
     this.$mainmenu = $(opt.html.containerMainMenu);
     this.$allMapsContainer = $(opt.html.containerAllMaps);
 
@@ -21,6 +26,17 @@ var Events = function(opt){
         this.eventResizeWindow();
         this.eventContextMenu();
         this.eventClickOutMenu();
+
+        this.contextMenuGlobalOptions();
+     }
+
+    // WINDOW RESIZE
+    this.eventResizeWindow = function(e){
+        window.onresize = function(e){
+            for (var i=0; i<LeafletMap.prototype.instances.length; i++){
+                LeafletMap.prototype.instances[i].refreshMapAfterResize();
+            }            
+        }
      }
 
 
@@ -51,38 +67,30 @@ var Events = function(opt){
      }
 
 
-    // WINDOW RESIZE
-    this.eventResizeWindow = function(e){
-        window.onresize = function(e){
-            for (var i=0; i<LeafletMap.prototype.instances.length; i++){
-                LeafletMap.prototype.instances[i].refreshMapAfterResize();
-            }            
-        }
+    // FORMS IN MAINMENU
+    this.formJSON = {
+        header: "Заголовок",
+        rows: [
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "select", val: ["123", "321"], placeholder: "text"},
+            {type: "select", val: ["123", "321"], placeholder: "text"},
+        ],
+        submit: [
+            {val: "send", id: "sendForm", extclass: "sendForm"},
+            {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
+        ]
+     }    
+
+    this.contextMenuGlobalOptions = function(){
+        $("#optionsGlobal").bind("click", function(){
+            eform.makeFromJSON(JSON.stringify(parent.formJSON));
+            parent.closeContextMenu();
+            eform.showForm();
+         })        
      }
 
     this.initMainEvents();
 }
-
-// // Global options form
-// $("#optionsGlobal").bind("click", function(){
-//     checkFormEnabled();
-
-//     var formJSON = {
-//         header: "Заголовок",
-//         rows: [
-//             {type: "input", val: "", placeholder: "text"},
-//             {type: "input", val: "", placeholder: "text"},
-//             {type: "input", val: "", placeholder: "text"},
-//             {type: "input", val: "", placeholder: "text"},
-//             {type: "select", val: ["123", "321"], placeholder: "text"},
-//             {type: "select", val: ["123", "321"], placeholder: "text"},
-//         ],
-//         submit: [
-//             {val: "send", id: "sendForm", extclass: "sendForm"},
-//             {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
-//         ]
-//     }
-//     eform.makeFromJSON(JSON.stringify(formJSON));
-//     closeContextMenu();
-//     eform.showForm();
-//  })
