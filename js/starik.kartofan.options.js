@@ -12,7 +12,7 @@ var Options = function(){
 
     this.global = {
         val: {
-            "mapDefaultCenterLatLng": [54.31727, 48.3946],
+            "mapDefaultCenterLatLng": "54.31727, 48.3946",
             "mapDefaultZoom": 12,
             "mapSyncMoving": true,
             "mapSyncZooming": false,
@@ -34,7 +34,32 @@ var Options = function(){
         },
 
         form: {
-
+            "mapDefaultCenterLatLng": {
+                default: "54.31727, 48.3946",
+                type: "input",
+                description: "Start coordinate",
+                // case: ,
+                check: /d+,d+/,
+                placeholder: "",
+            },
+            "mapDefaultZoom": {
+                default: 12,
+                type: "input",
+                description: "Start zoom",
+                // case: ,
+                check: /\d+/,
+                placeholder: "",
+            },
+            "mapSyncMoving": {
+                default: 1,
+                type: "checkbox",
+                description: "mapSyncMoving",
+            },
+            "mapSyncZooming": {
+                default: false,
+                type: "checkbox",
+                description: "mapSyncZooming",
+            },
         }
      };
 

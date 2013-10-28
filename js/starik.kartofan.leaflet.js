@@ -126,7 +126,12 @@ var LeafletMap = function(mapId, opt){
             latlng = L.latLng(latlng);
         }
         catch(e) {
-            latlng = L.latLng(opt.getOption("global", "mapDefaultCenterLatLng"));
+            try {
+                latlng = L.latLng(latlng.split(","));
+            }
+            catch(e) {
+                latlng = this._validateLatLng(opt.getOption("global", "mapDefaultCenterLatLng"));
+            }
         }
 
         return latlng;
