@@ -59,7 +59,7 @@ var Options = function(){
 
     // TODO: написать
     this.initOptions = function(){
-
+        this.getHash();
      }
 
     // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять

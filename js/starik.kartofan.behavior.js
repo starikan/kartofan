@@ -64,8 +64,33 @@ $("#container").bind("click", function(){
     closeAllForms();
  });
 
-$("#optionsGlobal").bind("click", function(){
-
- })
-
 initMainMenu();
+
+
+
+
+// FORMS
+
+// Global options form
+$("#optionsGlobal").bind("click", function(){
+    checkFormEnabled();
+
+    var formJSON = {
+        header: "Заголовок",
+        rows: [
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "input", val: "", placeholder: "text"},
+            {type: "select", val: ["123", "321"], placeholder: "text"},
+            {type: "select", val: ["123", "321"], placeholder: "text"},
+        ],
+        submit: [
+            {val: "send", id: "sendForm", extclass: "sendForm"},
+            {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
+        ]
+    }
+    eform.makeFromJSON(JSON.stringify(formJSON));
+    closeContextMenu();
+    eform.showForm();
+ })

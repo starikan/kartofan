@@ -3,12 +3,13 @@
 var StageMaps = function(container, opt){
     var parent = this;
 
-    if (!opt) { 
-        console.log("There is no options in StageMaps, check this.");
-        return;
+    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
+        window.opt = new Options();
+        opt = window.opt;
      }
 
     if (!container) { return }
+
     this.$container = $("#"+container);
 
     this.stageCurr;

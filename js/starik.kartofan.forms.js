@@ -1,8 +1,14 @@
 "use strict"
 
+var checkFormEnabled = function(){
+    if (typeof eform === "undefined" || !(eform instanceof EditableForm)){
+        window.eform = new EditableForm();
+     }
+}
+
 var EditableForm = function(id){
     
-    if (!id) { return; }
+    if (!id) {id = "eform"}
 
     this.$form;
     this.$formHeader;

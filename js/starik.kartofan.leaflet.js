@@ -5,9 +5,9 @@ var LeafletMap = function(mapId, opt){
     if (!mapId && !$("#"+mapId)){ return }
     this.mapId = mapId;
 
-    if (!opt) { 
-        console.log("There is no options in LeafletMap, check this.");
-        return;
+    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
+        window.opt = new Options();
+        opt = window.opt;
      }
 
     var parent = this;
@@ -229,9 +229,9 @@ var LeafletTiles = function(opt){
     this.startZoom;
     this.title;
 
-    if (!opt) { 
-        console.log("There is no options in LeafletTiles, check this.");
-        return;
+    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
+        window.opt = new Options();
+        opt = window.opt;
      }
 
     // TODO: сделать проверку что это строка и ссылка
