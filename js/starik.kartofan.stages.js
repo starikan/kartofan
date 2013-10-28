@@ -22,7 +22,7 @@ var StageMaps = function(container, opt){
      }
 
     this._getCurrentStage = function(){
-        this.stageCurr = opt.getOption("current", "stage");
+        this.stageCurr = opt.getOption("stage", "");
      }
 
     this._clearHTML = function(){

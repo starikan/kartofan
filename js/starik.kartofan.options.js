@@ -11,55 +11,71 @@ var Options = function(){
      }
 
     this.global = {
+        val: {
+            "mapDefaultCenterLatLng": [54.31727, 48.3946],
+            "mapDefaultZoom": 12,
+            "mapSyncMoving": true,
+            "mapSyncZooming": false,
 
-        "mapDefaultCenterLatLng": [54.31727, 48.3946],
-        "mapDefaultZoom": 12,
-        "mapSyncMoving": true,
-        "mapSyncZooming": false,
+            "viewControlsZoom": true,
+            "viewControlsZoomPosition": "topleft",
+            "viewControlsScale": true,
+            "viewControlsScalePosition": "bottomleft",
+            "viewControlsScaleMiles": false,
+            "viewControlsInfoName": true,
+            "viewControlsInfoNamePosition": "bottomright",        
+            "viewControlsInfoZoom": true,
+            "viewControlsInfoZoomPosition": "bottomright",
+            "viewControlsInfoCopyright": true,
+            "viewControlsInfoCopyrightPosition": "bottomright",
+            "viewControlsInfoCopyrightText": "Copyleft by Starik",
 
-        "viewControlsZoom": true,
-        "viewControlsZoomPosition": "topleft",
-        "viewControlsScale": true,
-        "viewControlsScalePosition": "bottomleft",
-        "viewControlsScaleMiles": false,
-        "viewControlsInfoName": true,
-        "viewControlsInfoNamePosition": "bottomright",        
-        "viewControlsInfoZoom": true,
-        "viewControlsInfoZoomPosition": "bottomright",
-        "viewControlsInfoCopyright": true,
-        "viewControlsInfoCopyrightPosition": "bottomright",
-        "viewControlsInfoCopyrightText": "Copyleft by Starik",
+            "hashChange": true,
+        },
 
-        "hashChange": true,
+        form: {
+
+        }
      };
 
     this.current = {
-        "mapCenterLatLng": [],
-        "mapZoom": undefined,
+        val: {
+            "mapCenterLatLng": [],
+            "mapZoom": undefined,
+        },
+        form: {
 
-        "stage": {
+        }
+     }
+
+    this.stage = {
+        val: {
             "stageName": "current",
             "stageMapsGrid": [
                 [0, 0, 100, 50],
                 [0, 50, 100, 50],
             ],
             "stageMapsNames": ["cloudmate", "cloudmate"],
-            "stageMapsZooms": [12, 8],            
+            "stageMapsZooms": [12, 8],              
         },
+        form: {
 
+        }
      }
 
     this.maps = {
-        "cloudmate": {
-            tags: ["0. Современные онлайн карты"],
-            src: "Internet",
-            server: "img",
-            title: 'Cloudmate',
-            tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-            maxZoom: 15,
-            minZoom: 0,
-            startZoom: 5,        
-        },
+        val: {
+            "cloudmate": {
+                tags: ["0. Современные онлайн карты"],
+                src: "Internet",
+                server: "img",
+                title: 'Cloudmate',
+                tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+                maxZoom: 15,
+                minZoom: 0,
+                startZoom: 5,        
+            },
+        }
      };
 
     // TODO: написать
@@ -74,12 +90,13 @@ var Options = function(){
      }     
 
     this.setOption = function(collection, option, value){
-        this[collection][option] = value;
+        this[collection].val[option] = value;
         // TODO: Update in localstorage and files in dropbox
      }
 
     this.getOption = function(collection, option){
-        return this[collection][option];
+        if (!option) {return this[collection].val}
+        return this[collection].val[option];
      }
 
     this.setHash = function(){
