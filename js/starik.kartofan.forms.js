@@ -48,10 +48,13 @@ var EditableForm = function(id){
         this.$formHeader.append(header);
      }
 
-    this.addInput = function(val, placeholder, tabindex){
+    this.addInput = function(val, placeholder, tabindex, description){
 
         if (!val){ val=undefined }
         if (!tabindex && tabindex!==0){ tabindex=undefined }
+        description = description ? description : "";
+
+        $("<label>"+description+"</label>").appendTo(this.$formContent);
 
         $("<input/>").appendTo(this.$formContent).attr({
             "type": "text",
@@ -61,10 +64,12 @@ var EditableForm = function(id){
         });
      }
 
-    this.addSelect = function(val, placeholder, tabindex){
+    this.addSelect = function(val, placeholder, tabindex, description){
 
         if (!val || !val.length){ val=[] }
         if (!tabindex && tabindex!==0){ tabindex=undefined }
+
+        $("<label>"+description+"</label>").appendTo(this.$formContent);
 
         var $select = $("<select/>").appendTo(this.$formContent).attr({
             "tabindex": tabindex,    
@@ -112,11 +117,11 @@ var EditableForm = function(id){
         var tabindex = 0;
         for (var i=0, v=json.rows; i<json.rows.length; i++){
             if (v[i].type === "input"){
-                this.addInput(v[i].val, v[i].placeholder, tabindex);
+                this.addInput(v[i].val, v[i].placeholder, tabindex, v[i].description);
                 tabindex++;
             }
             else if (v[i].type === "select"){
-                this.addSelect(v[i].val, v[i].placeholder, tabindex);
+                this.addSelect(v[i].val, v[i].placeholder, tabindex, v[i].description);
                 tabindex++;
             }
         }

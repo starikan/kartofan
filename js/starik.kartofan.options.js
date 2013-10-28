@@ -31,7 +31,6 @@ var Options = function(){
         "viewControlsInfoCopyrightText": "Copyleft by Starik",
 
         "hashChange": true,
-
      };
 
     this.current = {
@@ -79,40 +78,8 @@ var Options = function(){
         // TODO: Update in localstorage and files in dropbox
      }
 
-    this.setOptionLocalstorage = function(collection, option, value){
-
-     }
-
-    this.setOptionExternalstorage = function(collection, option, value){
-
-     }
-
-    this.setAllOptionsLocalstorage = function(type){
-        // type - replase all, partial, only new
-     }
-
-    this.setAllOptionsExternalstorage = function(type){
-        // type - replase all, partial, only new
-     }
-
     this.getOption = function(collection, option){
         return this[collection][option];
-     }
-
-    this.getOptionLocalstorage = function(collection, option){
-
-     }
-
-    this.getOptionExternalstorage = function(collection, option){
-
-     }
-
-    this.getAllOptionsLocalstorage = function(type){
-        // type - replase all, partial, only new
-     }
-
-    this.getAllOptionsExternalstorage = function(type){
-        // type - replase all, partial, only new
      }
 
     this.setHash = function(){
@@ -142,6 +109,11 @@ var Options = function(){
 
     this.openEditForm = function(){
 
+     }
+
+    this.createJsonToForm = function(obj, header, submit){
+        header = header ? header : "Header";
+        submit = submit && typeof submit === "object" ? submit : [];
      }
 
     this.initOptions();

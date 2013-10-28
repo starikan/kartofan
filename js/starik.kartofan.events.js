@@ -71,12 +71,12 @@ var Events = function(opt){
     this.formJSON = {
         header: "Заголовок",
         rows: [
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "select", val: ["123", "321"], placeholder: "text"},
-            {type: "select", val: ["123", "321"], placeholder: "text"},
+            {type: "input", val: "", placeholder: "text", description: "description"},
+            {type: "input", val: "", placeholder: "text", description: "description"},
+            {type: "input", val: "", placeholder: "text", description: "description"},
+            {type: "input", val: "", placeholder: "text", description: "description"},
+            {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
+            {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
         ],
         submit: [
             {val: "send", id: "sendForm", extclass: "sendForm"},
@@ -86,6 +86,7 @@ var Events = function(opt){
 
     this.contextMenuGlobalOptions = function(){
         $("#optionsGlobal").bind("click", function(){
+            eform.clearForm();
             eform.makeFromJSON(JSON.stringify(parent.formJSON));
             parent.closeContextMenu();
             eform.showForm();
