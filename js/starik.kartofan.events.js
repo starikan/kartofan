@@ -1,96 +1,88 @@
 "use strict"
 
-var openContextMenu = function(e){
-    // http://www.quirksmode.org/dom/events/contextmenu.html
-    var $mainmenu = $("#mainmenu");
-    if (!$mainmenu.is(":visible")){
-        $mainmenu.removeClass("hide");
-    }
-    return false;        
- }
 
-var closeContextMenu = function(e){
-    var $mainmenu = $("#mainmenu");
-    if ($mainmenu.is(":visible")){
-        $mainmenu.addClass("hide");
-    }
-    return false; 
- }
+var Events = function(opt){
 
-// TODO: it`s bad realization. Need more independance from class name
-var closeAllForms = function(){
-    $(".form-flat").addClass("hide");
- }
+    var parent = this;
 
-var initMainMenu = function(){
-    $('#cssmenu > ul > li ul').each(function(index, e){
-      var count = $(e).find('li').length;
-      var content = '<span class="cnt">' + count + '</span>';
-      $(e).closest('li').children('a').append(content);
-    });
-    $('#cssmenu ul ul li:odd').addClass('odd');
-    $('#cssmenu ul ul li:even').addClass('even');
-    $('#cssmenu > ul > li > a').click(function() {
-      $('#cssmenu li').removeClass('active');
-      $(this).closest('li').addClass('active'); 
-      var checkElement = $(this).next();
-      if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-        $(this).closest('li').removeClass('active');
-        checkElement.slideUp('normal');
-      }
-      if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-        $('#cssmenu ul ul:visible').slideUp('normal');
-        checkElement.slideDown('normal');
-      }
-      if($(this).closest('li').find('ul').children().length == 0) {
-        return true;
-      } else {
-        return false;   
-      }     
-    });
- }
+    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
+        window.opt = new Options();
+        opt = window.opt;
+     }
 
-var eventResizeWindow = function(e){
-    for (var i=0; i<LeafletMap.prototype.instances.length; i++){
-        LeafletMap.prototype.instances[i].refreshMapAfterResize();
-    }
- }
+    this.$mainmenu = $(opt.html.containerMainMenu);
+    this.$allMapsContainer = $(opt.html.containerAllMaps);
 
-window.onresize = eventResizeWindow;
-document.oncontextmenu = openContextMenu;
-// TODO: touch event to context menu
-$("#container").bind("click", function(){
-    closeContextMenu();
-    closeAllForms();
- });
+    this.initMainEvents = function(){
+        // Disable context menu
+        // http://www.quirksmode.org/dom/events/contextmenu.html
+        document.oncontextmenu = function(){ return false; };
 
-initMainMenu();
+        this.eventResizeWindow();
+        this.eventContextMenu();
+        this.eventClickOutMenu();
+     }
 
 
+    // MAIN CONTEXT MENU AND FORMS    
+    this.openContextMenu = function(e){
+        if (!parent.$mainmenu.is(":visible")){ parent.$mainmenu.removeClass("hide") }
+     }    
+
+    this.closeContextMenu = function(e){
+        if (parent.$mainmenu.is(":visible")){ parent.$mainmenu.addClass("hide") }
+     }
+
+    // TODO: it`s bad realization. Need more independance from class name
+    this.closeAllForms = function(){
+        $(".form-flat").addClass("hide");
+     }
+
+    this.eventContextMenu = function(e){
+        window.oncontextmenu = this.openContextMenu;
+     }
+
+    // TODO: touch event to context menu
+    this.eventClickOutMenu = function(e){
+        this.$allMapsContainer.bind("click", function(){
+            parent.closeContextMenu();
+            parent.closeAllForms();
+        });
+     }
 
 
-// FORMS
+    // WINDOW RESIZE
+    this.eventResizeWindow = function(e){
+        window.onresize = function(e){
+            for (var i=0; i<LeafletMap.prototype.instances.length; i++){
+                LeafletMap.prototype.instances[i].refreshMapAfterResize();
+            }            
+        }
+     }
 
-// Global options form
-$("#optionsGlobal").bind("click", function(){
-    checkFormEnabled();
+    this.initMainEvents();
+}
 
-    var formJSON = {
-        header: "Заголовок",
-        rows: [
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "input", val: "", placeholder: "text"},
-            {type: "select", val: ["123", "321"], placeholder: "text"},
-            {type: "select", val: ["123", "321"], placeholder: "text"},
-        ],
-        submit: [
-            {val: "send", id: "sendForm", extclass: "sendForm"},
-            {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
-        ]
-    }
-    eform.makeFromJSON(JSON.stringify(formJSON));
-    closeContextMenu();
-    eform.showForm();
- })
+// // Global options form
+// $("#optionsGlobal").bind("click", function(){
+//     checkFormEnabled();
+
+//     var formJSON = {
+//         header: "Заголовок",
+//         rows: [
+//             {type: "input", val: "", placeholder: "text"},
+//             {type: "input", val: "", placeholder: "text"},
+//             {type: "input", val: "", placeholder: "text"},
+//             {type: "input", val: "", placeholder: "text"},
+//             {type: "select", val: ["123", "321"], placeholder: "text"},
+//             {type: "select", val: ["123", "321"], placeholder: "text"},
+//         ],
+//         submit: [
+//             {val: "send", id: "sendForm", extclass: "sendForm"},
+//             {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
+//         ]
+//     }
+//     eform.makeFromJSON(JSON.stringify(formJSON));
+//     closeContextMenu();
+//     eform.showForm();
+//  })

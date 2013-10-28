@@ -4,6 +4,12 @@ var Options = function(){
 
     var parent = this;
 
+    // TODO: create function to set this
+    this.html = {
+        containerMainMenu: "#mainmenu",
+        containerAllMaps: "#container",
+     }
+
     this.global = {
 
         "mapDefaultCenterLatLng": [54.31727, 48.3946],

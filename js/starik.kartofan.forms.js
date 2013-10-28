@@ -1,5 +1,6 @@
 "use strict"
 
+// TODO: Remove this function
 var checkFormEnabled = function(){
     if (typeof eform === "undefined" || !(eform instanceof EditableForm)){
         window.eform = new EditableForm();
