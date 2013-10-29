@@ -31,6 +31,9 @@ var Options = function(){
         "viewControlsInfoCopyrightText": "Copyleft by Starik",
 
         "dbPointsStorySave": 1000,
+        "dbSync": true,
+        "dbExtServerMain": "http://localhost:5984/",
+        "dbExtServer": ["http://localhost:5984/"],
      };
 
     this.current = {
@@ -99,7 +102,11 @@ var Options = function(){
      }
 
     this.initReplicate = function(name){
-        this.db[name].replicate.to('http://localhost:5984/'+name, {continuous: true});
+        if (parent.global.dbSync){
+            for (var i in parent.global.dbExtServer){
+                this.db[name].replicate.to(parent.global.dbExtServer[i] + name, {continuous: true});
+            }
+        }
      }
 
     this.initBase = function(name){
@@ -109,7 +116,7 @@ var Options = function(){
                     parent[name][i] = doc.val;
                 }
                 else {
-                    parent.setOption(name, i, val);
+                    parent.setOption(name, v, parent[name][v]);
                 }
             })
         })
