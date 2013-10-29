@@ -29,24 +29,30 @@ var Options = function(){
         "viewControlsInfoCopyright": true,
         "viewControlsInfoCopyrightPosition": "bottomright",
         "viewControlsInfoCopyrightText": "Copyleft by Starik",
+
+        "dbPointsStorySave": 1000,
      };
 
     this.current = {
         "mapCenterLatLng": [],
         "mapZoom": undefined,
+        "stage": {
+            "stageName": "current",
+            "stageMapsGrid": [
+                [0, 0, 50, 50],
+                [0, 50, 50, 50],
+                [50, 0, 50, 50],
+                [50, 50, 50, 50],
+                [70, 70, 30, 30],
+            ],
+            "stageMapsNames": ["cloudmate", "cloudmate", "cloudmate", "cloudmate", "cloudmate"],
+            "stageMapsZooms": [12, 8, 10, 9, 2],              
+        }
      }
 
-    this.stage = {
-        "stageName": "current",
-        "stageMapsGrid": [
-            [0, 0, 50, 50],
-            [0, 50, 50, 50],
-            [50, 0, 50, 50],
-            [50, 50, 50, 50],
-        ],
-        "stageMapsNames": ["cloudmate", "cloudmate", "cloudmate", "cloudmate"],
-        "stageMapsZooms": [12, 8, 10, 9],              
-     }
+    this.stages = {}
+
+    this.places = {}
 
     this.maps = {
         "cloudmate": {
@@ -61,6 +67,54 @@ var Options = function(){
         },
      };
 
+    this.db = {
+        html: new Pouch("html", {}, function(){
+            parent.initBase("html");
+            parent.initReplicate("html");
+        }),
+        global: new Pouch("global", {}, function(){
+            parent.initBase("global");
+            parent.initReplicate("global");
+
+        }),
+        stages: new Pouch("stages", {}, function(){
+            parent.initBase("stages");
+            parent.initReplicate("stages");
+
+        }),
+        places: new Pouch("places", {}, function(){
+            parent.initBase("places");
+            parent.initReplicate("places");
+
+        }),
+        maps: new Pouch("maps", {}, function(){
+            parent.initBase("maps");
+            parent.initReplicate("maps");
+
+        }),
+        current: new Pouch("current", {}, function(){
+            parent.initBase("current");
+            parent.initReplicate("current");
+        }),
+     }
+
+    this.initReplicate = function(name){
+        this.db[name].replicate.to('http://localhost:5984/'+name, {continuous: true});
+     }
+
+    this.initBase = function(name){
+        $.each(parent[name], function(i, v){
+            parent.db[name].get(i, function(err, doc){
+                if (doc){
+                    parent[name][i] = doc.val;
+                }
+                else {
+                    parent.setOption(name, i, val);
+                }
+            })
+        })
+     }
+
     // TODO: написать
     this.initOptions = function(){
         this.getHash();
@@ -73,8 +127,23 @@ var Options = function(){
      }     
 
     this.setOption = function(collection, option, value){
+        // JS object
         this[collection][option] = value;
-        // TODO: Update in localstorage and files in dropbox
+
+        // PouchDB
+        this.db[collection].get(option, function(err, doc){
+            // console.log(err, doc)
+            if (doc) {
+                doc.val = value;
+                parent.db[collection].put(doc, function(err, response){});
+            }
+            else {
+                parent.db[collection].put({
+                    "_id": option,
+                    "val": value,
+                }, function(err, response){}); 
+            }
+        })
      }
 
     this.getOption = function(collection, option){
