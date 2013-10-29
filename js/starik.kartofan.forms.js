@@ -87,7 +87,7 @@ var EditableForm = function(id){
 
      }
 
-    this.addSubmit = function(val, id, extclass, tabindex){
+    this.addSubmit = function(val, id, extclass, tabindex, callback){
         if (!val){ val=undefined }
         if (!id){ id=undefined }
         if (!extclass){ extclass=undefined }
@@ -98,36 +98,52 @@ var EditableForm = function(id){
             "value": val,
             "id": id,
             "tabindex": tabindex,
-        }).addClass("button").addClass(extclass);        
+        }).addClass("button").addClass(extclass)
+        // TODO: add touch
+        .bind("click", callback);        
      }
 
     this.makeFromJSON = function(str){
         try {
-            var json = JSON.parse(str);
+            var json_inp = JSON.parse(str);
         } catch (e) {
             return false;
         }
 
-        if (!json.header){json.header = ""}
-        if (!json.rows || !json.rows.length){json.rows = []}
-        if (!json.submit){json.header.val = ""}
+        console.log(json_inp, json_inp.inputs)
 
-        this.addHeader(json.header);
+        if (!json_inp.header){json_inp.header = ""}
+        // TODO: check json_inp.inputs of array
+        // if (typeof json_inp.inputs === "undefined"){json_inp.inputs = []}
+
+
+        this.addHeader(json_inp.header);
 
         var tabindex = 0;
-        for (var i=0, v=json.rows; i<json.rows.length; i++){
+        for (var i=0, v=json_inp.inputs; i<json_inp.inputs.length; i++){
+
             if (v[i].type === "input"){
                 this.addInput(v[i].val, v[i].placeholder, tabindex, v[i].description);
-                tabindex++;
             }
+
             else if (v[i].type === "select"){
                 this.addSelect(v[i].val, v[i].placeholder, tabindex, v[i].description);
-                tabindex++;
             }
-        }
-        for (var i=0, v=json.submit; i<json.submit.length; i++){
-            this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex);
+
+            else if (v[i].type === "send"){
+                this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex, function(){
+                    console.log("send")
+                });
+            }
+
+            else if (v[i].type === "cancel"){
+                this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex, function(){
+                    console.log("cancel")
+                });
+            }
+
             tabindex++;
+
         }
      }
 

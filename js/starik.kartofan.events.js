@@ -21,23 +21,17 @@ var Events = function(opt){
     this.initMainEvents = function(){
         // Disable context menu
         // http://www.quirksmode.org/dom/events/contextmenu.html
-        document.oncontextmenu = function(){ return false; };
-
-        this.eventResizeWindow();
-        this.eventContextMenu();
-        this.eventClickOutMenu();
-
-        this.contextMenuGlobalOptions();
+        document.oncontextmenu = function(){ return false };
      }
 
     // WINDOW RESIZE
     this.eventResizeWindow = function(e){
-        window.onresize = function(e){
-            for (var i=0; i<LeafletMap.prototype.instances.length; i++){
-                LeafletMap.prototype.instances[i].refreshMapAfterResize();
-            }            
-        }
+        for (var i=0; i<LeafletMap.prototype.instances.length; i++){
+            LeafletMap.prototype.instances[i].refreshMapAfterResize();
+        }            
      }
+    
+    window.onresize = this.eventResizeWindow;
 
 
     // MAIN CONTEXT MENU AND FORMS    
@@ -49,49 +43,46 @@ var Events = function(opt){
         if (parent.$mainmenu.is(":visible")){ parent.$mainmenu.addClass("hide") }
      }
 
-    // TODO: it`s bad realization. Need more independance from class name
+// TODO: it`s bad realization. Need more independance from class name
     this.closeAllForms = function(){
         $(".form-flat").addClass("hide");
      }
 
-    this.eventContextMenu = function(e){
-        window.oncontextmenu = this.openContextMenu;
+    window.oncontextmenu = this.openContextMenu;
+
+    this.eventClickOutMenu = function(e){
+        parent.closeContextMenu();
+        parent.closeAllForms();
      }
 
-    // TODO: touch event to context menu
-    this.eventClickOutMenu = function(e){
-        this.$allMapsContainer.bind("click", function(){
-            parent.closeContextMenu();
-            parent.closeAllForms();
-        });
-     }
+// TODO: touch event to context menu
+    this.$allMapsContainer.bind("click", this.eventClickOutMenu);
 
 
     // FORMS IN MAINMENU
     this.formJSON = {
         header: "Заголовок",
-        rows: [
+        inputs: [
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
             {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
+            {type: "send", val: "send", id: "sendForm", extclass: "sendForm"},
+            {type: "cancel", val: "cancel", id: "cancelForm", extclass: "cancelForm"},            
         ],
-        submit: [
-            {val: "send", id: "sendForm", extclass: "sendForm"},
-            {val: "cancel", id: "cancelForm", extclass: "cancelForm"},
-        ]
      }    
 
     this.contextMenuGlobalOptions = function(){
-        $("#optionsGlobal").bind("click", function(){
-            eform.clearForm();
-            eform.makeFromJSON(JSON.stringify(parent.formJSON));
-            parent.closeContextMenu();
-            eform.showForm();
-         })        
+        parent.closeContextMenu();
+
+        eform.clearForm();
+        eform.makeFromJSON(JSON.stringify(parent.formJSON));
+        eform.showForm();
      }
+// TODO: touch event
+    $("#optionsGlobal").bind("click", this.contextMenuGlobalOptions);
 
     this.initMainEvents();
 }

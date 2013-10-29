@@ -11,96 +11,54 @@ var Options = function(){
      }
 
     this.global = {
-        val: {
-            "mapDefaultCenterLatLng": "54.31727, 48.3946",
-            "mapDefaultZoom": 12,
-            "mapSyncMoving": true,
-            "mapSyncZooming": false,
+        "mapDefaultCenterLatLng": "54.31727, 48.3946",
+        "mapDefaultZoom": 12,
+        "mapSyncMoving": true,
+        "mapSyncZooming": false,
+        "hashChange": true,
 
-            "viewControlsZoom": true,
-            "viewControlsZoomPosition": "topleft",
-            "viewControlsScale": true,
-            "viewControlsScalePosition": "bottomleft",
-            "viewControlsScaleMiles": false,
-            "viewControlsInfoName": true,
-            "viewControlsInfoNamePosition": "bottomright",        
-            "viewControlsInfoZoom": true,
-            "viewControlsInfoZoomPosition": "bottomright",
-            "viewControlsInfoCopyright": true,
-            "viewControlsInfoCopyrightPosition": "bottomright",
-            "viewControlsInfoCopyrightText": "Copyleft by Starik",
-
-            "hashChange": true,
-        },
-
-        form: {
-            "mapDefaultCenterLatLng": {
-                default: "54.31727, 48.3946",
-                type: "input",
-                description: "Start coordinate",
-                // case: ,
-                check: /d+,d+/,
-                placeholder: "",
-            },
-            "mapDefaultZoom": {
-                default: 12,
-                type: "input",
-                description: "Start zoom",
-                // case: ,
-                check: /\d+/,
-                placeholder: "",
-            },
-            "mapSyncMoving": {
-                default: 1,
-                type: "checkbox",
-                description: "mapSyncMoving",
-            },
-            "mapSyncZooming": {
-                default: false,
-                type: "checkbox",
-                description: "mapSyncZooming",
-            },
-        }
+        "viewControlsZoom": true,
+        "viewControlsZoomPosition": "topleft",
+        "viewControlsScale": true,
+        "viewControlsScalePosition": "bottomleft",
+        "viewControlsScaleMiles": false,
+        "viewControlsInfoName": true,
+        "viewControlsInfoNamePosition": "bottomright",        
+        "viewControlsInfoZoom": true,
+        "viewControlsInfoZoomPosition": "bottomright",
+        "viewControlsInfoCopyright": true,
+        "viewControlsInfoCopyrightPosition": "bottomright",
+        "viewControlsInfoCopyrightText": "Copyleft by Starik",
      };
 
     this.current = {
-        val: {
-            "mapCenterLatLng": [],
-            "mapZoom": undefined,
-        },
-        form: {
-
-        }
+        "mapCenterLatLng": [],
+        "mapZoom": undefined,
      }
 
     this.stage = {
-        val: {
-            "stageName": "current",
-            "stageMapsGrid": [
-                [0, 0, 100, 50],
-                [0, 50, 100, 50],
-            ],
-            "stageMapsNames": ["cloudmate", "cloudmate"],
-            "stageMapsZooms": [12, 8],              
-        },
-        form: {
-
-        }
+        "stageName": "current",
+        "stageMapsGrid": [
+            [0, 0, 50, 50],
+            [0, 50, 50, 50],
+            [50, 0, 50, 50],
+            [50, 50, 50, 50],
+        ],
+        "stageMapsNames": ["cloudmate", "cloudmate", "cloudmate", "cloudmate"],
+        "stageMapsZooms": [12, 8, 10, 9],              
      }
 
     this.maps = {
-        val: {
-            "cloudmate": {
-                tags: ["0. Современные онлайн карты"],
-                src: "Internet",
-                server: "img",
-                title: 'Cloudmate',
-                tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-                maxZoom: 15,
-                minZoom: 0,
-                startZoom: 5,        
-            },
-        }
+        "cloudmate": {
+            tags: ["0. Современные онлайн карты"],
+            src: "Internet",
+            server: "img",
+            title: 'Cloudmate',
+            tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+            maxZoom: 15,
+            minZoom: 0,
+            startZoom: 5,        
+        },
      };
 
     // TODO: написать
@@ -115,13 +73,13 @@ var Options = function(){
      }     
 
     this.setOption = function(collection, option, value){
-        this[collection].val[option] = value;
+        this[collection][option] = value;
         // TODO: Update in localstorage and files in dropbox
      }
 
     this.getOption = function(collection, option){
-        if (!option) {return this[collection].val}
-        return this[collection].val[option];
+        if (!option) {return this[collection]}
+        return this[collection][option];
      }
 
     this.setHash = function(){
@@ -151,11 +109,6 @@ var Options = function(){
 
     this.openEditForm = function(){
 
-     }
-
-    this.createJsonToForm = function(obj, header, submit){
-        header = header ? header : "Header";
-        submit = submit && typeof submit === "object" ? submit : [];
      }
 
     this.initOptions();
