@@ -10,6 +10,8 @@ var StageMaps = function(container, opt){
 
     if (!container) { return }
 
+    opt.html.containerAllMaps = "#"+container;
+
     this.$container = $("#"+container);
 
     this.stageCurr;

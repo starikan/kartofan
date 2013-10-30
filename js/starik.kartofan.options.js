@@ -6,8 +6,8 @@ var Options = function(){
 
     // TODO: create function to set this
     this.html = {
-        containerMainMenu: "#mainmenu",
-        containerAllMaps: "#container",
+        "containerMainMenu": "#mainmenu",
+        "containerAllMaps": "#container",
      }
 
     this.global = {

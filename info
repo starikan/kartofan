@@ -14,8 +14,6 @@ https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 
 
 TODO:
-- Options почему-то инициализируется 2 раза (синглтон нужен)
-- StageMaps при инициализации ставить контейнер в котором инициализировали в opt.html.allmapscontainer
 - BUG: tabindex in forms crashed when tab on first input
 - сделать Events и Options синглтонами
 - если карта меньше определенного размера то убирать навесные элементы (навесить на функцию ресайза)
