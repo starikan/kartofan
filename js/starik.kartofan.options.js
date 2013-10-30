@@ -78,22 +78,18 @@ var Options = function(){
         global: new Pouch("global", {}, function(){
             parent.initBase("global");
             parent.initReplicate("global");
-
         }),
         stages: new Pouch("stages", {}, function(){
             parent.initBase("stages");
             parent.initReplicate("stages");
-
         }),
         places: new Pouch("places", {}, function(){
             parent.initBase("places");
             parent.initReplicate("places");
-
         }),
         maps: new Pouch("maps", {}, function(){
             parent.initBase("maps");
             parent.initReplicate("maps");
-
         }),
         current: new Pouch("current", {}, function(){
             parent.initBase("current");
@@ -116,7 +112,7 @@ var Options = function(){
                     parent[name][i] = doc.val;
                 }
                 else {
-                    parent.setOption(name, v, parent[name][v]);
+                    parent.setOption(name, i, v);
                 }
             })
         })
@@ -139,7 +135,6 @@ var Options = function(){
 
         // PouchDB
         this.db[collection].get(option, function(err, doc){
-            // console.log(err, doc)
             if (doc) {
                 doc.val = value;
                 parent.db[collection].put(doc, function(err, response){});
