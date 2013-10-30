@@ -31,7 +31,8 @@ var Options = function(){
         "viewControlsInfoCopyrightText": "Copyleft by Starik",
 
         "dbPointsStorySave": 1000,
-        "dbSync": true,
+        "dbSyncIn": true,
+        "dbSyncOut": true,
         "dbExtServerMain": "http://localhost:5984/",
         "dbExtServer": ["http://localhost:5984/"],
      };
@@ -70,42 +71,22 @@ var Options = function(){
         },
      };
 
-    this.db = {
-        html: new Pouch("html", {}, function(){
-            parent.initBase("html");
-            parent.initReplicate("html");
-        }),
-        global: new Pouch("global", {}, function(){
-            parent.initBase("global");
-            parent.initReplicate("global");
-        }),
-        stages: new Pouch("stages", {}, function(){
-            parent.initBase("stages");
-            parent.initReplicate("stages");
-        }),
-        places: new Pouch("places", {}, function(){
-            parent.initBase("places");
-            parent.initReplicate("places");
-        }),
-        maps: new Pouch("maps", {}, function(){
-            parent.initBase("maps");
-            parent.initReplicate("maps");
-        }),
-        current: new Pouch("current", {}, function(){
-            parent.initBase("current");
-            parent.initReplicate("current");
-        }),
-     }
-
-    this.initReplicate = function(name){
-        if (parent.global.dbSync){
-            for (var i in parent.global.dbExtServer){
-                this.db[name].replicate.to(parent.global.dbExtServer[i] + name, {continuous: true});
-            }
-        }
-     }
-
     this.initBase = function(name){
+        return new Pouch(name, {}, function(){
+            if (parent.global.dbSyncIn){
+                parent.db[name].replicate.from(parent.global.dbExtServerMain + name, {}, function(){
+                    parent.configureBase(name);
+                });                
+            }
+            else {
+                parent.configureBase(name);
+            }
+        })
+     };
+
+    this.configureBase = function(name){
+
+        // Base init
         $.each(parent[name], function(i, v){
             parent.db[name].get(i, function(err, doc){
                 if (doc){
@@ -116,7 +97,25 @@ var Options = function(){
                 }
             })
         })
+
+        // Replicate
+        if (parent.global.dbSyncOut){
+            for (var i in parent.global.dbExtServer){
+                parent.db[name].replicate.to(parent.global.dbExtServerMain + name, {continuous: true});
+            }
+        }        
+     };
+
+    this.db = {
+        html: parent.initBase("html"),
+        global: parent.initBase("global"),
+        stages: parent.initBase("stages"),
+        places: parent.initBase("places"),
+        maps: parent.initBase("maps"),
+        current: parent.initBase("current"),
      }
+
+
 
     // TODO: написать
     this.initOptions = function(){
