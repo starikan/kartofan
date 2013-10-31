@@ -178,3 +178,47 @@ var EditableForm = function(id){
 
     this._initForm(id);
  }
+
+var CSSMenu = function(id, jsonstr, show){
+    if (!id) {id = "nonamemenu"}
+    if (!show) {show = false}
+
+    this.json;
+    try {
+        this.json = JSON.parse(jsonstr);
+     }
+    catch (e){
+        console.log(e);
+        return false;
+     }
+
+    this._initMenu = function(){
+
+     }
+
+    this.showMenu = function(){
+
+     }
+
+    this.hideMenu = function(){
+
+     }
+
+    this.addHeader = function(text, classList){
+
+     }
+
+    this.addParagraf = function(text, classList, active){
+
+     }
+
+    this.addLine = function(text, classList, callback){
+
+     }
+
+    this.makeFromJSON = function(){
+
+     }
+
+    this._initMenu();
+}

@@ -19,6 +19,8 @@ var Options = function(){
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
+        "mapExternalFeeds": ["json/maps.json"],
+
         "hashChange": true,
 
         "viewControlsZoom": true,
