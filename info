@@ -19,6 +19,5 @@ https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 
 TODO:
 - протестировать новую this.setOption
-- BUG: tabindex in forms crashed when tab on first input
 - сделать Events и Options синглтонами
 - если карта меньше определенного размера то убирать навесные элементы (навесить на функцию ресайза)

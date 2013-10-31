@@ -66,6 +66,10 @@ var EditableForm = function(id){
 
     this.addSelect = function(val, placeholder, tabindex, description){
 
+     }
+
+    this.addSelect2 = function(val, placeholder, tabindex, description){
+
         if (!val || !val.length){ val=[] }
         if (!tabindex && tabindex!==0){ tabindex=undefined }
 
@@ -87,7 +91,15 @@ var EditableForm = function(id){
 
      }
 
-    this.addSubmit = function(val, id, extclass, tabindex, callback){
+    this.addRadio = function(val, placeholder, tabindex, description){
+
+     }
+
+    this.addCheckbox = function(val, placeholder, tabindex, description){
+
+     }
+
+    this.addButton = function(val, id, extclass, tabindex, callback){
         if (!val){ val=undefined }
         if (!id){ id=undefined }
         if (!extclass){ extclass=undefined }
@@ -104,46 +116,46 @@ var EditableForm = function(id){
      }
 
     this.makeFromJSON = function(str){
+
         try {
             var json_inp = JSON.parse(str);
         } catch (e) {
             return false;
         }
 
-        console.log(json_inp, json_inp.inputs)
+        // console.log(json_inp, json_inp.inputs)
 
         if (!json_inp.header){json_inp.header = ""}
-        // TODO: check json_inp.inputs of array
+        // TODO: check json_inp.inputs is array
         // if (typeof json_inp.inputs === "undefined"){json_inp.inputs = []}
-
 
         this.addHeader(json_inp.header);
 
-        var tabindex = 0;
         for (var i=0, v=json_inp.inputs; i<json_inp.inputs.length; i++){
 
             if (v[i].type === "input"){
-                this.addInput(v[i].val, v[i].placeholder, tabindex, v[i].description);
+                this.addInput(v[i].val, v[i].placeholder, i+1, v[i].description);
             }
 
             else if (v[i].type === "select"){
-                this.addSelect(v[i].val, v[i].placeholder, tabindex, v[i].description);
+                this.addSelect(v[i].val, v[i].placeholder, i+1, v[i].description);
+            }
+
+            else if (v[i].type === "select2"){
+                this.addSelect2(v[i].val, v[i].placeholder, i+1, v[i].description);
             }
 
             else if (v[i].type === "send"){
-                this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex, function(){
+                this.addButton(v[i].val, v[i].id, v[i].extclass, i+1, function(){
                     console.log("send")
                 });
             }
 
             else if (v[i].type === "cancel"){
-                this.addSubmit(v[i].val, v[i].id, v[i].extclass, tabindex, function(){
+                this.addButton(v[i].val, v[i].id, v[i].extclass, i+1, function(){
                     console.log("cancel")
                 });
             }
-
-            tabindex++;
-
         }
      }
 

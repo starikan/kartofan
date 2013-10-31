@@ -15,7 +15,7 @@ var Options = function(){
      }
 
     this.global = {
-        "mapDefaultCenterLatLng": "54.31727, 48.3946",
+        "mapDefaultCenterLatLng": "54.31081536133442,48.362503051757805",
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
@@ -172,6 +172,7 @@ var Options = function(){
         })
      }
 
+    // TODO: сделать получение из базы,  а если базы нет то из локальной переменной
     this.getOption = function(collection, option){
         if (!option) {return this[collection]}
         return this[collection][option];
@@ -201,10 +202,6 @@ var Options = function(){
         catch (e) {}
 
      }    
-
-    this.openEditForm = function(){
-
-     }
 
     this.initOptions();
 

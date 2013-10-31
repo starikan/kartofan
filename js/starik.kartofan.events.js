@@ -73,7 +73,7 @@ var Events = function(){
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "input", val: "", placeholder: "text", description: "description"},
             {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
-            {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
+            {type: "select2", val: ["123", "321"], placeholder: "text", description: "description"},
             {type: "send", val: "send", id: "sendForm", extclass: "sendForm"},
             {type: "cancel", val: "cancel", id: "cancelForm", extclass: "cancelForm"},            
         ],
@@ -100,7 +100,12 @@ var Events = function(){
      }
 
     this.setActiveMapForm = function(){
-        parent.setActiveMap("cloudmate");
+        var maps = opt.getOption("maps");
+        var eformJSON = {"header": ""}
+        $.each(maps, function(i,v){
+            console.log(i);
+        })
+        // parent.setActiveMap("cloudmate");
      }
 
     // TODO: touch event

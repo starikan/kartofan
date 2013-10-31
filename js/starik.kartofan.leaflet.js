@@ -31,7 +31,6 @@ var LeafletMap = function(mapId){
 
     this.onClickMap = function(){
         opt.setOption("current", "activeMap", mapId);
-        console.log(opt.getOption("current", "activeMap"));
      }
 
     this.onMapMoveEnd = function(e){
