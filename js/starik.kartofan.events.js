@@ -1,7 +1,7 @@
 "use strict"
 
 
-var Events = function(opt){
+var Events = function(){
 
     var parent = this;
 
@@ -94,13 +94,15 @@ var Events = function(opt){
 
     // ********** SET MAP **********
     this.setActiveMap = function(mapName){
-
         mapName = mapName ? mapName : "";
-
         var mapNum = opt.getOption("current", "activeMap");
-        // window[mapNum]
-    }
+        window[mapNum].setMapTilesLayer(new LeafletTiles(mapName));
+     }
+
+    this.setActiveMapForm = function(){
+        parent.setActiveMap("cloudmate");
+     }
 
     // TODO: touch event
-    $("#setMap").bind("click", this.setActiveMap);
+    $("#setMap").bind("click", this.setActiveMapForm);
 }

@@ -1,6 +1,6 @@
 "use strict"
 
-var StageMaps = function(container, opt){
+var StageMaps = function(container){
     var parent = this;
 
     if (typeof opt === "undefined" || !(opt instanceof Options)) { 
@@ -39,10 +39,8 @@ var StageMaps = function(container, opt){
         var grid = this.stageCurr.stageMapsGrid;
         for (var i=0; i<grid.length; i++){
             window["layer"+i] = new LeafletTiles(names[i]);
-            // window["layer"+i].setLayerOptions(names[i]);
-            // window["layer"+i].setLayer();
 
-            window["map"+i] = new LeafletMap("map"+i, opt);
+            window["map"+i] = new LeafletMap("map"+i);
             var latlng = opt.getOption("current","mapCenterLatLng");
             var zoom = zooms[i] || window["layer"+i].startZoom;
             window["map"+i].createMap(latlng, zoom);

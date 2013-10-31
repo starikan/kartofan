@@ -1,6 +1,6 @@
 "use strict"
 
-var LeafletMap = function(mapId, opt){
+var LeafletMap = function(mapId){
 
     if (!mapId && !$("#"+mapId)){ return }
     this.mapId = mapId;
@@ -30,8 +30,8 @@ var LeafletMap = function(mapId, opt){
      }
 
     this.onClickMap = function(){
-        opt.current.activeMap = mapId;
-        console.log(opt.current.activeMap)
+        opt.setOption("current", "activeMap", mapId);
+        console.log(opt.getOption("current", "activeMap"));
      }
 
     this.onMapMoveEnd = function(e){
@@ -286,23 +286,7 @@ var LeafletTiles = function(mapName){
         }
      }
 
-    this.setLayerOptions = function(mapName){
-
-        var data = opt.getOption("maps", mapName);
-
-        if (!data) { return }
-
-        this.server = this._validateServer(data.server);
-        this.tilesURL = this._validateTilesURL(data.tilesURL);
-        this.maxZoom = this._validateMaxZoom(data.maxZoom);
-        this.minZoom = this._validateMinZoom(data.minZoom);
-        this.startZoom = this._validateStartZoom(data.startZoom);
-        this.title = data.title ? data.title : "Unknown Map";
-
-        this._validateZoomBounds();
-     }
-
-    this._setLayer = function(url, minZoom, maxZoom, startZoom){
+    this._setLayerOptions = function(url, minZoom, maxZoom, startZoom){
 
         // WMS server always set using the setLayerOptions
         this.server = this.server ? this.server : this._validateServer();
@@ -325,8 +309,26 @@ var LeafletTiles = function(mapName){
         }
      }
 
-    this.setLayerOptions(mapName);
+    this.setLayer = function(mapName){
 
-    this._setLayer();
+        var data = opt.getOption("maps", mapName);
+
+        if (!data) { return }
+
+        this.server = this._validateServer(data.server);
+        this.tilesURL = this._validateTilesURL(data.tilesURL);
+        this.maxZoom = this._validateMaxZoom(data.maxZoom);
+        this.minZoom = this._validateMinZoom(data.minZoom);
+        this.startZoom = this._validateStartZoom(data.startZoom);
+        this.title = data.title ? data.title : "Unknown Map";
+
+        this._validateZoomBounds();
+
+        this._setLayerOptions();
+     }
+
+
+
+    this.setLayer(mapName);
 
  }
