@@ -228,7 +228,7 @@ var LeafletMap = function(mapId, opt){
 
 LeafletMap.prototype.instances = []; // Collect all instanses of class
 
-var LeafletTiles = function(opt){
+var LeafletTiles = function(mapName){
 
     var parent = this;
 
@@ -302,7 +302,7 @@ var LeafletTiles = function(opt){
         this._validateZoomBounds();
      }
 
-    this.setLayer = function(url, minZoom, maxZoom, startZoom){
+    this._setLayer = function(url, minZoom, maxZoom, startZoom){
 
         // WMS server always set using the setLayerOptions
         this.server = this.server ? this.server : this._validateServer();
@@ -324,5 +324,9 @@ var LeafletTiles = function(opt){
             });
         }
      }
+
+    this.setLayerOptions(mapName);
+
+    this._setLayer();
 
  }

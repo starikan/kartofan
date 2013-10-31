@@ -38,9 +38,9 @@ var StageMaps = function(container, opt){
         var zooms = this.stageCurr.stageMapsZooms;
         var grid = this.stageCurr.stageMapsGrid;
         for (var i=0; i<grid.length; i++){
-            window["layer"+i] = new LeafletTiles(opt);
-            window["layer"+i].setLayerOptions(names[i]);
-            window["layer"+i].setLayer();
+            window["layer"+i] = new LeafletTiles(names[i]);
+            // window["layer"+i].setLayerOptions(names[i]);
+            // window["layer"+i].setLayer();
 
             window["map"+i] = new LeafletMap("map"+i, opt);
             var latlng = opt.getOption("current","mapCenterLatLng");

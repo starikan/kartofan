@@ -19,12 +19,12 @@ var Events = function(opt){
     this.$allMapsContainer = $(opt.html.containerAllMaps);
 
     this.initMainEvents = function(){
-        // Disable context menu
-        // http://www.quirksmode.org/dom/events/contextmenu.html
-        document.oncontextmenu = function(){ return false };
+
      }
 
-    // WINDOW RESIZE
+
+
+    // ********** WINDOW RESIZE **********
     this.eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
@@ -34,7 +34,12 @@ var Events = function(opt){
     window.onresize = this.eventResizeWindow;
 
 
-    // MAIN CONTEXT MENU AND FORMS    
+
+    // ***** MAIN CONTEXT MENU AND FORMS *****
+    // Disable context menu
+    // http://www.quirksmode.org/dom/events/contextmenu.html
+    document.oncontextmenu = function(){ return false };
+
     this.openContextMenu = function(e){
         if (!parent.$mainmenu.is(":visible")){ parent.$mainmenu.removeClass("hide") }
      }    
@@ -43,7 +48,7 @@ var Events = function(opt){
         if (parent.$mainmenu.is(":visible")){ parent.$mainmenu.addClass("hide") }
      }
 
-// TODO: it`s bad realization. Need more independance from class name
+    // TODO: it`s bad realization. Need more independance from class name
     this.closeAllForms = function(){
         $(".form-flat").addClass("hide");
      }
@@ -55,7 +60,7 @@ var Events = function(opt){
         parent.closeAllForms();
      }
 
-// TODO: touch event to context menu
+    // TODO: touch event to context menu
     this.$allMapsContainer.bind("click", this.eventClickOutMenu);
 
 
@@ -81,8 +86,21 @@ var Events = function(opt){
         eform.makeFromJSON(JSON.stringify(parent.formJSON));
         eform.showForm();
      }
-// TODO: touch event
+    // TODO: touch event
     $("#optionsGlobal").bind("click", this.contextMenuGlobalOptions);
 
     this.initMainEvents();
+
+
+    // ********** SET MAP **********
+    this.setActiveMap = function(mapName){
+
+        mapName = mapName ? mapName : "";
+
+        var mapNum = opt.getOption("current", "activeMap");
+        // window[mapNum]
+    }
+
+    // TODO: touch event
+    $("#setMap").bind("click", this.setActiveMap);
 }

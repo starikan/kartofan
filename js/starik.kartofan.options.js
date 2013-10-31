@@ -54,7 +54,7 @@ var Options = function(){
                 [50, 50, 50, 50],
             ],
             "stageMapsNames": ["", "", "", ""],
-            "stageMapsZooms": [],              
+            "stageMapsZooms": [],  
         }
      }
 
