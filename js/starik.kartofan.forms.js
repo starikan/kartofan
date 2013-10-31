@@ -180,6 +180,8 @@ var EditableForm = function(id){
  }
 
 var CSSMenu = function(id, arr, show){
+    parent = this;
+
     if (!id) {id = "nonamemenu"}
     if (!show) {show = false}
 
@@ -196,11 +198,11 @@ var CSSMenu = function(id, arr, show){
         }
 
         this.$container = $("div"+$id)
-        this.$container.empty().addClass("hide");
+        this.$container.empty().addClass("hide cssmenu_container");
 
-        $("<div></div>").appendTo(this.$container).attr("id", "cssmenu");
+        $("<div><ul></ul></div>").appendTo(this.$container).addClass("cssmenu");
 
-        this.$menu = $("div"+$id+" > div#cssmenu");
+        this.$menu = $("div"+$id+" > div.cssmenu > ul");
 
         if (show){ this.showMenu() }
 
@@ -219,16 +221,108 @@ var CSSMenu = function(id, arr, show){
      }
 
     this.addParagraf = function(text, classList, idList, callback, active){
+        
+        text = text ? text : "No title";
+        classList = classList ? classList : [];
+        idList = idList ? idList : [];
+        active = active ? active : false;
 
+        $("<li><a><span>"+text+"</span></a></li>").appendTo(this.$menu).addClass("paragraf");
+        var $li = this.$menu.find(".paragraf:last-child");
+        $.each(classList, function(i, v){
+            $li.addClass(v);
+        });
+        $.each(idList, function(i, v){
+            $li.attr("id", v);
+        });       
+        // TODO: touch
+        if (callback){
+            $li.bind("click", callback);
+        }
+        if (active){
+            $li.addClass("active");
+        }
      }
 
     this.addLine = function(text, classList, idList, callback){
 
+        text = text ? text : "No title";
+        classList = classList ? classList : [];
+        idList = idList ? idList : [];
+
+        var $main = this.$menu.find(".paragraf:last-child");
+        $main.addClass("has-sub");
+
+        var $ul = $main.find("ul");
+        if (!$ul.length){
+            $("<ul><li><a><span>"+text+"</span></a></li></ul>").appendTo($main);
+        }
+        else {
+            $("<li><a><span>"+text+"</span></a></li>").appendTo($main);
+        }
+
+        var $li = $main.find("li:last-child");
+        $.each(classList, function(i, v){
+            $li.addClass(v);
+        });
+        $.each(idList, function(i, v){
+            $li.attr("id", v);
+        });       
+        // TODO: touch
+        if (callback){
+            $li.bind("click", callback);
+        }
      }
 
     this.makeFromObj = function(){
+        $.each(this.genArr, function(i, v){
+            switch (v.type){
+                case "header":
+                    parent.addHeader(v.text, v.classList);
+                    break;
+                case "paragraf":
+                    parent.addParagraf(v.text, v.classList, v.idList, v.callback, v.active);
+                    break;
+                case "line":
+                    parent.addLine(v.text, v.classList, v.idList, v.callback);
+                    break;
+            }
+        });
 
+        this.activateMenu();
      }
 
+    this.activateMenu = function(){
+        $('.cssmenu > ul > li ul').each(function(index, e){
+          var count = $(e).find('li').length;
+          var content = '<span class="cnt">' + count + '</span>';
+          $(e).closest('li').children('a').append(content);
+        });
+        $('.cssmenu ul ul li:odd').addClass('odd');
+        $('.cssmenu ul ul li:even').addClass('even');
+        $('.cssmenu > ul > li > a').click(function() {
+          $('.cssmenu li').removeClass('active');
+          $(this).closest('li').addClass('active'); 
+          var checkElement = $(this).next();
+          if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+            $(this).closest('li').removeClass('active');
+            checkElement.slideUp('normal');
+          }
+          if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+            $('.cssmenu ul ul:visible').slideUp('normal');
+            checkElement.slideDown('normal');
+          }
+          if($(this).closest('li').find('ul').children().length == 0) {
+            return true;
+          } else {
+            return false;   
+          }     
+        });        
+    }
+
     this._initMenu();
+
+    if (Array.isArray(this.genArr)){
+        this.makeFromObj();
+     }
 }

@@ -54,13 +54,13 @@ var Events = function(){
 
     window.oncontextmenu = this.openContextMenu;
 
-    this.eventClickOutMenu = function(e){
+    this.closeAllModal = function(e){
         parent.closeContextMenu();
         parent.closeAllForms();
      }
 
     // TODO: touch event to context menu
-    this.$allMapsContainer.bind("click", this.eventClickOutMenu);
+    this.$allMapsContainer.bind("click", this.closeAllModal);
 
 
     // FORMS IN MAINMENU
@@ -119,6 +119,7 @@ var Events = function(){
 
         var menu = new CSSMenu("mapSelectMenu", genArray, true);
 
+        parent.closeAllModal();
         // $.each(maps, function(i,v){
         //     console.log(i);
         // })

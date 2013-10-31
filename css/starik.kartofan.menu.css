@@ -4,13 +4,13 @@
 @charset 'UTF-8';
 /* Base Styles */
 
-#mainmenu {
+.cssmenu_container {
   position: absolute;
   top: 50%;
   left: 50%;
 }
 
-#cssmenu {
+.cssmenu {
   transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -18,10 +18,10 @@
   -o-transform: translate(-50%, -50%);    
 }
 
-#cssmenu,
-#cssmenu ul,
-#cssmenu li,
-#cssmenu a {
+.cssmenu,
+.cssmenu ul,
+.cssmenu li,
+.cssmenu a {
   margin: 0;
   padding: 0;
   border: 0;
@@ -34,13 +34,13 @@
   position: relative;
   z-index: 1500;
 }
-#cssmenu a {
+.cssmenu a {
   line-height: 1.3;
 }
-#cssmenu {
+.cssmenu {
   width: 250px;
 }
-#cssmenu > ul > li > a {
+.cssmenu > ul > li > a {
   padding-right: 40px;
   font-size: 25px;
   font-weight: bold;
@@ -50,26 +50,26 @@
   border-bottom: 1px solid #04311d;
   text-transform: uppercase;
 }
-#cssmenu > ul > li > a > span {
+.cssmenu > ul > li > a > span {
   background: #0fbf70;
   padding: 10px;
   display: block;
   font-size: 13px;
   font-weight: 300;
 }
-#cssmenu > ul > li > a:hover {
+.cssmenu > ul > li > a:hover {
   text-decoration: none;
 }
-#cssmenu > ul > li.active {
+.cssmenu > ul > li.active {
   border-bottom: none;
 }
-#cssmenu > ul > li.active > a {
+.cssmenu > ul > li.active > a {
   color: #fff;
 }
-#cssmenu > ul > li.active > a span {
+.cssmenu > ul > li.active > a span {
   background: #0b9054;
 }
-#cssmenu span.cnt {
+.cssmenu span.cnt {
   position: absolute;
   top: 8px;
   right: 15px;
@@ -78,25 +78,25 @@
   background: none;
 }
 /* Sub menu */
-#cssmenu ul ul {
+.cssmenu ul ul {
   display: none;
 }
-#cssmenu ul ul li {
+.cssmenu ul ul li {
   border: 1px solid #e0e0e0;
   border-top: 0;
 }
-#cssmenu ul ul a {
+.cssmenu ul ul a {
   padding: 10px;
   display: block;
   color: #0f0809;
   font-size: 13px;
 }
-#cssmenu ul ul a:hover {
+.cssmenu ul ul a:hover {
   color: #29991f;
 }
-#cssmenu ul ul li.odd {
+.cssmenu ul ul li.odd {
   background: #f4f4f4;
 }
-#cssmenu ul ul li.even {
+.cssmenu ul ul li.even {
   background: #fff;
 }
