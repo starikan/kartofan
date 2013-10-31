@@ -157,6 +157,15 @@ var EditableForm = function(id){
                 });
             }
         }
+
+        this.focusFirstField();
+
+     }
+
+    // TODO
+    this.focusFirstField = function(){
+        // console.log(this.$form.find("input")[0]);
+        // $(this.$form.find("input")[0]).focus();
      }
 
     this.showForm = function(){
