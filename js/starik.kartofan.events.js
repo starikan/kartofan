@@ -15,8 +15,8 @@ var Events = function(){
         eform = window.eform;
      }
 
-    this.$mainmenu = $(opt.html.containerMainMenu);
-    this.$allMapsContainer = $(opt.html.containerAllMaps);
+    this.$mainmenu = $(opt.getOption("html", "containerMainMenu"));
+    this.$allMapsContainer = $(opt.getOption("html", "containerAllMaps"));
 
     this.initMainEvents = function(){
 
@@ -30,7 +30,6 @@ var Events = function(){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
         }            
      }
-    
     window.onresize = this.eventResizeWindow;
 
 
@@ -101,10 +100,28 @@ var Events = function(){
 
     this.setActiveMapForm = function(){
         var maps = opt.getOption("maps");
-        var eformJSON = {"header": ""}
-        $.each(maps, function(i,v){
-            console.log(i);
-        })
+
+        var genArray = [
+            {
+                type: "header",
+                text: "Select map",
+            },
+            {
+                type: "paragraf",
+                text: "Select map",
+                active: true,
+            },
+            {
+                type: "line",
+                text: "cloudmate",
+            },                
+        ];
+
+        var menu = new CSSMenu("mapSelectMenu", genArray, true);
+
+        // $.each(maps, function(i,v){
+        //     console.log(i);
+        // })
         // parent.setActiveMap("cloudmate");
      }
 

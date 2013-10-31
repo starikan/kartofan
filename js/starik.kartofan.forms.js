@@ -179,44 +179,54 @@ var EditableForm = function(id){
     this._initForm(id);
  }
 
-var CSSMenu = function(id, jsonstr, show){
+var CSSMenu = function(id, arr, show){
     if (!id) {id = "nonamemenu"}
     if (!show) {show = false}
 
-    this.json;
-    try {
-        this.json = JSON.parse(jsonstr);
-     }
-    catch (e){
-        console.log(e);
-        return false;
-     }
+    this.$container;
+    this.$menu;
+
+    this.genArr = arr;
 
     this._initMenu = function(){
+        var $id = "#"+id;
+
+        if (!$("div").is($id)){
+            $("<div></div>").appendTo($("body")).attr("id", id);
+        }
+
+        this.$container = $("div"+$id)
+        this.$container.empty().addClass("hide");
+
+        $("<div></div>").appendTo(this.$container).attr("id", "cssmenu");
+
+        this.$menu = $("div"+$id+" > div#cssmenu");
+
+        if (show){ this.showMenu() }
 
      }
 
     this.showMenu = function(){
-
+        this.$container.removeClass("hide");
      }
 
     this.hideMenu = function(){
-
+        this.$container.addClass("hide");
      }
 
     this.addHeader = function(text, classList){
 
      }
 
-    this.addParagraf = function(text, classList, active){
+    this.addParagraf = function(text, classList, idList, callback, active){
 
      }
 
-    this.addLine = function(text, classList, callback){
+    this.addLine = function(text, classList, idList, callback){
 
      }
 
-    this.makeFromJSON = function(){
+    this.makeFromObj = function(){
 
      }
 
