@@ -4,6 +4,10 @@ var Options = function(){
 
     var parent = this;
 
+    // ********* ALL SETTINGS ************
+
+    var sets = ["html", "global", "current", "stages", "places", "maps"];
+
     // TODO: create function to set this
     this.html = {
         "containerMainMenu": "#mainmenu",
@@ -40,6 +44,7 @@ var Options = function(){
     this.current = {
         "mapCenterLatLng": [],
         "mapZoom": undefined,
+        "activeMap": undefined,
         "stage": {
             "stageName": "current",
             "stageMapsGrid": [
@@ -47,10 +52,9 @@ var Options = function(){
                 [0, 50, 50, 50],
                 [50, 0, 50, 50],
                 [50, 50, 50, 50],
-                [70, 70, 30, 30],
             ],
-            "stageMapsNames": ["cloudmate", "cloudmate", "cloudmate", "cloudmate", "cloudmate"],
-            "stageMapsZooms": [12, 8, 10, 9, 2],              
+            "stageMapsNames": ["", "", "", ""],
+            "stageMapsZooms": [],              
         }
      }
 
@@ -71,29 +75,50 @@ var Options = function(){
         },
      };
 
-    this.initBase = function(name){
-        return new Pouch(name, {}, function(){
+    this.setWatch = function(collection){
+        watch(parent[collection], function(option, action, newvalue, oldvalue){
+            // console.log(option, action, newvalue, oldvalue, _.has(parent[collection], option), collection, option);
+            if (_.has(parent[collection], option)){
+                // console.log("in")
+                parent.setOption(collection, option, newvalue);
+            }
+            else {
+                // console.log("out")
+                $.each(parent[collection], function(option, newvalue){
+                    parent.setOption(collection, option, newvalue);
+                })
+            }
+        })
+     }
+
+    $.each(sets, function(i,v){
+        parent.setWatch(v);
+     })
+
+    // ********* POUCHDB *************
+    this.initBase = function(collection){
+        return new Pouch(collection, {}, function(){
             if (parent.global.dbSyncIn){
-                parent.db[name].replicate.from(parent.global.dbExtServerMain + name, {}, function(){
-                    parent.configureBase(name);
+                parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {}, function(){
+                    parent.configureBase(collection);
                 });                
             }
             else {
-                parent.configureBase(name);
+                parent.configureBase(collection);
             }
         })
      };
 
-    this.configureBase = function(name){
+    this.configureBase = function(collection){
 
         // Base init
-        $.each(parent[name], function(i, v){
-            parent.db[name].get(i, function(err, doc){
+        $.each(parent[collection], function(i, v){
+            parent.db[collection].get(i, function(err, doc){
                 if (doc){
-                    parent[name][i] = doc.val;
+                    parent[collection][i] = doc.val;
                 }
                 else {
-                    parent.setOption(name, i, v);
+                    parent.setOption(collection, i, v);
                 }
             })
         })
@@ -101,7 +126,7 @@ var Options = function(){
         // Replicate
         if (parent.global.dbSyncOut){
             for (var i in parent.global.dbExtServer){
-                parent.db[name].replicate.to(parent.global.dbExtServerMain + name, {continuous: true});
+                parent.db[collection].replicate.to(parent.global.dbExtServerMain + collection, {continuous: true});
             }
         }        
      };
@@ -114,8 +139,6 @@ var Options = function(){
         maps: parent.initBase("maps"),
         current: parent.initBase("current"),
      }
-
-
 
     // TODO: написать
     this.initOptions = function(){
@@ -135,8 +158,10 @@ var Options = function(){
         // PouchDB
         this.db[collection].get(option, function(err, doc){
             if (doc) {
-                doc.val = value;
-                parent.db[collection].put(doc, function(err, response){});
+                if (doc.val !== value){
+                    doc.val = value;
+                    parent.db[collection].put(doc, function(err, response){});                    
+                }
             }
             else {
                 parent.db[collection].put({

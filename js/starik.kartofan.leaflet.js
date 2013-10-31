@@ -29,6 +29,11 @@ var LeafletMap = function(mapId, opt){
         };        
      }
 
+    this.onClickMap = function(){
+        opt.current.activeMap = mapId;
+        console.log(opt.current.activeMap)
+     }
+
     this.onMapMoveEnd = function(e){
         if (!parent.map){return}
 
@@ -172,6 +177,8 @@ var LeafletMap = function(mapId, opt){
         this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
         // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
+        // TODO: touch
+        this.map.on("mousedown", this.onClickMap);
 
         this._setMapControls();
         this.updateMapControls();

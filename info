@@ -6,15 +6,19 @@ http://tympanus.net/Development/DynamicGrid/ - динамическая табл
 - http://camapka.ru/maps/thematic/114-lotsia-river.html#1
 - http://camapka.ru/maps/historical.html
 
+
+USAGE:
 http://ivaynberg.github.io/select2/
+https://github.com/melanke/Watch.JS
 
 
+ToAdd:
 https://github.com/mapbox/leaflet-image - экспорт изображения карты
 https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 
 
 TODO:
+- протестировать новую this.setOption
 - BUG: tabindex in forms crashed when tab on first input
 - сделать Events и Options синглтонами
 - если карта меньше определенного размера то убирать навесные элементы (навесить на функцию ресайза)
-
