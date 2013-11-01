@@ -19,7 +19,7 @@ var Options = function(){
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
-        "mapExternalFeeds": ["json/maps.json"],
+        "mapExternalFeeds": ["json/maps.json", "json/maps2.json"],
 
         "hashChange": true,
 
@@ -71,16 +71,6 @@ var Options = function(){
             src: "Internet",
             server: "img",
             title: 'Cloudmate',
-            tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-            maxZoom: 15,
-            minZoom: 0,
-            startZoom: 5,
-        },
-        "cloudmate_blank": {
-            tags: ["0. Online Maps"],
-            src: "Internet",
-            server: "img",
-            title: 'Cloudmate_blank',
             tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
             maxZoom: 15,
             minZoom: 0,

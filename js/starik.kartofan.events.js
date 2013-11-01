@@ -33,8 +33,12 @@ var Events = function(){
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            var menu = parent.setActiveMapForm();
-        }},
+            parent.createActiveMapForm();
+         }},
+        { type: "line", text: "Get External Maps", callback: function(){
+            parent.closeContextMenu();
+            parent.createExternalMapsForm();
+         }},
         { type: "line", text: "Set Map View" },
         { type: "line", text: "Add Selected Map To Storage" },
         { type: "paragraf", text: "Stage" },
@@ -71,7 +75,7 @@ var Events = function(){
 
     // TODO: touch event to context menu
     document.oncontextmenu = function(){ return false };
-    $("#"+opt.getOption("html", "containerAllMapsId")).bind("click", this.closeAllModal);
+    $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", this.closeAllModal);
     window.oncontextmenu = this.openContextMenu;
 
 
@@ -108,13 +112,11 @@ var Events = function(){
         window[mapNum].setMapTilesLayer(new LeafletTiles(mapName));
      }
 
-    this.setActiveMapForm = function(header){
+    this.getActiveMapFormObj = function(header){
         var maps = opt.getOption("maps");
 
         var groups = _.pluck(maps, 'group');
         groups.sort();
-
-        console.log(maps, groups)
 
         var genArray = [
             { type: "header", text: header },
@@ -132,8 +134,6 @@ var Events = function(){
                 }
             })
 
-            console.log(g, vg, mapsInGroup)
-
             if (!$.isEmptyObject(mapsInGroup)){
                 
                 if (!vg) {vg = "Others"};
@@ -142,7 +142,7 @@ var Events = function(){
                 $.each(mapsInGroup, function(i, vi){
                     genArray.push({
                         type: "line", 
-                        text: vi.title,
+                        text: vi.title ? vi.title : "Noname Map",
                         callback: function(){
                             parent.closeAllModal();
                             parent.setActiveMap(i);
@@ -152,10 +152,45 @@ var Events = function(){
             }
         })
 
-        console.log(genArray)
-
-        var menu = new CSSMenu("mapSelectMenu", genArray, true);
-
-        return menu;
+        return genArray;
      }
-}
+
+    this.createActiveMapForm = function(header){
+        var menuObj = this.getActiveMapFormObj(header);
+        var menu = new CSSMenu("mapSelectMenu", menuObj, true);
+        return menu;        
+     }
+
+    this.createExternalMapsForm = function(header){
+
+        var extMaps = opt.getOption("global", "mapExternalFeeds");
+
+        console.log(extMaps);
+
+        var menuObj = [
+            { type: "header", text: header },
+        ]; 
+
+        var menu = new CSSMenu("mapSelectMenu", menuObj, true);
+
+        $.each(extMaps, function(i, vi){
+            $.get(vi, function(data){
+                var genArr = [
+                    { type: "paragraf", text: vi },
+                ];
+                $.each(data, function(j, vj){
+                    genArr.push({
+                        type: "line", 
+                        text: vj.title ? vj.title : "Noname Map",
+                        callback: function(){
+                            parent.closeAllModal();
+                            console.log(j);
+                        },                            
+                    });
+                });
+                menu.makeFromObj(genArr);
+            })
+        });
+     }
+
+ }

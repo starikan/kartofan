@@ -275,8 +275,11 @@ var CSSMenu = function(id, arr, show){
         }
      }
 
-    this.makeFromObj = function(){
-        $.each(this.genArr, function(i, v){
+    this.makeFromObj = function(arr){
+
+        arr = arr ? arr : this.genArr
+
+        $.each(arr, function(i, v){
             switch (v.type){
                 case "header":
                     parent.addHeader(v.text, v.classList);
@@ -294,13 +297,22 @@ var CSSMenu = function(id, arr, show){
      }
 
     this.activateMenu = function(){
+
+        // Add counts
         $('.cssmenu > ul > li ul').each(function(index, e){
             var count = $(e).find('li').length;
             var content = '<span class="cnt">' + count + '</span>';
-            $(e).closest('li').children('a').append(content);
+            if (!$(e).closest('li').children('a').find("span.cnt").length){
+                $(e).closest('li').children('a').append(content);
+            }
         });
+
         $('.cssmenu ul ul li:odd').addClass('odd');
         $('.cssmenu ul ul li:even').addClass('even');
+
+        // Removed click event because when call several times it`s conflict each other
+        $('.cssmenu > ul > li > a').unbind("click");
+
         $('.cssmenu > ul > li > a').click(function() {
             $('.cssmenu li').removeClass('active');
             $(this).closest('li').addClass('active'); 
