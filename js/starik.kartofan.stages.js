@@ -43,13 +43,13 @@ var StageMaps = function(container){
         var zooms = this.stageCurr.stageMapsZooms;
         var grid = this.stageCurr.stageMapsGrid;
         for (var i=0; i<grid.length; i++){
-            window["layer"+i] = new LeafletTiles(names[i]);
 
             window["map"+i] = new LeafletMap("map"+i);
             var latlng = opt.getOption("current","mapCenterLatLng");
-            var zoom = zooms[i] || window["layer"+i].startZoom;
+            var zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
             window["map"+i].createMap(latlng, zoom);
-            window["map"+i].setMapTilesLayer(window["layer"+i]);
+            window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
+
         }
      }
 

@@ -301,9 +301,10 @@ var LeafletTiles = function(mapName, mapData){
 
     this.setLayer = function(mapName, mapData){
 
-        this.mapName = mapName ? mapName : this.mapName;
+        this.mapName = mapName ? mapName : this.mapName ? this.mapName : true;
 
-        this.mapData = mapData ? mapData : this.mapData ? this.mapData : opt.getOption("maps", this.mapName);
+        this.mapData = mapData ? mapData : this.mapData ? this.mapData : opt.getOption("maps", this.mapName) ? opt.getOption("maps", this.mapName) : {};
+
         if (!this.mapData) { return }
 
         this.mapData.server = this._validateServer(this.mapData.server);
