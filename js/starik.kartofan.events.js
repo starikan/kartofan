@@ -184,7 +184,7 @@ var Events = function(){
                         text: vj.title ? vj.title : "Noname Map",
                         callback: function(){
                             parent.closeAllModal();
-                            console.log(j);
+                            console.log(j, vj);
                         },                            
                     });
                 });

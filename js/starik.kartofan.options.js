@@ -55,8 +55,8 @@ var Options = function(){
                 [50, 0, 50, 50],
                 [50, 50, 50, 50],
             ],
-            "stageMapsNames": ["", "", "", ""],
-            "stageMapsZooms": [],  
+            "stageMapsNames": ["cloudmate", "", "", "cloudmate"],
+            "stageMapsZooms": [12,12,12,12],  
         }
      }
 

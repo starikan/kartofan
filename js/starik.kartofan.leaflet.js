@@ -232,18 +232,14 @@ var LeafletMap = function(mapId){
 
 LeafletMap.prototype.instances = []; // Collect all instanses of class
 
-var LeafletTiles = function(mapName){
+var LeafletTiles = function(mapName, mapData){
 
     var parent = this;
 
-    this.layer;
+    this.mapName = mapName ? mapName : undefined;
+    this.mapData = mapData ? mapData : undefined;
 
-    this.server;
-    this.tilesURL;
-    this.maxZoom;
-    this.minZoom;
-    this.startZoom;
-    this.title;
+    this.layer;
 
     if (typeof opt === "undefined" || !(opt instanceof Options)) { 
         window.opt = new Options();
@@ -257,16 +253,11 @@ var LeafletTiles = function(mapName){
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){
-        if (url) {
-            return url;
-        }
-        else {
-            return "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png";
-        }
+        return url ? url : "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png";
      }
 
     this._validateServer = function(server){
-        return server && server in ["img", "wms"] ? server : "img";
+        return server && ["img", "wms"].indexOf(server)>-1 ? server : "img";
      }
 
     this._validateMinZoom = function(minZoom){
@@ -288,54 +279,45 @@ var LeafletTiles = function(mapName){
      }     
 
     this._validateZoomBounds = function(){
-        if (!this.maxZoom || !this.minZoom) { return }
+        if (!this.mapData.maxZoom || !this.mapData.minZoom) { return }
 
-        if (this.maxZoom < this.minZoom) {
-            this.maxZoom = this.minZoom;
+        if (this.mapData.maxZoom < this.mapData.minZoom) {
+            this.mapData.maxZoom = this.mapData.minZoom;
         }
      }
 
-    this._setLayerOptions = function(url, minZoom, maxZoom, startZoom){
+    this._setLayerOptions = function(){
 
-        // WMS server always set using the setLayerOptions
-        this.server = this.server ? this.server : this._validateServer();
-        this.tilesURL = url ? this._validateTilesURL(url): this.tilesURL;
-        this.maxZoom = maxZoom ? his._validateMinZoom(maxZoom): this.maxZoom;
-        this.minZoom = minZoom ? this._validateMaxZoom(minZoom): this.minZoom;
-        this.startZoom = startZoom ? this._validateStartZoom(startZoom): this.startZoom;
-        this.title = this.title ? this.title : "Unknown Map";
-
-        this._validateZoomBounds();
-
-        if (this.server && this.server === "wms"){
+        if (this.mapData.server && this.mapData.server === "wms"){
             // TODO: server wms type
         }
         else {
-            this.layer = L.tileLayer(this.tilesURL, {
-                maxZoom: this.maxZoom,
-                minZoom: this.minZoom,
+            this.layer = L.tileLayer(this.mapData.tilesURL, {
+                maxZoom: this.mapData.maxZoom,
+                minZoom: this.mapData.minZoom,
             });
         }
      }
 
-    this.setLayer = function(mapName){
+    this.setLayer = function(mapName, mapData){
 
-        var data = opt.getOption("maps", mapName);
+        this.mapName = mapName ? mapName : this.mapName;
 
-        if (!data) { return }
+        this.mapData = mapData ? mapData : this.mapData ? this.mapData : opt.getOption("maps", this.mapName);
+        if (!this.mapData) { return }
 
-        this.server = this._validateServer(data.server);
-        this.tilesURL = this._validateTilesURL(data.tilesURL);
-        this.maxZoom = this._validateMaxZoom(data.maxZoom);
-        this.minZoom = this._validateMinZoom(data.minZoom);
-        this.startZoom = this._validateStartZoom(data.startZoom);
-        this.title = data.title ? data.title : "Unknown Map";
+        this.mapData.server = this._validateServer(this.mapData.server);
+        this.mapData.tilesURL = this._validateTilesURL(this.mapData.tilesURL);
+        this.mapData.maxZoom = this._validateMaxZoom(this.mapData.maxZoom);
+        this.mapData.minZoom = this._validateMinZoom(this.mapData.minZoom);
+        this.mapData.startZoom = this._validateStartZoom(this.mapData.startZoom);
+        this.mapData.title = this.mapData.title ? this.mapData.title : "Unknown Map";
 
         this._validateZoomBounds();
 
         this._setLayerOptions();
      }
 
-    this.setLayer(mapName);
+    this.setLayer();
 
  }
