@@ -179,8 +179,6 @@ var EditableForm = function(id){
     this._initForm(id);
  }
 
-EditableForm.prototype.instances = [];
-
 var CSSMenu = function(id, arr, show){
     parent = this;
 
@@ -327,6 +325,4 @@ var CSSMenu = function(id, arr, show){
     if (Array.isArray(this.genArr)){
         this.makeFromObj();
      }
-}
-
-CSSMenu.prototype.instances = [];
+ }

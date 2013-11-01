@@ -15,7 +15,7 @@ var StageMaps = function(container){
 
     if (!container) { return }
 
-    opt.html.containerAllMaps = "#"+container;
+    opt.setOption("html", "containerAllMapsId", container);
 
     this.$container = $("#"+container);
 

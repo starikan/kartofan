@@ -15,8 +15,8 @@ var Events = function(){
         eform = window.eform;
      }
 
-    this.$mainmenu = $(opt.getOption("html", "containerMainMenu"));
-    this.$allMapsContainer = $(opt.getOption("html", "containerAllMaps"));
+    this.$mainmenu = $("#"+opt.getOption("html", "containerMainMenuId"));
+    this.$allMapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
 
     this.initMainEvents = function(){
 
@@ -35,16 +35,19 @@ var Events = function(){
 
 
     // ***** MAIN CONTEXT MENU AND FORMS *****
-    // Disable context menu
-    // http://www.quirksmode.org/dom/events/contextmenu.html
     document.oncontextmenu = function(){ return false };
 
     this.openContextMenu = function(e){
-        if (!parent.$mainmenu.is(":visible")){ parent.$mainmenu.removeClass("hide") }
+        parent.$mainmenu.removeClass("hide");
      }    
 
-    this.closeContextMenu = function(e){
-        if (parent.$mainmenu.is(":visible")){ parent.$mainmenu.addClass("hide") }
+    this.closeContextMenu = function(id){
+        if (!id){
+            $(".cssmenu_container").addClass("hide");
+        }
+        else {
+            $(".cssmenu_container#"+id).addClass("hide");
+        }
      }
 
     // TODO: it`s bad realization. Need more independance from class name
@@ -54,7 +57,7 @@ var Events = function(){
 
     window.oncontextmenu = this.openContextMenu;
 
-    this.closeAllModal = function(e){
+    this.closeAllModal = function(){
         parent.closeContextMenu();
         parent.closeAllForms();
      }
@@ -114,17 +117,17 @@ var Events = function(){
             {
                 type: "line",
                 text: "cloudmate",
-                callback: function(){parent.setActiveMap("cloudmate")},
+                callback: function(){
+                    parent.setActiveMap("cloudmate");
+                    parent.closeAllModal();
+                },
             },                
         ];
 
         var menu = new CSSMenu("mapSelectMenu", genArray, true);
 
-        parent.closeAllModal();
-        // $.each(maps, function(i,v){
-        //     console.log(i);
-        // })
-        // parent.setActiveMap("cloudmate");
+        parent.closeContextMenu(opt.getOption("html", "containerMainMenuId"));
+
      }
 
     // TODO: touch event
