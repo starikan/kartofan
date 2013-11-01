@@ -19,7 +19,7 @@ var Options = function(){
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
-        "mapExternalFeeds": ["json/maps.json", "json/maps2.json"],
+        "mapExternalFeeds": ["json/maps.json"],
 
         "hashChange": true,
 

@@ -39,7 +39,6 @@ var Events = function(){
             parent.closeContextMenu();
             parent.createExternalMapsForm();
          }},
-        { type: "line", text: "Set Map View" },
         { type: "line", text: "Add Selected Map To Storage" },
         { type: "line", text: "Edit Map Data" },
         { type: "paragraf", text: "Stage" },
@@ -160,8 +159,6 @@ var Events = function(){
     this.createExternalMapsForm = function(header){
 
         var extMaps = opt.getOption("global", "mapExternalFeeds");
-
-        console.log(extMaps);
 
         var menuObj = [
             { type: "header", text: header },
