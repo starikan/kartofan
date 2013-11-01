@@ -255,8 +255,6 @@ var CSSMenu = function(id, arr, show){
 
         var $ul = $main.find("ul");
 
-        console.log($main, $ul.length)
-
         if (!$ul.length){
             $("<ul><li><a><span>"+text+"</span></a></li></ul>").appendTo($main);
         }

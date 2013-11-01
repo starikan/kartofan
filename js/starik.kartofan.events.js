@@ -31,7 +31,10 @@ var Events = function(){
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
-        { type: "line", text: "Set Map" },
+        { type: "line", text: "Set Map", callback: function(){
+            parent.closeContextMenu();
+            parent.setActiveMapForm();
+        }},
         { type: "line", text: "Set Map View" },
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
@@ -110,20 +113,19 @@ var Events = function(){
         var genArray = [
             { type: "header", text: "Select map" },
             { type: "paragraf", text: "Select map", active: true },
-            { type: "line", text: "cloudmate",
-                callback: function(){
-                    parent.setActiveMap("cloudmate");
-                    parent.closeAllModal();
-                },
-            },                
         ];
 
+        $.each(maps, function(i, v){
+            genArray.push({
+                type: "line", 
+                text: i,
+                callback: function(){
+                    parent.closeAllModal();
+                    parent.setActiveMap(i);
+                },
+            })
+        })
+
         var menu = new CSSMenu("mapSelectMenu", genArray, true);
-
-        parent.closeContextMenu(opt.getOption("html", "containerMainMenuId"));
-
      }
-
-    // TODO: touch event
-    $("#setMap").bind("click", this.setActiveMapForm);
 }
