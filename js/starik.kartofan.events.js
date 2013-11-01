@@ -33,9 +33,10 @@ var Events = function(){
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            parent.setActiveMapForm();
+            var menu = parent.setActiveMapForm();
         }},
         { type: "line", text: "Set Map View" },
+        { type: "line", text: "Add Selected Map To Storage" },
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
         { type: "line", text: "Save Stage" },
@@ -107,25 +108,54 @@ var Events = function(){
         window[mapNum].setMapTilesLayer(new LeafletTiles(mapName));
      }
 
-    this.setActiveMapForm = function(){
+    this.setActiveMapForm = function(header){
         var maps = opt.getOption("maps");
 
+        var groups = _.pluck(maps, 'group');
+        groups.sort();
+
+        console.log(maps, groups)
+
         var genArray = [
-            { type: "header", text: "Select map" },
-            { type: "paragraf", text: "Select map", active: true },
+            { type: "header", text: header },
         ];
 
-        $.each(maps, function(i, v){
-            genArray.push({
-                type: "line", 
-                text: i,
-                callback: function(){
-                    parent.closeAllModal();
-                    parent.setActiveMap(i);
-                },
+        $.each(groups, function(g, vg){
+
+            var mapsInGroup = {};
+            $.each(maps, function(i, v){
+                if (!v.group && !vg){
+                    mapsInGroup[i] = v;
+                }
+                if (v.group == vg) {
+                    mapsInGroup[i] = v;
+                }
             })
+
+            console.log(g, vg, mapsInGroup)
+
+            if (!$.isEmptyObject(mapsInGroup)){
+                
+                if (!vg) {vg = "Others"};
+                genArray.push({ type: "paragraf", text: vg });
+                
+                $.each(mapsInGroup, function(i, vi){
+                    genArray.push({
+                        type: "line", 
+                        text: vi.title,
+                        callback: function(){
+                            parent.closeAllModal();
+                            parent.setActiveMap(i);
+                        },
+                    })
+                });
+            }
         })
 
+        console.log(genArray)
+
         var menu = new CSSMenu("mapSelectMenu", genArray, true);
+
+        return menu;
      }
 }

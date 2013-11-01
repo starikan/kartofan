@@ -336,8 +336,6 @@ var LeafletTiles = function(mapName){
         this._setLayerOptions();
      }
 
-
-
     this.setLayer(mapName);
 
  }
