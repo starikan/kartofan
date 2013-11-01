@@ -33,7 +33,7 @@ var Events = function(){
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            parent.createActiveMapForm();
+            parent.createLocaleMapsForm();
          }},
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
@@ -106,13 +106,14 @@ var Events = function(){
 
 
     // ********** SET MAP **********
-    this.setActiveMap = function(mapName){
+    this.setActiveMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
         var mapNum = opt.getOption("current", "activeMap");
-        window[mapNum].setMapTilesLayer(new LeafletTiles(mapName));
+        window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
-    this.getActiveMapFormObj = function(header){
+    this.createLocaleMapsForm = function(header){
+
         var maps = opt.getOption("maps");
 
         var groups = _.pluck(maps, 'group');
@@ -152,13 +153,7 @@ var Events = function(){
             }
         })
 
-        return genArray;
-     }
-
-    this.createActiveMapForm = function(header){
-        var menuObj = this.getActiveMapFormObj(header);
-        var menu = new CSSMenu("mapSelectMenu", menuObj, true);
-        return menu;        
+        new CSSMenu("mapSelectMenu", genArray, true);
      }
 
     this.createExternalMapsForm = function(header){
@@ -184,7 +179,7 @@ var Events = function(){
                         text: vj.title ? vj.title : "Noname Map",
                         callback: function(){
                             parent.closeAllModal();
-                            console.log(j, vj);
+                            parent.setActiveMap(j, vj);
                         },                            
                     });
                 });
