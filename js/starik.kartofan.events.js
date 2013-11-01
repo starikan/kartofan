@@ -41,6 +41,7 @@ var Events = function(){
          }},
         { type: "line", text: "Set Map View" },
         { type: "line", text: "Add Selected Map To Storage" },
+        { type: "line", text: "Edit Map Data" },
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
         { type: "line", text: "Save Stage" },

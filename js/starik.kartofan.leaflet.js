@@ -64,7 +64,7 @@ var LeafletMap = function(mapId){
         }
 
         var title;
-        try { title = this.mapTilesLayer.title; }
+        try { title = this.mapTilesLayer.mapData.title; }
         catch (e) { title = "No title" }
 
         if (this.nameControl){
@@ -104,7 +104,7 @@ var LeafletMap = function(mapId){
         if (opt.getOption("global", "viewControlsInfoName")){
             var title;
             try {
-                title = this.mapTilesLayer.title;
+                title = this.mapTilesLayer.mapData.title;
             }
             catch (e) {
                 title = "No title"
@@ -152,8 +152,8 @@ var LeafletMap = function(mapId){
         var maxZoom = 20;
 
         if (this.mapTilesLayer){ 
-            minZoom = this.mapTilesLayer.minZoom;
-            maxZoom = this.mapTilesLayer.maxZoom;            
+            minZoom = this.mapTilesLayer.mapData.minZoom;
+            maxZoom = this.mapTilesLayer.mapData.maxZoom;            
         }
 
         zoom = zoom ? zoom : opt.getOption("global", "mapDefaultZoom");

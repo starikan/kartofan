@@ -16,6 +16,7 @@ http://www.quirksmode.org/dom/events/contextmenu.html - conrext menu event brows
 ToAdd:
 https://github.com/mapbox/leaflet-image - экспорт изображения карты
 https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
+http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
 
 
 TODO:
