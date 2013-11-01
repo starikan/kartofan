@@ -8,6 +8,11 @@ var StageMaps = function(container){
         opt = window.opt;
      }
 
+    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
+        window.mapvents = new Events();
+        mapvents = window.mapvents;
+     }
+
     if (!container) { return }
 
     opt.html.containerAllMaps = "#"+container;
@@ -16,7 +21,7 @@ var StageMaps = function(container){
 
     this.stageCurr;
 
-    this.initStage = function(){
+    this._initStage = function(){
         this._clearHTML();
         this._getCurrentStage();
         this.$container.append(this._createStageHTML());
@@ -64,5 +69,7 @@ var StageMaps = function(container){
     this.setStageOptions = function(){
 
      }
+
+    this._initStage();
 
  }

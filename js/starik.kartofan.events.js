@@ -114,6 +114,7 @@ var Events = function(){
             {
                 type: "line",
                 text: "cloudmate",
+                callback: function(){parent.setActiveMap("cloudmate")},
             },                
         ];
 

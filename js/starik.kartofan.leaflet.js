@@ -10,6 +10,11 @@ var LeafletMap = function(mapId){
         opt = window.opt;
      }
 
+    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
+        window.mapvents = new Events();
+        mapvents = window.mapvents;
+     }
+
     var parent = this;
 
     this.mapTilesLayer; // copy of LeafletTiles class
@@ -243,6 +248,11 @@ var LeafletTiles = function(mapName){
     if (typeof opt === "undefined" || !(opt instanceof Options)) { 
         window.opt = new Options();
         opt = window.opt;
+     }
+
+    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
+        window.mapvents = new Events();
+        mapvents = window.mapvents;
      }
 
     // TODO: сделать проверку что это строка и ссылка
