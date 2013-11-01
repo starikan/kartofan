@@ -10,7 +10,7 @@ var Options = function(){
 
     // TODO: create function to set this
     this.html = {
-        "containerMainMenuId": "mainmenu",
+        "containerMainMenuId": "mainMenu",
         "containerAllMapsId": "container",
      }
 

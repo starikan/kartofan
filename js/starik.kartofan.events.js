@@ -15,13 +15,6 @@ var Events = function(){
         eform = window.eform;
      }
 
-    this.$mainmenu = $("#"+opt.getOption("html", "containerMainMenuId"));
-    this.$allMapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
-
-    this.initMainEvents = function(){
-
-     }
-
 
 
     // ********** WINDOW RESIZE **********
@@ -35,10 +28,22 @@ var Events = function(){
 
 
     // ***** MAIN CONTEXT MENU AND FORMS *****
-    document.oncontextmenu = function(){ return false };
+
+    this.contextMenuArray = [
+        { type: "paragraf", text: "Map" },
+        { type: "line", text: "Set Map" },
+        { type: "line", text: "Set Map View" },
+        { type: "paragraf", text: "Stage" },
+        { type: "line", text: "Load Stage" },
+        { type: "line", text: "Save Stage" },
+        { type: "paragraf", text: "Options" },
+        { type: "line", text: "Global Settings" },
+        { type: "line", text: "Global Maps View" },
+        { type: "line", text: "Settings Reset" },
+     ];
 
     this.openContextMenu = function(e){
-        parent.$mainmenu.removeClass("hide");
+        var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), parent.contextMenuArray, true);
      }    
 
     this.closeContextMenu = function(id){
@@ -55,43 +60,41 @@ var Events = function(){
         $(".form-flat").addClass("hide");
      }
 
-    window.oncontextmenu = this.openContextMenu;
-
     this.closeAllModal = function(){
         parent.closeContextMenu();
         parent.closeAllForms();
      }
 
     // TODO: touch event to context menu
-    this.$allMapsContainer.bind("click", this.closeAllModal);
+    document.oncontextmenu = function(){ return false };
+    $("#"+opt.getOption("html", "containerAllMapsId")).bind("click", this.closeAllModal);
+    window.oncontextmenu = this.openContextMenu;
 
 
     // FORMS IN MAINMENU
-    this.formJSON = {
-        header: "Заголовок",
-        inputs: [
-            {type: "input", val: "", placeholder: "text", description: "description"},
-            {type: "input", val: "", placeholder: "text", description: "description"},
-            {type: "input", val: "", placeholder: "text", description: "description"},
-            {type: "input", val: "", placeholder: "text", description: "description"},
-            {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
-            {type: "select2", val: ["123", "321"], placeholder: "text", description: "description"},
-            {type: "send", val: "send", id: "sendForm", extclass: "sendForm"},
-            {type: "cancel", val: "cancel", id: "cancelForm", extclass: "cancelForm"},            
-        ],
-     }    
+    // this.formJSON = {
+    //     header: "Заголовок",
+    //     inputs: [
+    //         {type: "input", val: "", placeholder: "text", description: "description"},
+    //         {type: "input", val: "", placeholder: "text", description: "description"},
+    //         {type: "input", val: "", placeholder: "text", description: "description"},
+    //         {type: "input", val: "", placeholder: "text", description: "description"},
+    //         {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
+    //         {type: "select2", val: ["123", "321"], placeholder: "text", description: "description"},
+    //         {type: "send", val: "send", id: "sendForm", extclass: "sendForm"},
+    //         {type: "cancel", val: "cancel", id: "cancelForm", extclass: "cancelForm"},            
+    //     ],
+    //  }    
 
-    this.contextMenuGlobalOptions = function(){
-        parent.closeContextMenu();
+    // this.contextMenuGlobalOptions = function(){
+    //     parent.closeContextMenu();
 
-        eform.clearForm();
-        eform.makeFromJSON(JSON.stringify(parent.formJSON));
-        eform.showForm();
-     }
-    // TODO: touch event
-    $("#optionsGlobal").bind("click", this.contextMenuGlobalOptions);
-
-    this.initMainEvents();
+    //     eform.clearForm();
+    //     eform.makeFromJSON(JSON.stringify(parent.formJSON));
+    //     eform.showForm();
+    //  }
+    // // TODO: touch event
+    // $("#optionsGlobal").bind("click", this.contextMenuGlobalOptions);
 
 
     // ********** SET MAP **********
@@ -105,18 +108,9 @@ var Events = function(){
         var maps = opt.getOption("maps");
 
         var genArray = [
-            {
-                type: "header",
-                text: "Select map",
-            },
-            {
-                type: "paragraf",
-                text: "Select map",
-                active: true,
-            },
-            {
-                type: "line",
-                text: "cloudmate",
+            { type: "header", text: "Select map" },
+            { type: "paragraf", text: "Select map", active: true },
+            { type: "line", text: "cloudmate",
                 callback: function(){
                     parent.setActiveMap("cloudmate");
                     parent.closeAllModal();

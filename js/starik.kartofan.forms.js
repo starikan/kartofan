@@ -254,11 +254,14 @@ var CSSMenu = function(id, arr, show){
         $main.addClass("has-sub");
 
         var $ul = $main.find("ul");
+
+        console.log($main, $ul.length)
+
         if (!$ul.length){
             $("<ul><li><a><span>"+text+"</span></a></li></ul>").appendTo($main);
         }
         else {
-            $("<li><a><span>"+text+"</span></a></li>").appendTo($main);
+            $("<li><a><span>"+text+"</span></a></li>").appendTo($ul);
         }
 
         var $li = $main.find("li:last-child");
