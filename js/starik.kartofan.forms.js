@@ -35,15 +35,17 @@ var EditableForm = function(id, arr, show){
     this.checkAllFields = function(){
         this.$form.find("input").each(function(i, v){
             var check = $(v).attr("check")
-            var checkReg = new RegExp(check.substring(1, check.length-1));
-
-            if (checkReg.test(v.value)){
-                $(v).removeClass("noCheck");
-            }
-            else {
-                $(v).addClass("noCheck");
+            if (check){
+                var checkReg = new RegExp(check.substring(1, check.length-1));
+                if (checkReg.test(v.value)){
+                    $(v).removeClass("noCheck");
+                }
+                else {
+                    $(v).addClass("noCheck");
+                }                
             }
         })
+
      }
 
     this.addHeader = function(header, classList){
@@ -72,13 +74,15 @@ var EditableForm = function(id, arr, show){
         });
         // TODO: не ясно как это будет на мобильных работать
         $input.addClass(classList).bind("keyup change", function(){
-            // var checkReg = new RegExp(check);
-            if (check.test(this.value)){
-                $input.removeClass("noCheck");
+            if (check){
+                if (check.test(this.value)){
+                    $input.removeClass("noCheck");
+                }
+                else {
+                    $input.addClass("noCheck");
+                }                
             }
-            else {
-                $input.addClass("noCheck");
-            }
+
         });
      }
 
@@ -154,6 +158,8 @@ var EditableForm = function(id, arr, show){
             }            
         })
 
+        this.checkAllFields();
+
         this.focusFirstField();
 
      }
@@ -180,6 +186,18 @@ var EditableForm = function(id, arr, show){
 
     this.hideForm = function(){
         this.$form.addClass("hide");
+     }
+
+    this.getAllData = function(){
+        var allData = [];
+        this.$form.find("input").each(function(i, v){
+            allData.push({
+                "id": v.id,
+                "value": v.value,
+                "checkFlag": !$(v).hasClass("noCheck"),
+            });
+        })
+        return allData;
      }
 
     this._initForm(id);

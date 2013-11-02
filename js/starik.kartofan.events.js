@@ -198,7 +198,7 @@ var Events = function(){
             { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
             { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
             { type: "input", val: "", id: "startZoom", placeholder: "", description: "startZoom", check: /^\d+$/},
-        ]
+        ];
 
         var eform = new EditableForm("addMap", genForm);
 
@@ -212,6 +212,7 @@ var Events = function(){
 
         eform.fillForm(vals);
 
+        console.log(eform.getAllData());
      }
 
  }
