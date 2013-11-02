@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:100);
 
-.form-flat {
+.cssform {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -63,6 +63,9 @@
 
 
 
+.noCheck {
+  background: #de3163 !important;
+}
 
 
 

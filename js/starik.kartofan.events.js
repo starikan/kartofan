@@ -10,11 +10,6 @@ var Events = function(){
         opt = window.opt;
      }
 
-    if (typeof eform === "undefined" || !(eform instanceof EditableForm)){
-        window.eform = new EditableForm();
-        eform = window.eform;
-     }
-
 
 
     // ********** WINDOW RESIZE **********
@@ -39,7 +34,10 @@ var Events = function(){
             parent.closeContextMenu();
             parent.createExternalMapsForm();
          }},
-        { type: "line", text: "Add Selected Map To Storage" },
+        { type: "line", text: "Add Selected Map To Storage", callback: function(){
+            parent.closeContextMenu();
+            parent.addActiveMapToStorage();
+        } },
         { type: "line", text: "Edit Map Data" },
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
@@ -63,9 +61,8 @@ var Events = function(){
         }
      }
 
-    // TODO: it`s bad realization. Need more independance from class name
     this.closeAllForms = function(){
-        $(".form-flat").addClass("hide");
+        $(".cssform").addClass("hide");
      }
 
     this.closeAllModal = function(){
@@ -184,6 +181,27 @@ var Events = function(){
                 menu.makeFromObj(genArr);
             })
         });
+     }
+
+    this.addActiveMapToStorage = function(){
+        var maps = opt.getOption("maps");
+        var mapNum = opt.getOption("current", "activeMap");
+
+        var genForm = [
+            { type: "header", text: "Active Map Add"},
+            { type: "input", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
+            { type: "input", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
+            { type: "input", val: "", id: "src", placeholder: "", description: "src", check: /.?/},
+            { type: "input", val: "", id: "server", placeholder: "", description: "server", check: /.?/},
+            { type: "input", val: "", id: "title", placeholder: "", description: "title", check: /.?/},
+            { type: "input", val: "", id: "tilesURL", placeholder: "", description: "tilesURL", check: /.?/},
+            { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
+            { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
+            { type: "input", val: "", id: "startZoom", placeholder: "", description: "startZoom", check: /^\d+$/},
+        ]
+
+        new EditableForm("addMap", genForm);
+
      }
 
  }

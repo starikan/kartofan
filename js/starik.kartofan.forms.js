@@ -1,11 +1,15 @@
 "use strict"
 
-var EditableForm = function(id){
+var EditableForm = function(id, arr, show){
     
+    parent = this;
+
     if (!id) {id = "eform"}
+    if (!show) {show = true}
+
+    this.genArr = arr;
 
     this.$form;
-    this.$formHeader;
     this.$formContent;
 
     this._initForm = function(id){
@@ -17,58 +21,56 @@ var EditableForm = function(id){
         }
 
         this.$form = $("div"+$id);
+        this.$form.empty().addClass("cssform hide");
 
-        this.$form.addClass("form-flat hide");
+        $("<div></div>").appendTo(this.$form).addClass("form-header");
+        $("<div></div>").appendTo(this.$form).addClass("form-content").append("<form/>");
 
-        if (!this.$form.find(".form-header").length){
-            $("<div></div>").appendTo(this.$form).addClass("form-header");
-        }
+        this.$formContent = this.$form.find(".form-content > form");
 
-        if (!this.$form.find("div.form-content").length){
-            $("<div></div>").appendTo(this.$form).addClass("form-content").append("<form/>");
-        }
-
-        this.$formHeader = $("div").find(".form-header");
-        this.$formContent = $("div").find(".form-content > form");
+        if (show){ this.showForm() }
 
      }
 
-    this.clearForm = function(){
-        if (this.$formHeader){
-            this.$formHeader.empty();
-        }
-
-        if (this.$formContent){
-            this.$formContent.empty();
+    this.addHeader = function(header, classList){
+        if (classList && Array.isArray(classList)){ classList = classList.join(" ") }
+        if (header){
+            parent.$form.find(".form-header").append(header).addClass(classList);
         }
      }
 
-    this.addHeader = function(header){
-        if (!header){ return }
-        this.$formHeader.append(header);
-     }
+    this.addInput = function(val, id, placeholder, description, tabindex, classList, check){
 
-    this.addInput = function(val, placeholder, tabindex, description){
+        if (classList && Array.isArray(classList)){ classList = classList.join(" ") }
+        if (!check) { check = /.?/; }
 
-        if (!val){ val=undefined }
-        if (!tabindex && tabindex!==0){ tabindex=undefined }
-        description = description ? description : "";
+        if (description){
+            $("<label>"+description+"</label>").appendTo(this.$formContent).addClass(classList);
+        }
 
-        $("<label>"+description+"</label>").appendTo(this.$formContent);
-
-        $("<input/>").appendTo(this.$formContent).attr({
+        var $input = $("<input/>").appendTo(this.$formContent).attr({
             "type": "text",
+            "id": id,
             "placeholder": placeholder,
             "value": val,
             "tabindex": tabindex,
         });
+        // TODO: не ясно как это будет на мобильных работать
+        $input.addClass(classList).bind("keyup change", function(){
+            if (check.test(this.value)){
+                $input.removeClass("noCheck");
+            }
+            else {
+                $input.addClass("noCheck");
+            }
+        });
      }
 
-    this.addSelect = function(val, placeholder, tabindex, description){
+    this.addSelect = function(val, placeholder, tabindex, description, classList){
 
      }
 
-    this.addSelect2 = function(val, placeholder, tabindex, description){
+    this.addSelect2 = function(val, placeholder, tabindex, description, classList){
 
         if (!val || !val.length){ val=[] }
         if (!tabindex && tabindex!==0){ tabindex=undefined }
@@ -91,18 +93,22 @@ var EditableForm = function(id){
 
      }
 
-    this.addRadio = function(val, placeholder, tabindex, description){
+    this.addTextArea = function(val, placeholder, tabindex, description, classList){
 
      }
 
-    this.addCheckbox = function(val, placeholder, tabindex, description){
+    this.addRadio = function(val, placeholder, tabindex, description, classList){
 
      }
 
-    this.addButton = function(val, id, extclass, tabindex, callback){
+    this.addCheckbox = function(val, placeholder, tabindex, description, classList){
+
+     }
+
+    this.addButton = function(val, id, classList, tabindex, callback){
         if (!val){ val=undefined }
         if (!id){ id=undefined }
-        if (!extclass){ extclass=undefined }
+        if (!classList){ classList=undefined }
         if (!tabindex && tabindex!==0){ tabindex=undefined }
 
         $("<input/>").appendTo(this.$formContent).attr({
@@ -110,62 +116,40 @@ var EditableForm = function(id){
             "value": val,
             "id": id,
             "tabindex": tabindex,
-        }).addClass("button").addClass(extclass)
+        }).addClass("button").addClass(classList)
         // TODO: add touch
         .bind("click", callback);        
      }
 
-    this.makeFromJSON = function(str){
+    this.makeFromObj = function(arr){
 
-        try {
-            var json_inp = JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
+        arr = arr ? arr : this.genArr
 
-        // console.log(json_inp, json_inp.inputs)
+        if (!Array.isArray(arr)){ return }
 
-        if (!json_inp.header){json_inp.header = ""}
-        // TODO: check json_inp.inputs is array
-        // if (typeof json_inp.inputs === "undefined"){json_inp.inputs = []}
-
-        this.addHeader(json_inp.header);
-
-        for (var i=0, v=json_inp.inputs; i<json_inp.inputs.length; i++){
-
-            if (v[i].type === "input"){
-                this.addInput(v[i].val, v[i].placeholder, i+1, v[i].description);
-            }
-
-            else if (v[i].type === "select"){
-                this.addSelect(v[i].val, v[i].placeholder, i+1, v[i].description);
-            }
-
-            else if (v[i].type === "select2"){
-                this.addSelect2(v[i].val, v[i].placeholder, i+1, v[i].description);
-            }
-
-            else if (v[i].type === "send"){
-                this.addButton(v[i].val, v[i].id, v[i].extclass, i+1, function(){
-                    console.log("send")
-                });
-            }
-
-            else if (v[i].type === "cancel"){
-                this.addButton(v[i].val, v[i].id, v[i].extclass, i+1, function(){
-                    console.log("cancel")
-                });
-            }
-        }
+        $.each(arr, function(i, v){
+            switch (v.type){
+                case "header":
+                    parent.addHeader(v.text, v.classList);
+                    break;
+                case "input":
+                    parent.addInput(v.val, v.id, v.placeholder, v.description, i, v.classList, v.check);
+                    break;
+            }            
+        })
 
         this.focusFirstField();
+
+     }
+
+    this.fillForm = function(vals){
 
      }
 
     // TODO
     this.focusFirstField = function(){
         // console.log(this.$form.find("input")[0]);
-        // $(this.$form.find("input")[0]).focus();
+        // $this.$form.find("input")[0].focus();
      }
 
     this.showForm = function(){
@@ -177,13 +161,14 @@ var EditableForm = function(id){
      }
 
     this._initForm(id);
+    this.makeFromObj();
  }
 
 var CSSMenu = function(id, arr, show){
     parent = this;
 
     if (!id) {id = "nonamemenu"}
-    if (!show) {show = false}
+    if (!show) {show = true}
 
     this.$container;
     this.$menu;
@@ -279,6 +264,8 @@ var CSSMenu = function(id, arr, show){
 
         arr = arr ? arr : this.genArr
 
+        if (!Array.isArray(arr)){ return }
+
         $.each(arr, function(i, v){
             switch (v.type){
                 case "header":
@@ -334,8 +321,6 @@ var CSSMenu = function(id, arr, show){
      }
 
     this._initMenu();
+    this.makeFromObj();
 
-    if (Array.isArray(this.genArr)){
-        this.makeFromObj();
-     }
  }
