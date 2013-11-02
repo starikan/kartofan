@@ -32,6 +32,20 @@ var EditableForm = function(id, arr, show){
 
      }
 
+    this.checkAllFields = function(){
+        this.$form.find("input").each(function(i, v){
+            var check = $(v).attr("check")
+            var checkReg = new RegExp(check.substring(1, check.length-1));
+
+            if (checkReg.test(v.value)){
+                $(v).removeClass("noCheck");
+            }
+            else {
+                $(v).addClass("noCheck");
+            }
+        })
+     }
+
     this.addHeader = function(header, classList){
         if (classList && Array.isArray(classList)){ classList = classList.join(" ") }
         if (header){
@@ -54,9 +68,11 @@ var EditableForm = function(id, arr, show){
             "placeholder": placeholder,
             "value": val,
             "tabindex": tabindex,
+            "check": check,
         });
         // TODO: не ясно как это будет на мобильных работать
         $input.addClass(classList).bind("keyup change", function(){
+            // var checkReg = new RegExp(check);
             if (check.test(this.value)){
                 $input.removeClass("noCheck");
             }
@@ -143,7 +159,13 @@ var EditableForm = function(id, arr, show){
      }
 
     this.fillForm = function(vals){
+        if (!Array.isArray(vals)){ return }
 
+        $.each(vals, function(i, v){
+            parent.$form.find("#"+v.id).val(v.val);
+        })
+
+        this.checkAllFields();
      }
 
     // TODO

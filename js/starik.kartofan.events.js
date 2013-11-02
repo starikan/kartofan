@@ -200,7 +200,17 @@ var Events = function(){
             { type: "input", val: "", id: "startZoom", placeholder: "", description: "startZoom", check: /^\d+$/},
         ]
 
-        new EditableForm("addMap", genForm);
+        var eform = new EditableForm("addMap", genForm);
+
+        var vals = [
+            { val: "123, 321", id: "tags"},
+            { val: "123, 321", id: "tilesURL"},
+            { val: "123", id: "maxZoom"},
+            { val: "123,", id: "minZoom"},
+            { val: "", id: "startZoom"},
+        ]
+
+        eform.fillForm(vals);
 
      }
 
