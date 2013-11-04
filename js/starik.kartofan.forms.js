@@ -33,15 +33,17 @@ var EditableForm = function(id, arr, show){
      }
 
     this.checkAllFields = function(){
-        this.$form.find("input").each(function(i, v){
-            var check = $(v).attr("check")
+        this.$form.find("input, select").each(function(i, v){
+            var $v = $(v);
+            var check = $v.attr("check")
             if (check){
+                var value = $v.val();
                 var checkReg = new RegExp(check.substring(1, check.length-1));
-                if (checkReg.test(v.value)){
-                    $(v).removeClass("noCheck");
+                if (checkReg.test(value)){
+                    $v.removeClass("noCheck");
                 }
                 else {
-                    $(v).addClass("noCheck");
+                    $v.addClass("noCheck");
                 }                
             }
         })
@@ -54,7 +56,22 @@ var EditableForm = function(id, arr, show){
         if (v.description){
             $("<label>"+v.description+"</label>").appendTo(this.$formContent).addClass(v.classList);
         }        
+        if (!v.options){v.options = []}
+        v.tabindex = this.$formContent.find("input, select").length + 1;
+
         return v;
+     }
+
+    // TODO: не ясно как это будет на мобильных работать
+    this._checkVal = function(v, $item){
+        $item.addClass(v.classList).bind("keyup change", function(){
+            if (v.check){
+                var value = $(this).val();
+                if (v.check.test(value)){ $item.removeClass("noCheck") }
+                else { $item.addClass("noCheck") }                
+            }
+
+        });
      }
 
     this.addHeader = function(v){
@@ -72,25 +89,25 @@ var EditableForm = function(id, arr, show){
             "id": v.id,
             "placeholder": v.placeholder,
             "value": v.val,
-            "tabindex": parent.$formContent.find("input").length,
+            "tabindex": v.tabindex,
             "check": v.check,
         });
-        // TODO: не ясно как это будет на мобильных работать
-        $input.addClass(v.classList).bind("keyup change", function(){
-            if (v.check){
-                if (v.check.test(this.value)){
-                    $input.removeClass("noCheck");
-                }
-                else {
-                    $input.addClass("noCheck");
-                }                
-            }
-
-        });
+        this._checkVal(v, $input);
      }
 
     this.addSelect = function(v){
+        v = this._checkInputAttr(v);
 
+        var $select = $("<select/>").appendTo(this.$formContent).attr({
+            "id": v.id,
+            "value": v.val,
+            "tabindex": v.tabindex,
+            "check": v.check,
+        });
+        $.each(v.options, function(i, v){
+            $("<option>"+v+"</option>").appendTo($select);
+        });
+        this._checkVal(v, $select);
      }
 
     this.addSelect2 = function(val, placeholder, tabindex, description, classList){
@@ -168,6 +185,9 @@ var EditableForm = function(id, arr, show){
                 case "input":
                     parent.addInput(v);
                     break;
+                case "select":
+                    parent.addSelect(v);
+                    break;
             }            
         })
 
@@ -203,11 +223,12 @@ var EditableForm = function(id, arr, show){
 
     this.getAllData = function(){
         var allData = [];
-        this.$form.find("input").each(function(i, v){
+        this.$form.find("input, select").each(function(i, v){
+            var $v = $(v);
             allData.push({
                 "id": v.id,
-                "value": v.value,
-                "checkFlag": !$(v).hasClass("noCheck"),
+                "value": $v.val(),
+                "checkFlag": !$v.hasClass("noCheck"),
             });
         })
         return allData;

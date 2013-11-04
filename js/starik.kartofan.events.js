@@ -190,7 +190,7 @@ var Events = function(){
         var genForm = [
             { type: "header", val: "Active Map Add"},
             { type: "input", val: "", id: "title", description: "title"},
-            { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /.?/},
+            { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /^img|wms$/},
             { type: "input", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
             { type: "input", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
             { type: "input", val: "", id: "src", placeholder: "", description: "src", check: /.?/},
@@ -203,6 +203,7 @@ var Events = function(){
         var eform = new EditableForm("addMap", genForm);
 
         var vals = [
+            { val: "img", id: "server"},
             { val: "", id: "startZoom"},
         ]
 
