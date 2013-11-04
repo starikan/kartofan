@@ -48,34 +48,37 @@ var EditableForm = function(id, arr, show){
 
      }
 
-    this.addHeader = function(header, classList){
-        if (classList && Array.isArray(classList)){ classList = classList.join(" ") }
-        if (header){
-            parent.$form.find(".form-header").append(header).addClass(classList);
+    this._checkInputAttr = function(v){
+        if (v.classList && Array.isArray(v.classList)){ v.classList = v.classList.join(" ") }
+        if (!v.check) { v.check = /.?/; }
+        if (v.description){
+            $("<label>"+v.description+"</label>").appendTo(this.$formContent).addClass(v.classList);
+        }        
+        return v;
+     }
+
+    this.addHeader = function(v){
+        v = this._checkInputAttr(v);
+        if (v.val){
+            parent.$form.find(".form-header").append(v.val).addClass(v.classList);
         }
      }
 
-    this.addInput = function(val, id, placeholder, description, tabindex, classList, check){
-
-        if (classList && Array.isArray(classList)){ classList = classList.join(" ") }
-        if (!check) { check = /.?/; }
-
-        if (description){
-            $("<label>"+description+"</label>").appendTo(this.$formContent).addClass(classList);
-        }
+    this.addInput = function(v){
+        v = this._checkInputAttr(v);
 
         var $input = $("<input/>").appendTo(this.$formContent).attr({
             "type": "text",
-            "id": id,
-            "placeholder": placeholder,
-            "value": val,
-            "tabindex": tabindex,
-            "check": check,
+            "id": v.id,
+            "placeholder": v.placeholder,
+            "value": v.val,
+            "tabindex": parent.$formContent.find("input").length,
+            "check": v.check,
         });
         // TODO: не ясно как это будет на мобильных работать
-        $input.addClass(classList).bind("keyup change", function(){
-            if (check){
-                if (check.test(this.value)){
+        $input.addClass(v.classList).bind("keyup change", function(){
+            if (v.check){
+                if (v.check.test(this.value)){
                     $input.removeClass("noCheck");
                 }
                 else {
@@ -86,7 +89,7 @@ var EditableForm = function(id, arr, show){
         });
      }
 
-    this.addSelect = function(val, placeholder, tabindex, description, classList){
+    this.addSelect = function(v){
 
      }
 
@@ -143,6 +146,16 @@ var EditableForm = function(id, arr, show){
 
     this.makeFromObj = function(arr){
 
+        // v = {
+        //     type: header|input|select|select2,
+        //     val: "value",
+        //     id: "id",
+        //     placeholder: "placeholder",
+        //     check: "regexp to checking the value",
+        //     description: "description",
+        //     options: [] for select options
+        // }
+
         arr = arr ? arr : this.genArr
 
         if (!Array.isArray(arr)){ return }
@@ -150,10 +163,10 @@ var EditableForm = function(id, arr, show){
         $.each(arr, function(i, v){
             switch (v.type){
                 case "header":
-                    parent.addHeader(v.text, v.classList);
+                    parent.addHeader(v);
                     break;
                 case "input":
-                    parent.addInput(v.val, v.id, v.placeholder, v.description, i, v.classList, v.check);
+                    parent.addInput(v);
                     break;
             }            
         })

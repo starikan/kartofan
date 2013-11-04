@@ -188,12 +188,12 @@ var Events = function(){
         var mapNum = opt.getOption("current", "activeMap");
 
         var genForm = [
-            { type: "header", text: "Active Map Add"},
+            { type: "header", val: "Active Map Add"},
+            { type: "input", val: "", id: "title", description: "title"},
+            { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /.?/},
             { type: "input", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
             { type: "input", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
             { type: "input", val: "", id: "src", placeholder: "", description: "src", check: /.?/},
-            { type: "input", val: "", id: "server", placeholder: "", description: "server", check: /.?/},
-            { type: "input", val: "", id: "title", placeholder: "", description: "title", check: /.?/},
             { type: "input", val: "", id: "tilesURL", placeholder: "", description: "tilesURL", check: /.?/},
             { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
             { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
@@ -203,10 +203,6 @@ var Events = function(){
         var eform = new EditableForm("addMap", genForm);
 
         var vals = [
-            { val: "123, 321", id: "tags"},
-            { val: "123, 321", id: "tilesURL"},
-            { val: "123", id: "maxZoom"},
-            { val: "123,", id: "minZoom"},
             { val: "", id: "startZoom"},
         ]
 
