@@ -192,7 +192,7 @@ var Events = function(){
             { type: "header", val: "Active Map Add"},
             { type: "input", val: "", id: "title", description: "title"},
             { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /^img|wms$/},
-            { type: "select2tags", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
+            { type: "select2tags", val: "", id: "tags", options: ["tag1", "tag2"], description: "tags", check: /.?/},
             { type: "select2", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
             { type: "select", val: "", id: "src", options: ["Internet", "Storage", "Local"], description: "src", check: /^Internet|Storage|Local$/},
             { type: "input", val: "", id: "tilesURL", placeholder: "", description: "tilesURL", check: /.?/},

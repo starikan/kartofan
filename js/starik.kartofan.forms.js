@@ -104,37 +104,41 @@ var EditableForm = function(id, arr, show){
             "tabindex": v.tabindex,
             "check": v.check,
         });
+        
         $.each(v.options, function(i, v){
             $("<option>"+v+"</option>").appendTo($select);
         });
+
         this._checkVal(v, $select);
+
+        return $select;
      }
 
-    this.addSelect2 = function(val, placeholder, tabindex, description, classList){
+    this.addSelect2 = function(v){
 
-        if (!val || !val.length){ val=[] }
-        if (!tabindex && tabindex!==0){ tabindex=undefined }
-
-        $("<label>"+description+"</label>").appendTo(this.$formContent);
-
-        var $select = $("<select/>").appendTo(this.$formContent).attr({
-            "tabindex": tabindex,    
-        });;
-
-        $.each(val, function(i,v){
-            var $elem = $("<option/>")
-            $elem.append(v);
-            $select.append($elem);
-        });
+        var $select = this.addSelect(v)
 
         $select.select2({
-            "placeholder": placeholder,
+            "placeholder": v.placeholder,
         });
+
+        this._checkVal(v, $select);
 
      }
 
     this.addSelect2Tags = function(v){
+        v = this._checkInputAttr(v);
 
+        var $tags = $("<input/>").appendTo(this.$formContent).attr({
+            "id": v.id,
+            "tabindex": v.tabindex,
+            "check": v.check,
+            "value": v.options,
+        })
+
+        $tags.select2({ tags: [] });
+
+        this._checkVal(v, $tags);
      }
 
     this.addTextArea = function(v){
@@ -192,7 +196,13 @@ var EditableForm = function(id, arr, show){
                 case "select":
                     parent.addSelect(v);
                     break;
-            }            
+                case "select2":
+                    parent.addSelect2(v);
+                    break;            
+                case "select2tags":
+                    parent.addSelect2Tags(v);
+                    break;            
+            }   
         })
 
         this.checkAllFields();
