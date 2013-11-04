@@ -186,14 +186,15 @@ var Events = function(){
     this.addActiveMapToStorage = function(){
         var maps = opt.getOption("maps");
         var mapNum = opt.getOption("current", "activeMap");
+        var mapData = window[mapNum].mapTilesLayer.mapData;
 
         var genForm = [
             { type: "header", val: "Active Map Add"},
             { type: "input", val: "", id: "title", description: "title"},
             { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /^img|wms$/},
-            { type: "input", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
-            { type: "input", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
-            { type: "input", val: "", id: "src", placeholder: "", description: "src", check: /.?/},
+            { type: "select2tags", val: "", id: "tags", placeholder: "", description: "tags", check: /.?/},
+            { type: "select2", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
+            { type: "select", val: "", id: "src", options: ["Internet", "Storage", "Local"], description: "src", check: /^Internet|Storage|Local$/},
             { type: "input", val: "", id: "tilesURL", placeholder: "", description: "tilesURL", check: /.?/},
             { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
             { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
@@ -202,14 +203,9 @@ var Events = function(){
 
         var eform = new EditableForm("addMap", genForm);
 
-        var vals = [
-            { val: "img", id: "server"},
-            { val: "", id: "startZoom"},
-        ]
+        eform.fillForm(mapData);
 
-        eform.fillForm(vals);
-
-        console.log(eform.getAllData());
+        console.log(mapData, eform.getAllData());
      }
 
  }

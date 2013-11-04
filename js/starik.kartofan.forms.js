@@ -133,15 +133,19 @@ var EditableForm = function(id, arr, show){
 
      }
 
-    this.addTextArea = function(val, placeholder, tabindex, description, classList){
+    this.addSelect2Tags = function(v){
 
      }
 
-    this.addRadio = function(val, placeholder, tabindex, description, classList){
+    this.addTextArea = function(v){
 
      }
 
-    this.addCheckbox = function(val, placeholder, tabindex, description, classList){
+    this.addRadio = function(v){
+
+     }
+
+    this.addCheckbox = function(v){
 
      }
 
@@ -198,11 +202,20 @@ var EditableForm = function(id, arr, show){
      }
 
     this.fillForm = function(vals){
-        if (!Array.isArray(vals)){ return }
+        if (Array.isArray(vals)){ 
+            // [ { val: "img", id: "server"}, ]
+            $.each(vals, function(i, v){
+                parent.$form.find("#"+v.id).val(v.val);
+            })
+        } 
+        else if (vals) {
+            // {server: "img"}
+            $.each(vals, function(i, v){
+                parent.$form.find("#"+i).val(v);
+            })            
+        }
 
-        $.each(vals, function(i, v){
-            parent.$form.find("#"+v.id).val(v.val);
-        })
+
 
         this.checkAllFields();
      }
