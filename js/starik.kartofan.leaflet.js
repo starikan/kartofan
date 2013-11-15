@@ -176,6 +176,7 @@ var LeafletMap = function(mapId){
             center: latlng,
             zoom: zoom,
             inertia: false,
+            doubleClickZoom: false,
         });
 
         this.map.on("zoomend", function(e){ parent.onZoomEnd(); });

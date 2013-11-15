@@ -199,6 +199,10 @@ var Events = function(){
             { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
             { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
             { type: "input", val: "", id: "startZoom", placeholder: "", description: "startZoom", check: /^\d+$/},
+            { type: "button", val: "Submit", id: "submit", callback: function(form){
+                console.log(form.getAllData());
+            }},
+            // { type: "button", val: "Cancel", id: "cancel", callback: function(this){console.log(this)}},
         ];
 
         var eform = new EditableForm("addMap", genForm);

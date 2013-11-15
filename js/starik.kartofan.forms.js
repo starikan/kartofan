@@ -12,6 +12,8 @@ var EditableForm = function(id, arr, show){
     this.$form;
     this.$formContent;
 
+    this.fields = [];
+
     this._initForm = function(id){
 
         var $id = "#"+id;
@@ -84,7 +86,7 @@ var EditableForm = function(id, arr, show){
     this.addInput = function(v){
         v = this._checkInputAttr(v);
 
-        var $input = $("<input/>").appendTo(this.$formContent).attr({
+        var $input = $("<input/>").attr({
             "type": "text",
             "id": v.id,
             "placeholder": v.placeholder,
@@ -92,24 +94,29 @@ var EditableForm = function(id, arr, show){
             "tabindex": v.tabindex,
             "check": v.check,
         });
+        $input.appendTo(this.$formContent);
         this._checkVal(v, $input);
+        this.fields.push($input);
      }
 
     this.addSelect = function(v){
         v = this._checkInputAttr(v);
 
-        var $select = $("<select/>").appendTo(this.$formContent).attr({
+        var $select = $("<select/>").attr({
             "id": v.id,
             "value": v.val,
             "tabindex": v.tabindex,
             "check": v.check,
         });
         
+        $select.appendTo(this.$formContent);
+
         $.each(v.options, function(i, v){
             $("<option>"+v+"</option>").appendTo($select);
         });
 
         this._checkVal(v, $select);
+        this.fields.push($select);
 
         return $select;
      }
@@ -121,6 +128,7 @@ var EditableForm = function(id, arr, show){
         $select.select2({
             "placeholder": v.placeholder,
         });
+        $select.select2("val", v.val);
 
         this._checkVal(v, $select);
 
@@ -139,6 +147,7 @@ var EditableForm = function(id, arr, show){
         $tags.select2({ tags: [] });
 
         this._checkVal(v, $tags);
+        this.fields.push($tags);
      }
 
     this.addTextArea = function(v){
@@ -153,20 +162,21 @@ var EditableForm = function(id, arr, show){
 
      }
 
-    this.addButton = function(val, id, classList, tabindex, callback){
-        if (!val){ val=undefined }
-        if (!id){ id=undefined }
-        if (!classList){ classList=undefined }
-        if (!tabindex && tabindex!==0){ tabindex=undefined }
+    this.addButton = function(v){
+        v = this._checkInputAttr(v);
 
-        $("<input/>").appendTo(this.$formContent).attr({
-            "type": "submit",
-            "value": val,
-            "id": id,
-            "tabindex": tabindex,
-        }).addClass("button").addClass(classList)
+        var $button = $("<input/>").appendTo(this.$formContent).attr({
+            "type": "button",
+            "value": v.val,
+            "id": v.id,
+            "tabindex": v.tabindex,
+        })
+        $button.addClass("button")
+
         // TODO: add touch
-        .bind("click", callback);        
+        $button.bind("click", function(){v.callback(parent)});
+
+        this._checkVal(v, $button);
      }
 
     this.makeFromObj = function(arr){
@@ -178,7 +188,8 @@ var EditableForm = function(id, arr, show){
         //     placeholder: "placeholder",
         //     check: "regexp to checking the value",
         //     description: "description",
-        //     options: [] for select options
+        //     options: [] for select options, tags
+        //     callback: callback function
         // }
 
         arr = arr ? arr : this.genArr
@@ -202,6 +213,9 @@ var EditableForm = function(id, arr, show){
                 case "select2tags":
                     parent.addSelect2Tags(v);
                     break;            
+                case "button":
+                    parent.addButton(v);
+                    break; 
             }   
         })
 
@@ -212,20 +226,18 @@ var EditableForm = function(id, arr, show){
      }
 
     this.fillForm = function(vals){
-        if (Array.isArray(vals)){ 
-            // [ { val: "img", id: "server"}, ]
-            $.each(vals, function(i, v){
-                parent.$form.find("#"+v.id).val(v.val);
-            })
-        } 
-        else if (vals) {
+        if (vals) {
             // {server: "img"}
-            $.each(vals, function(i, v){
-                parent.$form.find("#"+i).val(v);
+            $.each(vals, function(i, vi){
+                $.each(parent.fields, function(j, vj){
+                    if (vj.attr("id") == i){
+                        vj.val(vi);
+                        vj.select2("val", vi)
+                        console.log(vi)
+                    }
+                })
             })            
         }
-
-
 
         this.checkAllFields();
      }
@@ -246,13 +258,13 @@ var EditableForm = function(id, arr, show){
 
     this.getAllData = function(){
         var allData = [];
-        this.$form.find("input, select").each(function(i, v){
+        $.each(this.fields, function(i, v){
             var $v = $(v);
             allData.push({
-                "id": v.id,
+                "id": v.attr("id"),
                 "value": $v.val(),
                 "checkFlag": !$v.hasClass("noCheck"),
-            });
+            });            
         })
         return allData;
      }
