@@ -22,11 +22,20 @@ var LeafletMap = function(mapId){
 
     this.map;
 
+    this.$map = $("#"+this.mapId);
+    this.$allMaps = $("div.mapContainer > .maps")
+
     this.zoomControl;
     this.scaleControl;
     this.copyrightControl;
     this.nameControl;
     this.zoomLevelControl;
+
+    this.onFocusMap = function(){
+        opt.setOption("current", "activeMap", mapId);
+        parent.$allMaps.removeClass("activemap");
+        parent.$map.addClass("activemap");
+     }
 
     this.moveAllMaps = function(latlng){
         for (var i = 0; i < parent.instances.length; i++) {
@@ -35,8 +44,6 @@ var LeafletMap = function(mapId){
      }
 
     this.onClickMap = function(e){
-        opt.setOption("current", "activeMap", mapId);
-
         // TODO: проверить как это будет работать в ИЕ и Лисе
         // Move all maps when mousewhell pressed
         if (e.originalEvent.button == 1){
@@ -190,6 +197,7 @@ var LeafletMap = function(mapId){
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
         // TODO: touch
         this.map.on("mousedown", this.onClickMap);
+        this.map.on("focus", this.onFocusMap);
 
         this._setMapControls();
         this.updateMapControls();
