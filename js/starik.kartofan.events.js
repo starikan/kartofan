@@ -188,28 +188,24 @@ var Events = function(){
         var mapNum = opt.getOption("current", "activeMap");
         var mapData = window[mapNum].mapTilesLayer.mapData;
 
-        var genForm = [
-            { type: "header", val: "Active Map Add"},
-            { type: "input", val: "", id: "title", description: "title"},
-            { type: "select", val: "img", options: ["img", "wms"], id: "server", description: "server", check: /^img|wms$/},
-            { type: "select2tags", val: "", id: "tags", options: ["tag1", "tag2"], description: "tags", check: /.?/},
-            { type: "select2", val: "", id: "group", placeholder: "", description: "group", check: /.?/},
-            { type: "select", val: "", id: "src", options: ["Internet", "Storage", "Local"], description: "src", check: /^Internet|Storage|Local$/},
-            { type: "input", val: "", id: "tilesURL", placeholder: "", description: "tilesURL", check: /.?/},
-            { type: "input", val: "", id: "maxZoom", placeholder: "", description: "maxZoom", check: /^\d+$/},
-            { type: "input", val: "", id: "minZoom", placeholder: "", description: "minZoom", check: /^\d+$/},
-            { type: "input", val: "", id: "startZoom", placeholder: "", description: "startZoom", check: /^\d+$/},
-            { type: "button", val: "Submit", id: "submit", callback: function(form){
-                console.log(form.getAllData());
-            }},
-            // { type: "button", val: "Cancel", id: "cancel", callback: function(this){console.log(this)}},
-        ];
+        var eformFunc = {
+            "submit": {
+                "events": "click",
+                "callback": function(form){form.getAllData(); form.hideForm();}
+            },
+            "cancel": {
+                "events": "click",
+                "callback": function(form){form.hideForm();}                
+            }
+        }
+        
+        $.getJSON("json/active_map_add_form.json", function(eformFields){
+            console.log(eformFields)
+            eform = new EditableForm("addMap", eformFields, eformFunc);
+            eform.fillForm(mapData);
+            console.log(eform.allData);
+        });
 
-        var eform = new EditableForm("addMap", genForm);
-
-        eform.fillForm(mapData);
-
-        console.log(mapData, eform.getAllData());
      }
 
  }

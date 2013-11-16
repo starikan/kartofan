@@ -1,18 +1,22 @@
 "use strict"
 
-var EditableForm = function(id, arr, show){
+var EditableForm = function(id, arr, funcs, show){
     
     parent = this;
 
-    if (!id) {id = "eform"}
-    if (!show) {show = true}
+    if (!id) {id = "eform"};
+    if (!show) {show = true};
+    if (!funcs) {funcs = {}};
 
-    this.genArr = arr;
+    this.arr = arr;
+    this.funcs = funcs;
 
     this.$form;
     this.$formContent;
 
     this.fields = [];
+
+    this.allData;
 
     this._initForm = function(id){
 
@@ -23,12 +27,12 @@ var EditableForm = function(id, arr, show){
         }
 
         this.$form = $("div"+$id);
-        this.$form.empty().addClass("cssform hide");
+        this.$form.empty().addClass("eform hide");
 
-        $("<div></div>").appendTo(this.$form).addClass("form-header");
-        $("<div></div>").appendTo(this.$form).addClass("form-content").append("<form/>");
+        $("<div></div>").appendTo(this.$form).addClass("eform-header");
+        $("<div></div>").appendTo(this.$form).addClass("eform-content").append("<form/>");
 
-        this.$formContent = this.$form.find(".form-content > form");
+        this.$formContent = this.$form.find(".eform-content > form");
 
         if (show){ this.showForm() }
 
@@ -59,6 +63,7 @@ var EditableForm = function(id, arr, show){
             $("<label>"+v.description+"</label>").appendTo(this.$formContent).addClass(v.classList);
         }        
         if (!v.options){v.options = []}
+        v.check = v.check ? new RegExp(v.check) : new RegExp(".?");
         v.tabindex = this.$formContent.find("input, select").length + 1;
 
         return v;
@@ -76,10 +81,13 @@ var EditableForm = function(id, arr, show){
         });
      }
 
+
+    // ***** ADDING FIELDS ******
+
     this.addHeader = function(v){
         v = this._checkInputAttr(v);
         if (v.val){
-            parent.$form.find(".form-header").append(v.val).addClass(v.classList);
+            parent.$form.find(".eform-header").append(v.val).addClass(v.classList);
         }
      }
 
@@ -162,7 +170,7 @@ var EditableForm = function(id, arr, show){
 
      }
 
-    this.addButton = function(v){
+    this.addButton = function(v, f){
         v = this._checkInputAttr(v);
 
         var $button = $("<input/>").appendTo(this.$formContent).attr({
@@ -170,16 +178,24 @@ var EditableForm = function(id, arr, show){
             "value": v.val,
             "id": v.id,
             "tabindex": v.tabindex,
-        })
-        $button.addClass("button")
+        });
+        $button.addClass("button");
 
         // TODO: add touch
-        $button.bind("click", function(){v.callback(parent)});
+        try {
+            $button.bind(f.events, function(){f.callback(parent)});
+        }
+        catch(e){
+            console.log(e);
+        };
 
         this._checkVal(v, $button);
      }
 
-    this.makeFromObj = function(arr){
+
+    // ******* MAKE FORM *******
+
+    this.makeFromObj = function(arr, funcs){
 
         // v = {
         //     type: header|input|select|select2,
@@ -192,29 +208,31 @@ var EditableForm = function(id, arr, show){
         //     callback: callback function
         // }
 
-        arr = arr ? arr : this.genArr
+        arr = arr ? arr : this.arr;
+        funcs = funcs ? funcs : this.funcs;
 
         if (!Array.isArray(arr)){ return }
 
         $.each(arr, function(i, v){
+            var f = funcs[v.id]
             switch (v.type){
                 case "header":
-                    parent.addHeader(v);
+                    parent.addHeader(v, f);
                     break;
                 case "input":
-                    parent.addInput(v);
+                    parent.addInput(v, f);
                     break;
                 case "select":
-                    parent.addSelect(v);
+                    parent.addSelect(v, f);
                     break;
                 case "select2":
-                    parent.addSelect2(v);
+                    parent.addSelect2(v, f);
                     break;            
                 case "select2tags":
-                    parent.addSelect2Tags(v);
+                    parent.addSelect2Tags(v, f);
                     break;            
                 case "button":
-                    parent.addButton(v);
+                    parent.addButton(v, f);
                     break; 
             }   
         })
@@ -233,7 +251,7 @@ var EditableForm = function(id, arr, show){
                     if (vj.attr("id") == i){
                         vj.val(vi);
                         vj.select2("val", vi)
-                        console.log(vi)
+                        // console.log(vi)
                     }
                 })
             })            
@@ -266,6 +284,7 @@ var EditableForm = function(id, arr, show){
                 "checkFlag": !$v.hasClass("noCheck"),
             });            
         })
+        this.allData = allData;
         return allData;
      }
 
@@ -282,7 +301,7 @@ var CSSMenu = function(id, arr, show){
     this.$container;
     this.$menu;
 
-    this.genArr = arr;
+    this.arr = arr;
 
     this._initMenu = function(){
         var $id = "#"+id;
@@ -371,7 +390,7 @@ var CSSMenu = function(id, arr, show){
 
     this.makeFromObj = function(arr){
 
-        arr = arr ? arr : this.genArr
+        arr = arr ? arr : this.arr;
 
         if (!Array.isArray(arr)){ return }
 
