@@ -187,11 +187,32 @@ var Events = function(){
         var maps = opt.getOption("maps");
         var mapNum = opt.getOption("current", "activeMap");
         var mapData = window[mapNum].mapTilesLayer.mapData;
+        mapData.id = window[mapNum].mapTilesLayer.mapName;
+
+        var submitFunc = function(form){
+            form.getAllData(); 
+            if (!form.checkForm){
+                // TODO: локализация
+                alert("Errors in form! Check values.");
+                return;
+            }
+
+            if (opt.getOption("maps", form.allData.val.id)){
+                // TODO: локализация
+                if (!confirm("Такая карта уже есть. Перезаписать.")) {
+                    return;
+                }
+            }
+
+            form.hideForm();
+            opt.setOption("maps", form.allData.val.id, form.allData.val)
+            console.log(form.allData.val.id, opt.getOption("maps", form.allData.val.id));            
+        }
 
         var eformFunc = {
             "submit": {
                 "events": "click",
-                "callback": function(form){form.getAllData(); form.hideForm();}
+                "callback": submitFunc,
             },
             "cancel": {
                 "events": "click",

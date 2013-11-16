@@ -17,6 +17,7 @@ var EditableForm = function(id, arr, funcs, show){
     this.fields = [];
 
     this.allData;
+    this.checkForm = true;
 
     this._initForm = function(id){
 
@@ -39,6 +40,7 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this.checkAllFields = function(){
+        this.checkForm = true;
         this.$form.find("input, select").each(function(i, v){
             var $v = $(v);
             var check = $v.attr("check")
@@ -49,6 +51,7 @@ var EditableForm = function(id, arr, funcs, show){
                     $v.removeClass("noCheck");
                 }
                 else {
+                    parent.checkForm = false;
                     $v.addClass("noCheck");
                 }                
             }
@@ -275,14 +278,15 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this.getAllData = function(){
-        var allData = [];
+        var allData = {
+            "val": {},
+            "check": {},
+        };
+        this.checkAllFields();
         $.each(this.fields, function(i, v){
             var $v = $(v);
-            allData.push({
-                "id": v.attr("id"),
-                "value": $v.val(),
-                "checkFlag": !$v.hasClass("noCheck"),
-            });            
+            allData.val[v.attr("id")] = $v.val();
+            allData.check[v.attr("id")] = !$v.hasClass("noCheck");
         })
         this.allData = allData;
         return allData;

@@ -6,6 +6,12 @@
     { 
         "type": "input",
         "val": "", 
+        "id": "id", 
+        "description": "id"
+    },
+    { 
+        "type": "input",
+        "val": "", 
         "id": "title", 
         "description": "title"
     },

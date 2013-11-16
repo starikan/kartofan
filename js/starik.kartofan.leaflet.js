@@ -316,7 +316,7 @@ var LeafletTiles = function(mapName, mapData){
 
     this.setLayer = function(mapName, mapData){
 
-        this.mapName = mapName ? mapName : this.mapName ? this.mapName : true;
+        this.mapName = mapName ? mapName : this.mapName ? this.mapName : "unknown";
 
         this.mapData = mapData ? mapData : this.mapData ? this.mapData : opt.getOption("maps", this.mapName) ? opt.getOption("maps", this.mapName) : {};
 
