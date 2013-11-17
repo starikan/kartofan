@@ -23,7 +23,7 @@ var Options = function(container){
         "mapExternalFeeds": ["json/maps.json"],
 
         "hashChange": true,
-        "resetToDefaultIаHashClear": true,
+        "resetToDefaultIfHashClear": true,
 
         "viewControlsZoom": true,
         "viewControlsZoomPosition": "topleft",
@@ -178,11 +178,20 @@ var Options = function(container){
 
         var hash = window.location.hash;
 
+        // If clear hash and resetToDefaultIfHashClear == true set to default latlng
+        if (!hash && parent.getOption("global", "resetToDefaultIfHashClear")){
+            this.setOption("current", "mapCenterLatLng", parent.getOption("global", "mapDefaultCenterLatLng"));
+            return;
+        }
+
         try {
             var latlng = L.latLng(hash.split("#").pop().split(","))
             this.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);
         }
-        catch (e) {}
+        catch (e) {
+            window.location.hash = "badCoords";
+            this.setOption("current", "mapCenterLatLng", parent.getOption("global", "mapDefaultCenterLatLng"));
+        }
 
      }    
 
