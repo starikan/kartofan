@@ -36,7 +36,7 @@ var Events = function(){
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             parent.closeContextMenu();
-            parent.addActiveMapToStorage();
+            parent.addMapToStorage();
         } },
         { type: "line", text: "Edit Map Data" },
         { type: "paragraf", text: "Stage" },
@@ -75,31 +75,6 @@ var Events = function(){
     $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", this.closeAllModal);
     window.oncontextmenu = this.openContextMenu;
 
-
-    // FORMS IN MAINMENU
-    // this.formJSON = {
-    //     header: "Заголовок",
-    //     inputs: [
-    //         {type: "input", val: "", placeholder: "text", description: "description"},
-    //         {type: "input", val: "", placeholder: "text", description: "description"},
-    //         {type: "input", val: "", placeholder: "text", description: "description"},
-    //         {type: "input", val: "", placeholder: "text", description: "description"},
-    //         {type: "select", val: ["123", "321"], placeholder: "text", description: "description"},
-    //         {type: "select2", val: ["123", "321"], placeholder: "text", description: "description"},
-    //         {type: "send", val: "send", id: "sendForm", extclass: "sendForm"},
-    //         {type: "cancel", val: "cancel", id: "cancelForm", extclass: "cancelForm"},            
-    //     ],
-    //  }    
-
-    // this.contextMenuGlobalOptions = function(){
-    //     parent.closeContextMenu();
-
-    //     eform.clearForm();
-    //     eform.makeFromJSON(JSON.stringify(parent.formJSON));
-    //     eform.showForm();
-    //  }
-    // // TODO: touch event
-    // $("#optionsGlobal").bind("click", this.contextMenuGlobalOptions);
 
 
     // ********** SET MAP **********
@@ -183,11 +158,21 @@ var Events = function(){
         });
      }
 
-    this.addActiveMapToStorage = function(){
+    this.addMapToStorage = function(mapId){
+
         var maps = opt.getOption("maps");
-        var mapNum = opt.getOption("current", "activeMap");
-        var mapData = window[mapNum].mapTilesLayer.mapData;
-        mapData.id = window[mapNum].mapTilesLayer.mapName;
+        var mapData;
+
+        // If no mapId get active map
+        if (!mapId){
+            var mapNum = opt.getOption("current", "activeMap");
+            mapData = window[mapNum].mapTilesLayer.mapData;
+            mapData.id = window[mapNum].mapTilesLayer.mapName;
+        }
+        else {
+            mapData = opt.getOption("maps", mapId);
+            mapData.id = mapData.id ? mapData.id : mapId;
+        }
 
         var submitFunc = function(form){
             form.getAllData(); 
@@ -207,7 +192,7 @@ var Events = function(){
             form.hideForm();
             opt.setOption("maps", form.allData.val.id, form.allData.val)
             console.log(form.allData.val.id, opt.getOption("maps", form.allData.val.id));            
-        }
+         }
 
         var eformFunc = {
             "submit": {
@@ -218,14 +203,14 @@ var Events = function(){
                 "events": "click",
                 "callback": function(form){form.hideForm();}                
             }
-        }
+         }
         
         $.getJSON("json/active_map_add_form.json", function(eformFields){
             console.log(eformFields)
             eform = new EditableForm("addMap", eformFields, eformFunc);
             eform.fillForm(mapData);
             console.log(eform.allData);
-        });
+         });
 
      }
 

@@ -81,7 +81,7 @@
     },
     { 
         "type": "button", 
-        "val": "Submit", 
+        "val": "Add Map", 
         "id": "submit"
     },
     { 

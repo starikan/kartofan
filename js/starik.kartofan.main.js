@@ -1,7 +1,9 @@
 "use strict"
 
 var eform;      // Main Form
-var opt;        // Options
 var mapvents;   // Events
+var stage;
 
-var stage = new StageMaps("container");
+var opt = new Options("container");        // Options
+
+

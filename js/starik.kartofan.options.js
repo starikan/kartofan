@@ -1,12 +1,13 @@
 "use strict"
 
-var Options = function(){
+var Options = function(container){
 
     var parent = this;
 
     // ********* ALL SETTINGS ************
 
-    var sets = ["html", "global", "current", "stages", "places", "maps"];
+    this.bases = ["html", "global", "current", "stages", "places", "maps"];
+    this.basesLoaded = 0;
 
     // TODO: create function to set this
     this.html = {
@@ -22,6 +23,7 @@ var Options = function(){
         "mapExternalFeeds": ["json/maps.json"],
 
         "hashChange": true,
+        "resetToDefaultIаHashClear": true,
 
         "viewControlsZoom": true,
         "viewControlsZoomPosition": "topleft",
@@ -64,89 +66,64 @@ var Options = function(){
 
     this.places = {}
 
-    this.maps = {
-        "cloudmate": {
-            tags: ["0. Online Maps"],
-            group: "0. Online Maps",
-            src: "Internet",
-            server: "img",
-            title: 'Cloudmate',
-            tilesURL: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-            maxZoom: 15,
-            minZoom: 0,
-            startZoom: 5,
-        },
-     };
+    this.maps = {};
 
-    this.setWatch = function(collection){
-        watch(parent[collection], function(option, action, newvalue, oldvalue){
-            // console.log(option, action, newvalue, oldvalue, _.has(parent[collection], option), collection, option);
-            if (_.has(parent[collection], option)){
-                // console.log("in")
-                parent.setOption(collection, option, newvalue);
-            }
-            else {
-                // console.log("out")
-                $.each(parent[collection], function(option, newvalue){
-                    parent.setOption(collection, option, newvalue);
-                })
-            }
-        })
-     }
+    this.db = {}
 
-    $.each(sets, function(i,v){
-        parent.setWatch(v);
-     })
 
     // ********* POUCHDB *************
-    this.initBase = function(collection){
+    this._initBase = function(collection){
         return new Pouch(collection, {}, function(){
-            if (parent.global.dbSyncIn){
-                parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {}, function(){
-                    parent.configureBase(collection);
-                });                
-            }
-            else {
-                parent.configureBase(collection);
-            }
-        })
-     };
+            parent.db[collection].allDocs({include_docs: true}, function(err, doc){
 
-    this.configureBase = function(collection){
+                $.each(doc.rows, function(i, v){
+                    parent[collection][v.id] = v.doc.val;
+                });
 
-        // Base init
-        $.each(parent[collection], function(i, v){
-            parent.db[collection].get(i, function(err, doc){
-                if (doc){
-                    parent[collection][i] = doc.val;
-                }
-                else {
-                    parent.setOption(collection, i, v);
-                }
+                parent.basesLoaded++;
+
+                parent._initSync();
+                parent._initStage();
             })
         })
-
-        // Replicate
-        if (parent.global.dbSyncOut){
-            for (var i in parent.global.dbExtServer){
-                parent.db[collection].replicate.to(parent.global.dbExtServerMain + collection, {continuous: true});
-            }
-        }        
      };
 
-    this.db = {
-        html: parent.initBase("html"),
-        global: parent.initBase("global"),
-        stages: parent.initBase("stages"),
-        places: parent.initBase("places"),
-        maps: parent.initBase("maps"),
-        current: parent.initBase("current"),
+    this._initSync = function(){
+        if (this.basesLoaded == this.bases.length){ 
+            // if (parent.global.dbSyncIn){
+            //     parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {}, function(){
+            //         parent.configureBase(collection);
+            //     });                
+            // }
+            // else {
+            //     parent.configureBase(collection);
+            // }
+
+    //     // Replicate
+    //     if (parent.global.dbSyncOut){
+    //         for (var i in parent.global.dbExtServer){
+    //             parent.db[collection].replicate.to(parent.global.dbExtServerMain + collection, {continuous: true});
+    //             // parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {continuous: true});
+    //         }
+    //     }  
+
+        }
      }
 
-    // TODO: написать
-    this.initOptions = function(){
-        this.getHash();
+    this._initStage = function(){
+        if (this.basesLoaded == this.bases.length){ 
+            this.getHash();
+            container = container ? container : this.getOption("html", "containerAllMapsId");
+            window.stage = new StageMaps(container);
+        }
      }
+
+    this._init = function(){
+        $.each(this.bases, function(i, v){
+            parent.db[v] = parent._initBase(v);
+        })
+     }
+
 
     // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
     // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
@@ -155,6 +132,7 @@ var Options = function(){
      }     
 
     this.setOption = function(collection, option, value){
+
         // JS object
         this[collection][option] = value;
 
@@ -181,6 +159,8 @@ var Options = function(){
         return this[collection][option];
      }
 
+    // *************** HASH ****************
+
     this.setHash = function(){
         
         if (!this.getOption("global", "hashChange") || !this.getOption("global", "mapSyncMoving")) { 
@@ -206,6 +186,6 @@ var Options = function(){
 
      }    
 
-    this.initOptions();
+    this._init();
 
  }

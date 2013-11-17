@@ -10,7 +10,7 @@ http://tympanus.net/Development/DynamicGrid/ - динамическая табл
 USAGE:
 http://ivaynberg.github.io/select2/
 https://github.com/melanke/Watch.JS
-http://www.quirksmode.org/dom/events/contextmenu.html - conrext menu event browsers support
+http://www.quirksmode.org/dom/events/contextmenu.html - context menu event browsers support
 
 
 ToAdd:
@@ -59,3 +59,63 @@ TODO:
 - Сделать что-то тиа календаря событий, можно на внешнем API
 - попробовать сделать маркет в виде стрелосчки с подписями, чтобы можно было отображать карты войн. И что-то типа динамических картинок, для поэтапного показывания маркеров (всеже это наверное должны делать KML слои)
 - если карта меньше определенного размера то убирать навесные элементы (навесить на функцию ресайза)
+- кэш карт 
+    * https://groups.google.com/forum/#!topic/pouchdb/3CAU93puheE
+    * http://stackoverflow.com/questions/14113278/storing-image-data-for-offline-web-application-client-side-storage-database
+    * http://stackoverflow.com/questions/16721312/using-pouchdb-as-an-offline-raster-map-cache
+    * https://github.com/tbicr/OfflineMap
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WatchJS
+
+    this.setWatch = function(collection){
+        watch(parent[collection], function(option, action, newvalue, oldvalue){
+            console.log(option, action, newvalue, oldvalue, _.has(parent[collection], option), collection);
+            if (_.has(parent[collection], option)){
+                // console.log("in")
+                parent.setOption(collection, option, newvalue);
+            }
+            else {
+                // console.log("out")
+                $.each(parent[collection], function(option, newvalue){
+                    parent.setOption(collection, option, newvalue);
+                })
+            }
+        })
+     }
+
+    $.each(sets, function(i,v){
+        parent.setWatch(v);
+     })
