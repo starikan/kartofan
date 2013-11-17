@@ -310,6 +310,7 @@ var LeafletTiles = function(mapName, mapData){
             this.layer = L.tileLayer(this.mapData.tilesURL, {
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
+                key: function(data){return "a"}
             });
         }
      }

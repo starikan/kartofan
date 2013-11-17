@@ -8,7 +8,7 @@ var Options = function(container){
 
     this.bases = ["html", "global", "current", "stages", "places", "maps"];
     this.basesLoaded = 0;
-    this.basesSyncedIn = 0;
+    // this.basesSyncedIn = 0;
 
     // TODO: create function to set this
     this.html = {
@@ -97,7 +97,8 @@ var Options = function(container){
                     $.each(parent.bases, function(i, v){
                         parent.db[v].replicate.to(vOut + v, {
                             continuous: true, 
-                            onChange: function(data){ console.log(data) },
+                            // TODO: усли ошибка то выводить предупреждение
+                            // onChange: function(data){ console.log(data) },
                         });
                     })
                 })
@@ -107,7 +108,9 @@ var Options = function(container){
                 var baseMain = parent.getOption("global","dbExtServerIn");
                 $.each(parent.bases, function(i, v){
                     parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
-                        console.log(v, err, data)
+                        // TODO: усли ошибка то выводить предупреждение
+                        // TODO: если пришло обновление то тоже выводить предупреждение.
+                        // console.log(v, err, data)
                     }); 
                 })
             }
