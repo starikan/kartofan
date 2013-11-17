@@ -8,6 +8,7 @@ var Options = function(container){
 
     this.bases = ["html", "global", "current", "stages", "places", "maps"];
     this.basesLoaded = 0;
+    this.basesSyncedIn = 0;
 
     // TODO: create function to set this
     this.html = {
@@ -41,8 +42,8 @@ var Options = function(container){
         "dbPointsStorySave": 1000,
         "dbSyncIn": true,
         "dbSyncOut": true,
-        "dbExtServerMain": "http://localhost:5984/",
-        "dbExtServer": ["http://localhost:5984/"],
+        "dbExtServerIn": "http://localhost:5984/", // Ended with /
+        "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
      };
 
     this.current = {
@@ -90,23 +91,26 @@ var Options = function(container){
 
     this._initSync = function(){
         if (this.basesLoaded == this.bases.length){ 
-            // if (parent.global.dbSyncIn){
-            //     parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {}, function(){
-            //         parent.configureBase(collection);
-            //     });                
-            // }
-            // else {
-            //     parent.configureBase(collection);
-            // }
+            
+            if (parent.getOption("global","dbSyncOut")){
+                $.each(parent.getOption("global","dbExtServerOut"), function(iOut, vOut){
+                    $.each(parent.bases, function(i, v){
+                        parent.db[v].replicate.to(vOut + v, {
+                            continuous: true, 
+                            onChange: function(data){ console.log(data) },
+                        });
+                    })
+                })
+            }
 
-    //     // Replicate
-    //     if (parent.global.dbSyncOut){
-    //         for (var i in parent.global.dbExtServer){
-    //             parent.db[collection].replicate.to(parent.global.dbExtServerMain + collection, {continuous: true});
-    //             // parent.db[collection].replicate.from(parent.global.dbExtServerMain + collection, {continuous: true});
-    //         }
-    //     }  
-
+            if (parent.getOption("global","dbSyncIn")){
+                var baseMain = parent.getOption("global","dbExtServerIn");
+                $.each(parent.bases, function(i, v){
+                    parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
+                        console.log(v, err, data)
+                    }); 
+                })
+            }
         }
      }
 
