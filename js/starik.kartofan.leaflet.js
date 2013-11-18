@@ -235,8 +235,8 @@ var LeafletMap = function(mapId){
     
     this.setMapTilesLayer = function(layerObj){
 
-        if (this.mapTilesLayer && this.map.hasLayer(this.mapTilesLayer)){
-            this.map.removeLayer(this.mapTilesLayer)
+        if (this.map){
+            this.map.removeLayer(this.mapTilesLayer.layer)
         }
 
         this.mapTilesLayer = layerObj;
@@ -376,4 +376,6 @@ var LeafletTiles = function(mapName, mapData){
 var tileLayerExtendKeys = {
     case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
     Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()));},
+    case0123: function(data){return [0,1,2,3][Math.floor(Math.random() * 4)]},
+    Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()));},
  }

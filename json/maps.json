@@ -36,5 +36,17 @@
         "minZoom": 0,
         "startZoom": 13,
         "crs": "EPSG3395"
-    }    
+    },
+    "googleSAT": {
+        "id": "googleSAT",
+        "tags": ["0. Спутниковые снимки"],
+        "group": "0. Спутниковые снимки",
+        "src": "Internet",
+        "server": "img",
+        "title": "Google SAT",
+        "tilesURL": "http://khms{case0123}.google.com/kh/v=141&hl=ru&src=app&x={x}&y={y}&z={z}&s={Galileo}",
+        "maxZoom": 20,
+        "minZoom": 0,
+        "startZoom": 13
+    }
 }
