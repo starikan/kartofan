@@ -29,7 +29,7 @@ var Events = function(){
 
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsForm("", parent.setActiveMap);
+            parent.createLocaleMapsMenu("", parent.setActiveMap);
          }},
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
@@ -41,7 +41,7 @@ var Events = function(){
         } },
         { type: "line", text: "Edit Maps", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsForm("Select To Edit Map Data", parent.editMap);
+            parent.createLocaleMapsMenu("Select To Edit Map Data", parent.editMap);
         }},
 
         { type: "paragraf", text: "Stage" },
@@ -94,11 +94,12 @@ var Events = function(){
         window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
-    this.createLocaleMapsForm = function(header, callback){
+    this.createLocaleMapsMenu = function(header, callback){
 
         var maps = opt.getOption("maps");
 
         var groups = _.pluck(maps, 'group');
+        groups = _.unique(groups);
         groups.sort();
 
         var genArray = [
