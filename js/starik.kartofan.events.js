@@ -31,6 +31,10 @@ var Events = function(){
             parent.closeContextMenu();
             parent.createLocaleMapsMenu("", parent.setActiveMap);
          }},
+        { type: "line", text: "Edit Maps", callback: function(){
+            parent.closeContextMenu();
+            parent.createLocaleMapsMenu("Select To Edit Map Data", parent.editMap);
+        }},        
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
             parent.createExternalMapsForm();
@@ -39,10 +43,10 @@ var Events = function(){
             parent.closeContextMenu();
             parent.editMap();
         } },
-        { type: "line", text: "Edit Maps", callback: function(){
+        { type: "line", text: "Get All Maps From JSON", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsMenu("Select To Edit Map Data", parent.editMap);
-        }},
+            parent.getAllMapsJSON();
+        } },
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
@@ -242,5 +246,25 @@ var Events = function(){
             
             console.log(eform.allData);
         }); 
+     }
+
+    this.getAllMapsJSON = function(url){
+        if (!url){
+            // TODO: локализация
+            url = prompt("Type here JSON with maps URL");
+        }
+
+        $.getJSON(url, function(data){
+            $.each(data, function(i,v){
+                if (opt.getOption("maps", i)){
+                    // TODO: локализация
+                    if (!confirm(i+" - Такая карта уже есть. Перезаписать.")) {
+                        return;
+                    }
+                }
+                opt.setOption("maps", i, v);
+            })
+        }); 
+
      }
  }
