@@ -31,6 +31,8 @@ var LeafletMap = function(mapId){
     this.nameControl;
     this.zoomLevelControl;
 
+    this.crs;
+
     this.onFocusMap = function(){
         opt.setOption("current", "activeMap", mapId);
         parent.$allMaps.removeClass("activemap");
@@ -183,6 +185,8 @@ var LeafletMap = function(mapId){
         latlng = latlng || opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng");
         latlng = this._validateLatLng(latlng);
 
+        this._setCRS();
+
         this.map = L.map(this.mapId, {
             zoomControl: false,
             attributionControl: false,
@@ -190,7 +194,12 @@ var LeafletMap = function(mapId){
             zoom: zoom,
             inertia: false,
             doubleClickZoom: false,
+            crs: parent.crs,
         });
+
+        if (this.mapTilesLayer.layer){
+            this.map.addLayer(this.mapTilesLayer.layer);
+        }
 
         this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
         // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
@@ -231,12 +240,31 @@ var LeafletMap = function(mapId){
         }
 
         this.mapTilesLayer = layerObj;
-        this.map.addLayer(this.mapTilesLayer.layer);
+        this._setCRS(this.mapTilesLayer.mapData.crs);
 
-        this.updateMapControls();
+        // When update tiles layer
+        if (this.map){
+            this.map.addLayer(this.mapTilesLayer.layer);
+            this.updateMapControls();
+        }
 
      }
 
+    this._setCRS = function(crs){
+
+        if (crs == "EPSG3395"){
+            parent.crs = L.CRS.EPSG3395;
+        }
+        else {
+            parent.crs = L.CRS.EPSG3857;
+        }
+
+        if (this.map){
+            this.map.options.crs = this.crs;
+            this.moveAllMaps(opt.getOption("current", "mapCenterLatLng"));
+        }
+     }
+    
     this.refreshMapAfterResize = function(){
         this.map.invalidateSize();
      }

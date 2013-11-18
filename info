@@ -17,6 +17,7 @@ ToAdd:
 https://github.com/mapbox/leaflet-image - экспорт изображения карты
 https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
+http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для привязки
 
 
 TODO:
@@ -42,6 +43,7 @@ TODO:
 - Нормальная работа на всех браузерах
 - Центральный репозиторий для всего подряд
 - Мобильные браузеры
+- Гид по сайту
 
 2 этап:
 - сделать выделение автивной карты
@@ -55,7 +57,6 @@ TODO:
 - Треки GPS
 - Реализовать все вещи которые были реализованы ранее
 - Сделать локализации
-- Гид по сайту
 - Быстрые подсказки
 - При обновлении окно новых возможностей
 - Чат и видеочат
