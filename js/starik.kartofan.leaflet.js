@@ -252,11 +252,18 @@ var LeafletMap = function(mapId){
 
     this._setCRS = function(crs){
 
-        if (crs == "EPSG3395"){
-            parent.crs = L.CRS.EPSG3395;
-        }
-        else {
-            parent.crs = L.CRS.EPSG3857;
+        crs = crs ? crs : "";
+
+        switch (crs){
+            case "EPSG3395":
+                parent.crs = L.CRS.EPSG3395;
+                break;
+            case "EPSG3857.Ext":
+                parent.crs = L.CRS.EPSG3857.Ext;
+                break;
+            case "":
+                parent.crs = L.CRS.EPSG3857
+                break;
         }
 
         if (this.map){
