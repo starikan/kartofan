@@ -1,13 +1,40 @@
 {
-    "cloudmate_ext": {
+    "cloudmate": {
+        "id": "cloudmate",
         "tags": ["0. Online Maps"],
         "group": "0. Online Maps",
         "src": "Internet",
         "server": "img",
-        "title": "Cloudmate_ext",
+        "title": "Cloudmate",
         "tilesURL": "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png",
         "maxZoom": 15,
         "minZoom": 0,
         "startZoom": 5
-    }
+    },
+    "mendeDrop": {
+        "id": "mendeDrop",
+        "tags": ["4. Исторические 1800-1920"],
+        "group": "4. Исторические 1800-1920",
+        "src": "Storage",
+        "server": "img",
+        "title": "Мендэ Симбирская губерния 1в.",
+        "tilesURL": "https://dl.dropboxusercontent.com/u/2231696/mende/{z}/{y}/{x}.jpg",
+        "maxZoom": 14,
+        "minZoom": 1,
+        "startZoom": 12,
+        "crs": "EPSG3857.Ext"
+    },
+    "yandexSAT": {
+        "id": "yandexSAT",
+        "tags": ["0. Спутниковые снимки"],
+        "group": "0. Спутниковые снимки",
+        "src": "Internet",
+        "server": "img",
+        "title": "Яндекс SAT",
+        "tilesURL": "http://sat0{case1234}.maps.yandex.net/tiles?l=sat&x={x}&y={y}&z={z}&g={Gagarin}",
+        "maxZoom": 20,
+        "minZoom": 0,
+        "startZoom": 13,
+        "crs": "EPSG3395"
+    }    
 }

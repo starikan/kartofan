@@ -307,11 +307,10 @@ var LeafletTiles = function(mapName, mapData){
             // TODO: server wms type
         }
         else {
-            this.layer = L.tileLayer(this.mapData.tilesURL, {
+            this.layer = L.tileLayer(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
-                key: function(data){return "a"}
-            });
+            }, tileLayerExtendKeys));
         }
      }
 
@@ -337,4 +336,9 @@ var LeafletTiles = function(mapName, mapData){
 
     this.setLayer();
 
+ }
+
+var tileLayerExtendKeys = {
+    case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
+    Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()));},
  }
