@@ -48,6 +48,14 @@
         "check": "^Internet|Storage|Local$"
     },
     { 
+        "type": "select",
+        "val": "", 
+        "id": "crs", 
+        "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], 
+        "description": "CRS", 
+        "check": "^|EPSG3857|EPSG3857\\.Ext|EPSG3395|Simple$"
+    },    
+    { 
         "type": "input",
         "val": "", 
         "id": "tilesURL", 
