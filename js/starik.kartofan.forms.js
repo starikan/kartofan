@@ -110,6 +110,34 @@ var EditableForm = function(id, arr, funcs, show){
         this.fields.push($input);
      }
 
+    this.addDatalist = function(v){
+        v = this._checkInputAttr(v);
+
+        var $input = $("<input/>").attr({
+            "type": "datalist",
+            "id": v.id,
+            "placeholder": v.placeholder,
+            "value": v.val,
+            "tabindex": v.tabindex,
+            "check": v.check,
+            "list": v.id+"_list"
+        });
+        $input.appendTo(this.$formContent);
+
+        var $datalist = $("<datalist></datalist>").attr({
+            "id": v.id+"_list"
+        });
+        if (!v.options.length){
+            $.each(v.options, function(i, option){
+                $datalist.appent($("<option></option>").val(option))
+            })
+        };
+        $datalist.appendTo(this.$formContent);
+
+        this._checkVal(v, $input);
+        this.fields.push($input);
+     }
+
     this.addSelect = function(v){
         v = this._checkInputAttr(v);
 
@@ -128,22 +156,39 @@ var EditableForm = function(id, arr, funcs, show){
 
         this._checkVal(v, $select);
         this.fields.push($select);
-
-        return $select;
      }
 
-    this.addSelect2 = function(v){
+    // this.addSelect2 = function(v){
 
-        var $select = this.addSelect(v)
+    //     v = this._checkInputAttr(v);
+        
+    //     var $select = $("<div></div>").attr({
+    //         "id": v.id,
+    //         "tabindex": v.tabindex,
+    //         "check": v.check,
+    //     });
+    //     $select.appendTo(this.$formContent);
 
-        $select.select2({
-            "placeholder": v.placeholder,
-        });
-        $select.select2("val", v.val);
+    //     var data = [];
+    //     $.each(v.options, function(i, v){
+    //         data.push({ id: i, text: v })
+    //     });
 
-        this._checkVal(v, $select);
+    //     $select.select2({
+    //         placeholder: v.placeholder,
+    //         query: function (query) {
+    //             var localData = {results: data}
+    //             localData.results.push({id: data.length+1, text: query});
+    //             query.callback(localData);
+    //         }            
+    //     });
 
-     }
+    //     $select.select2("data", data);
+    //     $select.select2("val", v.val);
+
+    //     this._checkVal(v, $select);
+    //     this.fields.push($select);
+    //  }
 
     this.addSelect2Tags = function(v){
         v = this._checkInputAttr(v);
@@ -155,7 +200,7 @@ var EditableForm = function(id, arr, funcs, show){
             "value": v.options,
         })
 
-        $tags.select2({ tags: [] });
+        $tags.select2({ tags: [], tokenSeparators: [","] });
 
         this._checkVal(v, $tags);
         this.fields.push($tags);
@@ -232,12 +277,14 @@ var EditableForm = function(id, arr, funcs, show){
                     parent.addSelect2(v, f);
                     break;            
                 case "select2tags":
-                    parent.addSelect2Tags(v, f);
+                    // parent.addSelect2Tags(v, f);
                     break;            
                 case "button":
                     parent.addButton(v, f);
                     break; 
-            }   
+                case "datalist":
+                    parent.addDatalist(v, f);
+                    break;             }   
         })
 
         this.checkAllFields();
@@ -246,19 +293,38 @@ var EditableForm = function(id, arr, funcs, show){
 
      }
 
-    this.fillForm = function(vals){
-        if (vals) {
-            // {server: "img"}
-            $.each(vals, function(i, vi){
-                $.each(parent.fields, function(j, vj){
-                    if (vj.attr("id") == i){
-                        vj.val(vi);
-                        vj.select2("val", vi)
-                        // console.log(vi)
+    this.fillForm = function(vals, options){
+        console.log(vals, $.isEmptyObject(vals))
+
+        if (!vals || $.isEmptyObject(vals)) {return}
+
+        $.each(vals, function(id, val){
+            $.each(parent.fields, function(j, field){
+                if (field.attr("id") == id){
+
+                    // Set vals
+                    field.val(val);
+                    // field.select2("val", val);
+
+                    // Set options
+                    if (options && !$.isEmptyObject(options) && $.isArray(options[id]) && options[id].length){
+
+                        if (field.attr("type") == "datalist"){
+                            $.each(options[id], function(o, option){
+                                $("datalist#"+id+"_list").append($("<option></option>").val(option))
+                            })
+                        }
+
+                        if (field.attr("type") == "select"){
+                            console.log("Select options sdd: "+options[id]);
+                        }  
+
                     }
-                })
-            })            
-        }
+
+                    console.log(id, val)
+                }
+            })
+        })            
 
         this.checkAllFields();
      }

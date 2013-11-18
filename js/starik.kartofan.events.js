@@ -26,9 +26,10 @@ var Events = function(){
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
+
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsForm();
+            parent.createLocaleMapsForm("", parent.setActiveMap);
          }},
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
@@ -36,12 +37,17 @@ var Events = function(){
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             parent.closeContextMenu();
-            parent.addMapToStorage();
+            parent.editMap();
         } },
-        { type: "line", text: "Edit Map Data" },
+        { type: "line", text: "Edit Maps", callback: function(){
+            parent.closeContextMenu();
+            parent.createLocaleMapsForm("Select To Edit Map Data", parent.editMap);
+        }},
+
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage" },
         { type: "line", text: "Save Stage" },
+
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Global Settings" },
         { type: "line", text: "Global Maps View" },
@@ -88,7 +94,7 @@ var Events = function(){
         window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
-    this.createLocaleMapsForm = function(header){
+    this.createLocaleMapsForm = function(header, callback){
 
         var maps = opt.getOption("maps");
 
@@ -122,7 +128,7 @@ var Events = function(){
                         text: vi.title ? vi.title : "Noname Map",
                         callback: function(){
                             parent.closeAllModal();
-                            parent.setActiveMap(i);
+                            callback(i);
                         },
                     })
                 });
@@ -162,23 +168,22 @@ var Events = function(){
         });
      }
 
-    this.addMapToStorage = function(mapId){
+    this.editMap = function(mapId){
 
         var maps = opt.getOption("maps");
-        var mapData;
+        var mapVals;
 
-        // If no mapId get active map
-        if (!mapId){
-            var mapNum = opt.getOption("current", "activeMap");
-            mapData = window[mapNum].mapTilesLayer.mapData;
-            mapData.id = window[mapNum].mapTilesLayer.mapName;
-        }
-        else {
-            mapData = opt.getOption("maps", mapId);
-            mapData.id = mapData.id ? mapData.id : mapId;
-        }
+        var _deleteMapFunc = function(form){
+            if (confirm("Do you realy want to delete " + mapVals.id + " map?")) {
+                if (mapVals.id){
+                    form.hideForm();
+                    opt.deleteOption("maps", mapVals.id);
+                    console.log(mapVals.id + "deleted")
+                }
+            }                    
+         }
 
-        var submitFunc = function(form){
+        var _submitMapFunc = function(form){
             form.getAllData(); 
             if (!form.checkForm){
                 // TODO: локализация
@@ -199,23 +204,42 @@ var Events = function(){
          }
 
         var eformFunc = {
-            "submit": {
-                "events": "click",
-                "callback": submitFunc,
-            },
-            "cancel": {
-                "events": "click",
-                "callback": function(form){form.hideForm();}                
-            }
+            "submit": { "events": "click", callback: _submitMapFunc },
+            "delete": { "events": "click", callback: function(form){_deleteMapFunc(form)} },
+            "cancel": { "events": "click", callback: function(form){form.hideForm()} }
          }
-        
-        $.getJSON("json/active_map_add_form.json", function(eformFields){
-            console.log(eformFields)
+
+
+        // If no mapId get active map
+        if (!mapId){
+            var mapNum = opt.getOption("current", "activeMap");
+            mapVals = window[mapNum].mapTilesLayer.mapData;
+            console.log(mapVals)
+            mapVals.id = window[mapNum].mapTilesLayer.mapName;
+        }
+        else {
+            mapVals = opt.getOption("maps", mapId);
+            mapVals.id = mapVals.id ? mapVals.id : mapId;
+        }
+
+        // Groups suggestions
+        var mapOptions = {}
+        var tempGroups = []
+        $.each(maps, function(i, v){
+            if (v.group){
+                tempGroups.push(v.group)
+            }
+        })
+        tempGroups = _.uniq(tempGroups);
+        tempGroups.sort()
+        mapOptions.group = tempGroups;        
+
+        // Generate Form
+        $.getJSON("json/map_edit_form.json", function(eformFields){
             eform = new EditableForm("addMap", eformFields, eformFunc);
-            eform.fillForm(mapData);
+            eform.fillForm(mapVals, mapOptions);
+            
             console.log(eform.allData);
-         });
-
+        }); 
      }
-
  }

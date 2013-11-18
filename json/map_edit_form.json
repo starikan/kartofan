@@ -27,12 +27,12 @@
         "type": "select2tags",
         "val": "", 
         "id": "tags", 
-        "options": ["tag1", "tag2"], 
+        "options": [], 
         "description": "tags", 
         "check": ".?"
     },
     { 
-        "type": "select2",
+        "type": "datalist",
         "val": "", 
         "id": "group", 
         "placeholder": "", 
@@ -84,6 +84,11 @@
         "val": "Add Map", 
         "id": "submit"
     },
+    { 
+        "type": "button", 
+        "val": "Delete Map", 
+        "id": "delete"
+    },    
     { 
         "type": "button", 
         "val": "Cancel", 

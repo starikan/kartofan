@@ -154,9 +154,7 @@ var Options = function(container){
                     console.log(iRow, vRow)
                     parent.db[v].get(vRow.doc._id, function(errRow, docRow) {
                         console.log(errRow, docRow)
-                        parent.db[v].remove(docRow, function(errRemove, responseRemove) { 
-
-                        });
+                        parent.db[v].remove(docRow, function(errRemove, responseRemove) {  });
                     });                    
                 });
             });
@@ -194,6 +192,14 @@ var Options = function(container){
     this.getOption = function(collection, option){
         if (!option) {return this[collection]}
         return this[collection][option];
+     }
+
+    this.deleteOption = function(collection, option){
+        delete this[collection][option];
+
+        parent.db[collection].get(option, function(err, doc) {
+            parent.db[collection].remove(doc, function(errRemove, responseRemove) {  });
+        });  
      }
 
     // *************** HASH ****************
