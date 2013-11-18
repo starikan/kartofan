@@ -86,13 +86,11 @@ var Options = function(container){
                 // When first start, set all values from default into DB
                 $.each(parent[collection], function(i, v){
                     parent.db[collection].get(i, {}, function(errG, docG){
-                        console.log(errG, docG);
                         if (errG){
                             parent.setOption(collection, i, v);
                         }
                     })
                 })
-
 
                 parent.basesLoaded++;
 
@@ -118,14 +116,7 @@ var Options = function(container){
             }
 
             if (parent.getOption("global","dbSyncIn")){
-                var baseMain = parent.getOption("global","dbExtServerIn");
-                $.each(parent.bases, function(i, v){
-                    parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
-                        // TODO: усли ошибка то выводить предупреждение
-                        // TODO: если пришло обновление то тоже выводить предупреждение.
-                        // console.log(v, err, data)
-                    }); 
-                })
+                parent.syncIn();
             }
         }
      }
@@ -141,6 +132,17 @@ var Options = function(container){
     this._init = function(){
         $.each(this.bases, function(i, v){
             parent.db[v] = parent._initBase(v);
+        })
+     }
+
+    this.syncIn = function(){
+        var baseMain = parent.getOption("global","dbExtServerIn");
+        $.each(parent.bases, function(i, v){
+            parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
+                // TODO: усли ошибка то выводить предупреждение
+                // TODO: если пришло обновление то тоже выводить предупреждение.
+                // console.log(v, err, data)
+            }); 
         })
      }
 

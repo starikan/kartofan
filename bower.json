@@ -1,0 +1,22 @@
+{
+  "name": "Kartofan",
+  "version": "0.0.1",
+  "authors": [
+    "Starik <4analit@gmail.com>"
+  ],
+  "main": "index.html",
+  "keywords": [
+    "maps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "noty": "~2.1.2"
+  }
+}

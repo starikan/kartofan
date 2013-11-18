@@ -46,6 +46,10 @@ var Events = function(){
         { type: "line", text: "Global Settings" },
         { type: "line", text: "Global Maps View" },
         { type: "line", text: "Settings Reset" },
+        { type: "line", text: "Update from External Storage", callback: function(){
+            parent.closeContextMenu();
+            opt.syncIn();
+        }},
      ];
 
     this.openContextMenu = function(e){
