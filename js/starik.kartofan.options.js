@@ -77,9 +77,22 @@ var Options = function(container){
         return new Pouch(collection, {}, function(){
             parent.db[collection].allDocs({include_docs: true}, function(err, doc){
 
+                if (err) {console.log(err)}
+
                 $.each(doc.rows, function(i, v){
                     parent[collection][v.id] = v.doc.val;
                 });
+
+                // When first start, set all values from default into DB
+                $.each(parent[collection], function(i, v){
+                    parent.db[collection].get(i, {}, function(errG, docG){
+                        console.log(errG, docG);
+                        if (errG){
+                            parent.setOption(collection, i, v);
+                        }
+                    })
+                })
+
 
                 parent.basesLoaded++;
 
@@ -131,10 +144,26 @@ var Options = function(container){
         })
      }
 
+    this._clearAllBases = function(){
+        $.each(parent.bases, function(i, v){
+            parent.db[v].allDocs({include_docs: true}, function(errBase, docBase){
+                console.log(errBase, docBase)
+                $.each(docBase.rows, function(iRow, vRow){
+                    console.log(iRow, vRow)
+                    parent.db[v].get(vRow.doc._id, function(errRow, docRow) {
+                        console.log(errRow, docRow)
+                        parent.db[v].remove(docRow, function(errRemove, responseRemove) { 
+
+                        });
+                    });                    
+                });
+            });
+        })
+     }
 
     // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
     // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
-    this.checkOptions = function(){
+    this.checkOptions = function(collection){
 
      }     
 
@@ -160,7 +189,6 @@ var Options = function(container){
         })
      }
 
-    // TODO: сделать получение из базы,  а если базы нет то из локальной переменной
     this.getOption = function(collection, option){
         if (!option) {return this[collection]}
         return this[collection][option];
