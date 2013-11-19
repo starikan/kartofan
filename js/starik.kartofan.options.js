@@ -55,12 +55,13 @@ var Options = function(container){
         "stage": {
             "stageName": "current",
             "stageMapsGrid": [
+                // left, top, width, height
                 [0, 0, 50, 50],
                 [0, 50, 50, 50],
                 [50, 0, 50, 50],
                 [50, 50, 50, 50],
             ],
-            "stageMapsNames": ["cloudmate", "", "", "cloudmate"],
+            "stageMapsNames": ["", "", "", ""],
             "stageMapsZooms": [12,12,12,12],  
         }
      }
@@ -169,7 +170,7 @@ var Options = function(container){
 
      }     
 
-    this.setOption = function(collection, option, value){
+    this.setOption = function(collection, option, value, callback){
 
         // JS object
         this[collection][option] = value;
@@ -179,14 +180,14 @@ var Options = function(container){
             if (doc) {
                 if (doc.val !== value){
                     doc.val = value;
-                    parent.db[collection].put(doc, function(err, response){});                    
+                    parent.db[collection].put(doc, callback);                    
                 }
             }
             else {
                 parent.db[collection].put({
                     "_id": option,
                     "val": value,
-                }, function(err, response){}); 
+                }, callback); 
             }
         })
      }

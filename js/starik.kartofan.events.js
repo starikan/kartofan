@@ -53,13 +53,13 @@ var Events = function(){
             parent.closeContextMenu();
             parent.loadStage();
         }},
-        { type: "line", text: "Edit Stage", callback: function(){
+        { type: "line", text: "Edit Stage View", callback: function(){
             parent.closeContextMenu();
-            parent.editStage();
+            parent.editView();
         }},
-        { type: "line", text: "Save Stage", callback: function(){
+        { type: "line", text: "Save Stage View", callback: function(){
             parent.closeContextMenu();
-            parent.saveStage();
+            parent.saveView();
         }},
 
         { type: "paragraf", text: "Options" },
@@ -281,44 +281,59 @@ var Events = function(){
 
     // ************ STAGES ************
 
-    this.editStage = function(){
+    var _errCorrect = function(x){
+
+        var err = opt.getOption("global", "stageViewConstructorElasticSizeErrorPersent");
+
+        var x1 = err * Math.floor(x/err);
+        var x2 = err * Math.ceil(x/err);
+
+        var d1 = Math.abs(x1 - x);
+        var d2 = Math.abs(x2 - x);
+
+        if (d2 >= d1) {
+            return x1;
+        }
+        return x2;
+     }
+
+    var _getPersentPosition = function(div){
+
+        var $container = $("#"+opt.getOption("html", "containerAllMapsId"));
+
+        var widthContainer = $container.width();
+        var heightContainer = $container.height();
+        
+        var $div = $(div);
+        var widthDiv = $div.width();
+        var heightDiv = $div.height();
+        var topDiv = $div.position().top;
+        var leftDiv = $div.position().left;                
+
+        var newWidth = _errCorrect( 100 * widthDiv/widthContainer );
+        var newHeight = _errCorrect( 100 * heightDiv/heightContainer );
+        var newTop = _errCorrect( 100 * topDiv/heightContainer );
+        var newLeft = _errCorrect( 100 * leftDiv/widthContainer );
+
+        return {
+            top: newTop,
+            left: newLeft,
+            width: newWidth,
+            height: newHeight
+        }
+     }
+
+    this.editView = function(){
         $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
 
-            var err = opt.getOption("global", "stageViewConstructorElasticSizeErrorPersent");
-
-            var $container = $("#"+opt.getOption("html", "containerAllMapsId"));
-
-            var errCorrect = function(x){
-                var x1 = err * Math.floor(x/err);
-                var x2 = err * Math.ceil(x/err);
-
-                var d1 = Math.abs(x1 - x);
-                var d2 = Math.abs(x2 - x);
-
-                if (d2 >= d1) {
-                    return x1;
-                }
-                return x2;
-
-            }
-
             var onStop = function(){
-                var widthContainer = $container.width();
-                var heightContainer = $container.height();
                 
                 var $this = $(this);
-                var widthDiv = $this.width();
-                var heightDiv = $this.height();
-                var topDiv = $this.position().top;
-                var leftDiv = $this.position().left;                
 
-                var newWidth = errCorrect( 100 * widthDiv/widthContainer );
-                var newHeight = errCorrect( 100 * heightDiv/heightContainer );
-                var newTop = errCorrect( 100 * topDiv/heightContainer );
-                var newLeft = errCorrect( 100 * leftDiv/widthContainer );
+                var pos = _getPersentPosition(this);
 
-                $this.width(newWidth + "%").height(newHeight + "%")
-                .css("top", newTop + "%").css("left", newLeft + "%");
+                $this.width(pos.width + "%").height(pos.height + "%")
+                .css("top", pos.top + "%").css("left", pos.left + "%");
 
             }
 
@@ -341,8 +356,28 @@ var Events = function(){
         })
      }
 
-    this.saveStage = function(){
+    this.saveView = function(){
 
+        var currStage = opt.getOption("current", "stage");
+
+        $.each($(".maps"), function(i, v){
+            currStage.stageMapsGrid[i] = [];
+            var $v = $(v)
+
+            var pos = _getPersentPosition(v);
+
+            currStage.stageMapsGrid[i].push(pos.left);
+            currStage.stageMapsGrid[i].push(pos.top);
+            currStage.stageMapsGrid[i].push(pos.width);
+            currStage.stageMapsGrid[i].push(pos.height);
+
+        });
+
+        opt.setOption("current", "stage", currStage, function(err, doc){
+            if (!err){
+                stage._initStage();
+            }
+        });
      }
 
     this.loadStage = function(){
