@@ -20,14 +20,8 @@ var StageMaps = function(container){
     this.$container = $("#"+container);
 
     this._initStage = function(){
-        this._clearHTML();
-        // this.$container.append(this._createStageHTML());
         this._createStageHTML();
         this._createMaps();
-     }
-
-    this._clearHTML = function(){
-        this.$container.empty();
      }
 
     this._createMaps = function(){
@@ -50,7 +44,9 @@ var StageMaps = function(container){
      }
 
     this._createStageHTML = function(){
-        // var divs = "";
+
+        this.$container.empty();
+        
         var currStage = opt.getOption("current", "stage");
 
         if (!currStage.stageMapsGrid || !currStage.stageMapsGrid.length){ return divs }
@@ -61,18 +57,13 @@ var StageMaps = function(container){
             $("<div></div>")
             .appendTo(parent.$container)
             .attr("id", "map"+i)
+            .addClass("maps")
             .css("position", "absolute")
             .css("left", v[0]+"%")
             .css("top", v[1]+"%")
             .css("width", v[2]+"%")
             .css("height", v[3]+"%");
         })    
-        // for (var i=0; i<grid.length; i++){
-        //     divs += "<div id='map{0}' class='maps' \
-        //             style='left:{1}%; top:{2}%; width:{3}%; \
-        //             height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
-        // }
-        // return divs;
      }
 
     this.setStage = function(){

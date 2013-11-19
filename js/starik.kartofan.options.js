@@ -44,6 +44,8 @@ var Options = function(container){
         "dbSyncOut": true,
         "dbExtServerIn": "http://localhost:5984/", // Ended with /
         "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
+
+        "stageViewConstructorElasticSizeErrorPersent": 2,
      };
 
     this.current = {

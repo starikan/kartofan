@@ -284,7 +284,45 @@ var Events = function(){
     this.editStage = function(){
         $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
 
-            $("#map"+i).draggable().resizable();
+            var err = opt.getOption("global", "stageViewConstructorElasticSizeErrorPersent");
+
+            var $container = $("#"+opt.getOption("html", "containerAllMapsId"));
+
+            var errCorrect = function(x){
+                var x1 = err * Math.floor(x/err);
+                var x2 = err * Math.ceil(x/err);
+
+                var d1 = Math.abs(x1 - x);
+                var d2 = Math.abs(x2 - x);
+
+                if (d2 >= d1) {
+                    return x1;
+                }
+                return x2;
+
+            }
+
+            var onStop = function(){
+                var widthContainer = $container.width();
+                var heightContainer = $container.height();
+                
+                var $this = $(this);
+                var widthDiv = $this.width();
+                var heightDiv = $this.height();
+                var topDiv = $this.position().top;
+                var leftDiv = $this.position().left;                
+
+                var newWidth = errCorrect( 100 * widthDiv/widthContainer );
+                var newHeight = errCorrect( 100 * heightDiv/heightContainer );
+                var newTop = errCorrect( 100 * topDiv/heightContainer );
+                var newLeft = errCorrect( 100 * leftDiv/widthContainer );
+
+                $this.width(newWidth + "%").height(newHeight + "%")
+                .css("top", newTop + "%").css("left", newLeft + "%");
+
+            }
+
+            $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
 
             var map = window["map"+i];
 
