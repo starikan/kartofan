@@ -69,6 +69,7 @@ var LeafletMap = function(mapId){
         if (!parent.map) { return }
         this.setMapZoom(parent.map.getZoom());
         this.onMapMoveEnd();
+        this.updateCurrentStageZoom();
      }
 
     this.updateMapControls = function(){
@@ -85,6 +86,26 @@ var LeafletMap = function(mapId){
         if (this.nameControl){
             this.nameControl.setPrefix(title);
         }
+     }
+
+    this.updateCurrentStageName = function(){
+        if (!this.map){ return }
+        var currStage = opt.getOption("current", "stage");
+        var name = this.mapTilesLayer.mapName;
+        var num = $(".maps").index($("#"+parent.mapId));
+
+        currStage.stageMapsNames[num] = name;
+        opt.setOption("current", "stage", currStage);
+     }
+
+    this.updateCurrentStageZoom = function(){
+        if (!this.map){ return }
+        var currStage = opt.getOption("current", "stage");
+        var zoom = parent.map.getZoom();
+        var num = $(".maps").index($("#"+parent.mapId));
+
+        currStage.stageMapsZooms[num] = zoom;
+        opt.setOption("current", "stage", currStage);
      }
 
     this._setMapControls = function(){
@@ -210,6 +231,8 @@ var LeafletMap = function(mapId){
 
         this._setMapControls();
         this.updateMapControls();
+        this.updateCurrentStageName();
+        this.updateCurrentStageZoom();
      }
 
     this.setMapCenter = function(latlng){
@@ -248,6 +271,8 @@ var LeafletMap = function(mapId){
             this.updateMapControls();
         }
 
+        this.updateCurrentStageName();
+        this.updateCurrentStageZoom();
      }
 
     this._setCRS = function(crs){
