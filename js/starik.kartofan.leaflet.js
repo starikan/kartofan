@@ -206,7 +206,9 @@ var LeafletMap = function(mapId){
         latlng = latlng || opt.getOption("current", "mapCenterLatLng") || opt.getOption("global", "mapDefaultCenterLatLng");
         latlng = this._validateLatLng(latlng);
 
-        this._setCRS();
+        if (this.mapTilesLayer){
+            this._setCRS(this.mapTilesLayer.mapData.crs);
+        }
 
         this.map = L.map(this.mapId, {
             zoomControl: false,
@@ -286,13 +288,13 @@ var LeafletMap = function(mapId){
             case "EPSG3857.Ext":
                 parent.crs = L.CRS.EPSG3857.Ext;
                 break;
-            case "":
+            default:
                 parent.crs = L.CRS.EPSG3857
                 break;
         }
 
         if (this.map){
-            this.map.options.crs = this.crs;
+            this.map.options.crs = parent.crs;
             this.moveAllMaps(opt.getOption("current", "mapCenterLatLng"));
         }
      }
