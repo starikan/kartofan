@@ -42,15 +42,25 @@ var Events = function(){
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             parent.closeContextMenu();
             parent.editMap();
-        } },
+        }},
         { type: "line", text: "Get All Maps From JSON", callback: function(){
             parent.closeContextMenu();
             parent.getAllMapsJSON();
-        } },
+        }},
 
         { type: "paragraf", text: "Stage" },
-        { type: "line", text: "Load Stage" },
-        { type: "line", text: "Save Stage" },
+        { type: "line", text: "Load Stage", callback: function(){
+            parent.closeContextMenu();
+            parent.loadStage();
+        }},
+        { type: "line", text: "Edit Stage", callback: function(){
+            parent.closeContextMenu();
+            parent.editStage();
+        }},
+        { type: "line", text: "Save Stage", callback: function(){
+            parent.closeContextMenu();
+            parent.saveStage();
+        }},
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Global Settings" },
@@ -267,4 +277,38 @@ var Events = function(){
         }); 
 
      }
+
+
+    // ************ STAGES ************
+
+    this.editStage = function(){
+        $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
+
+            $("#map"+i).draggable().resizable();
+
+            var map = window["map"+i];
+
+            map.map.dragging.disable();
+            map.map.scrollWheelZoom.disable();
+            map.map.touchZoom.disable();
+
+            if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
+            if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
+            if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
+            if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
+            
+            if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
+            map.nameControl.setPrefix("map"+i);
+
+        })
+     }
+
+    this.saveStage = function(){
+
+     }
+
+    this.loadStage = function(){
+
+     }
+
  }

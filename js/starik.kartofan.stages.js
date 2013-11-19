@@ -19,17 +19,11 @@ var StageMaps = function(container){
 
     this.$container = $("#"+container);
 
-    this.stageCurr;
-
     this._initStage = function(){
         this._clearHTML();
-        this._getCurrentStage();
-        this.$container.append(this._createStageHTML());
+        // this.$container.append(this._createStageHTML());
+        this._createStageHTML();
         this._createMaps();
-     }
-
-    this._getCurrentStage = function(){
-        this.stageCurr = opt.getOption("current", "stage");
      }
 
     this._clearHTML = function(){
@@ -37,11 +31,14 @@ var StageMaps = function(container){
      }
 
     this._createMaps = function(){
-        if (!this.stageCurr.stageMapsGrid || !this.stageCurr.stageMapsGrid.length){ return }
 
-        var names = this.stageCurr.stageMapsNames;
-        var zooms = this.stageCurr.stageMapsZooms;
-        var grid = this.stageCurr.stageMapsGrid;
+        var currStage = opt.getOption("current", "stage");
+
+        if (!currStage.stageMapsGrid || !currStage.stageMapsGrid.length){ return }
+
+        var names = currStage.stageMapsNames;
+        var zooms = currStage.stageMapsZooms;
+        var grid = currStage.stageMapsGrid;
         for (var i=0; i<grid.length; i++){
 
             window["map"+i] = new LeafletMap("map"+i);
@@ -53,19 +50,32 @@ var StageMaps = function(container){
      }
 
     this._createStageHTML = function(){
-        var divs = "";
-        if (!this.stageCurr.stageMapsGrid || !this.stageCurr.stageMapsGrid.length){ return divs }
+        // var divs = "";
+        var currStage = opt.getOption("current", "stage");
 
-        var grid = this.stageCurr.stageMapsGrid;
-        for (var i=0; i<grid.length; i++){
-            divs += "<div id='map{0}' class='maps' \
-                    style='left:{1}%; top:{2}%; width:{3}%; \
-                    height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
-        }
-        return divs;
+        if (!currStage.stageMapsGrid || !currStage.stageMapsGrid.length){ return divs }
+
+        var grid = currStage.stageMapsGrid;
+
+        $.each(grid, function(i, v){
+            $("<div></div>")
+            .appendTo(parent.$container)
+            .attr("id", "map"+i)
+            .css("position", "absolute")
+            .css("left", v[0]+"%")
+            .css("top", v[1]+"%")
+            .css("width", v[2]+"%")
+            .css("height", v[3]+"%");
+        })    
+        // for (var i=0; i<grid.length; i++){
+        //     divs += "<div id='map{0}' class='maps' \
+        //             style='left:{1}%; top:{2}%; width:{3}%; \
+        //             height:{4}%;'></div>".format(i, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
+        // }
+        // return divs;
      }
 
-    this.setStageOptions = function(){
+    this.setStage = function(){
 
      }
 
