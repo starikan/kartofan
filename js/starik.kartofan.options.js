@@ -17,7 +17,7 @@ var Options = function(container){
      }
 
     this.global = {
-        "mapDefaultCenterLatLng": "54.31081536133442,48.362503051757805",
+        "mapDefaultCenterLatLng": [54.31081536133442, 48.362503051757805],
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
@@ -224,6 +224,7 @@ var Options = function(container){
         // If clear hash and resetToDefaultIfHashClear == true set to default latlng
         if (!hash && parent.getOption("global", "resetToDefaultIfHashClear")){
             this.setOption("current", "mapCenterLatLng", parent.getOption("global", "mapDefaultCenterLatLng"));
+            this.setHash();
             return;
         }
 
