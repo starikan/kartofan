@@ -21,6 +21,7 @@ var Options = function(container){
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
+        "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
 
         "externalFeeds": ["json/maps.json"],
 

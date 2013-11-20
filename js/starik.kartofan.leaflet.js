@@ -330,7 +330,7 @@ var LeafletTiles = function(mapName, mapData){
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){
-        return url ? url : "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png";
+        return url ? url : opt.getOption("global", "mapDefaultURL");
      }
 
     this._validateServer = function(server){
