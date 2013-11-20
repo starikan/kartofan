@@ -61,6 +61,13 @@ var Events = function(){
             parent.closeContextMenu();
             parent.saveStage();
         }},
+        { type: "line", text: "Load External Stage", callback: function(){
+            parent.closeContextMenu();
+            parent.createExternalJSONForm("stages", function(i, v){
+                                                      parent.closeAllModal();
+                                                      parent.loadStage("", v);
+                                                  })
+        }},        
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Global Settings" },
@@ -443,18 +450,20 @@ var Events = function(){
         console.log(allStages)
 
         // TODO локализация
-        var newName = prompt("Input Stage ID", currStage.stageName)
+        var newName = prompt("Input Stage ID", currStage.title)
         if (newName){
             // TODO локализация
             if (allStages[newName] && !confirm("This ID already exist. Rewrite it?")){
                 return;
             }
-            currStage.stageName = newName;
+            currStage.title = newName;
             opt.setOption("stages", newName, currStage);  
         }
      }  
 
-    this.loadStage = function(){
-
+    this.loadStage = function(title, stageData){
+        stageData = title ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
+        opt.setOption("current", "stage", stageData);
+        stage.createStage();
      }     
  }

@@ -54,7 +54,7 @@ var Options = function(container){
         "mapZoom": undefined,
         "activeMap": undefined,
         "stage": {
-            "stageName": "current",
+            "title": "current",
             "stageMapsGrid": [
                 // left, top, width, height
                 [0, 0, 50, 50],

@@ -50,5 +50,106 @@
             "minZoom": 0,
             "startZoom": 13
         }
-    }
+    },
+    "stages": {
+        "current1": {
+            "title": "current1",
+            "stageMapsGrid": [
+                [
+                    0,
+                    0,
+                    50,
+                    50
+                ],
+                [
+                    0,
+                    50,
+                    50,
+                    50
+                ],
+                [
+                    50,
+                    50,
+                    50,
+                    50
+                ]
+            ],
+            "stageMapsNames": [
+                "cloudmate",
+                "unknown",
+                "unknown"
+            ],
+            "stageMapsZooms": [
+                9,
+                12,
+                11
+            ]
+        },
+        "current2": {
+            "title": "current2",
+            "stageMapsGrid": [
+                [
+                    0,
+                    0,
+                    50,
+                    50
+                ],
+                [
+                    0,
+                    50,
+                    50,
+                    50
+                ],
+                [
+                    50,
+                    50,
+                    50,
+                    50
+                ]
+            ],
+            "stageMapsNames": [
+                "cloudmate",
+                "unknown",
+                "unknown"
+            ],
+            "stageMapsZooms": [
+                9,
+                12,
+                11
+            ]
+        },
+        "current3": {
+            "title": "current3",
+            "stageMapsGrid": [
+                [
+                    0,
+                    0,
+                    50,
+                    50
+                ],
+                [
+                    0,
+                    50,
+                    50,
+                    50
+                ],
+                [
+                    50,
+                    50,
+                    50,
+                    50
+                ]
+            ],
+            "stageMapsNames": [
+                "cloudmate",
+                "unknown",
+                "unknown"
+            ],
+            "stageMapsZooms": [
+                9,
+                12,
+                11
+            ]
+        }
+    }    
 }
