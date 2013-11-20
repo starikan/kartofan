@@ -19,57 +19,43 @@ var StageMaps = function(container){
 
     this.$container = $("#"+container);
 
-    this._initStage = function(){
-        this._createStageHTML();
-        this._createMaps();
-     }
+    this.currStage;
 
-    this._createMaps = function(){
-
-        var currStage = opt.getOption("current", "stage");
-
-        if (!currStage.stageMapsGrid || !currStage.stageMapsGrid.length){ return }
-
-        var names = currStage.stageMapsNames;
-        var zooms = currStage.stageMapsZooms;
-        var grid = currStage.stageMapsGrid;
-        for (var i=0; i<grid.length; i++){
-
-            window["map"+i] = new LeafletMap("map"+i);
-            var latlng = opt.getOption("current","mapCenterLatLng");
-            var zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
-            window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
-            window["map"+i].createMap(latlng, zoom);
-        }
-     }
-
-    this._createStageHTML = function(){
-
+    this.createStage = function(){
         this.$container.empty();
-        
-        var currStage = opt.getOption("current", "stage");
+        this.currStage = opt.getOption("current", "stage");
+        if (!this.currStage.stageMapsGrid || !this.currStage.stageMapsGrid.length){ return }
 
-        if (!currStage.stageMapsGrid || !currStage.stageMapsGrid.length){ return divs }
-
-        var grid = currStage.stageMapsGrid;
-
-        $.each(grid, function(i, v){
-            $("<div></div>")
-            .appendTo(parent.$container)
-            .attr("id", "map"+i)
-            .addClass("maps")
-            .css("position", "absolute")
-            .css("left", v[0]+"%")
-            .css("top", v[1]+"%")
-            .css("width", v[2]+"%")
-            .css("height", v[3]+"%");
-        })    
-     }
-
-    this.setStage = function(){
+        $.each(this.currStage.stageMapsGrid, function(i, v){
+            parent.addMapDiv(i, v);
+            parent.addMapObject(i);
+        })
 
      }
 
-    this._initStage();
+    this.addMapDiv = function(i, v){
+        $("<div></div>")
+        .appendTo(parent.$container)
+        .attr("id", "map"+i)
+        .addClass("maps")
+        .css("position", "absolute")
+        .css("left", v[0]+"%")
+        .css("top", v[1]+"%")
+        .css("width", v[2]+"%")
+        .css("height", v[3]+"%");
+     }
+
+    this.addMapObject = function(i){
+        var names = this.currStage.stageMapsNames;
+        var zooms = this.currStage.stageMapsZooms;
+
+        window["map"+i] = new LeafletMap("map"+i);
+        var latlng = opt.getOption("current","mapCenterLatLng");
+        var zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
+        window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
+        window["map"+i].createMap(latlng, zoom);        
+    }
+
+    this.createStage();
 
  }

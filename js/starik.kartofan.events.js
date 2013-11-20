@@ -433,7 +433,21 @@ var Events = function(){
      }  
         
     this.saveStage = function(){
+        var allStages = opt.getOption("stages");
+        var currStage = opt.getOption("current", "stage");
 
+        console.log(allStages)
+
+        // TODO локализация
+        var newName = prompt("Input Stage ID", currStage.stageName)
+        if (newName){
+            // TODO локализация
+            if (allStages[newName] && !confirm("This ID already exist. Rewrite it?")){
+                return;
+            }
+            currStage.stageName = newName;
+            opt.setOption("stages", newName, currStage);  
+        }
      }  
 
     this.loadStage = function(){
