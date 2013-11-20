@@ -23,7 +23,12 @@ var Options = function(container){
         "mapSyncZooming": false,
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
 
-        "externalFeeds": ["json/maps.json"],
+        "externalFeeds": [
+            {
+                "title": "Local JSON",
+                "url": "json/maps.json"
+            }
+        ],
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,

@@ -172,16 +172,14 @@ var Events = function(){
 
         var extData = opt.getOption("global", "externalFeeds");
 
-        var menuObj = [
-            { type: "header", text: header },
-         ]; 
+        var menuObj = [{ type: "header", text: header }]; 
 
         var menu = new CSSMenu("mapSelectMenu", menuObj, true);
 
-        $.each(extData, function(i, jsonName){
-            $.get(jsonName, function(data){
+        $.each(extData, function(i, extJSON){
+            $.get(extJSON.url, function(data){
 
-                var genArr = [ { type: "paragraf", text: jsonName } ];
+                var genArr = [ { type: "paragraf", text: extJSON.title } ];
                 
                 $.each(data[collection], function(j, data){
                     genArr.push({
