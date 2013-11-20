@@ -169,7 +169,7 @@ var Events = function(){
                 var genArr = [
                     { type: "paragraf", text: vi },
                 ];
-                $.each(data, function(j, vj){
+                $.each(data.maps, function(j, vj){
                     genArr.push({
                         type: "line", 
                         text: vj.title ? vj.title : "Noname Map",
@@ -266,7 +266,7 @@ var Events = function(){
         }
 
         $.getJSON(url, function(data){
-            $.each(data, function(i,v){
+            $.each(data.maps, function(i,v){
                 if (opt.getOption("maps", i)){
                     // TODO: локализация
                     if (!confirm(i+" - Такая карта уже есть. Перезаписать.")) {

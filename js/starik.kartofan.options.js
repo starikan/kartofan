@@ -14,7 +14,7 @@ var Options = function(container){
     this.html = {
         "containerMainMenuId": "mainMenu",
         "containerAllMapsId": "container",
-     }
+     };
 
     this.global = {
         "mapDefaultCenterLatLng": [54.31081536133442, 48.362503051757805],
@@ -64,15 +64,15 @@ var Options = function(container){
             "stageMapsNames": ["", "", "", ""],
             "stageMapsZooms": [12,12,12,12],  
         }
-     }
+     };
 
-    this.stages = {}
+    this.stages = {};
 
-    this.places = {}
+    this.places = {};
 
     this.maps = {};
 
-    this.db = {}
+    this.db = {};
 
 
     // ********* POUCHDB *************
