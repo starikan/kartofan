@@ -21,7 +21,8 @@ var Options = function(container){
         "mapDefaultZoom": 12,
         "mapSyncMoving": true,
         "mapSyncZooming": false,
-        "mapExternalFeeds": ["json/maps.json"],
+
+        "externalFeeds": ["json/maps.json"],
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,

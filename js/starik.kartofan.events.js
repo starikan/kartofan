@@ -34,7 +34,10 @@ var Events = function(){
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
-            parent.createExternalMapsForm();
+            parent.createExternalJSONForm("maps", function(i, v){
+                                                      parent.closeAllModal();
+                                                      parent.setActiveMap(i, v);
+                                                  })
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             parent.closeContextMenu();
@@ -158,29 +161,26 @@ var Events = function(){
         new CSSMenu("mapSelectMenu", genArray, true);
      }
 
-    this.createExternalMapsForm = function(header){
+    this.createExternalJSONForm = function(collection, callback, header){
 
-        var extMaps = opt.getOption("global", "mapExternalFeeds");
+        var extData = opt.getOption("global", "externalFeeds");
 
         var menuObj = [
             { type: "header", text: header },
-        ]; 
+         ]; 
 
         var menu = new CSSMenu("mapSelectMenu", menuObj, true);
 
-        $.each(extMaps, function(i, vi){
-            $.get(vi, function(data){
-                var genArr = [
-                    { type: "paragraf", text: vi },
-                ];
-                $.each(data.maps, function(j, vj){
+        $.each(extData, function(i, jsonName){
+            $.get(jsonName, function(data){
+
+                var genArr = [ { type: "paragraf", text: jsonName } ];
+                
+                $.each(data[collection], function(j, data){
                     genArr.push({
                         type: "line", 
-                        text: vj.title ? vj.title : "Noname Map",
-                        callback: function(){
-                            parent.closeAllModal();
-                            parent.setActiveMap(j, vj);
-                        },                            
+                        text: data.title ? data.title : "Noname",
+                        callback: function(){ callback(j, data) },
                     });
                 });
                 menu.makeFromObj(genArr);
