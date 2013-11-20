@@ -170,6 +170,21 @@ var Options = function(container){
 
      }     
 
+    this.exportAllInJSON = function(){
+        var data = {};
+        $.each(this.bases, function(i, v){
+            data[v] = parent[v];
+        })
+
+        var dataJSON = JSON.stringify(data, null, 4);
+    
+        var blob = new Blob( 
+            [dataJSON], 
+            { type: "text/plain;charset=utf-8" }
+        );
+        saveAs(blob, "allData.json");
+     }
+
     this.setOption = function(collection, option, value, callback){
 
         // JS object

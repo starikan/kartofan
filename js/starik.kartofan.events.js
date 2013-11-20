@@ -70,6 +70,10 @@ var Events = function(){
             parent.closeContextMenu();
             opt.syncIn();
         }},
+        { type: "line", text: "Export All Data In JSON", callback: function(){
+            parent.closeContextMenu();
+            opt.exportAllInJSON();
+        }},        
      ];
 
     this.closeContextMenu = function(id){
