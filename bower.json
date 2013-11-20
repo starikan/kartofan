@@ -21,6 +21,7 @@
     "jquery-ui": "~1.10.3",
     "jquery": "~2.0.3",
     "lodash": "~2.3.0",
-    "select2": "~3.4.5"
+    "select2": "~3.4.5",
+    "flat-ui-official": "~2.1.1"
   }
 }

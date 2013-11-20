@@ -1,6 +1,5 @@
 "use strict"
 
-
 var Events = function(){
 
     var parent = this;
@@ -9,8 +8,6 @@ var Events = function(){
         window.opt = new Options();
         opt = window.opt;
      }
-
-
 
     // ********** WINDOW RESIZE **********
     this.eventResizeWindow = function(e){
@@ -57,24 +54,23 @@ var Events = function(){
             parent.closeContextMenu();
             parent.editView();
         }},
-        { type: "line", text: "Save Stage View", callback: function(){
+        { type: "line", text: "Save Stage", callback: function(){
             parent.closeContextMenu();
-            parent.saveView();
+            parent.saveStage();
         }},
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Global Settings" },
         { type: "line", text: "Global Maps View" },
-        { type: "line", text: "Settings Reset" },
+        { type: "line", text: "Settings Reset", callback: function(){
+            parent.closeContextMenu();
+            opt._clearAllBases();
+        }},
         { type: "line", text: "Update from External Storage", callback: function(){
             parent.closeContextMenu();
             opt.syncIn();
         }},
      ];
-
-    this.openContextMenu = function(e){
-        var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), parent.contextMenuArray, true);
-     }    
 
     this.closeContextMenu = function(id){
         if (!id){
@@ -95,10 +91,15 @@ var Events = function(){
      }
 
     // TODO: touch event to context menu
-    document.oncontextmenu = function(){ return false };
-    $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", this.closeAllModal);
-    window.oncontextmenu = this.openContextMenu;
+    this.onMainContextMenu = function(arr){
+        document.oncontextmenu = function(){ return false };
+        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", this.closeAllModal);
+        $(window).bind("contextmenu", function(e){
+            var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), arr, true);
+        });
+     }
 
+    this.onMainContextMenu(parent.contextMenuArray);
 
 
     // ********** SET MAP **********
@@ -281,6 +282,23 @@ var Events = function(){
 
     // ************ STAGES ************
 
+    this.editStageContextMenuArray = [
+ 
+        { type: "paragraf", text: "Stage", active: true },
+        { type: "line", text: "Save Stage View", callback: function(){
+            parent.closeContextMenu();
+            parent.saveView();
+        }},
+        { type: "line", text: "Add Map", callback: function(){
+            parent.closeContextMenu();
+            parent.addMapToStage();
+        }},
+        { type: "line", text: "Remove Map", callback: function(){
+            parent.closeContextMenu();
+            parent.removeMapFromStage();
+        }},
+     ];
+
     var _errCorrect = function(x){
 
         var err = opt.getOption("global", "stageViewConstructorElasticSizeErrorPersent");
@@ -325,40 +343,48 @@ var Events = function(){
 
     this.editView = function(){
         $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
+            parent.editMapView(i)
+        });
+    
+        parent.onMainContextMenu(parent.editStageContextMenuArray);
+     }
 
-            var onStop = function(){
-                
-                var $this = $(this);
+    this.editMapView = function(i){
 
-                var pos = _getPersentPosition(this);
-
-                $this.width(pos.width + "%").height(pos.height + "%")
-                .css("top", pos.top + "%").css("left", pos.left + "%");
-
-            }
-
-            $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
-
-            var map = window["map"+i];
-
-            map.map.dragging.disable();
-            map.map.scrollWheelZoom.disable();
-            map.map.touchZoom.disable();
-
-            if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
-            if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
-            if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
-            if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
+        var onStop = function(){
             
-            if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
-            map.nameControl.setPrefix("map"+i);
+            var $this = $(this);
 
-        })
+            var pos = _getPersentPosition(this);
+
+            $this.width(pos.width + "%").height(pos.height + "%")
+            .css("top", pos.top + "%").css("left", pos.left + "%");
+
+        }
+
+        $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
+
+        var map = window["map"+i];
+
+        map.map.dragging.disable();
+        map.map.scrollWheelZoom.disable();
+        map.map.touchZoom.disable();
+
+        if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
+        if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
+        if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
+        if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
+        
+        if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
+        map.nameControl.setPrefix("map"+i);
+
      }
 
     this.saveView = function(){
 
         var currStage = opt.getOption("current", "stage");
+
+        currStage.stageMapsGrid = [];
 
         $.each($(".maps"), function(i, v){
             currStage.stageMapsGrid[i] = [];
@@ -373,15 +399,44 @@ var Events = function(){
 
         });
 
+        currStage.stageMapsNames.length = currStage.stageMapsGrid.length;
+        currStage.stageMapsZooms.length = currStage.stageMapsGrid.length;
+
         opt.setOption("current", "stage", currStage, function(err, doc){
             if (!err){
-                stage._initStage();
+                stage.createStage();
             }
         });
+
+        parent.onMainContextMenu(parent.contextMenuArray);
+
      }
+
+    this.addMapToStage = function(){
+
+        var mapsCount = $(".maps").length;
+
+        stage.addMapDiv(mapsCount, [25, 25, 50, 50]);
+        stage.addMapObject(mapsCount);
+
+        parent.editMapView(mapsCount);
+
+     }
+
+    this.removeMapFromStage = function(){
+        var mapNum = opt.getOption("current", "activeMap");
+        var mapsCount = $(".maps").length;
+
+        if (mapsCount>1){
+            $("#"+mapNum).remove();
+        }
+     }  
+        
+    this.saveStage = function(){
+
+     }  
 
     this.loadStage = function(){
 
-     }
-
+     }     
  }

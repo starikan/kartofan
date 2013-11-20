@@ -423,7 +423,7 @@ var CSSMenu = function(id, arr, show){
             $li.bind("click", callback);
         }
         if (active){
-            $li.addClass("active");
+            $li.addClass("openOnStart");
         }
      }
 
@@ -479,6 +479,7 @@ var CSSMenu = function(id, arr, show){
         });
 
         this.activateMenu();
+        this.openOnStart();
      }
 
     this.activateMenu = function(){
@@ -516,6 +517,10 @@ var CSSMenu = function(id, arr, show){
                 return false;   
             }     
         });        
+     }
+
+    this.openOnStart = function(){
+        $('.cssmenu > ul > li.openOnStart > a').trigger( "click" );
      }
 
     this._initMenu();
