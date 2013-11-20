@@ -55,6 +55,9 @@ var Options = function(container){
         "activeMap": undefined,
         "stage": {
             "title": "current",
+            "id": "current",
+            "group": "",
+            "tags": [],
             "stageMapsGrid": [
                 // left, top, width, height
                 [0, 0, 50, 50],

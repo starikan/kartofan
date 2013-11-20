@@ -26,15 +26,15 @@ var Events = function(){
 
         { type: "line", text: "Set Map", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsMenu("", parent.setActiveMap);
+            parent.createLocaleSelectMenu("maps", parent.setActiveMap);
          }},
         { type: "line", text: "Edit Maps", callback: function(){
             parent.closeContextMenu();
-            parent.createLocaleMapsMenu("Select To Edit Map Data", parent.editMap);
+            parent.createLocaleSelectMenu("maps", parent.editMap, "Select To Edit Map Data");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
             parent.closeContextMenu();
-            parent.createExternalJSONForm("maps", function(i, v){
+            parent.createExternalJSONMenu("maps", function(i, v){
                                                       parent.closeAllModal();
                                                       parent.setActiveMap(i, v);
                                                   })
@@ -51,7 +51,10 @@ var Events = function(){
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Load Stage", callback: function(){
             parent.closeContextMenu();
-            parent.loadStage();
+            parent.createLocaleSelectMenu("stages", function(i, v){
+                                                        parent.closeAllModal();
+                                                        parent.loadStage(i);
+                                                    });
         }},
         { type: "line", text: "Edit Stage View", callback: function(){
             parent.closeContextMenu();
@@ -63,7 +66,7 @@ var Events = function(){
         }},
         { type: "line", text: "Load External Stage", callback: function(){
             parent.closeContextMenu();
-            parent.createExternalJSONForm("stages", function(i, v){
+            parent.createExternalJSONMenu("stages", function(i, v){
                                                       parent.closeAllModal();
                                                       parent.loadStage("", v);
                                                   })
@@ -123,41 +126,38 @@ var Events = function(){
         window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
-    this.createLocaleMapsMenu = function(header, callback){
+    this.createLocaleSelectMenu = function(collection, callback, header){
 
-        var maps = opt.getOption("maps");
+        var allData = opt.getOption(collection);
 
-        var groups = _.pluck(maps, 'group');
+        var groups = _.pluck(allData, 'group');
         groups = _.unique(groups);
         groups.sort();
 
-        var genArray = [
-            { type: "header", text: header },
-        ];
+        var genArray = [{ type: "header", text: header }];
 
-        $.each(groups, function(g, vg){
+        $.each(groups, function(g, group){
 
-            var mapsInGroup = {};
-            $.each(maps, function(i, v){
-                if (!v.group && !vg){
-                    mapsInGroup[i] = v;
+            var dataInGroup = {};
+            $.each(allData, function(i, v){
+                if (!v.group && !group){
+                    dataInGroup[i] = v;
                 }
-                if (v.group == vg) {
-                    mapsInGroup[i] = v;
+                if (v.group == group) {
+                    dataInGroup[i] = v;
                 }
             })
 
-            if (!$.isEmptyObject(mapsInGroup)){
+            if (!$.isEmptyObject(dataInGroup)){
                 
-                if (!vg) {vg = "Others"};
-                genArray.push({ type: "paragraf", text: vg });
+                if (!group) {group = "Others"};
+                genArray.push({ type: "paragraf", text: group });
                 
-                $.each(mapsInGroup, function(i, vi){
+                $.each(dataInGroup, function(i, vi){
                     genArray.push({
                         type: "line", 
-                        text: vi.title ? vi.title : "Noname Map",
+                        text: vi.title ? vi.title : "Noname",
                         callback: function(){
-                            parent.closeAllModal();
                             callback(i);
                         },
                     })
@@ -168,7 +168,7 @@ var Events = function(){
         new CSSMenu("mapSelectMenu", genArray, true);
      }
 
-    this.createExternalJSONForm = function(collection, callback, header){
+    this.createExternalJSONMenu = function(collection, callback, header){
 
         var extData = opt.getOption("global", "externalFeeds");
 
