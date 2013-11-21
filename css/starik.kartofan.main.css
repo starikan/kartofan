@@ -23,3 +23,12 @@ body {
 .activemap {
 	
 }
+
+.tour {
+    min-width: 300px;
+}
+
+.popover-title {
+    text-align: center;
+    font: 22px bold;
+}

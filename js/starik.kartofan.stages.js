@@ -31,6 +31,12 @@ var StageMaps = function(container){
             parent.addMapObject(i);
         })
 
+        // First visit automaticaly start tour
+        if (!opt.getOption("global", "tourFirstShown")){
+            tourMain.start(true);
+            opt.setOption("global", "tourFirstShown", true);
+        }
+
      }
 
     this.addMapDiv = function(i, v){

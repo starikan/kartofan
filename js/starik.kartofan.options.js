@@ -31,6 +31,7 @@ var Options = function(container){
             },
         ],
 
+        "tourFirstShown": false,
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,
