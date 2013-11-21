@@ -91,7 +91,8 @@ var Events = function(){
         { type: "paragraf", text: "Help" },
         { type: "line", text: "Main Features", callback: function(){
             parent.closeContextMenu();
-        }},
+            tourMain.restart();
+        }},        
      ];
 
     this.closeContextMenu = function(id){

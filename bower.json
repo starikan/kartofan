@@ -24,6 +24,7 @@
     "select2": "~3.4.5",
     "flat-ui-official": "~2.1.1",
     "FileSaver": "*",
-    "js-base64": "~2.1.2"
+    "js-base64": "~2.1.2",
+    "bootstrap-tour": "~0.7.0"
   }
 }
