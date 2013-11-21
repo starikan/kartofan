@@ -23,6 +23,7 @@
     "lodash": "~2.3.0",
     "select2": "~3.4.5",
     "flat-ui-official": "~2.1.1",
-    "FileSaver": "*"
+    "FileSaver": "*",
+    "js-base64": "~2.1.2"
   }
 }

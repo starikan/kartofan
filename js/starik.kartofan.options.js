@@ -26,9 +26,16 @@ var Options = function(container){
         "externalFeeds": [
             {
                 "title": "Local JSON",
-                "url": "json/maps.json"
-            }
+                "url": "json/maps.json",
+                "type": "local"
+            },
+            {
+                "title": "External JSON",
+                "url": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json",
+                "type": "GitHub"
+            },
         ],
+
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,

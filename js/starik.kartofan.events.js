@@ -177,10 +177,17 @@ var Events = function(){
         var menu = new CSSMenu("mapSelectMenu", menuObj, true);
 
         $.each(extData, function(i, extJSON){
-            $.get(extJSON.url, function(data){
 
+            extJSON.type = extJSON.type ? extJSON.type : "local";
+            extJSON.url = extJSON.type == "GitHub" ? extJSON.url + "?callback" : extJSON.url;
+
+            $.getJSON(extJSON.url, function(data){
                 var genArr = [ { type: "paragraf", text: extJSON.title } ];
-                
+
+                if (extJSON.type == "GitHub"){
+                    data = JSON.parse(Base64.decode(data.content));
+                }
+
                 $.each(data[collection], function(j, data){
                     genArr.push({
                         type: "line", 
@@ -188,6 +195,7 @@ var Events = function(){
                         callback: function(){ callback(j, data) },
                     });
                 });
+
                 menu.makeFromObj(genArr);
             })
         });
