@@ -86,7 +86,12 @@ var Events = function(){
         { type: "line", text: "Export All Data In JSON", callback: function(){
             parent.closeContextMenu();
             opt.exportAllInJSON();
-        }},        
+        }},
+
+        { type: "paragraf", text: "Help" },
+        { type: "line", text: "Main Features", callback: function(){
+            parent.closeContextMenu();
+        }},
      ];
 
     this.closeContextMenu = function(id){
