@@ -162,21 +162,17 @@ module.exports = function(grunt) {
          },
 
         watch: {
-          // dev:{
+          options: { livereload: true },
+          dev:{
+            files: [ sourceFolder+'/**/*.*' ], 
+            tasks: [ "copy:dev", "preprocess:dev", "jade:dev", "clean:temp" ],
             options: { livereload: true },
-            // Чтоб не было глюка обновления всех файлов
-            // обновление только при изменении основного html
-            // а он обновляется в любом случае
-            all: { files: [ devFolder+'/index.html' ], livereload: true },            
-            files: { files: [ sourceFolder+'/**/*.*' ], tasks: [ "copy:dev", "preprocess:dev", "jade:dev", "clean:temp" ] },
-          // },
-          // prod:{
-          //   options: { livereload: true },
-          //   all: { files: [ devFolder+'/**/*.*' ], livereload: true },            
-          //   jade: { files: [ sourceFolder+'/index.jade' ], tasks: [ "preprocess:prod", "jade:prod" ] },
-          //   js: { files: [ sourceFolder+'/**/*.js' ], tasks: [ "concat:topJs", "concat:bottomJs" ] },
-          //   css: { files: [ sourceFolder+'/**/*.css' ], tasks: [ "concat:cssApp", "concat:cssVendor" ] },
-          // }
+          },
+          prod:{
+            files: [ sourceFolder+'/**/*.*' ], 
+            tasks: [ "copy:prod", "concat", "preprocess:prod", "jade:prod", "clean:temp" ],
+            options: { livereload: true },            
+          }
          },
 
         connect: {
@@ -187,12 +183,21 @@ module.exports = function(grunt) {
                     open: true,
                     livereload: true,
                 },
-            }
+            },
+           prod: {
+                options: { 
+                    port: 12345,
+                    base: prodFolder,
+                    open: true,
+                    livereload: true,
+                },
+            },
          },
     });
 
     grunt.registerTask('default', ["clean", "copy", "preprocess", "jade", "concat", "clean:temp"]);
     // grunt.registerTask('default', ["jade", "concat"]);
-    grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch"]);
+    grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch:dev"]);
+    grunt.registerTask('prod', ["clean:prod", "copy:prod", "concat", "preprocess:prod", "jade:prod", "clean:temp", "connect:prod", "watch:prod"]);
 
  };
