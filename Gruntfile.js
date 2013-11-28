@@ -1,10 +1,6 @@
 module.exports = function(grunt) {
     "use strict"
 
-    var sourceFolder = "source";
-    var devFolder = "dev";
-    var prodFolder = "production";
-
     var topJs = [
       "source/js_vendor/jquery.js",
       "source/js_vendor/lodash.js",
@@ -31,12 +27,13 @@ module.exports = function(grunt) {
       "source/css_vendor/leaflet.css",
       "source/css_vendor/bootstrap.css",
       "source/css_vendor/bootstrap-tour.css",
-    ];
+     ];
+
     var appCss = [
       "source/css/starik.kartofan.main.css",
       "source/css/starik.kartofan.menu.css",
       "source/css/starik.kartofan.forms.css",
-    ];
+     ];
 
      // Load Grunt tasks declared in the package.json file
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -45,42 +42,42 @@ module.exports = function(grunt) {
 
         clean: {
           dev: {
-            src: [ devFolder ]
+            src: [ "dev" ]
           },
           prod: {
-            src: [ prodFolder ]
+            src: [ "production" ]
           },
           temp: {
-            src: [ devFolder+"/*.jade", prodFolder+"/*.jade" ]
+            src: [ "dev/*.jade", "production/*.jade" ]
           }
          },
 
         copy: {
           dev: {
-            cwd: sourceFolder,
+            cwd: "source",
             src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**' ],
-            dest: devFolder,
+            dest: "dev",
             expand: true
           },
           prod: {
             files: [
               {
-                cwd: sourceFolder,
+                cwd: "source",
                 src: [ 'data/**' ],
-                dest: prodFolder,
+                dest: "production",
                 expand: true
               },
               {
-                cwd: sourceFolder,
+                cwd: "source",
                 src: [ 'css_vendor/fonts/*', 'css/fonts/*' ],
-                dest: prodFolder+"/fonts",
+                dest: "production/fonts",
                 flatten: true,
                 expand: true
               },
               {
-                cwd: sourceFolder,
+                cwd: "source",
                 src: [ 'css_vendor/images/**', 'css/images/**', 'images/**' ],
-                dest: prodFolder+"/images",
+                dest: "production/images",
                 flatten: true,
                 expand: true
               },              
@@ -90,8 +87,8 @@ module.exports = function(grunt) {
 
         preprocess: {
           dev: {
-            src: sourceFolder+"/index.jade",
-            dest: devFolder+"/index.jade",
+            src: "source/index.jade",
+            dest: "dev/index.jade",
             options: {
               context: {
                 production: false
@@ -99,8 +96,8 @@ module.exports = function(grunt) {
             }
           },
           prod: {
-            src: sourceFolder+"/index.jade",
-            dest: prodFolder+"/index.jade",
+            src: "source/index.jade",
+            dest: "production/index.jade",
             options: {
               context: {
                 production: true
@@ -117,9 +114,9 @@ module.exports = function(grunt) {
               },
               files: [
                   {
-                    cwd: devFolder,
+                    cwd: "dev",
                     src: "**/*.jade",
-                    dest: devFolder,
+                    dest: "dev",
                     expand: true,
                     ext: ".html",
                   }
@@ -132,9 +129,9 @@ module.exports = function(grunt) {
               },
               files: [
                   {
-                    cwd: prodFolder,
+                    cwd: "production",
                     src: "**/*.jade",
-                    dest: prodFolder,
+                    dest: "production",
                     expand: true,
                     ext: ".html",
                   }
@@ -144,60 +141,69 @@ module.exports = function(grunt) {
 
         concat: {
           topJs: {
-              dest: prodFolder+"/top.js",
+              dest: "production/top.js",
               src: topJs,
           },
           bottomJs: {
-              dest: prodFolder+"/bottom.js",
+              dest: "production/bottom.js",
               src: bottomJs,
           },
-          cssApp: {
-              dest: prodFolder+"/app.css",
+          appCss: {
+              dest: "production/app.css",
               src: appCss,
           },
-          cssVendor: {
-              dest: prodFolder+"/vendor.css",
+          vendorCss: {
+              dest: "production/vendor.css",
               src: vendorCss,
           },
+         },
+
+        uglify: {
+          topJs: { files: { "production/top.js": topJs } },
+          bottomJs: { files: { "production/bottom.js": bottomJs } },
+         },
+
+        cssmin: {
+          appCss: { files: { "production/app.css": appCss } },
+          vendorCss: { files: { "production/vendor.css": vendorCss } },
          },
 
         watch: {
           options: { livereload: true },
           dev:{
-            files: [ sourceFolder+'/**/*.*' ], 
+            files: [ "source/**/*.*" ], 
             tasks: [ "copy:dev", "preprocess:dev", "jade:dev", "clean:temp" ],
             options: { livereload: true },
           },
           prod:{
-            files: [ sourceFolder+'/**/*.*' ], 
+            files: [ "source/**/*.*" ], 
             tasks: [ "copy:prod", "concat", "preprocess:prod", "jade:prod", "clean:temp" ],
             options: { livereload: true },            
           }
          },
 
         connect: {
-            dev: {
-                options: { 
-                    port: 12345,
-                    base: devFolder,
-                    open: true,
-                    livereload: true,
-                },
-            },
-           prod: {
-                options: { 
-                    port: 12345,
-                    base: prodFolder,
-                    open: true,
-                    livereload: true,
-                },
-            },
+          dev: {
+              options: { 
+                  port: 12345,
+                  base: "dev",
+                  open: true,
+                  livereload: true,
+              },
+          },
+         prod: {
+              options: { 
+                  port: 12345,
+                  base: "production",
+                  open: true,
+                  livereload: true,
+              },
+          },
          },
     });
 
-    grunt.registerTask('default', ["clean", "copy", "preprocess", "jade", "concat", "clean:temp"]);
-    // grunt.registerTask('default', ["jade", "concat"]);
+    grunt.registerTask('default', ["clean", "copy", "preprocess", "jade", "uglify", "cssmin", "clean:temp"]);
     grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch:dev"]);
-    grunt.registerTask('prod', ["clean:prod", "copy:prod", "concat", "preprocess:prod", "jade:prod", "clean:temp", "connect:prod", "watch:prod"]);
+    grunt.registerTask('prod', ["clean:prod", "copy:prod", "uglify", "cssmin", "preprocess:prod", "jade:prod", "clean:temp", "connect:prod", "watch:prod"]);
 
  };

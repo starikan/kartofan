@@ -13,6 +13,7 @@
     "grunt-contrib-jade": "~0.8.0",
     "grunt-contrib-concat": "latest",
     "grunt-preprocess": "latest",
-    "matchdep": "~0.1.2"
+    "matchdep": "~0.1.2",
+    "grunt-contrib-cssmin": "~0.7.0"
   }
 }
