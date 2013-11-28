@@ -1,5 +1,6 @@
 "use strict"
 
+
 var Events = function(){
 
     var parent = this;

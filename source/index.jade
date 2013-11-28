@@ -1,0 +1,66 @@
+doctype html
+head
+    title
+ 
+    <!-- @if production=false -->
+    // Top JS
+
+    script(src="js_vendor/jquery.js")
+    script(src="js_vendor/lodash.js")
+    script(src="js_vendor/leaflet-src.js")
+    script(src="js_vendor/FileSaver.js")
+    script(src="js_vendor/base64.js ")
+    script(src="js_vendor/bootstrap.js")
+    script(src="js_vendor/bootstrap-tour.js")
+    script(src="js_vendor/pouchdb.js")
+
+    // CSS    
+    
+    link(href="css_vendor/leaflet.css", rel="stylesheet")
+    link(href="css_vendor/bootstrap.css", rel="stylesheet")
+    link(href="css_vendor/bootstrap-tour.css", rel="stylesheet")
+
+    link(href="css/starik.kartofan.main.css", rel="stylesheet")
+    link(href="css/starik.kartofan.menu.css", rel="stylesheet")
+    link(href="css/starik.kartofan.forms.css", rel="stylesheet")
+    <!-- @endif -->
+
+    <!-- @if production=true -->
+
+    script(src="top.js")
+    link(href="app.css", rel="stylesheet")
+
+    <!-- @endif -->
+
+body
+
+    div.mapContainer#container
+
+    <!-- @if production=false -->
+    // Bottom JS
+
+    script(src="js/starik.kartofan.fn.js")
+    script(src="js/starik.kartofan.leaflet.js")
+    script(src="js/starik.kartofan.options.js")
+    script(src="js/starik.kartofan.stages.js")
+    script(src="js/starik.kartofan.forms.js")
+    script(src="js/starik.kartofan.events.js")
+    script(src="js/starik.kartofan.trip.js")
+    script(src="js/starik.kartofan.main.js")
+    <!-- @endif -->
+
+    <!-- @if production=true -->
+
+    script(src="bottom.js")
+
+    |<!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22770301 = new Ya.Metrika({id:22770301, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, trackHash:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/22770301" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+
+    |<script>
+    |(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    |(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    |m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    |})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    |ga('create', 'UA-38067250-2', 'kissr.com');
+    |ga('send', 'pageview');
+    |</script>
+    <!-- @endif -->

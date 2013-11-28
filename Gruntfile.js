@@ -1,79 +1,198 @@
-//Стандартный экспорт модуля в nodejs
 module.exports = function(grunt) {
+    "use strict"
+
+    var sourceFolder = "source";
+    var devFolder = "dev";
+    var prodFolder = "production";
+
+    var topJs = [
+      "source/js_vendor/jquery.js",
+      "source/js_vendor/lodash.js",
+      "source/js_vendor/leaflet-src.js",
+      "source/js_vendor/FileSaver.js",
+      "source/js_vendor/base64.js ",
+      "source/js_vendor/bootstrap.js",
+      "source/js_vendor/bootstrap-tour.js",
+      "source/js_vendor/pouchdb.js",
+     ];
+
+    var bottomJs = [
+      "source/js/starik.kartofan.fn.js",
+      "source/js/starik.kartofan.leaflet.js",
+      "source/js/starik.kartofan.options.js",
+      "source/js/starik.kartofan.stages.js",
+      "source/js/starik.kartofan.forms.js",
+      "source/js/starik.kartofan.events.js",
+      "source/js/starik.kartofan.trip.js",
+      "source/js/starik.kartofan.main.js",
+     ];
+     
+    var vendorCss = [
+      "source/css_vendor/leaflet.css",
+      "source/css_vendor/bootstrap.css",
+      "source/css_vendor/bootstrap-tour.css",
+    ];
+    var appCss = [
+      "source/css/starik.kartofan.main.css",
+      "source/css/starik.kartofan.menu.css",
+      "source/css/starik.kartofan.forms.css",
+    ];
 
      // Load Grunt tasks declared in the package.json file
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    // Инициализация конфига GruntJS
     grunt.initConfig({
 
-        //Например проверка кода javascript с помощью утилиты jshint
-        jshint: {},
+        clean: {
+          dev: {
+            src: [ devFolder ]
+          },
+          prod: {
+            src: [ prodFolder ]
+          },
+          temp: {
+            src: [ devFolder+"/*.jade", prodFolder+"/*.jade" ]
+          }
+         },
 
-        //Склеивание файлов
-        concat: {},
+        copy: {
+          dev: {
+            cwd: sourceFolder,
+            src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**' ],
+            dest: devFolder,
+            expand: true
+          },
+          prod: {
+            files: [
+              {
+                cwd: sourceFolder,
+                src: [ 'data/**' ],
+                dest: prodFolder,
+                expand: true
+              },
+              {
+                cwd: sourceFolder,
+                src: [ 'css_vendor/fonts/*', 'css/fonts/*' ],
+                dest: prodFolder+"/fonts",
+                flatten: true,
+                expand: true
+              },
+              {
+                cwd: sourceFolder,
+                src: [ 'css_vendor/images/**', 'css/images/**', 'images/**' ],
+                dest: prodFolder+"/images",
+                flatten: true,
+                expand: true
+              },              
+            ]
+          },
+         },
+
+        preprocess: {
+          dev: {
+            src: sourceFolder+"/index.jade",
+            dest: devFolder+"/index.jade",
+            options: {
+              context: {
+                production: false
+              }
+            }
+          },
+          prod: {
+            src: sourceFolder+"/index.jade",
+            dest: prodFolder+"/index.jade",
+            options: {
+              context: {
+                production: true
+              }
+            }
+          },          
+         },
 
         jade: {
-            compile: {
-                options: {
-                    data: {
-                        debug: false,
-                    },
-                    pretty: true,
-                },
-                files: {
-                    "index.html": ["index.jade"]
-                }
-            }
-        },
+          dev: {
+              options: {
+                  data: { debug: false },
+                  pretty: true,
+              },
+              files: [
+                  {
+                    cwd: devFolder,
+                    src: "**/*.jade",
+                    dest: devFolder,
+                    expand: true,
+                    ext: ".html",
+                  }
+              ],
+          },
+          prod: {
+              options: {
+                  data: { debug: false },
+                  pretty: true,
+              },
+              files: [
+                  {
+                    cwd: prodFolder,
+                    src: "**/*.jade",
+                    dest: prodFolder,
+                    expand: true,
+                    ext: ".html",
+                  }
+              ],
+          },            
+         },
+
+        concat: {
+          topJs: {
+              dest: prodFolder+"/top.js",
+              src: topJs,
+          },
+          bottomJs: {
+              dest: prodFolder+"/bottom.js",
+              src: bottomJs,
+          },
+          cssApp: {
+              dest: prodFolder+"/app.css",
+              src: appCss,
+          },
+          cssVendor: {
+              dest: prodFolder+"/vendor.css",
+              src: vendorCss,
+          },
+         },
 
         watch: {
-
-            options: { 
-                livereload: true 
-            },   
-                     
-            all: {
-                files: ['index.jade'],
-                tasks: ['jade'],
-            },
-
-            html: {
-                files: ['index.html'],
-                livereload: true,
-            },            
-
-            js: {
-                files: ['js/*.js'],
-                livereload: true,
-            },  
-
-            css: {
-                files: ['css/*.css'],
-                livereload: true,
-            },
-        },
+          // dev:{
+            options: { livereload: true },
+            // Чтоб не было глюка обновления всех файлов
+            // обновление только при изменении основного html
+            // а он обновляется в любом случае
+            all: { files: [ devFolder+'/index.html' ], livereload: true },            
+            files: { files: [ sourceFolder+'/**/*.*' ], tasks: [ "copy:dev", "preprocess:dev", "jade:dev", "clean:temp" ] },
+          // },
+          // prod:{
+          //   options: { livereload: true },
+          //   all: { files: [ devFolder+'/**/*.*' ], livereload: true },            
+          //   jade: { files: [ sourceFolder+'/index.jade' ], tasks: [ "preprocess:prod", "jade:prod" ] },
+          //   js: { files: [ sourceFolder+'/**/*.js' ], tasks: [ "concat:topJs", "concat:bottomJs" ] },
+          //   css: { files: [ sourceFolder+'/**/*.css' ], tasks: [ "concat:cssApp", "concat:cssVendor" ] },
+          // }
+         },
 
         connect: {
-            server: {
-                options: {
+            dev: {
+                options: { 
                     port: 12345,
-                    // base: ".",
+                    base: devFolder,
                     open: true,
                     livereload: true,
                 },
             }
-        },
+         },
     });
 
-    //Эти задания будут выполнятся сразу же когда вы в консоли напечатание grunt, и нажмете Enter
-    // grunt.registerTask('default', ['jshint', 'concat']);
-    grunt.registerTask('default', ["jade"]);
-    // grunt.registerTask('default', ["watch"]);
+    grunt.registerTask('default', ["clean", "copy", "preprocess", "jade", "concat", "clean:temp"]);
+    // grunt.registerTask('default', ["jade", "concat"]);
+    grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch"]);
 
-    // Creates the `server` task
-    grunt.registerTask('server', [
-        "connect",
-        "watch",
-    ]);    
  };

@@ -1,6 +1,6 @@
 {
   "name": "Kartofan",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "authors": [
     "Starik <4analit@gmail.com>"
   ],
@@ -25,6 +25,9 @@
     "flat-ui-official": "~2.1.1",
     "FileSaver": "*",
     "js-base64": "~2.1.2",
-    "bootstrap-tour": "~0.7.0"
+    "bootstrap-tour": "~0.7.0",
+    "leaflet-dist": "~0.7.x",
+    "pouchdb": "~0.0.10",
+    "pouchdb-nightly.min.js": "http://download.pouchdb.com/pouchdb-nightly.min.js"
   }
 }
