@@ -15,7 +15,7 @@ if (! Array.isArray) {
     };
  }
 
-L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
+ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
 
     code: 'EPSG:3857.Ext',
 

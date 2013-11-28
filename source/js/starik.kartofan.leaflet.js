@@ -318,6 +318,13 @@ var LeafletTiles = function(mapName, mapData){
 
     this.layer;
 
+    this.tileLayerExtendKeys = {
+        case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
+        Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()));},
+        case0123: function(data){return [0,1,2,3][Math.floor(Math.random() * 4)]},
+        Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()));},
+     }
+
     if (typeof opt === "undefined" || !(opt instanceof Options)) { 
         window.opt = new Options();
         opt = window.opt;
@@ -372,7 +379,7 @@ var LeafletTiles = function(mapName, mapData){
             this.layer = L.tileLayer(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
-            }, tileLayerExtendKeys));
+            }, parent.tileLayerExtendKeys));
         }
      }
 
@@ -398,11 +405,4 @@ var LeafletTiles = function(mapName, mapData){
 
     this.setLayer();
 
- }
-
-var tileLayerExtendKeys = {
-    case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
-    Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()));},
-    case0123: function(data){return [0,1,2,3][Math.floor(Math.random() * 4)]},
-    Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()));},
  }
