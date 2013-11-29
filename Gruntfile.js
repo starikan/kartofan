@@ -202,7 +202,7 @@ module.exports = function(grunt) {
          },
     });
 
-    grunt.registerTask('default', ["clean", "copy", "preprocess", "jade", "uglify", "cssmin", "clean:temp"]);
+    grunt.registerTask('default', ["clean:dev", "clean:prod", "copy", "preprocess", "jade", "uglify", "cssmin", "clean:temp"]);
     grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch:dev"]);
     grunt.registerTask('prod', ["clean:prod", "copy:prod", "uglify", "cssmin", "preprocess:prod", "jade:prod", "clean:temp", "connect:prod", "watch:prod"]);
 

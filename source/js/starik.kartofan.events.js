@@ -274,7 +274,7 @@ var Events = function(){
         mapOptions.group = tempGroups;        
 
         // Generate Form
-        $.getJSON("json/map_edit_form.json", function(eformFields){
+        $.getJSON("data/map_edit_form.json", function(eformFields){
             eform = new EditableForm("addMap", eformFields, eformFunc);
             eform.fillForm(mapVals, mapOptions);
             
