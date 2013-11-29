@@ -136,8 +136,8 @@ var Events = function(){
 
         var allData = opt.getOption(collection);
 
-        var groups = _.pluck(allData, 'group');
-        groups = _.unique(groups);
+        var groups = $.pluck(allData, 'group');
+        groups = $.unique(groups);
         groups.sort();
 
         var genArray = [{ type: "header", text: header }];
@@ -271,7 +271,7 @@ var Events = function(){
                 tempGroups.push(v.group)
             }
         })
-        tempGroups = _.uniq(tempGroups);
+        tempGroups = $.unique(tempGroups);
         tempGroups.sort()
         mapOptions.group = tempGroups;        
 
