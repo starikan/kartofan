@@ -1,5 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:100);
-
 .eform {
   position: absolute;
   top: 50%;
@@ -12,12 +10,13 @@
     
   background: #0fbf70;
   width: 250px;
-  font-family: 'Roboto';
+  /*height: 100%;*/
   z-index: 1400;
   padding: 0;
 }
 
 .eform-header {
+  /*position: absolute;*/
   margin: 0;
   padding: 0;
   text-align: center;
@@ -28,9 +27,14 @@
 }
 
 .eform-content {
+  /*position: absolute;*/
   padding: 10px;
-  margin: 10px;
+  /*margin: 10px;*/
   margin-top: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
 .eform-content input,
@@ -48,7 +52,7 @@
   background: #badbad;
 }
 
-.button {
+.eform-content .button {
   border: none;
   text-align: center;
   background: #0b9054;
@@ -58,134 +62,12 @@
   transition: all 0.15s linear;
 }
 
-.button:hover {
+.eform-content .button:hover {
   background: #0f8060;
 }
 
 
 
-.noCheck {
+.eform-content .noCheck {
   background: #de3163 !important;
-}
-
-
-
-.eform-content .select2-container {
-  width: 100%;
-  margin: 2px 0 2px 0;
-}
-
-.eform-content .select2-container .select2-choice {
-  border-radius: 0px;
-}
-
-.eform-content .select2-container-active .select2-choice,
-.eform-content .select2-container-active .select2-choices {
-  background: #badbad;
-}
-
-.eform-content .select2-container .select2-choice {
-    border: 2px solid #dce4ec;
-    font-family: "Lato", sans-serif;
-    font-size: 14px;
-    text-indent: 1px;
-    -webkit-border-radius: 0px;
-       -moz-border-radius: 0px;
-            border-radius: 0px;
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
-}
-.eform-content .select2-container.select2-drop-above .select2-choice {
-    border-bottom-color: #dce4ec;
-    -webkit-border-radius:0;
-       -moz-border-radius:0;
-            border-radius:0;
-}
-.eform-content .select2-drop {
-    margin-top: -2px;
-    border: 2px solid #dce4ec;
-    border-top: 0;
-    -webkit-border-radius:0;
-       -moz-border-radius:0;
-            border-radius:0;
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
-}
-.eform-content .select2-drop.select2-drop-above {
-    margin-top: 2px;
-    border-top: 2px solid #dce4ec;
-    border-bottom: 0;
-    -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-            border-radius: 0;
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
-}
-.eform-content .select2-container .select2-choice div {
-    border-left: 2px solid #dce4ec;
-    -webkit-border-radius: 0;
-       -moz-border-radius: 0;
-            border-radius: 0;
- 
-    -webkit-background-clip: padding-box;
-       -moz-background-clip: padding;
-            background-clip: padding-box;
-}
-.eform-content .select2-search input {
-    height: 30px !important;
-    border: 2px solid #dce4ec;
-}
-.eform-content .select2-container-active .select2-choice,
-.eform-content .select2-container-active .select2-choices {
-    border: 2px solid #dce4ec;
-    outline: none;
- 
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
-}
-.eform-content .select2-dropdown-open .select2-choice {
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
- 
-    -webkit-border-bottom-left-radius: 0;
-        -moz-border-radius-bottomleft: 0;
-            border-bottom-left-radius: 0;
- 
-    -webkit-border-bottom-right-radius: 0;
-        -moz-border-radius-bottomright: 0;
-            border-bottom-right-radius: 0;
-}
-.eform-content .select2-dropdown-open .select2-choice div {
-    background: transparent;
-    border-left: none;
-    filter: none;
-}
-.eform-content .select2-results .select2-highlighted {
-    background: #3875d7;
-    background: #1abc9c;
-    color: #fff;
-    -webkit-border-radius: 0px;
-       -moz-border-radius: 0px;
-            border-radius: 0px;
-}
-.eform-content .select2-container-multi .select2-choices {
-    height: auto !important;
-    height: 1%;
- 
-    border: 2px solid #dce4ec;
-}
-.eform-content .select2-container-multi.select2-container-active .select2-choices {
-    border: 2px solid #dce4ec;
-    -webkit-border-radius: 0px;
-       -moz-border-radius: 0px;
-            border-radius: 0px;
- 
-    -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
 }

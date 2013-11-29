@@ -126,6 +126,7 @@ var Options = function(container){
                             continuous: true, 
                             // TODO: усли ошибка то выводить предупреждение
                             // onChange: function(data){ console.log(data) },
+                            // complite: function(data){ console.log(data) },
                         });
                     })
                 })
@@ -155,10 +156,11 @@ var Options = function(container){
         var baseMain = parent.getOption("global","dbExtServerIn");
         $.each(parent.bases, function(i, v){
             parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
+                if (err){ console.log(err) }
+                if (data){ console.log(data) }
                 // TODO: усли ошибка то выводить предупреждение
                 // TODO: если пришло обновление то тоже выводить предупреждение.
-                // console.log(v, err, data)
-            }); 
+            });
         })
      }
 

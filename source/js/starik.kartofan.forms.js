@@ -2,7 +2,7 @@
 
 var EditableForm = function(id, arr, funcs, show){
     
-    parent = this;
+    var parent = this;
 
     if (!id) {id = "eform"};
     if (!show) {show = true};
@@ -31,9 +31,9 @@ var EditableForm = function(id, arr, funcs, show){
         this.$form.empty().addClass("eform hide");
 
         $("<div></div>").appendTo(this.$form).addClass("eform-header");
-        $("<div></div>").appendTo(this.$form).addClass("eform-content").append("<form/>");
+        $("<div></div>").appendTo(this.$form).addClass("eform-content");
 
-        this.$formContent = this.$form.find(".eform-content > form");
+        this.$formContent = this.$form.find(".eform-content");
 
         if (show){ this.showForm() }
 
@@ -363,7 +363,8 @@ var EditableForm = function(id, arr, funcs, show){
  }
 
 var CSSMenu = function(id, arr, show){
-    parent = this;
+    
+    var parent = this;
 
     if (!id) {id = "nonamemenu"}
     if (!show) {show = true}
