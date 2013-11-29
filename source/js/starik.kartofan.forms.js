@@ -105,6 +105,7 @@ var EditableForm = function(id, arr, funcs, show){
             "tabindex": v.tabindex,
             "check": v.check,
         });
+        // $input.addClass("form-control flat");
         $input.appendTo(this.$formContent);
         this._checkVal(v, $input);
         this.fields.push($input);
@@ -122,6 +123,7 @@ var EditableForm = function(id, arr, funcs, show){
             "check": v.check,
             "list": v.id+"_list"
         });
+        // $input.addClass("form-control flat");
         $input.appendTo(this.$formContent);
 
         var $datalist = $("<datalist></datalist>").attr({
@@ -142,12 +144,13 @@ var EditableForm = function(id, arr, funcs, show){
         v = this._checkInputAttr(v);
 
         var $select = $("<select/>").attr({
+            "type": "select",
             "id": v.id,
             "value": v.val,
             "tabindex": v.tabindex,
             "check": v.check,
         });
-        
+        // $select.addClass("form-control flat");
         $select.appendTo(this.$formContent);
 
         $.each(v.options, function(i, v){
@@ -162,16 +165,15 @@ var EditableForm = function(id, arr, funcs, show){
         v = this._checkInputAttr(v);
 
         var $tags = $("<input/>").appendTo(this.$formContent).attr({
+            "type": "tags",
             "id": v.id,
             "tabindex": v.tabindex,
             "check": v.check,
-            "value": v.options,
+            "data-role": "tagsinput",
+            "value": v.val,
         })
 
-        // $tags.tagsInput({
-        //     'height':'100px',
-        //     'width':'300px',
-        // });
+        $tags.tagsinput();
 
         this._checkVal(v, $tags);
         this.fields.push($tags);
@@ -273,6 +275,14 @@ var EditableForm = function(id, arr, funcs, show){
                     // Set vals
                     field.val(val);
 
+                    //Set tags vals
+                    if (field.attr("type") == "tags"){
+                        var tags = val.split(",");
+                        $.each(tags, function(num, tag){
+                            field.tagsinput('add', tag);
+                        })
+                    }
+
                     // Set options
                     if (options && !$.isEmptyObject(options) && $.isArray(options[id]) && options[id].length){
 
@@ -284,7 +294,13 @@ var EditableForm = function(id, arr, funcs, show){
 
                         if (field.attr("type") == "select"){
                             console.log("Select options sdd: "+options[id]);
-                        }  
+                        }
+                        
+                        if (field.attr("type") == "tags"){
+                            // Add suggestions on tags
+                            // http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/
+                        }
+
                     }
 
                     console.log(id, val)

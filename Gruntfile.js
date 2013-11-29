@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       "source/js_vendor/bootstrap.js",
       "source/js_vendor/bootstrap-tour.js",
       "source/js_vendor/pouchdb.js",
-      // "source/js_vendor/jquery.tagsinput.js",
+      "source/js_vendor/bootstrap-tagsinput.js",
      ];
 
     var bottomJs = [
@@ -28,7 +28,6 @@ module.exports = function(grunt) {
       "source/css_vendor/leaflet.css",
       "source/css_vendor/bootstrap.css",
       "source/css_vendor/bootstrap-tour.css",
-      "source/css_vendor/jquery.tagsinput.css",
      ];
 
     var appCss = [

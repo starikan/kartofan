@@ -209,6 +209,8 @@ var Events = function(){
 
     this.editMap = function(mapId){
 
+        parent.closeContextMenu();
+
         var maps = opt.getOption("maps");
         var mapVals;
 

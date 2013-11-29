@@ -44,7 +44,7 @@
 .eform-content select
  {
   width: 100%;
-  padding: 10px;
+  padding: 6px;
   box-sizing: border-box;
   border: none;
   color: black;
@@ -56,13 +56,6 @@
 
 .eform-content input:focus,
 .eform-content select:focus
-{
-  background: #badbad;
-}
-
-.eform-content input:hover,
-.eform-content select:hover,
-.eform-content .button:hover 
 {
   background: #badbad;
 }
@@ -83,6 +76,41 @@
   background: #de3163 !important;
 }
 
-/*.tagsinput {
-  padding: 0px !important;
-}*/
+
+
+.bootstrap-tagsinput {
+  background-color: #fff;
+  display: inline-block;
+  padding: 6px;
+  vertical-align: middle;
+  max-width: 100%;
+  line-height: 22px;
+  width: 100%;
+}
+.bootstrap-tagsinput input {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  width: auto !important;
+  max-width: inherit;
+}
+.bootstrap-tagsinput input:focus {
+  border: none;
+  box-shadow: none;
+  background-color: #fff;
+}
+.bootstrap-tagsinput .tag {
+  margin-right: 2px;
+  color: white;
+}
+.bootstrap-tagsinput .tag [data-role="remove"] {
+  margin-left: 8px;
+  cursor: pointer;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+  content: "x";
+  padding: 0px 2px;
+}

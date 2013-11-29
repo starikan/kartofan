@@ -9,6 +9,7 @@ USAGE:
 http://ivaynberg.github.io/select2/
 https://github.com/melanke/Watch.JS
 http://www.quirksmode.org/dom/events/contextmenu.html - context menu event browsers support
+http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/ - Tags
 
 
 ToAdd:
@@ -22,9 +23,6 @@ TODO:
 
 - сделать проверку внешних баз и если нет то выводить предупреждение
 - если происходит синхронизация с внешней базы внутрь, то делать предупреждение
-
-- форма:
-    * сделать тэги
 
 - избавиться от ненужных библиотек (lodash, jquery)
 - тур по сайту вынесли в JSON
