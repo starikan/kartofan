@@ -60,7 +60,7 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this._checkInputAttr = function(v){
-        if (v.classList && Array.isArray(v.classList)){ v.classList = v.classList.join(" ") }
+        if (v.classList && $.isArray(v.classList)){ v.classList = v.classList.join(" ") }
         if (!v.check) { v.check = /.?/; }
         if (v.description){
             $("<label>"+v.description+"</label>").appendTo(this.$formContent).addClass(v.classList);
@@ -259,7 +259,7 @@ var EditableForm = function(id, arr, funcs, show){
         arr = arr ? arr : this.arr;
         funcs = funcs ? funcs : this.funcs;
 
-        if (!Array.isArray(arr)){ return }
+        if (!$.isArray(arr)){ return }
 
         $.each(arr, function(i, v){
             var f = funcs[v.id]
@@ -462,7 +462,7 @@ var CSSMenu = function(id, arr, show){
 
         arr = arr ? arr : this.arr;
 
-        if (!Array.isArray(arr)){ return }
+        if (!$.isArray(arr)){ return }
 
         $.each(arr, function(i, v){
             switch (v.type){
