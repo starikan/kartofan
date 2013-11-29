@@ -41,7 +41,8 @@
 }
 
 .eform-content input,
-.eform-content select {
+.eform-content select
+ {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -54,13 +55,15 @@
 }
 
 .eform-content input:focus,
-.eform-content select:focus {
+.eform-content select:focus
+{
   background: #badbad;
 }
 
 .eform-content input:hover,
 .eform-content select:hover,
-.eform-content .button:hover {
+.eform-content .button:hover 
+{
   background: #badbad;
 }
 
@@ -79,3 +82,7 @@
 .eform-content .noCheck {
   background: #de3163 !important;
 }
+
+/*.tagsinput {
+  padding: 0px !important;
+}*/

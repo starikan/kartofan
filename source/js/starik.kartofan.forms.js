@@ -158,39 +158,7 @@ var EditableForm = function(id, arr, funcs, show){
         this.fields.push($select);
      }
 
-    // this.addSelect2 = function(v){
-
-    //     v = this._checkInputAttr(v);
-        
-    //     var $select = $("<div></div>").attr({
-    //         "id": v.id,
-    //         "tabindex": v.tabindex,
-    //         "check": v.check,
-    //     });
-    //     $select.appendTo(this.$formContent);
-
-    //     var data = [];
-    //     $.each(v.options, function(i, v){
-    //         data.push({ id: i, text: v })
-    //     });
-
-    //     $select.select2({
-    //         placeholder: v.placeholder,
-    //         query: function (query) {
-    //             var localData = {results: data}
-    //             localData.results.push({id: data.length+1, text: query});
-    //             query.callback(localData);
-    //         }            
-    //     });
-
-    //     $select.select2("data", data);
-    //     $select.select2("val", v.val);
-
-    //     this._checkVal(v, $select);
-    //     this.fields.push($select);
-    //  }
-
-    this.addSelect2Tags = function(v){
+    this.addTags = function(v){
         v = this._checkInputAttr(v);
 
         var $tags = $("<input/>").appendTo(this.$formContent).attr({
@@ -200,7 +168,10 @@ var EditableForm = function(id, arr, funcs, show){
             "value": v.options,
         })
 
-        $tags.select2({ tags: [], tokenSeparators: [","] });
+        // $tags.tagsInput({
+        //     'height':'100px',
+        //     'width':'300px',
+        // });
 
         this._checkVal(v, $tags);
         this.fields.push($tags);
@@ -273,11 +244,8 @@ var EditableForm = function(id, arr, funcs, show){
                 case "select":
                     parent.addSelect(v, f);
                     break;
-                case "select2":
-                    parent.addSelect2(v, f);
-                    break;            
-                case "select2tags":
-                    // parent.addSelect2Tags(v, f);
+                case "tags":
+                    parent.addTags(v, f);
                     break;            
                 case "button":
                     parent.addButton(v, f);
@@ -304,7 +272,6 @@ var EditableForm = function(id, arr, funcs, show){
 
                     // Set vals
                     field.val(val);
-                    // field.select2("val", val);
 
                     // Set options
                     if (options && !$.isEmptyObject(options) && $.isArray(options[id]) && options[id].length){
@@ -318,7 +285,6 @@ var EditableForm = function(id, arr, funcs, show){
                         if (field.attr("type") == "select"){
                             console.log("Select options sdd: "+options[id]);
                         }  
-
                     }
 
                     console.log(id, val)

@@ -24,12 +24,10 @@
         "check": "^img$|^wms$"
     },
     { 
-        "type": "select2tags",
+        "type": "tags",
         "val": "", 
         "id": "tags", 
-        "options": [], 
-        "description": "tags", 
-        "check": ".?"
+        "description": "tags"
     },
     { 
         "type": "datalist",
