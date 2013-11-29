@@ -9,30 +9,33 @@
   -o-transform: translate(-50%, -50%);
     
   background: #0fbf70;
-  width: 250px;
-  /*height: 100%;*/
+  width: 40%;
+  height: 100%;
+  min-height: 240px;
+  max-height: 600px;
+  min-width: 240px;
+  max-width: 400px;
   z-index: 1400;
   padding: 0;
 }
 
 .eform-header {
-  /*position: absolute;*/
+  position: absolute;
+  top: -40px;
   margin: 0;
   padding: 0;
   text-align: center;
   height: 40px;
+  width: 100%;
   color: white;
   background: #0b9054;
   font-size: 30px;
 }
 
 .eform-content {
-  /*position: absolute;*/
+  position: absolute;
   padding: 10px;
-  /*margin: 10px;*/
-  margin-top: 0px;
   height: 100%;
-  box-sizing: border-box;
   overflow-x:hidden;
   overflow-y:auto;
 }
@@ -45,10 +48,19 @@
   border: none;
   color: black;
   outline: none;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  transition: all 0.15s linear;  
 }
 
 .eform-content input:focus,
 .eform-content select:focus {
+  background: #badbad;
+}
+
+.eform-content input:hover,
+.eform-content select:hover,
+.eform-content .button:hover {
   background: #badbad;
 }
 
@@ -57,16 +69,12 @@
   text-align: center;
   background: #0b9054;
   display: block;
+  padding: 10px;
+  margin: 10px 0px;
   -webkit-transition: all 0.15s linear;
   -moz-transition: all 0.15s linear;
   transition: all 0.15s linear;
 }
-
-.eform-content .button:hover {
-  background: #0f8060;
-}
-
-
 
 .eform-content .noCheck {
   background: #de3163 !important;
