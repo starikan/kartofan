@@ -10,7 +10,6 @@ var Options = function(container){
     this.basesLoaded = 0;
     // this.basesSyncedIn = 0;
 
-    // TODO: create function to set this
     this.html = {
         "containerMainMenuId": "mainMenu",
         "containerAllMapsId": "container",
@@ -190,12 +189,6 @@ var Options = function(container){
             });
         })
      }
-
-    // TODO: нужна проверка наличия всех нужных глобальных переменных, если нет то принудительно обновлять
-    // TODO: сделать проверку соответствия viewControlsZoomPosition и подобных определенным значениям
-    this.checkOptions = function(collection){
-
-     }     
 
     this.exportAllInJSON = function(){
         var data = {};

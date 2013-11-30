@@ -85,8 +85,6 @@ var LeafletMap = function(mapId){
      }
 
     this.onClickMap = function(e){
-        // TODO: проверить как это будет работать в ИЕ и Лисе
-        // Move all maps when mousewhell pressed
         if (e.originalEvent.button == 1){
             parent.moveAllMaps(e.latlng)
         }
