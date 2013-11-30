@@ -28,3 +28,37 @@ $.noty.defaults = {
     },
     buttons: false // an array of buttons
 };
+
+// https://github.com/selevit/translate-js
+function loc(params, lang) {
+
+    if (typeof opt === "undefined" || !(opt instanceof Options)) { return }
+
+    var lang = lang || opt.getOption("global", "lang"),
+        localization = opt.getOption("localization", lang),
+        translated = 'ERROR', 
+        code;
+
+    if (!localization) { 
+        console.log("Error: Cant`t get localization to " + lang);
+        return "ERROR";
+    }
+
+    console.log(localization)
+    params = params.toLowerCase().split(':');
+
+    if (params.length) {
+        for (var i = 0; i < params.length; i++) {
+            code = params[i];
+            if (typeof localization[code] === 'object') {
+                localization = localization[code];
+            }
+            if (typeof localization[code] === 'string') {
+                translated = localization[code];
+                break;
+            }
+        }
+    }
+
+    return translated;
+};

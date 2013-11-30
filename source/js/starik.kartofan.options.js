@@ -56,6 +56,8 @@ var Options = function(container){
         "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
 
         "stageViewConstructorElasticSizeErrorPersent": 2,
+
+        "lang": "en_US",
      };
 
     this.current = {
@@ -81,14 +83,14 @@ var Options = function(container){
 
     this.stages = {};
 
-    this.places = {
-        "test2": "ert"
-    };
+    this.places = {};
 
     this.maps = {};
 
-    this.db = {};
 
+
+    this.db = {};
+    this.localization = {};
 
     // ********* POUCHDB *************
     this._initBase = function(collection){
@@ -143,6 +145,8 @@ var Options = function(container){
         $.each(this.bases, function(i, v){
             parent.db[v] = parent._initBase(v);
         })
+
+        this.initLocalization();
      }
 
     this.syncOut = function(){
@@ -215,6 +219,7 @@ var Options = function(container){
         this[collection][option] = value;
 
         // PouchDB
+        if (!this.db[collection]) {return}
         this.db[collection].get(option, function(err, doc){
             if (doc) {
                 if (doc.val !== value){
@@ -280,6 +285,17 @@ var Options = function(container){
         }
 
      }    
+
+    // *************** LOCALIZATION ****************
+
+    this.initLocalization = function(){
+        var lang = this.getOption("global", "lang");
+        $.getJSON("data/localization_"+lang+".json", function(data){
+            if(data){
+                parent.setOption("localization", lang, data);
+            }
+        })
+     }
 
     this._init();
 
