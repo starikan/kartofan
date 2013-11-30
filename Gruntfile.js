@@ -9,6 +9,9 @@ module.exports = function(grunt) {
       "source/js_vendor/bootstrap.js",
       "source/js_vendor/bootstrap-tour.js",
       "source/js_vendor/pouchdb.js",
+      "source/js_vendor/jquery.noty.js",
+      "source/js_vendor/jquery.noty.topRight.js",
+      "source/js_vendor/jquery.noty.default.js",
       "source/js_vendor/bootstrap-tagsinput.js",
      ];
 

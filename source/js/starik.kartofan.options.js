@@ -156,10 +156,14 @@ var Options = function(container){
         var baseMain = parent.getOption("global","dbExtServerIn");
         $.each(parent.bases, function(i, v){
             parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
-                if (err){ console.log(err) }
-                if (data){ console.log(data) }
-                // TODO: усли ошибка то выводить предупреждение
-                // TODO: если пришло обновление то тоже выводить предупреждение.
+                // TODO локализация
+                if (err){ 
+                    noty({text: "Ошибка доступа к внешней базе "+v, type: "error"});
+                }
+                console.log(data)
+                if (data && data.docs_written){ 
+                    noty({text: "Произошло обновление из внешенй базы "+v});
+                }
             });
         })
      }
