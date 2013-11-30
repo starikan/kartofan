@@ -33,6 +33,7 @@ module.exports = function(grunt) {
       "source/css_vendor/leaflet.css",
       "source/css_vendor/bootstrap.css",
       "source/css_vendor/bootstrap-tour.css",
+      "source/css_vendor/jquery-ui.css",
      ];
 
     var appCss = [

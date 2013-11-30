@@ -30,7 +30,9 @@ TODO:
 - Сайт-визитка + форум + wiki + блог
 
 2 этап:
-- При обрыве соединения выдавать предупреждение, а после восстановления синхронизировать бвзы
+- Выбор языка
+- Сделать внешнюю базу для синхронизации
+- При обрыве соединения выдавать предупреждение, а после восстановления синхронизировать базы
 - Мобильные браузеры
 - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
 - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)
@@ -56,10 +58,28 @@ TODO:
     * http://stackoverflow.com/questions/16721312/using-pouchdb-as-an-offline-raster-map-cache
     * https://github.com/tbicr/OfflineMap
 
+- наложение слоев
+- сохранение куска экрана в файл и создание привязки к озику
+- азимут
+- поиск фотографий окрестностей точки на всяких сервисах
+- высоты под курсором
+- доступные снимки как в саспланет
+- поиск названий (https://github.com/stefanocudini/leaflet-search)
+- коллаж из нескольких карт, как изначально хотел на печать
+- отображение списка карт которые есть под точкой
+- круги расстояний и времени, азимут (время - сделать заранее сетку по всем точкам определить время до этой точки от дома а потом просто делать выборку)
+- слои wikimapia, panoramio, яндекс картинки
+- добавить лицензию
+- Logo при загрузке
+- сделать метки напоминания (например тат. калмаюр поле под озимыми на июль 2014 года ) + смс напоминания и на почту
+- http://copypastecharacter.com/arrows - стрелки
+- карусель из разных наборов карт (один  набор - второй - третий - опять первый)
+- коррекция привязки
+- горячие клавиши для карт
 
 - привязка карт (continuousWorld: continuousWorld)
 - wms
-
+- быстрое открытие активной карты на все окно
 
 
 
@@ -261,6 +281,96 @@ L.TileLayer.ZMP = L.TileLayer.extend({
 
 
 
+https://github.com/jacobtoye/Leaflet.iconlabel - всплывающие нащвания
+https://github.com/kartena/Leaflet.EditableHandlers - фигуры и измерения
+https://github.com/jtreml/leaflet.measure - расстояния
+
+http://lite.launchlist.net/ - чеклист при запуске
+http://wootapa-watable.appspot.com/ - еще таблицы
+http://handsontable.com/ - таблицы как excel
+
+http://codecanyon.net/item/jquery-notify/1161570 - всплывающие подсказки
+http://codeseven.github.io/toastr/ - еще подсказки
+http://dhtmlx.com/docs/products/dhtmlxMessage/index.shtml - Еще подсказки
+http://needim.github.io/noty/ - Самые лучшие вроде
+
+http://habrahabr.ru/post/163535/ - выборка из массивов
+
+https://github.com/jensarps/IDBWrapper - IndexedDb
+
+http://cesium.agi.com/demos.html - 3D глобус на JavaScript
+http://tinydata.ru/index.html#
+https://github.com/dfilatov/jspath - поиск как XPath
+
+http://mmenu.frebsite.nl/ - меню на мобильном
+
+http://www.opennet.ru/opennews/art.shtml?num=36695 - чат и всякое прямо на сайте
+http://formalize.me/ - формы
+
+http://www.html5rocks.com/ru/tutorials/file/dndfiles/ - FileAPI
+
+http://jster.net/category/mapping-libraries
+
+http://mapicons.nicolasmollet.com/ - иконки
+http://html5.by/blog/fullscreen-javascript-api/ - FullScreenAPI
+
+http://foundation.zurb.com/ - Аналог бутстрапа
+http://www.berriart.com/sidr/#usage - выезжающее меню
+http://heelhook.github.io/chardin.js/ - Инструкция поверх всего, для первого ознакомления
+http://kreaturamedia.com/layerslider-jquery-3d-demo-slider/ - классный слайдер
+http://padolsey.github.io/sonic-creator/#snake - заставка при загрузке
+
+http://maps.ilovevitaly.com/places - аналогичный сервис с несколькими картами
+
+http://usablica.github.io/intro.js/- пошаговая презентация сайта
+http://bashooka.com/coding/powerful-jquery-image-map-plugins/ - добавление карт 7 библиотек
+http://habrahabr.ru/post/181766/ - Карты на D3js
+
+https://developer.mozilla.org/en-US/docs/HTML/Using_the_application_cache - КЭШ
+http://diveintohtml5.info/offline.html - КЭШ
+
+http://habrahabr.ru/qa/39809/ - обрезка изображений
+
+Интересные API: http://daker.me/2013/06/5-html5-javascript-apis-to-keep-an-eye-on.html
+    Battery Status API
+    Device Orientation API
+    Page Visibility API
+
+
+http://www.outyear.co.uk/smint/ - Заебатый дизайн для сайтика
+
+http://conversejs.org/ - еще чатик
+
+http://easelinc.github.io/tourist/ - еще один тур по сайту
+http://linkedin.github.io/hopscotch/ - и еще
+http://imperavi.com/redactor/ - редактор WISWYG
+
+http://landsatlook.usgs.gov/ - Снимки LandSAT
+
+http://habrahabr.ru/post/183630/ - Notification API
+
+http://poselok-programmistov.ru/faq/ - Дизайн сайта на Bootstrap
+
+https://plus.google.com/u/0/+GoogleChromeDevelopers/posts/MvaqnzEoPKT - localhost на телефоне
+http://habrahabr.ru/post/184926/ - FulscreenApi
+https://github.com/neovov/Fullscreen-API-Polyfill - для FullScreenApi улучшатор
+http://www.inserthtml.com/2013/06/history-api/ - History API
+http://alexwolfe.github.io/Buttons/ - кнопочки
+
+https://github.com/Prinzhorn/skrollr - парралакс супер просто
+http://www.jsdelivr.com/ cdn
+http://tilecache.org/docs/README.html - кэш сервер
+
+http://docs.locusmap.eu/doku.php/manual:convert_img_to_sql - из ozi в тайлы
+
+http://lab.hakim.se/reveal-js/#/ - презентации суперски
+
+ftp://ftp.ntsomz.ru/2013/July/10/1500/ - снимки ежедневные сос путника
+
+https://wrapbootstrap.com/theme/flat-scroll-one-page-theme-WB0RL445S - неплохой шаблон для личного сайта
+https://wrapbootstrap.com - шаблоны для bootstrap
+
+http://stackoverflow.com/questions/1068834/object-comparison-in-javascript/1144249#1144249 - сравнение двух обектов
 
 
 
