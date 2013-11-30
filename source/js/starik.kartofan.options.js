@@ -21,6 +21,8 @@ var Options = function(container){
         "mapSyncMoving": true,
         "mapSyncZooming": false,
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
+        "mapVizirVisible": true,
+        "mapCursorAllMapsVisible": true,
 
         "externalFeeds": [
             {

@@ -72,6 +72,9 @@ var LeafletMap = function(mapId){
 
     this.crs;
 
+    this.markerVizir;
+    this.markerCursor;
+
     this.onFocusMap = function(){
         opt.setOption("current", "activeMap", mapId);
         parent.$allMaps.removeClass("activemap");
@@ -267,17 +270,21 @@ var LeafletMap = function(mapId){
         // TODO: touch
         this.map.on("mousedown", this.onClickMap);
         this.map.on("focus", this.onFocusMap);
+        this.map.on("mousemove", this.moveCursor);
 
         this._setMapControls();
         this.updateMapControls();
         this.updateCurrentStageName();
         this.updateCurrentStageZoom();
+        this.addVizir();
+        this.addCursor();
      }
 
     this.setMapCenter = function(latlng){
         if (!this.map){return}
         latlng = this._validateLatLng(latlng);
         this.map.panTo(latlng);
+        this.markerVizir.setLatLng(latlng);
         this.updateMapControls();
      }
 
@@ -338,6 +345,57 @@ var LeafletMap = function(mapId){
     
     this.refreshMapAfterResize = function(){
         this.map.invalidateSize();
+     }
+
+    this.addVizir = function(){
+        if (!opt.getOption("global", "mapVizirVisible")){ return }
+
+        var iconVizir = L.icon({
+            iconUrl: 'images/vizir_32x32.png',
+            iconSize: [32, 10],
+            iconAnchor: [16, 0],
+        });
+
+        this.markerVizir = L.marker(
+            opt.getOption("current", "mapCenterLatLng"), 
+            {
+                icon: iconVizir,
+                clickable: false
+            }
+        );
+        this.markerVizir.addTo(this.map);
+     }
+
+    this.addCursor = function(){
+        if (!opt.getOption("global", "mapCursorAllMapsVisible")){ return }
+
+        var iconCursor = L.icon({
+            iconUrl: 'images/cursorAllMaps_32x32.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+        });
+
+        this.markerCursor = L.marker(
+            opt.getOption("current", "mapCenterLatLng"), 
+            {
+                icon: iconCursor,
+                clickable: false
+            }
+        );
+
+        this.markerCursor.addTo(this.map);
+
+     }
+
+    this.moveCursor = function(e){
+
+        for (var i = 0; i < parent.instances.length; i++) {
+            parent.instances[i].markerCursor.setOpacity(1.0);
+            parent.instances[i].markerCursor.setLatLng(e.latlng);
+        }; 
+
+        parent.markerCursor.setOpacity(0.0);
+
      }
 
     this.instances.push(this);

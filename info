@@ -32,9 +32,8 @@ TODO:
 2 этап:
 - При обрыве соединения выдавать предупреждение, а после восстановления синхронизировать бвзы
 - Мобильные браузеры
-- Горячие клавиши
+- Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
 - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)
-- сделать выделение автивной карты
 - Написать тесты
 - Добавление и редактирование меток рызных типов
 - Быстрые клавиши
@@ -42,7 +41,6 @@ TODO:
 - Быстрые перемещения
 - Измеритель расстояний
 - Треки GPS
-- Реализовать все вещи которые были реализованы ранее
 - Быстрые подсказки
 - При обновлении окно новых возможностей
 - Чат и видеочат
@@ -58,6 +56,9 @@ TODO:
     * http://stackoverflow.com/questions/16721312/using-pouchdb-as-an-offline-raster-map-cache
     * https://github.com/tbicr/OfflineMap
 
+
+- привязка карт (continuousWorld: continuousWorld)
+- wms
 
 
 
@@ -79,10 +80,184 @@ https://googledrive.com/host/0B1gRcO428ISsbEg2c25oUkRVSkE/
 
 
 
+var crsCorrect_goodPoint = function (){
+    mapOpt.goodPoint = mapOpt.currLatLng;
+ }
 
+var crsCorrect_badPoint = function (){
 
+    var good = mapOpt.goodPoint;
 
+    if (good) {
 
+        var bad = mapOpt.currLatLng;
+
+        var mapId = GetMapID(mapOpt.nameMaps[mapOpt.activeMap]);
+
+        if (mapId != -1) {
+            mapOpt.mapsList[mapId].crs.projection.dY = bad.lat - good.lat;
+            mapOpt.mapsList[mapId].crs.projection.dX = bad.lng - good.lng;
+        }
+
+        good = undefined;
+
+        mapOpt.arrayMaps[mapOpt.activeMap].fireEvent("dragend");
+
+    }
+ }
+
+var crsCorrect_dropCorrection = function (){
+
+    $.each(mapOpt.mapsList, function (i,v) {
+        try       { v.crs.projection.dY = v.crs.projection.dX = 0 }
+        catch (e) { }
+    });
+
+    mapOpt.arrayMaps[mapOpt.activeMap].fireEvent("dragend");
+
+ }
+
+var gps_moveToCoords = function () {
+    
+    // http://diveintohtml5.info/geolocation.html
+    
+    var show_map = function (position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        console.log(latitude, longitude)
+        PanMaps([latitude, longitude]);
+        // let's show a map or do something interesting!        
+     }
+
+    var handle_error = function (err) {
+        console.log(err)
+        if (err.code == 1) {
+            // user said no!
+        }
+     }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(show_map, handle_error);
+    } else {
+        console.log("Нет координат")
+    }
+ }
+
+L.TileLayer.ZMP = L.TileLayer.extend({
+
+    getTileUrl: function(tilePoint) {
+        this._adjustTilePoint(tilePoint);
+
+        return L.Util.template(
+            this._url,
+            L.extend({
+            s: this._getSubdomain(tilePoint),
+            z: this._getZoomForUrl(),
+            x: tilePoint.x,
+            y: tilePoint.y,
+            yInv: this._getWrapTileNum() - tilePoint.y - 1, // TMS для карт привязки
+            _s0123: this.sSubdomain("0123"),
+            _s1234: this.sSubdomain("1234"),
+            _z17: 17 - this._getZoomForUrl(),
+            _z1: this._getZoomForUrl() - 1,
+            _z_1: this._getZoomForUrl() + 1,
+            _Galileo: this.sGalileo("Galileo"),
+            _Gagarin: this.sGalileo("Gagarin"),
+            _rosreestr: this.sRosreestr(tilePoint.x, tilePoint.y, this._getZoomForUrl()),
+            x_kosmo: this.x_kosmo(tilePoint.x, this._getZoomForUrl()),
+            y_kosmo: this.y_kosmo(tilePoint.y, this._getZoomForUrl()),
+            x1000: Math.floor(tilePoint.x / 1000),
+            y1000: Math.floor(tilePoint.y / 1000),
+            bing_bird: this.bing_bird(tilePoint.x, tilePoint.y, this._getZoomForUrl()),
+        },
+            this.options));
+    },
+
+    sSubdomain: function(t) {
+        return t.substr(Math.round((t.length - 1) * Math.random()), 1);
+    },
+
+    sGalileo: function(t) {
+        return t.substr(0, Math.round(t.length * Math.random()));
+    },
+
+    // Перевод из десятичного в двоичный
+    Dec2Bin: function(n) {
+        for (var s = ''; n != 0;
+        (n >>>= 1)) s = ((n & 1) ? '1' : '0') + s;
+        return s;
+    },
+
+    sRosreestr: function(x, y, z) {
+
+        text = "";
+        x2 = this.Dec2Bin(x);
+        y2 = this.Dec2Bin(y);
+        x0 = "";
+        y0 = "";
+
+        for (var i = 1; i <= z - x2.length; i++) {
+            x0 += "0";
+        }
+        x2 = x0 + x2;
+
+        for (var i = 1; i <= z - y2.length; i++) {
+            y0 += "0";
+        }
+        y2 = y0 + y2;
+
+        for (var i = 7; i <= z; i++) {
+            text += y2.substr(0, i - 6) + "-" + x2.substr(0, i - 6) + "/";
+        }
+        text += y2 + "-" + x2;
+
+        // console.log(text)
+
+        return text;
+    },
+
+    x_kosmo: function(x, z) {
+        // inttostr(-((round(intpower(2,GetZ-1)))div 2)+(GetX))
+
+    },
+
+    y_kosmo: function(y, z) {
+        // inttostr(-((Round(intpower(2,GetZ-1)))div 2)+ (Round(intpower(2,GetZ-1))-(GetY+1)))
+    },
+
+    bing_bird: function(x, y, z) {
+        var res = "";
+        osX = Math.floor(Math.round(Math.pow(2, z)) / 2);
+        osY = Math.floor(Math.round(Math.pow(2, z)) / 2);
+        prX = osX;
+        prY = osY;
+        for (var i = 2; i <= z + 1; i++) {
+            prX = Math.floor(prX / 2);
+            prY = Math.floor(prY / 2);
+            if (x < osX) {
+                osX = osX - prX;
+                if (y < osY) {
+                    osY = osY - prY;
+                    res += '0';
+                } else {
+                    osY = osY + prY;
+                    res += '2';
+                }
+            } else {
+                osX = osX + prX;
+                if (y < osY) {
+                    osY = osY - prY;
+                    res += '1';
+                } else {
+                    osY = osY + prY;
+                    res += '3';
+                }
+            }
+        }
+        return res;
+    }
+
+ });
 
 
 
