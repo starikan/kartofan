@@ -8,7 +8,8 @@ String.prototype.format = String.prototype.f = function() {
 
     while (i--) {
         s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
+    }        
+
     return s;
 };
 
@@ -69,7 +70,8 @@ function loc(params, options, lang ) {
         }
     }
 
-    if (options && typeof options === 'object'){
+    if (options){
+        if (typeof options !== "object"){ options = [options] }
         translated = translated.format(options);
     }
 
