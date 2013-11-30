@@ -166,12 +166,11 @@ var Options = function(container){
         var baseMain = parent.getOption("global","dbExtServerIn");
         $.each(parent.bases, function(i, v){
             parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
-                // TODO локализация
                 if (err){ 
-                    noty({text: "Ошибка доступа к внешней базе "+v, type: "error"});
+                    noty({text: loc("syncBases:errorExtSync", v), type: "error"});
                 }
                 if (data && data.docs_written){ 
-                    noty({text: "Произошло обновление из внешенй базы "+v+ ". Для применения изменений нужно перезагрузить приложение."});
+                    noty({text: loc("syncBases:syncFromExtComplire", v)});
                 }
             });
         })

@@ -2,6 +2,16 @@ $.pluck = function(arr, key) {
     return $.map(arr, function(e) { return e[key]; }) 
 }
 
+String.prototype.format = String.prototype.f = function() {
+    var s = this,
+        i = arguments.length;
+
+    while (i--) {
+        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+    }
+    return s;
+};
+
 $.noty.defaults = {
     layout: 'topRight',
     theme: 'defaultTheme',
@@ -30,7 +40,7 @@ $.noty.defaults = {
 };
 
 // https://github.com/selevit/translate-js
-function loc(params, lang) {
+function loc(params, options, lang ) {
 
     if (typeof opt === "undefined" || !(opt instanceof Options)) { return }
 
@@ -44,8 +54,7 @@ function loc(params, lang) {
         return "ERROR";
     }
 
-    console.log(localization)
-    params = params.toLowerCase().split(':');
+    params = params.split(':');
 
     if (params.length) {
         for (var i = 0; i < params.length; i++) {
@@ -60,5 +69,9 @@ function loc(params, lang) {
         }
     }
 
+    if (options && typeof options === 'object'){
+        translated = translated.format(options);
+    }
+
     return translated;
-};
+ };

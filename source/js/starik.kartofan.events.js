@@ -215,7 +215,7 @@ var Events = function(){
         var mapVals;
 
         var _deleteMapFunc = function(form){
-            if (confirm("Do you realy want to delete " + mapVals.id + " map?")) {
+            if (confirm(loc("editMaps:deleteMap", mapVals.id))) {
                 if (mapVals.id){
                     form.hideForm();
                     opt.deleteOption("maps", mapVals.id);
@@ -227,14 +227,12 @@ var Events = function(){
         var _submitMapFunc = function(form){
             form.getAllData(); 
             if (!form.checkForm){
-                // TODO: локализация
-                alert("Errors in form! Check values.");
+                alert(loc("editMaps:errorCheckForm"));
                 return;
             }
 
             if (opt.getOption("maps", form.allData.val.id)){
-                // TODO: локализация
-                if (!confirm("Такая карта уже есть. Перезаписать.")) {
+                if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
                     return;
                 }
             }
@@ -286,15 +284,13 @@ var Events = function(){
 
     this.getAllMapsJSON = function(url){
         if (!url){
-            // TODO: локализация
-            url = prompt("Type here JSON with maps URL");
+            url = prompt(loc("editMaps:mapsJSONAdd"));
         }
 
         $.getJSON(url, function(data){
             $.each(data.maps, function(i,v){
                 if (opt.getOption("maps", i)){
-                    // TODO: локализация
-                    if (!confirm(i+" - Такая карта уже есть. Перезаписать.")) {
+                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
                         return;
                     }
                 }
@@ -463,11 +459,9 @@ var Events = function(){
 
         console.log(allStages)
 
-        // TODO локализация
-        var newName = prompt("Input Stage ID", currStage.title)
+        var newName = prompt(loc("editStage:inputStageID"), currStage.title)
         if (newName){
-            // TODO локализация
-            if (allStages[newName] && !confirm("This ID already exist. Rewrite it?")){
+            if (allStages[newName] && !confirm(loc("editStage:stageRewriteConfirm", newName))){
                 return;
             }
             currStage.title = newName;

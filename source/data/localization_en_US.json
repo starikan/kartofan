@@ -1,0 +1,16 @@
+{
+  "editMaps": {
+    "errorCheckForm": "Errors in form! Check values.",
+    "mapRewriteConfirm": "Map already exist. Rewrite it?",
+    "mapsJSONAdd": "Type here URL of JSON with maps.",
+    "deleteMap": "Do you realy want to delete {0} map?"
+  },
+  "editStage": {
+    "inputStageID": "Input Stage ID",
+    "stageRewriteConfirm": "Stage with ID = {0} already exist. Rewrite it?"
+  },
+  "syncBases": {
+    "errorExtSync": "Access to the external database {0} denied", 
+    "syncFromExtComplire": "Syncronization from external base {0} complite. Reload application to successe all changes."
+  }
+}

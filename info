@@ -38,7 +38,6 @@ TODO:
 - Горячие клавиши
 - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)
 - сделать выделение автивной карты
-- Локализация
 - Написать тесты
 - Добавление и редактирование меток рызных типов
 - Быстрые клавиши
@@ -117,16 +116,6 @@ WatchJS
         parent.setWatch(v);
      })
 
-
-String.prototype.format = function() {
-    var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) { 
-        return typeof args[number] != 'undefined'
-            ? args[number]
-            : match
-        ;
-     });
- };
 
 // isArray shim
 if (! Array.isArray) {
