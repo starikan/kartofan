@@ -13,6 +13,11 @@ var StageMaps = function(container){
         mapvents = window.mapvents;
      }
 
+    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
+        window.gps = new GPS();
+        gps = window.gps;
+     }
+
     if (!container) { return }
 
     opt.setOption("html", "containerAllMapsId", container);
@@ -35,6 +40,10 @@ var StageMaps = function(container){
         if (!opt.getOption("global", "tourFirstShown")){
             tourMain.start(true);
             opt.setOption("global", "tourFirstShown", true);
+        }
+
+        if (opt.getOption("global", "gpsAutoStart")){
+            gps.startGPS();
         }
 
      }

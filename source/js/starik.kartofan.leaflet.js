@@ -54,6 +54,11 @@ var LeafletMap = function(mapId){
         mapvents = window.mapvents;
      }
 
+    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
+        window.gps = new GPS();
+        gps = window.gps;
+     }
+
     var parent = this;
 
     this.mapTilesLayer; // copy of LeafletTiles class
@@ -271,6 +276,8 @@ var LeafletMap = function(mapId){
         this.map.on("mousedown", this.onClickMap);
         this.map.on("focus", this.onFocusMap);
         this.map.on("mousemove", this.moveCursor);
+        this.map.on("locationfound", gps.onGPS)
+        this.map.on("locationerror", gps.errorGPS)
 
         this._setMapControls();
         this.updateMapControls();

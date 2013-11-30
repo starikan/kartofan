@@ -9,6 +9,11 @@ var Events = function(){
         opt = window.opt;
      }
 
+    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
+        window.gps = new GPS();
+        gps = window.gps;
+     }
+
     // ********** WINDOW RESIZE **********
     this.eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
@@ -90,6 +95,16 @@ var Events = function(){
         { type: "line", text: "Export All Data In JSON", callback: function(){
             parent.closeContextMenu();
             opt.exportAllInJSON();
+        }},
+
+        { type: "paragraf", text: "GPS" },
+        { type: "line", text: "Start Location", callback: function(){
+            parent.closeContextMenu();
+            gps.startGPS();
+        }},
+        { type: "line", text: "Stop Location", callback: function(){
+            parent.closeContextMenu();
+            gps.stopGPS();
         }},
 
         { type: "paragraf", text: "Help" },
@@ -540,4 +555,5 @@ var Events = function(){
             console.log(eform.allData);
         });         
      }
+
  }

@@ -24,6 +24,11 @@ var Options = function(container){
         "mapVizirVisible": true,
         "mapCursorAllMapsVisible": true,
 
+        "gpsAutoStart": true,
+        "gpsMarker": true,
+        "gpsAccuracy": true,
+        "gpsFollowing": true,
+
         "externalFeeds": [
             {
                 "title": "External JSON",
@@ -79,6 +84,15 @@ var Options = function(container){
             ],
             "stageMapsNames": ["", "", "", ""],
             "stageMapsZooms": [12,12,12,12],  
+        },
+        "gps": {
+            "latlng": [],
+            "accuracy": "",
+            "altitude": "",
+            "altitudeAccuracy": "",
+            "heading": "",
+            "speed": "",
+            "timestamp": "",
         }
      };
 

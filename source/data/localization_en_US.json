@@ -14,5 +14,8 @@
   "syncBases": {
     "errorExtSync": "Access to the external database {0} denied", 
     "syncFromExtComplire": "Syncronization from external base {0} complite. Reload application to successe all changes."
+  },
+  "gps": {
+    "error": "GPS Error"
   }
 }
