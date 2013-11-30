@@ -81,7 +81,9 @@ var Options = function(container){
 
     this.stages = {};
 
-    this.places = {};
+    this.places = {
+        "test2": "ert"
+    };
 
     this.maps = {};
 
@@ -120,16 +122,7 @@ var Options = function(container){
         if (this.basesLoaded == this.bases.length){ 
             
             if (parent.getOption("global","dbSyncOut")){
-                $.each(parent.getOption("global","dbExtServerOut"), function(iOut, vOut){
-                    $.each(parent.bases, function(i, v){
-                        parent.db[v].replicate.to(vOut + v, {
-                            continuous: true, 
-                            // TODO: усли ошибка то выводить предупреждение
-                            // onChange: function(data){ console.log(data) },
-                            // complite: function(data){ console.log(data) },
-                        });
-                    })
-                })
+                parent.syncOut();
             }
 
             if (parent.getOption("global","dbSyncIn")){
@@ -152,6 +145,19 @@ var Options = function(container){
         })
      }
 
+    this.syncOut = function(){
+        $.each(parent.getOption("global","dbExtServerOut"), function(iOut, vOut){
+            $.each(parent.bases, function(i, v){
+                parent.db[v].replicate.to(vOut + v, { continuous: true }, function(err, data){
+                    console.log(err, data)
+                    if (err){
+                        noty({text: "Ошибка доступа к внешней базе "+v, type: "error"});
+                    }
+                });
+            })
+        })
+     }
+
     this.syncIn = function(){
         var baseMain = parent.getOption("global","dbExtServerIn");
         $.each(parent.bases, function(i, v){
@@ -160,9 +166,8 @@ var Options = function(container){
                 if (err){ 
                     noty({text: "Ошибка доступа к внешней базе "+v, type: "error"});
                 }
-                console.log(data)
                 if (data && data.docs_written){ 
-                    noty({text: "Произошло обновление из внешенй базы "+v});
+                    noty({text: "Произошло обновление из внешенй базы "+v+ ". Для применения изменений нужно перезагрузить приложение."});
                 }
             });
         })

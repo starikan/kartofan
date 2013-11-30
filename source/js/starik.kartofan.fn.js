@@ -18,7 +18,7 @@ $.noty.defaults = {
     timeout: 6000, // delay for closing event. Set false for sticky notifications
     force: false, // adds notification to the beginning of queue when set to true
     modal: false,
-    maxVisible: 5, // you can set max visible notification for dismissQueue true option
+    maxVisible: 6, // you can set max visible notification for dismissQueue true option
     closeWith: ['click'], // ['click', 'button', 'hover']
     callback: {
         onShow: function() {},
