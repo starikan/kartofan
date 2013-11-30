@@ -6,8 +6,10 @@
     "deleteMap": "Do you realy want to delete {0} map?"
   },
   "editStage": {
+    "errorCheckForm": "Errors in form! Check values.",
     "inputStageID": "Input Stage ID",
-    "stageRewriteConfirm": "Stage with ID = {0} already exist. Rewrite it?"
+    "stageRewriteConfirm": "Stage with ID = {0} already exist. Rewrite it?",
+    "deleteStage": "Do you realy want to delete stage with ID = {0}?"
   },
   "syncBases": {
     "errorExtSync": "Access to the external database {0} denied", 

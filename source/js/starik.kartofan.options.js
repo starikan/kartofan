@@ -67,7 +67,7 @@ var Options = function(container){
             "title": "current",
             "id": "current",
             "group": "",
-            "tags": [],
+            "tags": "",
             "stageMapsGrid": [
                 // left, top, width, height
                 [0, 0, 50, 50],
@@ -154,7 +154,7 @@ var Options = function(container){
                 parent.db[v].replicate.to(vOut + v, { continuous: true }, function(err, data){
                     console.log(err, data)
                     if (err){
-                        noty({text: "Ошибка доступа к внешней базе "+v, type: "error"});
+                        noty({text: loc("syncBases:errorExtSync", v), type: "error"});
                     }
                 });
             })

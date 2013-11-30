@@ -1,0 +1,45 @@
+[
+    { 
+        "type": "header",
+        "val": "Stage Edit Data"
+    },
+    { 
+        "type": "input",
+        "val": "", 
+        "id": "id", 
+        "description": "id"
+    },
+    { 
+        "type": "input",
+        "val": "", 
+        "id": "title", 
+        "description": "title"
+    },
+    { 
+        "type": "tags",
+        "val": "", 
+        "id": "tags", 
+        "description": "tags"
+    },
+    { 
+        "type": "input",
+        "val": "", 
+        "id": "group", 
+        "description": "group"
+    },
+    { 
+        "type": "button", 
+        "val": "Add Map", 
+        "id": "submit"
+    },
+    { 
+        "type": "button", 
+        "val": "Delete Map", 
+        "id": "delete"
+    },    
+    { 
+        "type": "button", 
+        "val": "Cancel", 
+        "id": "cancel"
+    }  
+]
