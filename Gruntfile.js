@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 
     var topJs = [
       "source/js_vendor/jquery.js",
+      "source/js_vendor/jquery-ui.js",
       "source/js_vendor/leaflet-src.js",
       "source/js_vendor/FileSaver.js",
       "source/js_vendor/base64.js ",
