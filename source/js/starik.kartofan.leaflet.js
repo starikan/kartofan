@@ -65,6 +65,7 @@ var LeafletMap = function(mapId){
     this.marksLayer; 
 
     this.map;
+    this.num = $(".maps").index($("#"+this.mapId));
 
     this.$map = $("#"+this.mapId);
     this.$allMaps = $("div.mapContainer > .maps")
@@ -138,9 +139,8 @@ var LeafletMap = function(mapId){
         if (!this.map){ return }
         var currStage = opt.getOption("current", "stage");
         var name = this.mapTilesLayer.mapName;
-        var num = $(".maps").index($("#"+parent.mapId));
 
-        currStage.stageMapsNames[num] = name;
+        currStage.stageMapsNames[parent.num] = name;
         opt.setOption("current", "stage", currStage);
      }
 
@@ -148,60 +148,61 @@ var LeafletMap = function(mapId){
         if (!this.map){ return }
         var currStage = opt.getOption("current", "stage");
         var zoom = parent.map.getZoom();
-        var num = $(".maps").index($("#"+parent.mapId));
 
-        currStage.stageMapsZooms[num] = zoom;
+        currStage.stageMapsZooms[parent.num] = zoom;
         opt.setOption("current", "stage", currStage);
      }
 
     this._setMapControls = function(){
 
-        if (!this.map) { return }
+        if (!this.map){ return }
+        // Controls params from current stage
+        var currStage = opt.getOption("current", "stage");
+        var ctrls = currStage.stageMapsControlls[parent.num];
+
+        if (!ctrls) { return }
 
         // Zoom Control
-        if (opt.getOption("global", "viewControlsZoom")){
-            this.zoomControl = L.control.zoom(opt.getOption("global", "viewControlsZoomPosition"))
-            this.map.addControl(this.zoomControl);
+        if (ctrls.zoom){
+            this.zoomControl = L.control.zoom(ctrls.zoom.pos ? ctrls.zoom.pos : "topleft")
+            this.map.addControl(this.zoomControl);            
          }
 
         // Scale Control
-        if (opt.getOption("global", "viewControlsScale")){
+        if (ctrls.scale){
             this.scaleControl = L.control.scale({
-                position: opt.getOption("global", "viewControlsScalePosition"),
-                imperial: opt.getOption("global", "viewControlsScaleMiles"),
+                position: ctrls.scale.pos ? ctrls.scale.pos : "bottomleft",
+                imperial: ctrls.scale.miles ? ctrls.scale.miles : false,
             })
-            this.map.addControl(this.scaleControl);
-         }
+            this.map.addControl(this.scaleControl);            
+         }        
 
         // Cporyright
-        if (opt.getOption("global", "viewControlsInfoCopyright")){
+        if (ctrls.infoCopyright && ctrls.infoCopyright.text){
             this.copyrightControl = L.control.attribution({
-                position: opt.getOption("global", "viewControlsInfoCopyrightPosition"),
-                prefix: opt.getOption("global", "viewControlsInfoCopyrightText"),
+                position: ctrls.infoCopyright.pos ? ctrls.infoCopyright.pos : "bottomright",
+                prefix: ctrls.infoCopyright.text,
             })
-            this.map.addControl(this.copyrightControl);
-         }   
+            this.map.addControl(this.copyrightControl);          
+         }  
 
         // Map Title
-        if (opt.getOption("global", "viewControlsInfoName")){
+        if (ctrls.mapTitle){
             var title;
-            try {
-                title = this.mapTilesLayer.mapData.title;
-            }
-            catch (e) {
-                title = "No title"
-            }
+            try { title = this.mapTilesLayer.mapData.title }
+            catch (e) { title = "No title" }
+
             this.nameControl = L.control.attribution({
-                position: opt.getOption("global", "viewControlsInfoNamePosition"),
+                position: ctrls.mapTitle.pos ? ctrls.mapTitle.pos : "bottomright",
                 prefix: title,
             })
-            this.map.addControl(this.nameControl);
+            this.map.addControl(this.nameControl);        
          }  
 
         // Zoom Level
-        if (opt.getOption("global", "viewControlsInfoZoom")){
+        if (ctrls.zoomLevel){
             this.zoomLevelControl = L.control.attribution({
-                position: opt.getOption("global", "viewControlsInfoZoomPosition"),
+                position: ctrls.zoomLevel.pos ? ctrls.zoomLevel.pos : "bottomright",
                 prefix: this.map.getZoom(),
             })
             this.map.addControl(this.zoomLevelControl);

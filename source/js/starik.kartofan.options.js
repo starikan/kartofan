@@ -42,19 +42,6 @@ var Options = function(container){
         "hashChange": true,
         "resetToDefaultIfHashClear": true,
 
-        "viewControlsZoom": true,
-        "viewControlsZoomPosition": "topleft",
-        "viewControlsScale": true,
-        "viewControlsScalePosition": "bottomleft",
-        "viewControlsScaleMiles": false,
-        "viewControlsInfoName": true,
-        "viewControlsInfoNamePosition": "bottomright",        
-        "viewControlsInfoZoom": true,
-        "viewControlsInfoZoomPosition": "bottomright",
-        "viewControlsInfoCopyright": true,
-        "viewControlsInfoCopyrightPosition": "bottomright",
-        "viewControlsInfoCopyrightText": "Copyleft by Starik",
-
         "dbPointsStorySave": 1000,
         "dbSyncIn": true,
         "dbSyncOut": true,
@@ -83,7 +70,16 @@ var Options = function(container){
                 [50, 50, 50, 50],
             ],
             "stageMapsNames": ["", "", "", ""],
-            "stageMapsZooms": [12,12,12,12],  
+            "stageMapsZooms": [12,12,12,12],
+            "stageMapsControlls": [
+                {
+                    "zoom": {"pos": "topleft"},
+                    "scale": {"pos": "bottomleft", "miles": false},
+                    "infoCopyright": {"pos": "bottomright", "text": "Copyleft by Starik"},
+                    "mapTitle": {"pos": "bottomright"},
+                    "zoomLevel": {"pos": "bottomright"},
+                },
+            ]
         },
         "gps": {
             "latlng": [],
