@@ -94,6 +94,7 @@ var LeafletMap = function(mapId){
 
     this.onClickMap = function(e){
         if (e.originalEvent.button == 1){
+            e.originalEvent.preventDefault();
             parent.moveAllMaps(e.latlng)
         }
      }
