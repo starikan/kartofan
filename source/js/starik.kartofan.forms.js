@@ -452,7 +452,7 @@ var CSSMenu = function(id, arr, show){
         }
      }
 
-    // ************ ACTIVATE ************
+    // ************ BULK ************
 
     this.makeFromObj = function(arr){
 
@@ -477,6 +477,55 @@ var CSSMenu = function(id, arr, show){
         this.activateMenu();
         this.openOnStart();
      }
+
+    this.groupedCollectionMenu = function(collection, callback, show, groupSelector, header){
+
+        if (!collection) { return }
+        if (show == "undefined") {show = true;}
+        groupSelector = groupSelector ? groupSelector : "group"
+
+        var groups = $.pluck(collection, groupSelector);
+        groups = $.unique(groups);
+        groups.sort();
+
+        var genArray = [{ type: "header", text: header }];
+
+        $.each(groups, function(g, group){
+
+            var dataInGroup = {};
+            $.each(collection, function(i, v){
+                if (!v.group && !group || v.group == group){
+                    dataInGroup[i] = v;
+                }
+            })
+
+            if (!$.isEmptyObject(dataInGroup)){
+                
+                if (!group) {group = "Others"};
+                genArray.push({ type: "paragraf", text: group });
+                
+                $.each(dataInGroup, function(i, vi){
+                    genArray.push({
+                        type: "line", 
+                        text: vi.title ? vi.title : "Noname",
+                        callback: function(){
+                            callback(i, vi);
+                        },
+                    })
+                });
+            }
+        })
+
+        console.log(genArray)
+        this.arr = genArray;
+
+        this._initMenu();
+        this.makeFromObj(genArray); 
+
+        show ? this.showMenu() : "";
+     }
+
+    // ************ ACTIVATE ************
 
     this.activateMenu = function(){
 

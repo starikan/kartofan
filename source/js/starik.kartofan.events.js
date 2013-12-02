@@ -62,10 +62,10 @@ var Events = (function(){
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
-            parent.createLocaleSelectMenu("maps", parent.setActiveMap);
+            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.setMap, true, "group");
          }},
         { type: "line", text: "Edit Maps", callback: function(){
-            parent.createLocaleSelectMenu("maps", parent.editMap, "Select To Edit Map Data");
+            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.editMap, true, "group");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
             parent.createExternalJSONMenu("maps", function(i, v){ parent.setActiveMap(i, v) })
@@ -137,7 +137,7 @@ var Events = (function(){
     this._initMainMenu();
 
 
-    // ************ STAGES CONTEXT MENU ************
+    // ************ STAGES EDITOR CONTEXT MENU ************
 
     this.stageEditorMenu;
 
@@ -173,7 +173,19 @@ var Events = (function(){
     this._initStageEditorMenu(); 
 
 
-    // ********** SET MAP **********
+    // ********** MAP EDITOR **********
+
+    this.mapLocalGeneratedMenu;
+
+    this._initMapLocalGeneratedMenu = function(){
+        this.mapLocalGeneratedMenu = new CSSMenu("mapSelectMenu", [], false);
+     }
+
+    this._initMapLocalGeneratedMenu();
+
+
+
+
     this.setActiveMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
         var mapNum = opt.getOption("current", "activeMap");
@@ -194,12 +206,12 @@ var Events = (function(){
 
             var dataInGroup = {};
             $.each(allData, function(i, v){
-                if (!v.group && !group){
+                if (!v.group && !group || v.group == group){
                     dataInGroup[i] = v;
                 }
-                if (v.group == group) {
-                    dataInGroup[i] = v;
-                }
+                // if (v.group == group) {
+                //     dataInGroup[i] = v;
+                // }
             })
 
             if (!$.isEmptyObject(dataInGroup)){
@@ -208,6 +220,7 @@ var Events = (function(){
                 genArray.push({ type: "paragraf", text: group });
                 
                 $.each(dataInGroup, function(i, vi){
+                    console.log(i, vi)
                     genArray.push({
                         type: "line", 
                         text: vi.title ? vi.title : "Noname",

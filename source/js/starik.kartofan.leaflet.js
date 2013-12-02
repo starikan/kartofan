@@ -511,6 +511,79 @@ var MapsEditor = (function(){
 
     window.opt = new Options();
 
+    this.setMap = function(mapName, mapData){
+        mapName = mapName ? mapName : "";
+        var mapNum = opt.getOption("current", "activeMap");
+        window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
+     }
+
+    this.editMap = function(mapId){
+
+        var maps = opt.getOption("maps");
+        var mapNum = opt.getOption("current", "activeMap");
+        var mapVals;
+
+        var eformFunc = {
+            "submit": { "events": "click", callback: function(form){parent._submitMapFunc(form)} },
+            "delete": { "events": "click", callback: function(form){parent._deleteMapFunc(form)} },
+            "cancel": { "events": "click", callback: function(form){form.hideForm()} }
+         }
+
+        // If no mapId get active map
+        if (!mapId){
+            mapVals = window[mapNum].mapTilesLayer.mapData;
+            mapVals.id = window[mapNum].mapTilesLayer.mapName;
+        }
+        else {
+            mapVals = opt.getOption("maps", mapId);
+            mapVals.id = mapVals.id ? mapVals.id : mapId;
+        }
+
+        // Groups suggestions
+        var mapOptions = {}
+        var groups = $.pluck(maps, "group");
+        groups = $.unique(groups);
+        groups.sort()
+        mapOptions.group = groups;        
+
+        // Generate Form
+        $.getJSON("data/map_edit_form.json", function(eformFields){
+            eform = new EditableForm("addMap", eformFields, eformFunc);
+            eform.fillForm(mapVals, mapOptions);
+            
+            console.log(eform.allData);
+        }); 
+     }     
+
+    this._deleteMapFunc = function(form){
+        form.getAllData(); 
+        console.log(form.allData)
+        if (confirm(loc("editMaps:deleteMap", form.allData.val.id))) {
+            if (form.allData.val.id){
+                form.hideForm();
+                opt.deleteOption("maps", form.allData.val.id);
+                console.log(form.allData.val.id + "deleted")
+            }
+        }                    
+     }
+
+    this._submitMapFunc = function(form){
+        form.getAllData(); 
+        if (!form.checkForm){
+            alert(loc("editMaps:errorCheckForm"));
+            return;
+        }
+
+        if (opt.getOption("maps", form.allData.val.id)){
+            if (!confirm(loc("editMaps:mapRewriteConfirm", form.allData.val.id))) {
+                return;
+            }
+        }
+
+        form.hideForm();
+        opt.setOption("maps", form.allData.val.id, form.allData.val)
+        console.log(form.allData.val.id, opt.getOption("maps", form.allData.val.id));            
+     }
 
     // *************** JSON ****************
  
