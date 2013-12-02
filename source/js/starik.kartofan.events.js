@@ -36,88 +36,62 @@ var Events = (function(){
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
-
         { type: "line", text: "Set Map", callback: function(){
-            parent.closeContextMenu();
             parent.createLocaleSelectMenu("maps", parent.setActiveMap);
          }},
         { type: "line", text: "Edit Maps", callback: function(){
-            parent.closeContextMenu();
             parent.createLocaleSelectMenu("maps", parent.editMap, "Select To Edit Map Data");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
-            parent.closeContextMenu();
-            parent.createExternalJSONMenu("maps", function(i, v){
-                                                      parent.closeAllModal();
-                                                      parent.setActiveMap(i, v);
-                                                  })
+            parent.createExternalJSONMenu("maps", function(i, v){ parent.setActiveMap(i, v) })
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
-            parent.closeContextMenu();
             parent.editMap();
         }},
         { type: "line", text: "Get All Maps From JSON", callback: function(){
-            parent.closeContextMenu();
             parent.getAllMapsJSON();
         }},
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
-            parent.closeContextMenu();
-            parent.createLocaleSelectMenu("stages", function(i, v){
-                                                        parent.closeAllModal();
-                                                        parent.loadStage(i);
-                                                    });
+            parent.createLocaleSelectMenu("stages", function(i, v){ parent.loadStage(i) });
         }},
         { type: "line", text: "Edit Stages", callback: function(){
-            parent.closeContextMenu();
             parent.createLocaleSelectMenu("stages", parent.editStage, "Select To Edit Stage Data");
         }},         
         { type: "line", text: "Edit Stage View", callback: function(){
-            parent.closeContextMenu();
             stageEditor.editView();
         }},
         { type: "line", text: "Save Stage", callback: function(){
-            parent.closeContextMenu();
             parent.saveStage();
         }},
         { type: "line", text: "Load External Stage", callback: function(){
-            parent.closeContextMenu();
-            parent.createExternalJSONMenu("stages", function(i, v){
-                                                      parent.closeAllModal();
-                                                      parent.loadStage("", v);
-                                                  })
+            parent.createExternalJSONMenu("stages", function(i, v){ parent.loadStage("", v) })
         }},        
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Global Settings" },
         { type: "line", text: "Global Maps View" },
         { type: "line", text: "Settings Reset", callback: function(){
-            parent.closeContextMenu();
             opt._clearAllBases();
         }},
         { type: "line", text: "Update from External Storage", callback: function(){
-            parent.closeContextMenu();
             opt.syncIn();
         }},
         { type: "line", text: "Export All Data In JSON", callback: function(){
-            parent.closeContextMenu();
             opt.exportAllInJSON();
         }},
 
         { type: "paragraf", text: "GPS" },
         { type: "line", text: "Start Location", callback: function(){
-            parent.closeContextMenu();
             gps.startGPS();
         }},
         { type: "line", text: "Stop Location", callback: function(){
-            parent.closeContextMenu();
             gps.stopGPS();
         }},
 
         { type: "paragraf", text: "Help" },
         { type: "line", text: "Main Features", callback: function(){
-            parent.closeContextMenu();
             tourMain.start(true);
         }},        
      ];
@@ -132,18 +106,16 @@ var Events = (function(){
      }
 
     this.closeAllForms = function(){
-        $(".cssform").addClass("hide");
-     }
-
-    this.closeAllModal = function(){
-        parent.closeContextMenu();
-        parent.closeAllForms();
+        $(".eform").addClass("hide");
      }
 
     // TODO: touch event to context menu
     this.onMainContextMenu = function(arr){
         document.oncontextmenu = function(){ return false };
-        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", this.closeAllModal);
+        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
+            parent.closeContextMenu();
+            parent.closeAllForms();
+        });
         $(window).bind("contextmenu", function(e){
             var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), arr, true);
         });
@@ -236,7 +208,6 @@ var Events = (function(){
 
     this.editMap = function(mapId){
 
-        parent.closeContextMenu();
 
         var maps = opt.getOption("maps");
         var mapVals;
@@ -334,19 +305,15 @@ var Events = (function(){
  
         { type: "paragraf", text: "Stage", active: true },
         { type: "line", text: "Save Stage View", callback: function(){
-            parent.closeContextMenu();
             stageEditor.saveView();
         }},
         { type: "line", text: "Add Map", callback: function(){
-            parent.closeContextMenu();
             stageEditor.addMapToStage();
         }},
         { type: "line", text: "Remove Map", callback: function(){
-            parent.closeContextMenu();
             stageEditor.removeMapFromStage();
         }},
         { type: "line", text: "Edit Controls", callback: function(){
-            parent.closeContextMenu();
             stageEditor.editMapsControls();
         }},        
      ];

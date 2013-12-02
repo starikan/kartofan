@@ -131,8 +131,6 @@ var Options = (function(){
 
     this.maps = {};
 
-
-
     this.db = {};
     this.localization = {};
 

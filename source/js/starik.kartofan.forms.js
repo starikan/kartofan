@@ -344,7 +344,7 @@ var EditableForm = function(id, arr, funcs, show){
     this.makeFromObj();
  }
 
-var CSSMenu = function(id, arr, show){
+var CSSMenu = function(id, arr, show, closeOnClick){
     
     var parent = this;
 
@@ -434,10 +434,17 @@ var CSSMenu = function(id, arr, show){
         });
         $.each(idList, function(i, v){
             $li.attr("id", v);
-        });       
+        });   
+
         // TODO: touch
         if (callback){
-            $li.bind("click", callback);
+            $li.bind("click", function(){
+                parent.hideMenu();
+                callback();
+            });
+        }
+        else {
+            $li.bind("click", this.hideMenu);
         }
      }
 

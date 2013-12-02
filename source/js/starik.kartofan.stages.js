@@ -73,7 +73,8 @@ var StageMaps = (function(){
         var zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
         window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
         window["map"+i].createMap(latlng, zoom);        
-    }
+     }
+ 
  }}());
 
 var StageEditor = (function(){
@@ -138,6 +139,17 @@ var StageEditor = (function(){
         }
      }
 
+    var onStop = function(){
+        
+        var $this = $(this);
+
+        var pos = _getPersentPosition(this);
+
+        $this.width(pos.width + "%").height(pos.height + "%")
+        .css("top", pos.top + "%").css("left", pos.left + "%");
+
+     }
+
     this.editView = function(){
         $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
             parent.editMapView(i)
@@ -147,17 +159,6 @@ var StageEditor = (function(){
      }
 
     this.editMapView = function(i){
-
-        var onStop = function(){
-            
-            var $this = $(this);
-
-            var pos = _getPersentPosition(this);
-
-            $this.width(pos.width + "%").height(pos.height + "%")
-            .css("top", pos.top + "%").css("left", pos.left + "%");
-
-        }
 
         $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
 
@@ -224,9 +225,7 @@ var StageEditor = (function(){
         var mapNum = opt.getOption("current", "activeMap");
         var mapsCount = $(".maps").length;
 
-        if (mapsCount>1){
-            $("#"+mapNum).remove();
-        }
+        if (mapsCount>1){ $("#"+mapNum).remove() }
      }  
         
     this.saveStage = function(){
@@ -253,8 +252,6 @@ var StageEditor = (function(){
 
     this.editStage = function(stageId){
 
-        mapvents.closeContextMenu();
-
         if (!stageId){ return }
 
         var stageVals;
@@ -267,7 +264,7 @@ var StageEditor = (function(){
                     console.log(stageVals.id + "deleted")
                 }
             }                    
-         }
+        }
 
         var _submitStageFunc = function(form){
             form.getAllData(); 
@@ -293,13 +290,13 @@ var StageEditor = (function(){
 
             opt.setOption("stages", form.allData.val.id, stageVals)
             console.log(form.allData.val.id, opt.getOption("stages", form.allData.val.id));            
-         }
+        }
 
         var eformFunc = {
             "submit": { "events": "click", callback: _submitStageFunc },
             "delete": { "events": "click", callback: function(form){_deleteStageFunc(form)} },
             "cancel": { "events": "click", callback: function(form){form.hideForm()} }
-         }
+        }
 
         stageVals = opt.getOption("stages", stageId);
         if (!stageVals){ return }
@@ -318,6 +315,4 @@ var StageEditor = (function(){
 
         // TODO: форма
      }
-
-
  }}());
