@@ -23,7 +23,6 @@ var Events = (function(){
     window.bases = new Bases();
 
 
-
     // ********** WINDOW RESIZE EVENT **********
     this.eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
@@ -35,7 +34,7 @@ var Events = (function(){
 
 
 
-    // ********** MAIN MENU EVENT **********
+    // ********** CONTEXT MENU EVENT **********
 
     this.closeContextMenu = function(id){
         id ? $(".cssmenu_container#"+id).addClass("hide") : $(".cssmenu_container").addClass("hide");
@@ -46,21 +45,17 @@ var Events = (function(){
      }
 
     // TODO: touch event to context menu
-    this.onMainContextMenu = function(arr){
-        document.oncontextmenu = function(){ return false };
-        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
-            parent.closeContextMenu();
-            parent.closeAllForms();
-        });
-        $(window).bind("contextmenu", function(e){
-            var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), arr, true);
-        });
-     }
+    $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
+        parent.closeContextMenu();
+        parent.closeAllForms();
+     });
+
+    document.oncontextmenu = function(){ return false };
 
 
+    // ************ MAIN CONTEXT MENU ************
 
-
-    // ***** MAIN CONTEXT MENU AND FORMS *****
+    this.mainMenu;
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
@@ -124,7 +119,56 @@ var Events = (function(){
         }},        
      ];
 
-    this.onMainContextMenu(parent.contextMenuArray);
+    this._initMainMenu = function(){
+        this.mainMenu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), this.contextMenuArray, false);
+        this.bindMainMenu();
+     }
+
+    // TODO: touch event to context menu
+    this.bindMainMenu = function(){
+        $(window).unbind("contextmenu");
+        $(window).bind("contextmenu", function(e){
+            parent.mainMenu.showMenu();
+        });
+     }
+
+    this._initMainMenu();
+
+
+    // ************ STAGES CONTEXT MENU ************
+
+    this.stageEditorMenu;
+
+    this.stageEditorMenuArray = [
+ 
+        { type: "paragraf", text: "Stage", active: true },
+        { type: "line", text: "Save Stage View", callback: function(){
+            stageEditor.saveView();
+        }},
+        { type: "line", text: "Add Map", callback: function(){
+            stageEditor.addMapToStage();
+        }},
+        { type: "line", text: "Remove Map", callback: function(){
+            stageEditor.removeMapFromStage();
+        }},
+        { type: "line", text: "Edit Controls", callback: function(){
+            stageEditor.editMapsControls();
+        }},        
+     ];
+
+    this._initStageEditorMenu = function(){
+        this.stageEditorMenu = new CSSMenu(opt.getOption("html", "containerStageEditorMenuId"), this.stageEditorMenuArray, false);
+     }
+
+    // TODO: touch event to context menu
+    this.bindStageEditorMenu = function(){
+        $(window).unbind("contextmenu");
+        $(window).bind("contextmenu", function(e){
+            parent.stageEditorMenu.showMenu();
+        });
+     }
+
+    this._initStageEditorMenu(); 
 
 
     // ********** SET MAP **********
@@ -282,25 +326,5 @@ var Events = (function(){
             console.log(eform.allData);
         }); 
      }
-
-
-    // ************ STAGES ************
-
-    this.editStageContextMenuArray = [
- 
-        { type: "paragraf", text: "Stage", active: true },
-        { type: "line", text: "Save Stage View", callback: function(){
-            stageEditor.saveView();
-        }},
-        { type: "line", text: "Add Map", callback: function(){
-            stageEditor.addMapToStage();
-        }},
-        { type: "line", text: "Remove Map", callback: function(){
-            stageEditor.removeMapFromStage();
-        }},
-        { type: "line", text: "Edit Controls", callback: function(){
-            stageEditor.editMapsControls();
-        }},        
-     ];
 
  }}());

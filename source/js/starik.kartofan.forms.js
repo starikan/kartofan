@@ -349,7 +349,7 @@ var CSSMenu = function(id, arr, show){
     var parent = this;
 
     if (!id) {id = "nonamemenu"}
-    if (!show) {show = true}
+    if (show == "undefined") {show = true}
 
     this.$container;
     this.$menu;

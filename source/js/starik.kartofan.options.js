@@ -22,6 +22,7 @@ var Options = (function(){
 
     this.html = {
         "containerMainMenuId": "mainMenu",
+        "containerStageEditorMenuId": "stageEditorMenu",
         "containerAllMapsId": "container",
      };
 

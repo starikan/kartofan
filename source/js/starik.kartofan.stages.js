@@ -155,7 +155,7 @@ var StageEditor = (function(){
             parent.editMapView(i)
         });
     
-        mapvents.onMainContextMenu(mapvents.editStageContextMenuArray);
+        mapvents.bindStageEditorMenu();
      }
 
     this.editMapView = function(i){
@@ -206,7 +206,7 @@ var StageEditor = (function(){
             }
         });
 
-        mapvents.onMainContextMenu(mapvents.contextMenuArray);
+        mapvents.bindMainMenu();
 
      }
 
