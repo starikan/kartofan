@@ -21,7 +21,9 @@ var Events = (function(){
     window.gps = new GPS();
     window.stageEditor = new StageEditor();
 
-    // ********** WINDOW RESIZE **********
+
+
+    // ********** WINDOW RESIZE EVENT **********
     this.eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
@@ -29,6 +31,31 @@ var Events = (function(){
      }
 
     window.onresize = this.eventResizeWindow;
+
+
+
+    // ********** MAIN MENU EVENT **********
+
+    this.closeContextMenu = function(id){
+        id ? $(".cssmenu_container#"+id).addClass("hide") : $(".cssmenu_container").addClass("hide");
+     }
+
+    this.closeAllForms = function(){
+        $(".eform").addClass("hide");
+     }
+
+    // TODO: touch event to context menu
+    this.onMainContextMenu = function(arr){
+        document.oncontextmenu = function(){ return false };
+        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
+            parent.closeContextMenu();
+            parent.closeAllForms();
+        });
+        $(window).bind("contextmenu", function(e){
+            var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), arr, true);
+        });
+     }
+
 
 
 
@@ -95,31 +122,6 @@ var Events = (function(){
             tourMain.start(true);
         }},        
      ];
-
-    this.closeContextMenu = function(id){
-        if (!id){
-            $(".cssmenu_container").addClass("hide");
-        }
-        else {
-            $(".cssmenu_container#"+id).addClass("hide");
-        }
-     }
-
-    this.closeAllForms = function(){
-        $(".eform").addClass("hide");
-     }
-
-    // TODO: touch event to context menu
-    this.onMainContextMenu = function(arr){
-        document.oncontextmenu = function(){ return false };
-        $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
-            parent.closeContextMenu();
-            parent.closeAllForms();
-        });
-        $(window).bind("contextmenu", function(e){
-            var menu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), arr, true);
-        });
-     }
 
     this.onMainContextMenu(parent.contextMenuArray);
 

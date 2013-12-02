@@ -14,6 +14,7 @@ var Options = (function(){
             return new Construct_singletone();
         }
 
+    window.base = new Bases();
 
     var parent = this;
 
@@ -175,23 +176,6 @@ var Options = (function(){
         }
      }
 
-    this._initStage = function(container){
-        if (this.basesLoaded == this.bases.length){ 
-            this.getHash();
-            container = container ? container : this.getOption("html", "containerAllMapsId");
-            window.stage = new StageMaps();
-            window.stage.initContainer(container);
-        }
-     }
-
-    this._init = function(){
-        $.each(this.bases, function(i, v){
-            parent.db[v] = parent._initBase(v);
-        })
-
-        this.initLocalization();
-     }
-
     this.syncOut = function(){
         $.each(parent.getOption("global","dbExtServerOut"), function(iOut, vOut){
             $.each(parent.bases, function(i, v){
@@ -248,6 +232,23 @@ var Options = (function(){
         );
         saveAs(blob, "allData.json");
      }
+    
+    this._init = function(){
+        $.each(this.bases, function(i, v){
+            parent.db[v] = parent._initBase(v);
+        })
+
+        this.initLocalization();
+     }
+    
+    this._initStage = function(container){
+        if (this.basesLoaded == this.bases.length){ 
+            this.getHash();
+            container = container ? container : this.getOption("html", "containerAllMapsId");
+            window.stage = new StageMaps();
+            window.stage.initContainer(container);
+        }
+     }  
 
     this.setOption = function(collection, option, value, callback){
 
@@ -334,5 +335,22 @@ var Options = (function(){
      }
 
     this._init();
+
+ }}());
+
+
+var Bases = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
 
  }}());

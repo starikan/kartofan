@@ -344,7 +344,7 @@ var EditableForm = function(id, arr, funcs, show){
     this.makeFromObj();
  }
 
-var CSSMenu = function(id, arr, show, closeOnClick){
+var CSSMenu = function(id, arr, show){
     
     var parent = this;
 
@@ -355,6 +355,8 @@ var CSSMenu = function(id, arr, show, closeOnClick){
     this.$menu;
 
     this.arr = arr;
+
+    // ************ MAIN FUCNTIONS ************
 
     this._initMenu = function(){
         var $id = "#"+id;
@@ -381,6 +383,8 @@ var CSSMenu = function(id, arr, show, closeOnClick){
     this.hideMenu = function(){
         this.$container.addClass("hide");
      }
+
+    // ************ ADD FIELDS ************
 
     this.addHeader = function(text, classList){
 
@@ -447,6 +451,8 @@ var CSSMenu = function(id, arr, show, closeOnClick){
             $li.bind("click", this.hideMenu);
         }
      }
+
+    // ************ ACTIVATE ************
 
     this.makeFromObj = function(arr){
 
