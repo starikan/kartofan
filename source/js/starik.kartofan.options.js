@@ -1,6 +1,19 @@
 "use strict"
 
-var Options = function(container){
+var Options = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
 
     var parent = this;
 
@@ -8,7 +21,6 @@ var Options = function(container){
 
     this.bases = ["html", "global", "current", "stages", "places", "maps"];
     this.basesLoaded = 0;
-    // this.basesSyncedIn = 0;
 
     this.html = {
         "containerMainMenuId": "mainMenu",
@@ -79,6 +91,27 @@ var Options = function(container){
                     "mapTitle": {"pos": "bottomright"},
                     "zoomLevel": {"pos": "bottomright"},
                 },
+                {
+                    "zoom": {"pos": "topleft"},
+                    "scale": {"pos": "bottomleft", "miles": false},
+                    "infoCopyright": {"pos": "bottomright", "text": "Copyleft by Starik"},
+                    "mapTitle": {"pos": "bottomright"},
+                    "zoomLevel": {"pos": "bottomright"},
+                },
+                {
+                    "zoom": {"pos": "topleft"},
+                    "scale": {"pos": "bottomleft", "miles": false},
+                    "infoCopyright": {"pos": "bottomright", "text": "Copyleft by Starik"},
+                    "mapTitle": {"pos": "bottomright"},
+                    "zoomLevel": {"pos": "bottomright"},
+                },
+                {
+                    "zoom": {"pos": "topleft"},
+                    "scale": {"pos": "bottomleft", "miles": false},
+                    "infoCopyright": {"pos": "bottomright", "text": "Copyleft by Starik"},
+                    "mapTitle": {"pos": "bottomright"},
+                    "zoomLevel": {"pos": "bottomright"},
+                },                
             ]
         },
         "gps": {
@@ -144,11 +177,12 @@ var Options = function(container){
         }
      }
 
-    this._initStage = function(){
+    this._initStage = function(container){
         if (this.basesLoaded == this.bases.length){ 
             this.getHash();
             container = container ? container : this.getOption("html", "containerAllMapsId");
-            window.stage = new StageMaps(container);
+            window.stage = new StageMaps();
+            window.stage.initContainer(container);
         }
      }
 
@@ -303,4 +337,4 @@ var Options = function(container){
 
     this._init();
 
- }
+ }}());

@@ -44,20 +44,9 @@ var LeafletMap = function(mapId){
     if (!mapId && !$("#"+mapId)){ return }
     this.mapId = mapId;
 
-    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
-        window.opt = new Options();
-        opt = window.opt;
-     }
-
-    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
-        window.mapvents = new Events();
-        mapvents = window.mapvents;
-     }
-
-    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
-        window.gps = new GPS();
-        gps = window.gps;
-     }
+    window.opt = new Options();
+    window.mapvents = new Events();
+    window.gps = new GPS();
 
     var parent = this;
 
@@ -429,15 +418,8 @@ var LeafletTiles = function(mapName, mapData){
         Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()));},
      }
 
-    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
-        window.opt = new Options();
-        opt = window.opt;
-     }
-
-    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
-        window.mapvents = new Events();
-        mapvents = window.mapvents;
-     }
+    window.opt = new Options();
+    window.mapvents = new Events();
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){

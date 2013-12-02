@@ -1,18 +1,25 @@
 "use strict"
 
-var Events = function(){
+var Events = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
 
     var parent = this;
 
-    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
-        window.opt = new Options();
-        opt = window.opt;
-     }
-
-    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
-        window.gps = new GPS();
-        gps = window.gps;
-     }
+    window.opt = new Options();
+    window.gps = new GPS();
+    window.stageEditor = new StageEditor();
 
     // ********** WINDOW RESIZE **********
     this.eventResizeWindow = function(e){
@@ -20,6 +27,7 @@ var Events = function(){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
         }            
      }
+
     window.onresize = this.eventResizeWindow;
 
 
@@ -337,6 +345,10 @@ var Events = function(){
             parent.closeContextMenu();
             parent.removeMapFromStage();
         }},
+        { type: "line", text: "Edit Controls", callback: function(){
+            parent.closeContextMenu();
+            parent.editMapsControls();
+        }},        
      ];
 
     var _errCorrect = function(x){
@@ -556,4 +568,10 @@ var Events = function(){
         });         
      }
 
- }
+    this.editMapsControls = function(){
+        var mapNum = opt.getOption("current", "activeMap");
+
+        // TODO: форма
+     }
+
+ }}());

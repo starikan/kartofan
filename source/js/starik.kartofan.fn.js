@@ -1,6 +1,6 @@
 $.pluck = function(arr, key) { 
     return $.map(arr, function(e) { return e[key]; }) 
-}
+ }
 
 String.prototype.format = String.prototype.f = function() {
     var s = this,
@@ -11,7 +11,7 @@ String.prototype.format = String.prototype.f = function() {
     }        
 
     return s;
-};
+ };
 
 $.noty.defaults = {
     layout: 'topRight',
@@ -38,12 +38,12 @@ $.noty.defaults = {
         afterClose: function() {}
     },
     buttons: false // an array of buttons
-};
+ };
 
 // https://github.com/selevit/translate-js
 function loc(params, options, lang ) {
 
-    if (typeof opt === "undefined" || !(opt instanceof Options)) { return }
+    window.opt = new Options();
 
     var lang = lang || opt.getOption("global", "lang"),
         localization = opt.getOption("localization", lang),

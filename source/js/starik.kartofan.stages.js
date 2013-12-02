@@ -1,30 +1,34 @@
 "use strict"
 
-var StageMaps = function(container){
+var StageMaps = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
     var parent = this;
 
-    if (typeof opt === "undefined" || !(opt instanceof Options)) { 
-        window.opt = new Options();
-        opt = window.opt;
-     }
+    window.opt = new Options();
+    window.mapvents = new Events();
+    window.gps = new GPS();
 
-    if (typeof mapvents === "undefined" || !(mapvents instanceof Events)) { 
-        window.mapvents = new Events();
-        mapvents = window.mapvents;
-     }
-
-    if (typeof gps === "undefined" || !(gps instanceof GPS)) { 
-        window.gps = new GPS();
-        gps = window.gps;
-     }
-
-    if (!container) { return }
-
-    opt.setOption("html", "containerAllMapsId", container);
-
-    this.$container = $("#"+container);
-
+    this.$container;
     this.currStage;
+
+    this.initContainer = function(container){
+        if (!container) { return }
+        opt.setOption("html", "containerAllMapsId", container);
+        this.$container = $("#"+container);
+        this.createStage();
+     }
 
     this.createStage = function(){
         this.$container.empty();
@@ -70,7 +74,25 @@ var StageMaps = function(container){
         window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
         window["map"+i].createMap(latlng, zoom);        
     }
+ }}());
 
-    this.createStage();
+var StageEditor = (function(){
 
- }
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+
+    var parent = this;
+
+    window.opt = new Options();
+
+ }}());
