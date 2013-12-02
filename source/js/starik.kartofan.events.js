@@ -20,10 +20,12 @@ var Events = (function(){
     window.opt = new Options();
     window.gps = new GPS();
     window.stageEditor = new StageEditor();
+    window.mapsEditor = new MapsEditor();
     window.bases = new Bases();
 
 
     // ********** WINDOW RESIZE EVENT **********
+
     this.eventResizeWindow = function(e){
         for (var i=0; i<LeafletMap.prototype.instances.length; i++){
             LeafletMap.prototype.instances[i].refreshMapAfterResize();
@@ -72,7 +74,7 @@ var Events = (function(){
             parent.editMap();
         }},
         { type: "line", text: "Get All Maps From JSON", callback: function(){
-            bases.getAllMapsJSON();
+            mapsEditor.getAllMapsJSON();
         }},
 
         { type: "paragraf", text: "Stage" },
@@ -99,10 +101,10 @@ var Events = (function(){
             bases._clearAllBases();
         }},
         { type: "line", text: "Update from External Storage", callback: function(){
-            opt.syncIn();
+            bases.syncIn();
         }},
         { type: "line", text: "Export All Data In JSON", callback: function(){
-            bases.exportAllInJSON();
+            opt.exportAllInJSON();
         }},
 
         { type: "paragraf", text: "GPS" },

@@ -492,3 +492,44 @@ var LeafletTiles = function(mapName, mapData){
     this.setLayer();
 
  }
+
+var MapsEditor = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    var parent = this;
+
+    window.opt = new Options();
+
+
+    // *************** JSON ****************
+ 
+    this.getAllMapsJSON = function(url){
+        if (!url){
+            url = prompt(loc("editMaps:mapsJSONAdd"));
+        }
+
+        $.getJSON(url, function(data){
+            $.each(data.maps, function(i,v){
+                if (opt.getOption("maps", i)){
+                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
+                        return;
+                    }
+                }
+                opt.setOption("maps", i, v);
+            })
+        }); 
+
+     }
+
+ }}());

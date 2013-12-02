@@ -233,6 +233,25 @@ var Options = (function(){
         })
      }
 
+    // *************** JSON ****************
+
+    this.exportAllInJSON = function(){
+        var data = {};
+        $.each(bases.baseNames, function(i, v){
+            data[v] = parent[v];
+        })
+
+        var dataJSON = JSON.stringify(data, null, 4);
+    
+        var blob = new Blob( 
+            [dataJSON], 
+            { type: "text/plain;charset=utf-8" }
+        );
+        saveAs(blob, "allData.json");
+     }
+
+
+
     this._init();
 
  }}());
@@ -341,41 +360,5 @@ var Bases = (function(){
             });
         })
      }
-
-    // *************** JSON ****************
-
-    this.exportAllInJSON = function(){
-        var data = {};
-        $.each(this.baseNames, function(i, v){
-            data[v] = opt[v];
-        })
-
-        var dataJSON = JSON.stringify(data, null, 4);
-    
-        var blob = new Blob( 
-            [dataJSON], 
-            { type: "text/plain;charset=utf-8" }
-        );
-        saveAs(blob, "allData.json");
-     }
-
-    this.getAllMapsJSON = function(url){
-        if (!url){
-            url = prompt(loc("editMaps:mapsJSONAdd"));
-        }
-
-        $.getJSON(url, function(data){
-            $.each(data.maps, function(i,v){
-                if (opt.getOption("maps", i)){
-                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
-                        return;
-                    }
-                }
-                opt.setOption("maps", i, v);
-            })
-        }); 
-
-     }
-
 
  }}());
