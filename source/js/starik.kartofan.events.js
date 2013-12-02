@@ -75,7 +75,7 @@ var Events = (function(){
         }},         
         { type: "line", text: "Edit Stage View", callback: function(){
             parent.closeContextMenu();
-            parent.editView();
+            stageEditor.editView();
         }},
         { type: "line", text: "Save Stage", callback: function(){
             parent.closeContextMenu();
@@ -335,243 +335,20 @@ var Events = (function(){
         { type: "paragraf", text: "Stage", active: true },
         { type: "line", text: "Save Stage View", callback: function(){
             parent.closeContextMenu();
-            parent.saveView();
+            stageEditor.saveView();
         }},
         { type: "line", text: "Add Map", callback: function(){
             parent.closeContextMenu();
-            parent.addMapToStage();
+            stageEditor.addMapToStage();
         }},
         { type: "line", text: "Remove Map", callback: function(){
             parent.closeContextMenu();
-            parent.removeMapFromStage();
+            stageEditor.removeMapFromStage();
         }},
         { type: "line", text: "Edit Controls", callback: function(){
             parent.closeContextMenu();
-            parent.editMapsControls();
+            stageEditor.editMapsControls();
         }},        
      ];
-
-    var _errCorrect = function(x){
-
-        var err = opt.getOption("global", "stageViewConstructorElasticSizeErrorPersent");
-
-        var x1 = err * Math.floor(x/err);
-        var x2 = err * Math.ceil(x/err);
-
-        var d1 = Math.abs(x1 - x);
-        var d2 = Math.abs(x2 - x);
-
-        if (d2 >= d1) {
-            return x1;
-        }
-        return x2;
-     }
-
-    var _getPersentPosition = function(div){
-
-        var $container = $("#"+opt.getOption("html", "containerAllMapsId"));
-
-        var widthContainer = $container.width();
-        var heightContainer = $container.height();
-        
-        var $div = $(div);
-        var widthDiv = $div.width();
-        var heightDiv = $div.height();
-        var topDiv = $div.position().top;
-        var leftDiv = $div.position().left;                
-
-        var newWidth = _errCorrect( 100 * widthDiv/widthContainer );
-        var newHeight = _errCorrect( 100 * heightDiv/heightContainer );
-        var newTop = _errCorrect( 100 * topDiv/heightContainer );
-        var newLeft = _errCorrect( 100 * leftDiv/widthContainer );
-
-        return {
-            top: newTop,
-            left: newLeft,
-            width: newWidth,
-            height: newHeight
-        }
-     }
-
-    this.editView = function(){
-        $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
-            parent.editMapView(i)
-        });
-    
-        parent.onMainContextMenu(parent.editStageContextMenuArray);
-     }
-
-    this.editMapView = function(i){
-
-        var onStop = function(){
-            
-            var $this = $(this);
-
-            var pos = _getPersentPosition(this);
-
-            $this.width(pos.width + "%").height(pos.height + "%")
-            .css("top", pos.top + "%").css("left", pos.left + "%");
-
-        }
-
-        $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
-
-        var map = window["map"+i];
-
-        map.map.dragging.disable();
-        map.map.scrollWheelZoom.disable();
-        map.map.touchZoom.disable();
-
-        if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
-        if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
-        if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
-        if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
-        
-        if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
-        map.nameControl.setPrefix("map"+i);
-
-     }
-
-    this.saveView = function(){
-
-        var currStage = opt.getOption("current", "stage");
-
-        currStage.stageMapsGrid = [];
-
-        $.each($(".maps"), function(i, v){
-            currStage.stageMapsGrid[i] = [];
-            var $v = $(v)
-
-            var pos = _getPersentPosition(v);
-
-            currStage.stageMapsGrid[i].push(pos.left);
-            currStage.stageMapsGrid[i].push(pos.top);
-            currStage.stageMapsGrid[i].push(pos.width);
-            currStage.stageMapsGrid[i].push(pos.height);
-
-        });
-
-        currStage.stageMapsNames.length = currStage.stageMapsGrid.length;
-        currStage.stageMapsZooms.length = currStage.stageMapsGrid.length;
-
-        opt.setOption("current", "stage", currStage, function(err, doc){
-            if (!err){
-                stage.createStage();
-            }
-        });
-
-        parent.onMainContextMenu(parent.contextMenuArray);
-
-     }
-
-    this.addMapToStage = function(){
-
-        var mapsCount = $(".maps").length;
-
-        stage.addMapDiv(mapsCount, [25, 25, 50, 50]);
-        stage.addMapObject(mapsCount);
-
-        parent.editMapView(mapsCount);
-
-     }
-
-    this.removeMapFromStage = function(){
-        var mapNum = opt.getOption("current", "activeMap");
-        var mapsCount = $(".maps").length;
-
-        if (mapsCount>1){
-            $("#"+mapNum).remove();
-        }
-     }  
-        
-    this.saveStage = function(){
-        var allStages = opt.getOption("stages");
-        var currStage = opt.getOption("current", "stage");
-
-        console.log(allStages)
-
-        var newName = prompt(loc("editStage:inputStageID"), currStage.title)
-        if (newName){
-            if (allStages[newName] && !confirm(loc("editStage:stageRewriteConfirm", newName))){
-                return;
-            }
-            currStage.title = newName;
-            opt.setOption("stages", newName, currStage);  
-        }
-     }  
-
-    this.loadStage = function(title, stageData){
-        stageData = title ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
-        opt.setOption("current", "stage", stageData);
-        stage.createStage();
-     }
-
-    this.editStage = function(stageId){
-
-        parent.closeContextMenu();
-
-        if (!stageId){ return }
-
-        var stageVals;
-
-        var _deleteStageFunc = function(form){
-            if (confirm(loc("editStage:deleteStage", stageVals.id))) {
-                if (stageVals.id){
-                    form.hideForm();
-                    opt.deleteOption("stages", stageVals.id);
-                    console.log(stageVals.id + "deleted")
-                }
-            }                    
-         }
-
-        var _submitStageFunc = function(form){
-            form.getAllData(); 
-            if (!form.checkForm){
-                alert(loc("editStage:errorCheckForm"));
-                return;
-            }
-
-            if (opt.getOption("stages", form.allData.val.id)){
-                if (!confirm(loc("editStage:stageRewriteConfirm", form.allData.val.id))) {
-                    return;
-                }
-            }
-
-            form.hideForm();
-
-            stageVals = opt.getOption("stages", form.allData.val.id);
-            if (!stageVals){ return }
-
-            $.each(form.allData.val, function(i, v){
-                stageVals[i] = v;
-            })
-
-            opt.setOption("stages", form.allData.val.id, stageVals)
-            console.log(form.allData.val.id, opt.getOption("stages", form.allData.val.id));            
-         }
-
-        var eformFunc = {
-            "submit": { "events": "click", callback: _submitStageFunc },
-            "delete": { "events": "click", callback: function(form){_deleteStageFunc(form)} },
-            "cancel": { "events": "click", callback: function(form){form.hideForm()} }
-         }
-
-        stageVals = opt.getOption("stages", stageId);
-        if (!stageVals){ return }
-        stageVals.id = stageVals.id ? stageVals.id : stageId;
-
-        // Generate Form
-        $.getJSON("data/stage_edit_form.json", function(eformFields){
-            eform = new EditableForm("editStage", eformFields, eformFunc);
-            eform.fillForm(stageVals);
-            console.log(eform.allData);
-        });         
-     }
-
-    this.editMapsControls = function(){
-        var mapNum = opt.getOption("current", "activeMap");
-
-        // TODO: форма
-     }
 
  }}());
