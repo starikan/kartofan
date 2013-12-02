@@ -20,6 +20,7 @@ var Events = (function(){
     window.opt = new Options();
     window.gps = new GPS();
     window.stageEditor = new StageEditor();
+    window.bases = new Bases();
 
 
 
@@ -76,7 +77,7 @@ var Events = (function(){
             parent.editMap();
         }},
         { type: "line", text: "Get All Maps From JSON", callback: function(){
-            parent.getAllMapsJSON();
+            bases.getAllMapsJSON();
         }},
 
         { type: "paragraf", text: "Stage" },
@@ -100,13 +101,13 @@ var Events = (function(){
         { type: "line", text: "Global Settings" },
         { type: "line", text: "Global Maps View" },
         { type: "line", text: "Settings Reset", callback: function(){
-            opt._clearAllBases();
+            bases._clearAllBases();
         }},
         { type: "line", text: "Update from External Storage", callback: function(){
             opt.syncIn();
         }},
         { type: "line", text: "Export All Data In JSON", callback: function(){
-            opt.exportAllInJSON();
+            bases.exportAllInJSON();
         }},
 
         { type: "paragraf", text: "GPS" },
@@ -280,24 +281,6 @@ var Events = (function(){
             
             console.log(eform.allData);
         }); 
-     }
-
-    this.getAllMapsJSON = function(url){
-        if (!url){
-            url = prompt(loc("editMaps:mapsJSONAdd"));
-        }
-
-        $.getJSON(url, function(data){
-            $.each(data.maps, function(i,v){
-                if (opt.getOption("maps", i)){
-                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
-                        return;
-                    }
-                }
-                opt.setOption("maps", i, v);
-            })
-        }); 
-
      }
 
 

@@ -14,14 +14,11 @@ var Options = (function(){
             return new Construct_singletone();
         }
 
-    window.base = new Bases();
+    window.bases = new Bases();
 
     var parent = this;
 
     // ********* ALL SETTINGS ************
-
-    this.bases = ["html", "global", "current", "stages", "places", "maps"];
-    this.basesLoaded = 0;
 
     this.html = {
         "containerMainMenuId": "mainMenu",
@@ -132,117 +129,16 @@ var Options = (function(){
 
     this.maps = {};
 
-    this.db = {};
-    this.localization = {};
-
-    // ********* POUCHDB *************
-    this._initBase = function(collection){
-        return new Pouch(collection, {}, function(){
-            parent.db[collection].allDocs({include_docs: true}, function(err, doc){
-
-                if (err) {console.log(err)}
-
-                $.each(doc.rows, function(i, v){
-                    parent[collection][v.id] = v.doc.val;
-                });
-
-                // When first start, set all values from default into DB
-                $.each(parent[collection], function(i, v){
-                    parent.db[collection].get(i, {}, function(errG, docG){
-                        if (errG){
-                            parent.setOption(collection, i, v);
-                        }
-                    })
-                })
-
-                parent.basesLoaded++;
-
-                parent._initSync();
-                parent._initStage();
-            })
-        })
-     };
-
-    this._initSync = function(){
-        if (this.basesLoaded == this.bases.length){ 
-            
-            if (parent.getOption("global","dbSyncOut")){
-                parent.syncOut();
-            }
-
-            if (parent.getOption("global","dbSyncIn")){
-                parent.syncIn();
-            }
-        }
-     }
-
-    this.syncOut = function(){
-        $.each(parent.getOption("global","dbExtServerOut"), function(iOut, vOut){
-            $.each(parent.bases, function(i, v){
-                parent.db[v].replicate.to(vOut + v, { continuous: true }, function(err, data){
-                    console.log(err, data)
-                    if (err){
-                        noty({text: loc("syncBases:errorExtSync", v), type: "error"});
-                    }
-                });
-            })
-        })
-     }
-
-    this.syncIn = function(){
-        var baseMain = parent.getOption("global","dbExtServerIn");
-        $.each(parent.bases, function(i, v){
-            parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
-                if (err){ 
-                    noty({text: loc("syncBases:errorExtSync", v), type: "error"});
-                }
-                if (data && data.docs_written){ 
-                    noty({text: loc("syncBases:syncFromExtComplire", v)});
-                }
-            });
-        })
-     }
-
-    this._clearAllBases = function(){
-        $.each(parent.bases, function(i, v){
-            parent.db[v].allDocs({include_docs: true}, function(errBase, docBase){
-                console.log(errBase, docBase)
-                $.each(docBase.rows, function(iRow, vRow){
-                    console.log(iRow, vRow)
-                    parent.db[v].get(vRow.doc._id, function(errRow, docRow) {
-                        console.log(errRow, docRow)
-                        parent.db[v].remove(docRow, function(errRemove, responseRemove) {  });
-                    });                    
-                });
-            });
-        })
-     }
-
-    this.exportAllInJSON = function(){
-        var data = {};
-        $.each(this.bases, function(i, v){
-            data[v] = parent[v];
-        })
-
-        var dataJSON = JSON.stringify(data, null, 4);
-    
-        var blob = new Blob( 
-            [dataJSON], 
-            { type: "text/plain;charset=utf-8" }
-        );
-        saveAs(blob, "allData.json");
-     }
-    
     this._init = function(){
-        $.each(this.bases, function(i, v){
-            parent.db[v] = parent._initBase(v);
+        $.each(bases.baseNames, function(i, v){
+            bases.db[v] = bases._initBase(v);
         })
 
         this.initLocalization();
      }
     
     this._initStage = function(container){
-        if (this.basesLoaded == this.bases.length){ 
+        if (bases.basesLoaded == bases.baseNames.length){ 
             this.getHash();
             container = container ? container : this.getOption("html", "containerAllMapsId");
             window.stage = new StageMaps();
@@ -256,16 +152,16 @@ var Options = (function(){
         this[collection][option] = value;
 
         // PouchDB
-        if (!this.db[collection]) {return}
-        this.db[collection].get(option, function(err, doc){
+        if (!bases.db[collection]) {return}
+        bases.db[collection].get(option, function(err, doc){
             if (doc) {
                 if (doc.val !== value){
                     doc.val = value;
-                    parent.db[collection].put(doc, callback);                    
+                    bases.db[collection].put(doc, callback);                    
                 }
             }
             else {
-                parent.db[collection].put({
+                bases.db[collection].put({
                     "_id": option,
                     "val": value,
                 }, callback); 
@@ -281,8 +177,8 @@ var Options = (function(){
     this.deleteOption = function(collection, option){
         delete this[collection][option];
 
-        parent.db[collection].get(option, function(err, doc) {
-            parent.db[collection].remove(doc, function(errRemove, responseRemove) {  });
+        bases.db[collection].get(option, function(err, doc) {
+            bases.db[collection].remove(doc, function(errRemove, responseRemove) {  });
         });  
      }
 
@@ -325,6 +221,8 @@ var Options = (function(){
 
     // *************** LOCALIZATION ****************
 
+    this.localization = {};
+
     this.initLocalization = function(){
         var lang = this.getOption("global", "lang");
         $.getJSON("data/localization_"+lang+".json", function(data){
@@ -352,5 +250,131 @@ var Bases = (function(){
         } else {
             return new Construct_singletone();
         }
+
+    var parent = this;
+
+    window.opt = new Options();
+
+    this.baseNames = ["html", "global", "current", "stages", "places", "maps"];
+    this.basesLoaded = 0;
+    this.db = {};
+
+    this._initBase = function(collection){
+        return new Pouch(collection, {}, function(){
+            parent.db[collection].allDocs({include_docs: true}, function(err, doc){
+
+                if (err) {console.log(err)}
+
+                $.each(doc.rows, function(i, v){
+                    opt[collection][v.id] = v.doc.val;
+                });
+
+                // When first start, set all values from default into DB
+                $.each(opt[collection], function(i, v){
+                    parent.db[collection].get(i, {}, function(errG, docG){
+                        if (errG){
+                            opt.setOption(collection, i, v);
+                        }
+                    })
+                })
+
+                parent.basesLoaded++;
+
+                parent._initSync();
+                opt._initStage();
+            })
+        })
+     };
+
+    this._initSync = function(){
+        if (this.basesLoaded == this.baseNames.length){ 
+            
+            if (opt.getOption("global","dbSyncOut")){
+                parent.syncOut();
+            }
+
+            if (opt.getOption("global","dbSyncIn")){
+                parent.syncIn();
+            }
+        }
+     }
+
+    this.syncOut = function(){
+        $.each(opt.getOption("global","dbExtServerOut"), function(iOut, vOut){
+            $.each(parent.baseNames, function(i, v){
+                parent.db[v].replicate.to(vOut + v, { continuous: true }, function(err, data){
+                    console.log(err, data)
+                    if (err){
+                        noty({text: loc("syncBases:errorExtSync", v), type: "error"});
+                    }
+                });
+            })
+        })
+     }
+
+    this.syncIn = function(){
+        var baseMain = opt.getOption("global","dbExtServerIn");
+        $.each(parent.baseNames, function(i, v){
+            parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
+                if (err){ 
+                    noty({text: loc("syncBases:errorExtSync", v), type: "error"});
+                }
+                if (data && data.docs_written){ 
+                    noty({text: loc("syncBases:syncFromExtComplire", v)});
+                }
+            });
+        })
+     }
+
+    this._clearAllBases = function(){
+        $.each(parent.baseNames, function(i, v){
+            parent.db[v].allDocs({include_docs: true}, function(errBase, docBase){
+                console.log(errBase, docBase)
+                $.each(docBase.rows, function(iRow, vRow){
+                    console.log(iRow, vRow)
+                    parent.db[v].get(vRow.doc._id, function(errRow, docRow) {
+                        console.log(errRow, docRow)
+                        parent.db[v].remove(docRow, function(errRemove, responseRemove) {  });
+                    });                    
+                });
+            });
+        })
+     }
+
+    // *************** JSON ****************
+
+    this.exportAllInJSON = function(){
+        var data = {};
+        $.each(this.baseNames, function(i, v){
+            data[v] = opt[v];
+        })
+
+        var dataJSON = JSON.stringify(data, null, 4);
+    
+        var blob = new Blob( 
+            [dataJSON], 
+            { type: "text/plain;charset=utf-8" }
+        );
+        saveAs(blob, "allData.json");
+     }
+
+    this.getAllMapsJSON = function(url){
+        if (!url){
+            url = prompt(loc("editMaps:mapsJSONAdd"));
+        }
+
+        $.getJSON(url, function(data){
+            $.each(data.maps, function(i,v){
+                if (opt.getOption("maps", i)){
+                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
+                        return;
+                    }
+                }
+                opt.setOption("maps", i, v);
+            })
+        }); 
+
+     }
+
 
  }}());
