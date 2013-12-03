@@ -43,7 +43,7 @@ var StageMaps = (function(){
         // First visit automaticaly start tour
         if (opt.getOption("global", "isTourFirstShown")){
             tourMain.start(true);
-            opt.setOption("global", "isTtourFirstShown", false);
+            opt.setOption("global", "isTourFirstShown", false);
         }
 
         if (opt.getOption("global", "gpsAutoStart")){
