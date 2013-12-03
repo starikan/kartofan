@@ -481,7 +481,7 @@ var CSSMenu = function(id, arr, show){
     this.groupedCollectionMenu = function(collection, callback, show, groupSelector, header){
 
         if (!collection) { return }
-        if (show == "undefined") {show = true;}
+        var show = show == undefined ? true : show;
         groupSelector = groupSelector ? groupSelector : "group"
 
         var groups = $.pluck(collection, groupSelector);
@@ -516,13 +516,50 @@ var CSSMenu = function(id, arr, show){
             }
         })
 
-        console.log(genArray)
         this.arr = genArray;
 
         this._initMenu();
         this.makeFromObj(genArray); 
 
         show ? this.showMenu() : "";
+     }
+
+    this.groupedCollectionMenuExteranlJSON = function(collection, callback, show, header){
+
+        var show = show == undefined ? true : show;
+
+        var extData = opt.getOption("global", "externalFeeds");
+
+        var menuObj = [{ type: "header", text: header }]; 
+
+        // var menu = new CSSMenu("mapSelectMenu", menuObj, true);
+
+        $.each(extData, function(i, extJSON){
+
+            extJSON.type = extJSON.type ? extJSON.type : "local";
+            extJSON.url = extJSON.type == "GitHub" ? extJSON.url + "?callback" : extJSON.url;
+
+            $.getJSON(extJSON.url, function(data){
+                var genArr = [ { type: "paragraf", text: extJSON.title } ];
+
+                if (extJSON.type == "GitHub"){
+                    data = JSON.parse(Base64.decode(data.content));
+                }
+
+                $.each(data[collection], function(j, data){
+                    genArr.push({
+                        type: "line", 
+                        text: data.title ? data.title : "Noname",
+                        callback: function(){ callback(j, data) },
+                    });
+                });
+
+                parent._initMenu();
+                parent.makeFromObj(genArr);
+                show ? parent.showMenu() : "";
+
+            })
+        });
      }
 
     // ************ ACTIVATE ************

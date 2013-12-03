@@ -68,7 +68,7 @@ var Events = (function(){
             parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.editMap, true, "group");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
-            parent.createExternalJSONMenu("maps", function(i, v){ mapsEditor.setMap(i, v) })
+            parent.mapLocalGeneratedMenu.groupedCollectionMenuExteranlJSON("maps", mapsEditor.setMap)
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             mapsEditor.editMap();
@@ -79,10 +79,10 @@ var Events = (function(){
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
-            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.loadStage, true, "group");
+            parent.stageLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.loadStage, true, "group");
         }},
         { type: "line", text: "Edit Stages", callback: function(){
-            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.editStage, true, "group");
+            parent.stageLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.editStage, true, "group");
         }},         
         { type: "line", text: "Edit Stage View", callback: function(){
             stageEditor.editView();
@@ -91,7 +91,7 @@ var Events = (function(){
             stageEditor.saveStage();
         }},
         { type: "line", text: "Load External Stage", callback: function(){
-            parent.createExternalJSONMenu("stages", function(i, v){ stageEditor.loadStage("", v) })
+            parent.stageLocalGeneratedMenu.groupedCollectionMenuExteranlJSON("stages", stageEditor.loadStage)
         }},        
 
         { type: "paragraf", text: "Options" },
@@ -139,8 +139,6 @@ var Events = (function(){
 
     // ************ STAGES EDITOR CONTEXT MENU ************
 
-    this.stageEditorMenu;
-
     this.stageEditorMenuArray = [
  
         { type: "paragraf", text: "Stage", active: true },
@@ -158,9 +156,7 @@ var Events = (function(){
         }},        
      ];
 
-    this._initStageEditorMenu = function(){
-        this.stageEditorMenu = new CSSMenu(opt.getOption("html", "containerStageEditorMenuId"), this.stageEditorMenuArray, false);
-     }
+    this.stageEditorMenu = new CSSMenu(opt.getOption("html", "containerStageEditorMenuId"), this.stageEditorMenuArray, false);
 
     // TODO: touch event to context menu
     this.bindStageEditorMenu = function(){
@@ -170,53 +166,14 @@ var Events = (function(){
         });
      }
 
-    this._initStageEditorMenu(); 
+    // ********** MAP EDITOR MENU **********
+
+    this.mapLocalGeneratedMenu = new CSSMenu("mapSelectMenu", [], false);
 
 
-    // ********** MAP EDITOR **********
+    // ********** STAGE EDITOR MENU **********
 
-    this.mapLocalGeneratedMenu;
+    this.stageLocalGeneratedMenu = new CSSMenu("stageSelectMenu", [], false);
 
-    this._initMapLocalGeneratedMenu = function(){
-        this.mapLocalGeneratedMenu = new CSSMenu("mapSelectMenu", [], false);
-     }
-
-    this._initMapLocalGeneratedMenu();
-
-
-
-
-    this.createExternalJSONMenu = function(collection, callback, header){
-
-        var extData = opt.getOption("global", "externalFeeds");
-
-        var menuObj = [{ type: "header", text: header }]; 
-
-        var menu = new CSSMenu("mapSelectMenu", menuObj, true);
-
-        $.each(extData, function(i, extJSON){
-
-            extJSON.type = extJSON.type ? extJSON.type : "local";
-            extJSON.url = extJSON.type == "GitHub" ? extJSON.url + "?callback" : extJSON.url;
-
-            $.getJSON(extJSON.url, function(data){
-                var genArr = [ { type: "paragraf", text: extJSON.title } ];
-
-                if (extJSON.type == "GitHub"){
-                    data = JSON.parse(Base64.decode(data.content));
-                }
-
-                $.each(data[collection], function(j, data){
-                    genArr.push({
-                        type: "line", 
-                        text: data.title ? data.title : "Noname",
-                        callback: function(){ callback(j, data) },
-                    });
-                });
-
-                menu.makeFromObj(genArr);
-            })
-        });
-     }
 
  }}());

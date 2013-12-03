@@ -315,4 +315,5 @@ var StageEditor = (function(){
 
         // TODO: форма
      }
+
  }}());
