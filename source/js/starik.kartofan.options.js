@@ -183,6 +183,16 @@ var Options = (function(){
         });  
      }
 
+    this.editGlobalForm = function(){
+        
+        window.mapvents = new Events();
+
+        eform = new EditableForm(mapvents.globalOptionsForm);
+        eform.fillForm(parent.global);
+
+     }
+
+
     // *************** HASH ****************
 
     this.setHash = function(){
@@ -192,8 +202,9 @@ var Options = (function(){
             return 
         }
 
-        window.location.hash = this.getOption("current", "mapCenterLatLng").join(",");
-
+        var latlng = this.getOption("current", "mapCenterLatLng");
+        // window.location.hash = this.getOption("current", "mapCenterLatLng").join(",");
+        window.location.hash = $.isArray(latlng) ? latlng.join(",") : latlng;
      }
 
     this.getHash = function(){

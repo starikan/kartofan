@@ -544,7 +544,7 @@ var MapsEditor = (function(){
 
         // Generate Form
         $.getJSON("data/map_edit_form.json", function(eformFields){
-            eform = new EditableForm("addMap", eformFields, eformFunc);
+            eform = new EditableForm(eformFields, eformFunc, "addMap");
             eform.fillForm(mapVals, mapOptions);
             
             console.log(eform.allData);
@@ -553,12 +553,12 @@ var MapsEditor = (function(){
 
     this._deleteMapFunc = function(form){
         form.getAllData(); 
-        console.log(form.allData)
-        if (confirm(loc("editMaps:deleteMap", form.allData.val.id))) {
-            if (form.allData.val.id){
+        console.log(form.data)
+        if (confirm(loc("editMaps:deleteMap", form.data.id))) {
+            if (form.data.id){
                 form.hideForm();
-                opt.deleteOption("maps", form.allData.val.id);
-                console.log(form.allData.val.id + "deleted")
+                opt.deleteOption("maps", form.data.id);
+                console.log(form.data.id + "deleted")
             }
         }                    
      }

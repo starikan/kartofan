@@ -1,6 +1,6 @@
 "use strict"
 
-var EditableForm = function(id, arr, funcs, show){
+var EditableForm = function(arr, funcs, id, show){
     
     var parent = this;
 
@@ -16,7 +16,8 @@ var EditableForm = function(id, arr, funcs, show){
 
     this.fields = [];
 
-    this.allData;
+    this.data;
+    this.check;
     this.checkForm = true;
 
     this._initForm = function(id){
@@ -105,7 +106,6 @@ var EditableForm = function(id, arr, funcs, show){
             "tabindex": v.tabindex,
             "check": v.check,
         });
-        // $input.addClass("form-control flat");
         $input.appendTo(this.$formContent);
         this._checkVal(v, $input);
         this.fields.push($input);
@@ -188,7 +188,17 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this.addCheckbox = function(v){
+        v = this._checkInputAttr(v);
 
+        var $input = $("<input/>").attr({
+            "type": "checkbox",
+            "id": v.id,
+            "value": v.val,
+            "tabindex": v.tabindex,
+        });
+        $input.appendTo(this.$formContent);
+        this._checkVal(v, $input);
+        this.fields.push($input);
      }
 
     this.addButton = function(v, f){
@@ -205,6 +215,14 @@ var EditableForm = function(id, arr, funcs, show){
         // TODO: add touch
         try {
             $button.bind(f.events, function(){f.callback(parent)});
+        }
+        catch(e){
+            console.log(e);
+        };
+
+        // TODO: add touch
+        try {
+            $button.bind("click", function(){v.callback(parent)});
         }
         catch(e){
             console.log(e);
@@ -254,7 +272,11 @@ var EditableForm = function(id, arr, funcs, show){
                     break; 
                 case "datalist":
                     parent.addDatalist(v, f);
-                    break;             }   
+                    break;             
+                case "checkbox":
+                    parent.addCheckbox(v, f);
+                    break;    
+            }   
         })
 
         this.checkAllFields();
@@ -264,7 +286,6 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this.fillForm = function(vals, options){
-        console.log(vals, $.isEmptyObject(vals))
 
         if (!vals || $.isEmptyObject(vals)) {return}
 
@@ -273,14 +294,23 @@ var EditableForm = function(id, arr, funcs, show){
                 if (field.attr("id") == id){
 
                     // Set vals
-                    field.val(val);
+                    switch (field.attr("type")){
 
-                    //Set tags vals
-                    if (field.attr("type") == "tags"){
-                        var tags = val.split(",");
-                        $.each(tags, function(num, tag){
-                            field.tagsinput('add', tag);
-                        })
+                        case "tags":
+                            var tags = val.split(",");
+                            $.each(tags, function(num, tag){
+                                field.tagsinput('add', tag);
+                            })      
+                            break;
+
+                        case "checkbox":
+                            console.log(field)
+                            // field[0].checked = val;
+                            field.prop('checked', val);                                    
+                            break;
+
+                        default:
+                            field.val(val);
                     }
 
                     // Set options
@@ -297,7 +327,7 @@ var EditableForm = function(id, arr, funcs, show){
                         }
                         
                         if (field.attr("type") == "tags"){
-                            // Add suggestions on tags
+                            // TODO: Add suggestions on tags
                             // http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/
                         }
 
@@ -326,18 +356,29 @@ var EditableForm = function(id, arr, funcs, show){
      }
 
     this.getAllData = function(){
-        var allData = {
-            "val": {},
-            "check": {},
-        };
+
+        var data = {};
+        var check = {};
+
         this.checkAllFields();
+
         $.each(this.fields, function(i, v){
             var $v = $(v);
-            allData.val[v.attr("id")] = $v.val();
-            allData.check[v.attr("id")] = !$v.hasClass("noCheck");
+
+            switch (v.attr("type")){
+                case "checkbox":
+                    data[v.attr("id")] = $v.prop('checked')
+                    break;
+                default:
+                    data[v.attr("id")] = $v.val();
+            }
+
+            check[v.attr("id")] = !$v.hasClass("noCheck");
         })
-        this.allData = allData;
-        return allData;
+
+        this.data = data;
+        this.check = check;
+
      }
 
     this._initForm(id);

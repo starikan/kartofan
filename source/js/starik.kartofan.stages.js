@@ -273,23 +273,23 @@ var StageEditor = (function(){
                 return;
             }
 
-            if (opt.getOption("stages", form.allData.val.id)){
-                if (!confirm(loc("editStage:stageRewriteConfirm", form.allData.val.id))) {
+            if (opt.getOption("stages", form.data.id)){
+                if (!confirm(loc("editStage:stageRewriteConfirm", form.data.id))) {
                     return;
                 }
             }
 
             form.hideForm();
 
-            stageVals = opt.getOption("stages", form.allData.val.id);
+            stageVals = opt.getOption("stages", form.data.id);
             if (!stageVals){ return }
 
-            $.each(form.allData.val, function(i, v){
+            $.each(form.data, function(i, v){
                 stageVals[i] = v;
             })
 
-            opt.setOption("stages", form.allData.val.id, stageVals)
-            console.log(form.allData.val.id, opt.getOption("stages", form.allData.val.id));            
+            opt.setOption("stages", form.data.id, stageVals)
+            console.log(form.data.id, opt.getOption("stages", form.data.id));            
         }
 
         var eformFunc = {
@@ -304,7 +304,7 @@ var StageEditor = (function(){
 
         // Generate Form
         $.getJSON("data/stage_edit_form.json", function(eformFields){
-            eform = new EditableForm("editStage", eformFields, eformFunc);
+            eform = new EditableForm(eformFields, eformFunc, "editStage");
             eform.fillForm(stageVals);
             console.log(eform.allData);
         });         

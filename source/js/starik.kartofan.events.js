@@ -35,7 +35,6 @@ var Events = (function(){
     window.onresize = this.eventResizeWindow;
 
 
-
     // ********** CONTEXT MENU EVENT **********
 
     this.closeContextMenu = function(id){
@@ -54,10 +53,11 @@ var Events = (function(){
 
     document.oncontextmenu = function(){ return false };
 
+    // *******************************************
+    // ***************** MENUES ******************
+    // *******************************************
 
     // ************ MAIN CONTEXT MENU ************
-
-    this.mainMenu;
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
@@ -95,8 +95,7 @@ var Events = (function(){
         }},        
 
         { type: "paragraf", text: "Options" },
-        { type: "line", text: "Global Settings" },
-        { type: "line", text: "Global Maps View" },
+        { type: "line", text: "Set Global Settings", callback: opt.editGlobalForm },
         { type: "line", text: "Settings Reset", callback: function(){
             bases._clearAllBases();
         }},
@@ -121,10 +120,7 @@ var Events = (function(){
         }},        
      ];
 
-    this._initMainMenu = function(){
-        this.mainMenu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), this.contextMenuArray, false);
-        this.bindMainMenu();
-     }
+    this.mainMenu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), this.contextMenuArray, false);
 
     // TODO: touch event to context menu
     this.bindMainMenu = function(){
@@ -134,7 +130,7 @@ var Events = (function(){
         });
      }
 
-    this._initMainMenu();
+    this.bindMainMenu();
 
 
     // ************ STAGES EDITOR CONTEXT MENU ************
@@ -166,6 +162,7 @@ var Events = (function(){
         });
      }
 
+
     // ********** MAP EDITOR MENU **********
 
     this.mapLocalGeneratedMenu = new CSSMenu("mapSelectMenu", [], false);
@@ -174,6 +171,147 @@ var Events = (function(){
     // ********** STAGE EDITOR MENU **********
 
     this.stageLocalGeneratedMenu = new CSSMenu("stageSelectMenu", [], false);
+
+
+
+
+    // *******************************************
+    // ****************** FORMS ******************
+    // *******************************************
+
+// "mapSyncMoving"
+// "mapSyncZooming"
+// "mapDefaultURL"
+// "mapVizirVisible"
+// "mapCursorAllMapsVisible"
+// "gpsAutoStart"
+// "gpsMarker"
+// "gpsAccuracy"
+// "gpsFollowing"
+// "tourFirstShown"
+// "hashChange"
+// "resetToDefaultIfHashClear"
+// "dbPointsStorySave"
+// "dbSyncIn"
+// "dbSyncOut"
+// "dbExtServerIn"
+// "dbExtServerOut"
+// "stageViewConstructorElasticSizeErrorPersent"
+// "lang"
+
+    this.globalOptionsForm = [
+        { 
+            "type": "header",
+            "val": "Global Options"
+        },
+        { 
+            "type": "input",
+            "val": "", 
+            "id": "mapDefaultCenterLatLng", 
+            "description": "mapDefaultCenterLatLng"
+        },
+        { 
+            "type": "input",
+            "val": "", 
+            "id": "mapDefaultZoom", 
+            "description": "mapDefaultZoom",
+            "check": "^1?\\d$|^20$"
+        },
+        { 
+            "type": "checkbox",
+            "id": "mapSyncMoving", 
+            "description": "mapSyncMoving", 
+        },
+        // { 
+        //     "type": "tags",
+        //     "val": "", 
+        //     "id": "tags", 
+        //     "description": "tags"
+        // },
+        // { 
+        //     "type": "datalist",
+        //     "val": "", 
+        //     "id": "group", 
+        //     "placeholder": "", 
+        //     "description": "group", 
+        //     "check": ".?"
+        // },
+        // { 
+        //     "type": "select",
+        //     "val": "", 
+        //     "id": "src", 
+        //     "options": ["Internet", "Storage", "Local"], 
+        //     "description": "src", 
+        //     "check": "^Internet$|^Storage$|^Local$"
+        // },
+        // { 
+        //     "type": "select",
+        //     "val": "", 
+        //     "id": "crs", 
+        //     "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], 
+        //     "description": "CRS", 
+        //     "check": "^$|^EPSG3857$|^EPSG3857\\.Ext$|^EPSG3395$|^Simple$"
+        // },    
+        // { 
+        //     "type": "input",
+        //     "val": "", 
+        //     "id": "tilesURL", 
+        //     "placeholder": "", 
+        //     "description": "tilesURL", 
+        //     "check": ".?"
+        // },
+        // { 
+        //     "type": "input",
+        //     "val": "", 
+        //     "id": "maxZoom", 
+        //     "placeholder": "", 
+        //     "description": "maxZoom", 
+        //     "check": "^1?\\d$|^20$"
+        // },
+        // { 
+        //     "type": "input",
+        //     "val": "", 
+        //     "id": "minZoom", 
+        //     "placeholder": "", 
+        //     "description": "minZoom", 
+        //     "check": "^1?\\d$|^20$"
+        // },
+        // { 
+        //     "type": "input",
+        //     "val": "", 
+        //     "id": "startZoom", 
+        //     "placeholder": "", 
+        //     "description": "startZoom", 
+        //     "check": "^1?\\d$|^20$"
+        // },
+        { 
+            "type": "button", 
+            "val": "Update", 
+            "id": "submit",
+            "callback": function(form){
+                form.getAllData();
+                var data = form.data;
+                if (form.checkForm){
+                    form.hideForm();
+
+                    data.mapDefaultCenterLatLng = data.mapDefaultCenterLatLng.split(",");
+                    data.mapDefaultZoom = data.mapDefaultZoom|0;
+
+                    console.log(data);
+
+                    $.each(data, function(i, v){
+                        // opt.setOption("global", i, v);
+                    })
+                }
+            }
+        },
+        { 
+            "type": "button", 
+            "val": "Cancel", 
+            "id": "cancel",
+            "callback": function(form){form.hideForm()}
+        }  
+     ]
 
 
  }}());
