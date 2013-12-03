@@ -179,15 +179,6 @@ var Events = (function(){
     // ****************** FORMS ******************
     // *******************************************
 
-// "mapSyncMoving"
-// "mapSyncZooming"
-// "mapDefaultURL"
-// "mapVizirVisible"
-// "mapCursorAllMapsVisible"
-// "gpsAutoStart"
-// "gpsMarker"
-// "gpsAccuracy"
-// "gpsFollowing"
 // "tourFirstShown"
 // "hashChange"
 // "resetToDefaultIfHashClear"
@@ -200,90 +191,18 @@ var Events = (function(){
 // "lang"
 
     this.globalOptionsForm = [
-        { 
-            "type": "header",
-            "val": "Global Options"
-        },
-        { 
-            "type": "input",
-            "val": "", 
-            "id": "mapDefaultCenterLatLng", 
-            "description": "mapDefaultCenterLatLng"
-        },
-        { 
-            "type": "input",
-            "val": "", 
-            "id": "mapDefaultZoom", 
-            "description": "mapDefaultZoom",
-            "check": "^1?\\d$|^20$"
-        },
-        { 
-            "type": "checkbox",
-            "id": "mapSyncMoving", 
-            "description": "mapSyncMoving", 
-        },
-        // { 
-        //     "type": "tags",
-        //     "val": "", 
-        //     "id": "tags", 
-        //     "description": "tags"
-        // },
-        // { 
-        //     "type": "datalist",
-        //     "val": "", 
-        //     "id": "group", 
-        //     "placeholder": "", 
-        //     "description": "group", 
-        //     "check": ".?"
-        // },
-        // { 
-        //     "type": "select",
-        //     "val": "", 
-        //     "id": "src", 
-        //     "options": ["Internet", "Storage", "Local"], 
-        //     "description": "src", 
-        //     "check": "^Internet$|^Storage$|^Local$"
-        // },
-        // { 
-        //     "type": "select",
-        //     "val": "", 
-        //     "id": "crs", 
-        //     "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], 
-        //     "description": "CRS", 
-        //     "check": "^$|^EPSG3857$|^EPSG3857\\.Ext$|^EPSG3395$|^Simple$"
-        // },    
-        // { 
-        //     "type": "input",
-        //     "val": "", 
-        //     "id": "tilesURL", 
-        //     "placeholder": "", 
-        //     "description": "tilesURL", 
-        //     "check": ".?"
-        // },
-        // { 
-        //     "type": "input",
-        //     "val": "", 
-        //     "id": "maxZoom", 
-        //     "placeholder": "", 
-        //     "description": "maxZoom", 
-        //     "check": "^1?\\d$|^20$"
-        // },
-        // { 
-        //     "type": "input",
-        //     "val": "", 
-        //     "id": "minZoom", 
-        //     "placeholder": "", 
-        //     "description": "minZoom", 
-        //     "check": "^1?\\d$|^20$"
-        // },
-        // { 
-        //     "type": "input",
-        //     "val": "", 
-        //     "id": "startZoom", 
-        //     "placeholder": "", 
-        //     "description": "startZoom", 
-        //     "check": "^1?\\d$|^20$"
-        // },
+        { "type": "header", "val": "Global Options" },
+        { "type": "input", "id": "mapDefaultCenterLatLng", "description": "mapDefaultCenterLatLng" },
+        { "type": "input", "id": "mapDefaultZoom", "description": "mapDefaultZoom", "check": "^1?\\d$|^20$" },
+        { "type": "checkbox", "id": "mapSyncMoving", "description": "mapSyncMoving" },
+        { "type": "checkbox", "id": "mapSyncZooming", "description": "mapSyncZooming" },
+        { "type": "textarea", "id": "mapDefaultURL", "description": "mapDefaultURL", "rows": 3 },
+        { "type": "checkbox", "id": "mapVizirVisible", "description": "mapVizirVisible" },
+        { "type": "checkbox", "id": "mapCursorAllMapsVisible", "description": "mapCursorAllMapsVisible" },
+        { "type": "checkbox", "id": "gpsAutoStart", "description": "gpsAutoStart" },
+        { "type": "checkbox", "id": "gpsMarker", "description": "gpsMarker" },
+        { "type": "checkbox", "id": "gpsAccuracy", "description": "gpsAccuracy" },
+        { "type": "checkbox", "id": "gpsFollowing", "description": "gpsFollowing" },
         { 
             "type": "button", 
             "val": "Update", 

@@ -41,7 +41,8 @@
 }
 
 .eform-content input,
-.eform-content select
+.eform-content select,
+.eform-content textarea
  {
   width: 100%;
   padding: 6px;
@@ -55,7 +56,8 @@
 }
 
 .eform-content input:focus,
-.eform-content select:focus
+.eform-content select:focus,
+.eform-content textarea:focus
 {
   background: #badbad;
 }

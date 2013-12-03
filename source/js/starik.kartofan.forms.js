@@ -69,6 +69,7 @@ var EditableForm = function(arr, funcs, id, show){
         if (!v.options){v.options = []}
         v.check = v.check ? new RegExp(v.check) : new RegExp(".?");
         v.tabindex = this.$formContent.find("input, select").length + 1;
+        v.rows = v.rows ? v.rows : 1;
 
         return v;
      }
@@ -180,7 +181,18 @@ var EditableForm = function(arr, funcs, id, show){
      }
 
     this.addTextArea = function(v){
+        v = this._checkInputAttr(v);
 
+        var $input = $("<textarea/>").attr({
+            "id": v.id,
+            "value": v.val,
+            "tabindex": v.tabindex,
+            "check": v.check,
+            "rows": v.rows,
+        });
+        $input.appendTo(this.$formContent);
+        this._checkVal(v, $input);
+        this.fields.push($input);
      }
 
     this.addRadio = function(v){
@@ -244,7 +256,8 @@ var EditableForm = function(arr, funcs, id, show){
         //     check: "regexp to checking the value",
         //     description: "description",
         //     options: [] for select options, tags
-        //     callback: callback function
+        //     callback: callback function,
+        //     rows: lines count for textarea
         // }
 
         arr = arr ? arr : this.arr;
@@ -276,6 +289,9 @@ var EditableForm = function(arr, funcs, id, show){
                 case "checkbox":
                     parent.addCheckbox(v, f);
                     break;    
+                case "textarea":
+                    parent.addTextArea(v, f);
+                    break;  
             }   
         })
 
