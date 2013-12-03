@@ -41,9 +41,9 @@ var StageMaps = (function(){
         })
 
         // First visit automaticaly start tour
-        if (!opt.getOption("global", "tourFirstShown")){
+        if (opt.getOption("global", "isTourFirstShown")){
             tourMain.start(true);
-            opt.setOption("global", "tourFirstShown", true);
+            opt.setOption("global", "isTtourFirstShown", false);
         }
 
         if (opt.getOption("global", "gpsAutoStart")){

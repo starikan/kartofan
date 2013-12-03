@@ -48,7 +48,7 @@ var Options = (function(){
             },
         ],
 
-        "tourFirstShown": false,
+        "isTourFirstShown": true,
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,

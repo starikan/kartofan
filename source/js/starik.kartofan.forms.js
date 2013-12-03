@@ -320,8 +320,6 @@ var EditableForm = function(arr, funcs, id, show){
                             break;
 
                         case "checkbox":
-                            console.log(field)
-                            // field[0].checked = val;
                             field.prop('checked', val);                                    
                             break;
 
@@ -349,7 +347,7 @@ var EditableForm = function(arr, funcs, id, show){
 
                     }
 
-                    console.log(id, val)
+                    // console.log(id, val)
                 }
             })
         })            
