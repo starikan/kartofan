@@ -1,3 +1,5 @@
+
+/*TODO: что-то делать с курсорами на планшете*/
 * {
     cursor: url("../images/mainCursor.png"), auto !important;
 }
@@ -41,4 +43,9 @@ body {
 .popover-title {
     text-align: center;
     font: 22px bold;
+}
+
+/*Shown cursor when resize maps containers in stage*/
+.ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
+    cursor: move !important;
 }
