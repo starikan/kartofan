@@ -201,7 +201,6 @@ var Events = (function(){
         { "type": "textarea", "id": "dbExtServerOut", "description": "dbExtServerOut", "rows": 4 },
         { "type": "input", "id": "stageViewConstructorElasticSizeErrorPersent", "description": "stageViewConstructorElasticSizeErrorPersent", "check": "^1?\\d$" },
         { "type": "select", "id": "lang", "description": "lang", "options": ["en_US", "ru_RU"] },
-
         { 
             "type": "button", 
             "val": "Update", 

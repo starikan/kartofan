@@ -2,6 +2,12 @@ $.pluck = function(arr, key) {
     return $.map(arr, function(e) { return e[key]; }) 
  }
 
+function unique(array){
+    return array.filter(function(el, index, arr) {
+        return index == arr.indexOf(el);
+    });
+ }
+
 String.prototype.format = String.prototype.f = function() {
     var s = this,
         i = arguments.length;

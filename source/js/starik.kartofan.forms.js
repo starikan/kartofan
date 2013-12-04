@@ -540,8 +540,10 @@ var CSSMenu = function(id, arr, show){
         groupSelector = groupSelector ? groupSelector : "group"
 
         var groups = $.pluck(collection, groupSelector);
-        groups = $.unique(groups);
+        groups = unique(groups);
         groups.sort();
+
+        console.log(groups)
 
         var genArray = [{ type: "header", text: header }];
 
