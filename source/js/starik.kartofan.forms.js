@@ -589,8 +589,6 @@ var CSSMenu = function(id, arr, show){
 
         var menuObj = [{ type: "header", text: header }]; 
 
-        // var menu = new CSSMenu("mapSelectMenu", menuObj, true);
-
         $.each(extData, function(i, extJSON){
 
             extJSON.type = extJSON.type ? extJSON.type : "local";
@@ -607,7 +605,10 @@ var CSSMenu = function(id, arr, show){
                     genArr.push({
                         type: "line", 
                         text: data.title ? data.title : "Noname",
-                        callback: function(){ callback(j, data) },
+                        callback: function(){ 
+                            console.log(j, data)
+                            callback(j, data) 
+                        },
                     });
                 });
 

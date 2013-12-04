@@ -234,5 +234,70 @@ var Events = (function(){
         }  
      ]
 
+    this.mapEditForm = [
+        { "type": "header","val": "Active Map Add" },
+        { "type": "input","val": "", "id": "id", "description": "id"},
+        { "type": "input","val": "", "id": "title", "description": "title" },
+        { "type": "select","val": "img", "options": ["img", "wms"], "id": "server", "description": "server", "check": "^img$|^wms$" },
+        { "type": "tags","val": "", "id": "tags", "description": "tags" },
+        { "type": "datalist","val": "", "id": "group", "placeholder": "", "description": "group", "check": ".?" },
+        { "type": "select","val": "", "id": "src", "options": ["Internet", "Storage", "Local"], "description": "src", "check": "^Internet$|^Storage$|^Local$"},
+        { "type": "select","val": "", "id": "crs", "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "description": "CRS", "check": "^$|^EPSG3857$|^EPSG3857\\.Ext$|^EPSG3395$|^Simple$" },    
+        { "type": "input","val": "", "id": "tilesURL", "placeholder": "", "description": "tilesURL", "check": ".?" },
+        { "type": "input","val": "", "id": "maxZoom", "placeholder": "", "description": "maxZoom", "check": "^1?\\d$|^20$" },
+        { "type": "input","val": "", "id": "minZoom", "placeholder": "", "description": "minZoom","check": "^1?\\d$|^20$" },
+        { "type": "input","val": "", "id": "startZoom", "placeholder": "", "description": "startZoom", "check": "^1?\\d$|^20$" },
+        { "type": "button", "val": "Add Map", "id": "submit", callback: function(form){mapsEditor._submitMapFunc(form)}  },
+        { "type": "button", "val": "Delete Map", "id": "delete", callback: function(form){mapsEditor._deleteMapFunc(form)}  },    
+        { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} },
+     ];
+
+    this.stageEditForm = [
+        { "type": "header","val": "Stage Edit Data" },
+        { "type": "input","val": "", "id": "id", "description": "id" },
+        { "type": "input","val": "", "id": "title", "description": "title" },
+        { "type": "tags","val": "", "id": "tags", "description": "tags" },
+        { "type": "input","val": "", "id": "group", "description": "group" },
+        { "type": "button", "val": "Add Stage", "id": "submit", callback: function(form)
+            {
+                form.getAllData(); 
+                if (!form.checkForm){
+                    alert(loc("editStage:errorCheckForm"));
+                    return;
+                }
+
+                if (opt.getOption("stages", form.data.id)){
+                    if (!confirm(loc("editStage:stageRewriteConfirm", form.data.id))) { return }
+                }
+
+                form.hideForm();
+
+                stageVals = opt.getOption("stages", form.data.id);
+                if (!stageVals){ return }
+
+                $.each(form.data, function(i, v){
+                    stageVals[i] = v;
+                })
+
+                opt.setOption("stages", form.data.id, stageVals)
+                console.log(form.data.id, opt.getOption("stages", form.data.id));  
+            } 
+         },
+        { "type": "button", "val": "Delete Stage", "id": "delete", callback: function(form)
+            {
+                form.getAllData();
+                var data = form.data;
+                if (confirm(loc("editStage:deleteStage", data.id))) {
+                    console.log(data)
+                    if (opt.getOption("stages", data.id)){
+                        form.hideForm();
+                        opt.deleteOption("stages", data.id);
+                        console.log(data.id + "deleted")
+                    }
+                }   
+            }   
+         },    
+        { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} } 
+     ];
 
  }}());

@@ -240,14 +240,16 @@ var StageEditor = (function(){
             if (allStages[newName] && !confirm(loc("editStage:stageRewriteConfirm", newName))){
                 return;
             }
-            currStage.title = newName;
+            currStage.id = newName;
             opt.setOption("stages", newName, currStage);  
         }
      }  
 
     this.loadStage = function(title, stageData){
-        stageData = title ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
+        // console.log(title!=undefined, stageData, opt.getOption("stages", title), opt.getOption("current", "stage"))
+        stageData = opt.getOption("stages", title) ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
         opt.setOption("current", "stage", stageData);
+        // console.log(stageData)
         stage.createStage();
      }
 
@@ -255,60 +257,60 @@ var StageEditor = (function(){
 
         if (!stageId){ return }
 
-        var stageVals;
+        // var _deleteStageFunc = function(form){
+        //     if (confirm(loc("editStage:deleteStage", stageVals.id))) {
+        //         if (stageVals.id){
+        //             form.hideForm();
+        //             opt.deleteOption("stages", stageVals.id);
+        //             console.log(stageVals.id + "deleted")
+        //         }
+        //     }                    
+        // }
 
-        var _deleteStageFunc = function(form){
-            if (confirm(loc("editStage:deleteStage", stageVals.id))) {
-                if (stageVals.id){
-                    form.hideForm();
-                    opt.deleteOption("stages", stageVals.id);
-                    console.log(stageVals.id + "deleted")
-                }
-            }                    
-        }
+        // var _submitStageFunc = function(form){
+        //     form.getAllData(); 
+        //     if (!form.checkForm){
+        //         alert(loc("editStage:errorCheckForm"));
+        //         return;
+        //     }
 
-        var _submitStageFunc = function(form){
-            form.getAllData(); 
-            if (!form.checkForm){
-                alert(loc("editStage:errorCheckForm"));
-                return;
-            }
+        //     if (opt.getOption("stages", form.data.id)){
+        //         if (!confirm(loc("editStage:stageRewriteConfirm", form.data.id))) {
+        //             return;
+        //         }
+        //     }
 
-            if (opt.getOption("stages", form.data.id)){
-                if (!confirm(loc("editStage:stageRewriteConfirm", form.data.id))) {
-                    return;
-                }
-            }
+        //     form.hideForm();
 
-            form.hideForm();
+        //     stageVals = opt.getOption("stages", form.data.id);
+        //     if (!stageVals){ return }
 
-            stageVals = opt.getOption("stages", form.data.id);
-            if (!stageVals){ return }
+        //     $.each(form.data, function(i, v){
+        //         stageVals[i] = v;
+        //     })
 
-            $.each(form.data, function(i, v){
-                stageVals[i] = v;
-            })
+        //     opt.setOption("stages", form.data.id, stageVals)
+        //     console.log(form.data.id, opt.getOption("stages", form.data.id));            
+        // }
 
-            opt.setOption("stages", form.data.id, stageVals)
-            console.log(form.data.id, opt.getOption("stages", form.data.id));            
-        }
+        // var eformFunc = {
+        //     "submit": { "events": "click", callback: _submitStageFunc },
+        //     "delete": { "events": "click", callback: function(form){_deleteStageFunc(form)} },
+        //     "cancel": { "events": "click", callback: function(form){form.hideForm()} }
+        // }
 
-        var eformFunc = {
-            "submit": { "events": "click", callback: _submitStageFunc },
-            "delete": { "events": "click", callback: function(form){_deleteStageFunc(form)} },
-            "cancel": { "events": "click", callback: function(form){form.hideForm()} }
-        }
 
-        stageVals = opt.getOption("stages", stageId);
+        // Вылазит curent вместо того что нужно
+
+
+        var stageVals = opt.getOption("stages", stageId);
         if (!stageVals){ return }
         stageVals.id = stageVals.id ? stageVals.id : stageId;
 
-        // Generate Form
-        $.getJSON("data/stage_edit_form.json", function(eformFields){
-            eform = new EditableForm(eformFields, eformFunc, "editStage");
-            eform.fillForm(stageVals);
-            console.log(eform.allData);
-        });         
+        console.log(stageVals, stageId)
+
+        eform = new EditableForm(mapvents.stageEditForm);
+        eform.fillForm(stageVals);     
      }
 
     this.editMapsControls = function(){
@@ -335,6 +337,7 @@ var StageEditor = (function(){
                     form.getAllData();
                     var data = form.data;
                     if (form.checkForm){
+                        form.hideForm();
                         $.each(data, function(i, v){
                             currStage.stageMapsControlls[mapNum][i] = v;
                         })

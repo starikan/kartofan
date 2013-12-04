@@ -126,6 +126,9 @@ var LeafletMap = function(mapId){
         var currStage = opt.getOption("current", "stage");
         var name = this.mapTilesLayer.mapName;
 
+        // If map deleted before it must get out from current stage
+        name = opt.getOption("maps").name ? name : "unknown";
+
         currStage.stageMapsNames[parent.num] = name;
         opt.setOption("current", "stage", currStage);
      }
@@ -529,16 +532,11 @@ var MapsEditor = (function(){
         var activeMap = opt.getOption("current", "activeMap");
         var mapVals;
 
-        var eformFunc = {
-            "submit": { "events": "click", callback: function(form){parent._submitMapFunc(form)} },
-            "delete": { "events": "click", callback: function(form){parent._deleteMapFunc(form)} },
-            "cancel": { "events": "click", callback: function(form){form.hideForm()} }
-         }
-
         // If no mapId get active map
         if (!mapId){
             mapVals = window[activeMap].mapTilesLayer.mapData;
             mapVals.id = window[activeMap].mapTilesLayer.mapName;
+            console.log(mapVals.id, activeMap, window[activeMap].mapTilesLayer)
         }
         else {
             mapVals = opt.getOption("maps", mapId);
@@ -552,13 +550,8 @@ var MapsEditor = (function(){
         groups.sort()
         mapOptions.group = groups;        
 
-        // Generate Form
-        $.getJSON("data/map_edit_form.json", function(eformFields){
-            eform = new EditableForm(eformFields, eformFunc, "addMap");
-            eform.fillForm(mapVals, mapOptions);
-            
-            console.log(eform.allData);
-        }); 
+        eform = new EditableForm(mapvents.mapEditForm);
+        eform.fillForm(mapVals, mapOptions);
      }     
 
     this._deleteMapFunc = function(form){
@@ -575,20 +568,22 @@ var MapsEditor = (function(){
 
     this._submitMapFunc = function(form){
         form.getAllData(); 
+
+        console.log(form)
         if (!form.checkForm){
             alert(loc("editMaps:errorCheckForm"));
             return;
         }
 
-        if (opt.getOption("maps", form.allData.val.id)){
-            if (!confirm(loc("editMaps:mapRewriteConfirm", form.allData.val.id))) {
+        if (opt.getOption("maps", form.data.id)){
+            if (!confirm(loc("editMaps:mapRewriteConfirm", form.data.id))) {
                 return;
             }
         }
 
         form.hideForm();
-        opt.setOption("maps", form.allData.val.id, form.allData.val)
-        console.log(form.allData.val.id, opt.getOption("maps", form.allData.val.id));            
+        opt.setOption("maps", form.data.id, form.data)
+        console.log(form.data.id, opt.getOption("maps", form.data.id));            
      }
 
     // *************** JSON ****************
