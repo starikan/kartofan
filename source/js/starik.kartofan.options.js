@@ -68,6 +68,7 @@ var Options = (function(){
         "mapCenterLatLng": [],
         "mapZoom": undefined,
         "activeMap": undefined,
+        "activeMapNum": undefined,
         "stage": {
             "title": "current",
             "id": "current",
@@ -129,6 +130,10 @@ var Options = (function(){
     this.places = {};
 
     this.maps = {};
+
+    this.appVars = {
+        "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
+    }
 
     this._init = function(){
         $.each(bases.baseNames, function(i, v){

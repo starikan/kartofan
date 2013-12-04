@@ -168,13 +168,13 @@ var StageEditor = (function(){
         map.map.scrollWheelZoom.disable();
         map.map.touchZoom.disable();
 
-        if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
-        if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
-        if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
-        if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
+        // if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
+        // if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
+        // if (map.copyrightControl) {map.map.removeControl(map.copyrightControl)};
+        // if (map.zoomLevelControl) {map.map.removeControl(map.zoomLevelControl)};
         
-        if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
-        map.nameControl.setPrefix("map"+i);
+        // if (!map.nameControl) {map.nameControl = L.control.attribution({position: "bottomright" })}
+        // map.nameControl.setPrefix("map"+i);
 
      }
 
@@ -199,6 +199,7 @@ var StageEditor = (function(){
 
         currStage.stageMapsNames.length = currStage.stageMapsGrid.length;
         currStage.stageMapsZooms.length = currStage.stageMapsGrid.length;
+        currStage.stageMapsControlls.length = currStage.stageMapsGrid.length;
 
         opt.setOption("current", "stage", currStage, function(err, doc){
             if (!err){
@@ -222,10 +223,10 @@ var StageEditor = (function(){
      }
 
     this.removeMapFromStage = function(){
-        var mapNum = opt.getOption("current", "activeMap");
+        var activeMap = opt.getOption("current", "activeMap");
         var mapsCount = $(".maps").length;
 
-        if (mapsCount>1){ $("#"+mapNum).remove() }
+        if (mapsCount>1){ $("#"+activeMap).remove() }
      }  
         
     this.saveStage = function(){
@@ -311,9 +312,50 @@ var StageEditor = (function(){
      }
 
     this.editMapsControls = function(){
-        var mapNum = opt.getOption("current", "activeMap");
+        // TODOЖ сделать в суггкте номер карты
+        var activeMap = opt.getOption("current", "activeMap");
+        var mapNum = opt.getOption("current", "activeMapNum");
+        var currStage = opt.getOption("current", "stage");
 
-        // TODO: форма
-     }
+        var mapControlsForm = [
+            { "type": "header", "val": "Choose Controls View" },
+        ]
+
+        // TODO: Localization
+        $.each(opt.getOption("appVars", "mapsControlsList"), function(i, v){
+            mapControlsForm.push({ "type": "checkbox", "id": v, "description": v })
+        })
+
+        mapControlsForm.push(
+            { 
+                "type": "button", 
+                "val": "Update", 
+                "id": "submit",
+                "callback": function(form){
+                    form.getAllData();
+                    var data = form.data;
+                    if (form.checkForm){
+                        $.each(data, function(i, v){
+                            currStage.stageMapsControlls[mapNum][i] = v;
+                        })
+                        opt.setOption("current", "stage", currStage);
+                        window[activeMap].removeAllControls();
+                        window[activeMap]._setMapControls();
+                    }
+                }
+            },
+            { 
+                "type": "button", 
+                "val": "Cancel", 
+                "id": "cancel",
+                "callback": function(form){form.hideForm()}
+            }  
+        )
+
+        console.log(mapNum, currStage.stageMapsControlls[mapNum])
+
+        var eform = new EditableForm(mapControlsForm);
+        eform.fillForm(currStage.stageMapsControlls[mapNum]);
+    }
 
  }}());

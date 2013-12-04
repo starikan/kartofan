@@ -68,6 +68,7 @@ var LeafletMap = function(mapId){
 
     this.onFocusMap = function(){
         opt.setOption("current", "activeMap", mapId);
+        opt.setOption("current", "activeMapNum", mapId.replace("map", ""));
         parent.$allMaps.removeClass("activemap");
         parent.$map.addClass("activemap");
      }
@@ -136,6 +137,15 @@ var LeafletMap = function(mapId){
 
         currStage.stageMapsZooms[parent.num] = zoom;
         opt.setOption("current", "stage", currStage);
+     }
+
+    this.removeAllControls = function(){
+        if (!this.map){ return }
+        if (this.zoomControl) { try{this.map.removeControl(parent.zoomControl)}catch(e){} }
+        if (this.scaleControl) { try{this.map.removeControl(parent.scaleControl)}catch(e){} }
+        if (this.copyrightControl) { try{this.map.removeControl(parent.copyrightControl)}catch(e){} }
+        if (this.nameControl) { try{this.map.removeControl(parent.nameControl)}catch(e){} }
+        if (this.zoomLevelControl) { try{this.map.removeControl(parent.zoomLevelControl)}catch(e){} }
      }
 
     this._setMapControls = function(){
@@ -509,14 +519,14 @@ var MapsEditor = (function(){
 
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
-        var mapNum = opt.getOption("current", "activeMap");
-        window[mapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
+        var activeMap = opt.getOption("current", "activeMap");
+        window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
     this.editMap = function(mapId){
 
         var maps = opt.getOption("maps");
-        var mapNum = opt.getOption("current", "activeMap");
+        var activeMap = opt.getOption("current", "activeMap");
         var mapVals;
 
         var eformFunc = {
@@ -527,8 +537,8 @@ var MapsEditor = (function(){
 
         // If no mapId get active map
         if (!mapId){
-            mapVals = window[mapNum].mapTilesLayer.mapData;
-            mapVals.id = window[mapNum].mapTilesLayer.mapName;
+            mapVals = window[activeMap].mapTilesLayer.mapData;
+            mapVals.id = window[activeMap].mapTilesLayer.mapName;
         }
         else {
             mapVals = opt.getOption("maps", mapId);
