@@ -15,6 +15,7 @@ var Options = (function(){
         }
 
     window.bases = new Bases();
+    window.gps = new GPS();
 
     var parent = this;
 
@@ -49,6 +50,7 @@ var Options = (function(){
         ],
 
         "isTourFirstShown": true,
+        "isSetLangFirstShown": true,
 
         "hashChange": true,
         "resetToDefaultIfHashClear": true,
@@ -144,14 +146,25 @@ var Options = (function(){
         this.initLocalization();
      }
     
-    this._initStage = function(container){
+    this._afterInit = function(container){
         if (bases.basesLoaded == opt.getOption("appVars", "baseNamesSync").length){ 
+
             this.getHash();
             container = container ? container : this.getOption("html", "containerAllMapsId");
             window.stage = new StageMaps();
             window.stage.initContainer(container);
+
+            // First visit automaticaly start tour
+            if (opt.getOption("global", "isTourFirstShown")){
+                tourMain.start(true);
+                opt.setOption("global", "isTourFirstShown", false);
+            }
+
+            if (opt.getOption("global", "gpsAutoStart")){
+                gps.startGPS();
+            }
         }
-     }  
+     }
 
     this.setOption = function(collection, option, value, callback){
 
@@ -316,7 +329,7 @@ var Bases = (function(){
                 parent.basesLoaded++;
 
                 parent._initSync();
-                opt._initStage();
+                opt._afterInit();
             })
         })
      };

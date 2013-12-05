@@ -18,7 +18,6 @@ var StageMaps = (function(){
 
     window.opt = new Options();
     window.mapvents = new Events();
-    window.gps = new GPS();
 
     this.$container;
     this.currStage;
@@ -39,17 +38,6 @@ var StageMaps = (function(){
             parent.addMapDiv(i, v);
             parent.addMapObject(i);
         })
-
-        // First visit automaticaly start tour
-        if (opt.getOption("global", "isTourFirstShown")){
-            tourMain.start(true);
-            opt.setOption("global", "isTourFirstShown", false);
-        }
-
-        if (opt.getOption("global", "gpsAutoStart")){
-            gps.startGPS();
-        }
-
      }
 
     this.addMapDiv = function(i, v){

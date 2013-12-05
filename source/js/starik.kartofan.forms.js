@@ -551,8 +551,6 @@ var CSSMenu = function(id, arr, show){
         groups = unique(groups);
         groups.sort();
 
-        console.log(groups)
-
         var genArray = [{ type: "header", text: header }];
 
         $.each(groups, function(g, group){
