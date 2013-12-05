@@ -257,57 +257,9 @@ var StageEditor = (function(){
 
         if (!stageId){ return }
 
-        // var _deleteStageFunc = function(form){
-        //     if (confirm(loc("editStage:deleteStage", stageVals.id))) {
-        //         if (stageVals.id){
-        //             form.hideForm();
-        //             opt.deleteOption("stages", stageVals.id);
-        //             console.log(stageVals.id + "deleted")
-        //         }
-        //     }                    
-        // }
-
-        // var _submitStageFunc = function(form){
-        //     form.getAllData(); 
-        //     if (!form.checkForm){
-        //         alert(loc("editStage:errorCheckForm"));
-        //         return;
-        //     }
-
-        //     if (opt.getOption("stages", form.data.id)){
-        //         if (!confirm(loc("editStage:stageRewriteConfirm", form.data.id))) {
-        //             return;
-        //         }
-        //     }
-
-        //     form.hideForm();
-
-        //     stageVals = opt.getOption("stages", form.data.id);
-        //     if (!stageVals){ return }
-
-        //     $.each(form.data, function(i, v){
-        //         stageVals[i] = v;
-        //     })
-
-        //     opt.setOption("stages", form.data.id, stageVals)
-        //     console.log(form.data.id, opt.getOption("stages", form.data.id));            
-        // }
-
-        // var eformFunc = {
-        //     "submit": { "events": "click", callback: _submitStageFunc },
-        //     "delete": { "events": "click", callback: function(form){_deleteStageFunc(form)} },
-        //     "cancel": { "events": "click", callback: function(form){form.hideForm()} }
-        // }
-
-
-        // Вылазит curent вместо того что нужно
-
-
         var stageVals = opt.getOption("stages", stageId);
         if (!stageVals){ return }
         stageVals.id = stageVals.id ? stageVals.id : stageId;
-
-        console.log(stageVals, stageId)
 
         eform = new EditableForm(mapvents.stageEditForm);
         eform.fillForm(stageVals);     

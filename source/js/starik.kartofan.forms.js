@@ -301,7 +301,7 @@ var EditableForm = function(arr, funcs, id, show){
 
      }
 
-    this.fillForm = function(vals, options){
+    this.fillForm = function(vals){
 
         if (!vals || $.isEmptyObject(vals)) {return}
 
@@ -326,6 +326,19 @@ var EditableForm = function(arr, funcs, id, show){
                         default:
                             field.val(val);
                     }
+                }
+            })
+        })            
+
+        this.checkAllFields();
+     }
+
+    this.fillOptions = function(options){
+        if (!options || $.isEmptyObject(options)) {return}
+        
+        $.each(options, function(id, val){
+            $.each(parent.fields, function(j, field){
+                if (field.attr("id") == id){
 
                     // Set options
                     if (options && !$.isEmptyObject(options) && $.isArray(options[id]) && options[id].length){
@@ -344,15 +357,10 @@ var EditableForm = function(arr, funcs, id, show){
                             // TODO: Add suggestions on tags
                             // http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/
                         }
-
                     }
-
-                    // console.log(id, val)
                 }
             })
-        })            
-
-        this.checkAllFields();
+        })
      }
 
     // TODO
@@ -591,15 +599,12 @@ var CSSMenu = function(id, arr, show){
 
         $.each(extData, function(i, extJSON){
 
-            extJSON.type = extJSON.type ? extJSON.type : "local";
-            extJSON.url = extJSON.type == "GitHub" ? extJSON.url + "?callback" : extJSON.url;
-
             $.getJSON(extJSON.url, function(data){
                 var genArr = [ { type: "paragraf", text: extJSON.title } ];
-
-                if (extJSON.type == "GitHub"){
+                try {
                     data = JSON.parse(Base64.decode(data.content));
                 }
+                catch(e){}
 
                 $.each(data[collection], function(j, data){
                     genArr.push({

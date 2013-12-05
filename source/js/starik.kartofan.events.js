@@ -243,7 +243,7 @@ var Events = (function(){
         { "type": "datalist","val": "", "id": "group", "placeholder": "", "description": "group", "check": ".?" },
         { "type": "select","val": "", "id": "src", "options": ["Internet", "Storage", "Local"], "description": "src", "check": "^Internet$|^Storage$|^Local$"},
         { "type": "select","val": "", "id": "crs", "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "description": "CRS", "check": "^$|^EPSG3857$|^EPSG3857\\.Ext$|^EPSG3395$|^Simple$" },    
-        { "type": "input","val": "", "id": "tilesURL", "placeholder": "", "description": "tilesURL", "check": ".?" },
+        { "type": "textarea","val": "", "id": "tilesURL", "rows": 3, "description": "tilesURL", "check": ".?" },
         { "type": "input","val": "", "id": "maxZoom", "placeholder": "", "description": "maxZoom", "check": "^1?\\d$|^20$" },
         { "type": "input","val": "", "id": "minZoom", "placeholder": "", "description": "minZoom","check": "^1?\\d$|^20$" },
         { "type": "input","val": "", "id": "startZoom", "placeholder": "", "description": "startZoom", "check": "^1?\\d$|^20$" },

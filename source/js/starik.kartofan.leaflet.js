@@ -551,7 +551,8 @@ var MapsEditor = (function(){
         mapOptions.group = groups;        
 
         eform = new EditableForm(mapvents.mapEditForm);
-        eform.fillForm(mapVals, mapOptions);
+        eform.fillForm(mapVals);
+        eform.fillOptions(mapOptions);
      }     
 
     this._deleteMapFunc = function(form){
@@ -590,10 +591,16 @@ var MapsEditor = (function(){
  
     this.getAllMapsJSON = function(url){
         if (!url){
-            url = prompt(loc("editMaps:mapsJSONAdd"));
+            url = prompt(loc("editMaps:mapsJSONAdd"), opt.getOption("global", "externalFeeds")[0].url);
         }
 
         $.getJSON(url, function(data){
+
+            try {
+                data = JSON.parse(Base64.decode(data.content));
+            }
+            catch(e){}
+
             $.each(data.maps, function(i,v){
                 if (opt.getOption("maps", i)){
                     if (!confirm(loc("editMaps:mapRewriteConfirm"))) {

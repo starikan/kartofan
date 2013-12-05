@@ -42,9 +42,9 @@ var Options = (function(){
 
         "externalFeeds": [
             {
-                "title": "External JSON",
-                "url": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json",
-                "type": "GitHub"
+                "title": "Main Repository",
+                "url": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
+                // "type": "GitHub",
             },
         ],
 
