@@ -54,8 +54,8 @@ var Options = (function(){
         "resetToDefaultIfHashClear": true,
 
         "dbPointsStorySave": 1000,
-        "dbSyncIn": true,
-        "dbSyncOut": true,
+        "dbSyncIn": false,
+        "dbSyncOut": false,
         "dbExtServerIn": "http://localhost:5984/", // Ended with /
         "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
 
@@ -133,10 +133,11 @@ var Options = (function(){
 
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
+        "baseNamesSync": ["html", "global", "current", "stages", "places", "maps"],
     }
 
     this._init = function(){
-        $.each(bases.baseNames, function(i, v){
+        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
             bases.db[v] = bases._initBase(v);
         })
 
@@ -144,7 +145,7 @@ var Options = (function(){
      }
     
     this._initStage = function(container){
-        if (bases.basesLoaded == bases.baseNames.length){ 
+        if (bases.basesLoaded == opt.getOption("appVars", "baseNamesSync").length){ 
             this.getHash();
             container = container ? container : this.getOption("html", "containerAllMapsId");
             window.stage = new StageMaps();
@@ -208,7 +209,6 @@ var Options = (function(){
         }
 
         var latlng = this.getOption("current", "mapCenterLatLng");
-        // window.location.hash = this.getOption("current", "mapCenterLatLng").join(",");
         window.location.hash = $.isArray(latlng) ? latlng.join(",") : latlng;
      }
 
@@ -253,7 +253,7 @@ var Options = (function(){
 
     this.exportAllInJSON = function(){
         var data = {};
-        $.each(bases.baseNames, function(i, v){
+        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
             data[v] = parent[v];
         })
 
@@ -291,7 +291,6 @@ var Bases = (function(){
 
     window.opt = new Options();
 
-    this.baseNames = ["html", "global", "current", "stages", "places", "maps"];
     this.basesLoaded = 0;
     this.db = {};
 
@@ -323,7 +322,7 @@ var Bases = (function(){
      };
 
     this._initSync = function(){
-        if (this.basesLoaded == this.baseNames.length){ 
+        if (this.basesLoaded == opt.getOption("appVars", "baseNamesSync").length){ 
             
             if (opt.getOption("global","dbSyncOut")){
                 parent.syncOut();
@@ -337,7 +336,7 @@ var Bases = (function(){
 
     this.syncOut = function(){
         $.each(opt.getOption("global","dbExtServerOut"), function(iOut, vOut){
-            $.each(parent.baseNames, function(i, v){
+            $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
                 parent.db[v].replicate.to(vOut + v, { continuous: true }, function(err, data){
                     console.log(err, data)
                     if (err){
@@ -350,7 +349,7 @@ var Bases = (function(){
 
     this.syncIn = function(){
         var baseMain = opt.getOption("global","dbExtServerIn");
-        $.each(parent.baseNames, function(i, v){
+        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
             parent.db[v].replicate.from(baseMain + v, {}, function(err, data){
                 if (err){ 
                     noty({text: loc("syncBases:errorExtSync", v), type: "error"});
@@ -363,7 +362,7 @@ var Bases = (function(){
      }
 
     this._clearAllBases = function(){
-        $.each(parent.baseNames, function(i, v){
+        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
             parent.db[v].allDocs({include_docs: true}, function(errBase, docBase){
                 console.log(errBase, docBase)
                 $.each(docBase.rows, function(iRow, vRow){
