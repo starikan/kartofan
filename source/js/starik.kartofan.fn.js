@@ -58,9 +58,11 @@ function loc(params, options, lang ) {
     window.opt = new Options();
 
     var lang = lang || opt.getOption("global", "lang"),
-        localization = opt.getOption("localization", lang),
+        localization = opt.getOption("localization", "en_US"),
         translated = 'ERROR', 
         code;
+
+    $.extend(localization, opt.getOption("localization", lang));
 
     if (!localization) { 
         console.log("Error: Cant`t get localization to " + lang);
