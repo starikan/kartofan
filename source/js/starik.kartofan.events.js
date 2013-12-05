@@ -200,6 +200,8 @@ var Events = (function(){
         { "type": "textarea", "id": "mapDefaultURL", "description": "mapDefaultURL", "rows": 3 },
         { "type": "checkbox", "id": "mapVizirVisible", "description": "mapVizirVisible" },
         { "type": "checkbox", "id": "mapCursorAllMapsVisible", "description": "mapCursorAllMapsVisible" },
+        { "type": "checkbox", "id": "mapCache", "description": "mapCache" },
+        { "type": "select", "id": "mapCacheLoad", "description": "mapCacheLoad", "options": ["internet", "cache", "internet+cach"] },
         { "type": "checkbox", "id": "gpsAutoStart", "description": "gpsAutoStart" },
         { "type": "checkbox", "id": "gpsMarker", "description": "gpsMarker" },
         { "type": "checkbox", "id": "gpsAccuracy", "description": "gpsAccuracy" },

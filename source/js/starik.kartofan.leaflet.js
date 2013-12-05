@@ -37,6 +37,7 @@ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
 
 L.TileLayerCache = L.TileLayer.extend({
     _imageToDataUri: function (image) {
+
         var canvas = window.document.createElement('canvas');
         canvas.width = image.naturalWidth || image.width;
         canvas.height = image.naturalHeight || image.height;
@@ -51,12 +52,12 @@ L.TileLayerCache = L.TileLayer.extend({
 
         var mapCacheBase = this._layer.mapCacheBase;
 
-        // var storage = this._layer.options.storage;
         if (mapCacheBase) {
             mapCacheBase.put({"_id": this._storageKey, "tile": this._layer._imageToDataUri(this)}, {}, function(err, data){
-                console.log(err, data)
+                // console.log(err, data)
             });
         }
+
         L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
     },
 
@@ -87,25 +88,17 @@ L.TileLayerCache = L.TileLayer.extend({
         var parent = this;
         this.mapCacheBase = bases.mapCache["map_"+this.options.mapName];
 
-        // console.log(this)
+        var flag = opt.getOption("global", "mapCacheLoad") || "internet";
 
         // If chached
-        // if (false) {
-        if (opt.getOption("global", "mapCache")) {
-            // mapCacheBase.get(key, function (value) {
-            //     if (value) { parent._setUpTile(tile, key, value, false) } 
-            //     else { parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true) }
-            // }, function () {
-            //     parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
-            // });
+        if (opt.getOption("global", "mapCache") && flag != "internet") {
             parent.mapCacheBase.get(key, function(err, data){
-                if (err){
+                if (err && flag != "cache"){
                     parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true)
                 }
                 if (data){
                     parent._setUpTile(tile, key, data.tile, false);
                 }
-                // console.log(err, data, tile, key, parent.getTileUrl(tilePoint))
             })
         } 
         // If no cache

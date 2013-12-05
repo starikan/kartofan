@@ -36,7 +36,7 @@ var Options = (function(){
         "mapVizirVisible": true,
         "mapCursorAllMapsVisible": true,
         "mapCache": true,
-        "mapCacheLoad": "",
+        "mapCacheLoad": "internet", // internet, cache, internet+cach
 
         "gpsAutoStart": true,
         "gpsMarker": true,
