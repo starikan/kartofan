@@ -127,7 +127,7 @@ var LeafletMap = function(mapId){
         var name = this.mapTilesLayer.mapName;
 
         // If map deleted before it must get out from current stage
-        name = opt.getOption("maps").name ? name : "unknown";
+        name = opt.getOption("maps")[name] ? name : "unknown";
 
         currStage.stageMapsNames[parent.num] = name;
         opt.setOption("current", "stage", currStage);
@@ -411,6 +411,71 @@ var LeafletMap = function(mapId){
 
 LeafletMap.prototype.instances = []; // Collect all instanses of class
 
+var tileLayerExtendKeys = {
+    case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
+    Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()))},
+    case0123: function(data){return [0,1,2,3][Math.floor(Math.random() * 4)]},
+    Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()))},
+    z17: function(data){return 17-data.z},
+    rosreestr: function(data){
+        var text = "";
+        var x2 = Dec2Bin(data.x);
+        var y2 = Dec2Bin(data.y);
+        var x0 = "";
+        var y0 = "";
+
+        for (var i = 1; i <= data.z - x2.length; i++) {
+            x0 += "0";
+        }
+        x2 = x0 + x2;
+
+        for (var i = 1; i <= data.z - y2.length; i++) {
+            y0 += "0";
+        }
+        y2 = y0 + y2;
+
+        for (var i = 7; i <= data.z; i++) {
+            text += y2.substr(0, i - 6) + "-" + x2.substr(0, i - 6) + "/";
+        }
+        text += y2 + "-" + x2;
+
+        // console.log(text)
+
+        return text;
+     },
+    bingBird: function(data) {
+        var res = "";
+        var osX = Math.floor(Math.round(Math.pow(2, data.z)) / 2);
+        var osY = Math.floor(Math.round(Math.pow(2, data.z)) / 2);
+        var prX = osX;
+        var prY = osY;
+        for (var i = 2; i <= data.z + 1; i++) {
+            prX = Math.floor(prX / 2);
+            prY = Math.floor(prY / 2);
+            if (data.x < osX) {
+                osX = osX - prX;
+                if (data.y < osY) {
+                    osY = osY - prY;
+                    res += '0';
+                } else {
+                    osY = osY + prY;
+                    res += '2';
+                }
+            } else {
+                osX = osX + prX;
+                if (data.y < osY) {
+                    osY = osY - prY;
+                    res += '1';
+                } else {
+                    osY = osY + prY;
+                    res += '3';
+                }
+            }
+        }
+        return res;
+     },
+ }
+
 var LeafletTiles = function(mapName, mapData){
 
     var parent = this;
@@ -419,13 +484,6 @@ var LeafletTiles = function(mapName, mapData){
     this.mapData = mapData ? mapData : undefined;
 
     this.layer;
-
-    this.tileLayerExtendKeys = {
-        case1234: function(data){return [1,2,3,4][Math.floor(Math.random() * 4)]},
-        Gagarin: function(data){return "Gagarin".substr(0, Math.round("Gagarin".length * Math.random()));},
-        case0123: function(data){return [0,1,2,3][Math.floor(Math.random() * 4)]},
-        Galileo: function(data){return "Galileo".substr(0, Math.round("Galileo".length * Math.random()));},
-     }
 
     window.opt = new Options();
     window.mapvents = new Events();
@@ -468,13 +526,18 @@ var LeafletTiles = function(mapName, mapData){
     this._setLayerOptions = function(){
 
         if (this.mapData.server && this.mapData.server === "wms"){
-            // TODO: server wms type
+            if (!this.mapData.layer) { return }
+            this.layer = L.tileLayer.wms(this.mapData.tilesURL, $.extend({
+                maxZoom: this.mapData.maxZoom,
+                minZoom: this.mapData.minZoom,
+                layer: this.mapData.layer,
+            }, tileLayerExtendKeys));
         }
         else {
             this.layer = L.tileLayer(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
-            }, parent.tileLayerExtendKeys));
+            }, tileLayerExtendKeys));
         }
      }
 
@@ -523,6 +586,7 @@ var MapsEditor = (function(){
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
         var activeMap = opt.getOption("current", "activeMap");
+
         window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 

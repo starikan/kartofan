@@ -8,6 +8,12 @@ function unique(array){
     });
  }
 
+function Dec2Bin(n) {
+    for (var s = ''; n != 0;
+    (n >>>= 1)) s = ((n & 1) ? '1' : '0') + s;
+    return s;
+ }
+
 String.prototype.format = String.prototype.f = function() {
     var s = this,
         i = arguments.length;

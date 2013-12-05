@@ -21,21 +21,25 @@ http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для прив�
 
 TODO:
 
-- Добавить все возможные карты что были раньше
 - все меню сделать на локализацию
+- Выбор языка
 - тур по сайту вынесли в JSON
 - работа оффлайн
+- Сделать внешнюю базу для синхронизации
+- на тэгах не работает tab
+- максимальный зум сделать 20
 
 - groupedCollectionMenu и groupedCollectionMenuExteranlJSON объединить
+- разобраться с росреестром
 
 Планы:
 
 1 стадия - Минимально нужный функционал:
 - Сайт-визитка + форум + wiki + блог
+- Чат и видеочат
+- Комментирование, привязка к соцсетям
 
 2 этап:
-- Выбор языка
-- Сделать внешнюю базу для синхронизации
 - При обрыве соединения выдавать предупреждение, а после восстановления синхронизировать базы
 - Мобильные браузеры
 - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
@@ -49,8 +53,6 @@ TODO:
 - GPS отображение параметров и маркер с кругом точности, направление, цвет маркера в завимимости от скорости
 - Быстрые подсказки
 - При обновлении окно новых возможностей
-- Чат и видеочат
-- Комментирование, привязка к соцсетям
 - Дополнительные KML слои
 - Режим путешествия по карте, плюс привязка к таймлайнам
 - Сделать что-то тиа календаря событий, можно на внешнем API
@@ -86,7 +88,6 @@ TODO:
 - горячие клавиши для карт
 
 - привязка карт (continuousWorld: continuousWorld)
-- wms
 - быстрое открытие активной карты на все окно
 
 - панель инструментов
@@ -102,6 +103,10 @@ TODO:
 https://drive.google.com/folderview?id=0B1gRcO428ISsbEg2c25oUkRVSkE&usp=sharing - В папке google
 https://googledrive.com/host/0B1gRcO428ISsbEg2c25oUkRVSkE/
 
+http://kartofan.comuf.com/qa/
+    https://github.com/alixandru/q2a-open-login - OAuth
+
+http://kartofan.ianswer.me/questions/
 
 
 
@@ -145,150 +150,6 @@ var crsCorrect_dropCorrection = function (){
     mapOpt.arrayMaps[mapOpt.activeMap].fireEvent("dragend");
 
  }
-
-var gps_moveToCoords = function () {
-    
-    // http://diveintohtml5.info/geolocation.html
-    
-    var show_map = function (position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
-        console.log(latitude, longitude)
-        PanMaps([latitude, longitude]);
-        // let's show a map or do something interesting!        
-     }
-
-    var handle_error = function (err) {
-        console.log(err)
-        if (err.code == 1) {
-            // user said no!
-        }
-     }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(show_map, handle_error);
-    } else {
-        console.log("Нет координат")
-    }
- }
-
-L.TileLayer.ZMP = L.TileLayer.extend({
-
-    getTileUrl: function(tilePoint) {
-        this._adjustTilePoint(tilePoint);
-
-        return L.Util.template(
-            this._url,
-            L.extend({
-            s: this._getSubdomain(tilePoint),
-            z: this._getZoomForUrl(),
-            x: tilePoint.x,
-            y: tilePoint.y,
-            yInv: this._getWrapTileNum() - tilePoint.y - 1, // TMS для карт привязки
-            _s0123: this.sSubdomain("0123"),
-            _s1234: this.sSubdomain("1234"),
-            _z17: 17 - this._getZoomForUrl(),
-            _z1: this._getZoomForUrl() - 1,
-            _z_1: this._getZoomForUrl() + 1,
-            _Galileo: this.sGalileo("Galileo"),
-            _Gagarin: this.sGalileo("Gagarin"),
-            _rosreestr: this.sRosreestr(tilePoint.x, tilePoint.y, this._getZoomForUrl()),
-            x_kosmo: this.x_kosmo(tilePoint.x, this._getZoomForUrl()),
-            y_kosmo: this.y_kosmo(tilePoint.y, this._getZoomForUrl()),
-            x1000: Math.floor(tilePoint.x / 1000),
-            y1000: Math.floor(tilePoint.y / 1000),
-            bing_bird: this.bing_bird(tilePoint.x, tilePoint.y, this._getZoomForUrl()),
-        },
-            this.options));
-    },
-
-    sSubdomain: function(t) {
-        return t.substr(Math.round((t.length - 1) * Math.random()), 1);
-    },
-
-    sGalileo: function(t) {
-        return t.substr(0, Math.round(t.length * Math.random()));
-    },
-
-    // Перевод из десятичного в двоичный
-    Dec2Bin: function(n) {
-        for (var s = ''; n != 0;
-        (n >>>= 1)) s = ((n & 1) ? '1' : '0') + s;
-        return s;
-    },
-
-    sRosreestr: function(x, y, z) {
-
-        text = "";
-        x2 = this.Dec2Bin(x);
-        y2 = this.Dec2Bin(y);
-        x0 = "";
-        y0 = "";
-
-        for (var i = 1; i <= z - x2.length; i++) {
-            x0 += "0";
-        }
-        x2 = x0 + x2;
-
-        for (var i = 1; i <= z - y2.length; i++) {
-            y0 += "0";
-        }
-        y2 = y0 + y2;
-
-        for (var i = 7; i <= z; i++) {
-            text += y2.substr(0, i - 6) + "-" + x2.substr(0, i - 6) + "/";
-        }
-        text += y2 + "-" + x2;
-
-        // console.log(text)
-
-        return text;
-    },
-
-    x_kosmo: function(x, z) {
-        // inttostr(-((round(intpower(2,GetZ-1)))div 2)+(GetX))
-
-    },
-
-    y_kosmo: function(y, z) {
-        // inttostr(-((Round(intpower(2,GetZ-1)))div 2)+ (Round(intpower(2,GetZ-1))-(GetY+1)))
-    },
-
-    bing_bird: function(x, y, z) {
-        var res = "";
-        osX = Math.floor(Math.round(Math.pow(2, z)) / 2);
-        osY = Math.floor(Math.round(Math.pow(2, z)) / 2);
-        prX = osX;
-        prY = osY;
-        for (var i = 2; i <= z + 1; i++) {
-            prX = Math.floor(prX / 2);
-            prY = Math.floor(prY / 2);
-            if (x < osX) {
-                osX = osX - prX;
-                if (y < osY) {
-                    osY = osY - prY;
-                    res += '0';
-                } else {
-                    osY = osY + prY;
-                    res += '2';
-                }
-            } else {
-                osX = osX + prX;
-                if (y < osY) {
-                    osY = osY - prY;
-                    res += '1';
-                } else {
-                    osY = osY + prY;
-                    res += '3';
-                }
-            }
-        }
-        return res;
-    }
-
- });
-
-
 
 https://github.com/jacobtoye/Leaflet.iconlabel - всплывающие нащвания
 https://github.com/kartena/Leaflet.EditableHandlers - фигуры и измерения
@@ -406,160 +267,3 @@ WatchJS
     $.each(sets, function(i,v){
         parent.setWatch(v);
      })
-
-
-// isArray shim
-if (! Array.isArray) {
-    Array.isArray = function(obj) {
-        return Object.prototype.toString.call(obj) === "[object Array]";
-    };
- }     
-
-
-
-
-
-
- // mapOpt.mapsList.push({
-//     name: "OSM",
-//     type: "0. Современные онлайн карты",
-//     src: "Internet",
-//     server: "img",
-//     title: 'OSM',
-//     tiles: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png',
-//     maxZoom: 18,
-//     minZoom: 0,
-//     startZoom: 8,
-// });
-
-mapOpt.mapsList.push({
-    name: "googleMap",
-    type: "0. Современные онлайн карты",
-    src: "Internet",
-    server: "img",
-    title: 'Google MAP',
-    tiles: 'http://mt{_s0123}.google.com/vt/lyrs=m@169000000&hl=ru&x={x}&y={y}&zoom={_z17}&s={_Galileo}',
-    maxZoom: 19,
-    minZoom: 0,
-    startZoom: 13,
-});
-mapOpt.mapsList.push({
-    name: "yandexSAT",
-    type: "0. Спутниковые снимки",
-    src: "Internet",
-    server: "img",
-    title: 'Yandex SAT',
-    tiles: 'http://sat0{_s1234}.maps.yandex.net/tiles?l=sat&x={x}&y={y}&z={z}&g={_Gagarin}',
-    maxZoom: 20,
-    minZoom: 0,
-    startZoom: 13,
-    crs: "EPSG3395",
-    hotkey: "2",
-});
-mapOpt.mapsList.push({
-    name: "yandexMap",
-    type: "0. Современные онлайн карты",
-    src: "Internet",
-    server: "img",
-    title: 'Yandex MAP',
-    tiles: 'http://vec0{_s1234}.maps.yandex.net/tiles?l=map&x={x}&y={y}&z={z}&g={_Gagarin}',
-    maxZoom: 20,
-    minZoom: 0,
-    startZoom: 13,
-    crs: "EPSG3395",
-});
-mapOpt.mapsList.push({
-    name: "yandexHyb",
-    type: "0. Гибриды",
-    hybrid: true,
-    src: "Internet",
-    server: "img",
-    title: 'Yandex HYB',
-    tiles: 'http://vec0{_s1234}.maps.yandex.net/tiles?l=skl&x={x}&y={y}&z={z}&g={_Gagarin}',
-    maxZoom: 22,
-    minZoom: 0,
-    startZoom: 13,
-    crs: "EPSG3395",
-});
-mapOpt.mapsList.push({
-    name: "rosreestr",
-    type: "0. Спутниковые снимки",
-    src: "Internet",
-    server: "img",
-    title: 'Rosreestr SAT',
-    tiles: 'http://geoportal.ntsomz.ru/coverages/images/{z}/{_rosreestr}.jpg',
-    maxZoom: 18,
-    minZoom: 0,
-    startZoom: 13,
-    hotkey: "3",
-});
-mapOpt.mapsList.push({
-    name: "GGC_025k",
-    type: "1. Современные карты 1990-2010",
-    src: "Internet",
-    server: "img",
-    title: 'GGC 025k',
-    tiles: 'http://maps.marshruty.ru/ml.ashx?al=1&i=1&x={x}&y={y}&z={z}',
-    maxZoom: 15,
-    minZoom: 8,
-    startZoom: 13,
-    hotkey: "9",
-});
-mapOpt.mapsList.push({
-    name: "Genshtab",
-    type: "2. Исторические 1950-1990",
-    src: "Internet",
-    server: "wms",
-    title: 'Генштаб СССР',
-    tiles: 'http://78.46.61.141/cgi-bin/tilecache-2.11b/tilecache.py',
-    maxZoom: 13,
-    minZoom: 1,
-    startZoom: 11,
-    layers: "topomapper_gmerc",
-    format: "image/jpeg",
-    version: "1.1.1",
-    hotkey: "8",
-});
-mapOpt.mapsList.push({
-    name: "tatrstanWMS",
-    type: "0. Современные онлайн карты",
-    src: "Internet",
-    server: "wms",
-    title: 'Современный татарстан',
-    tiles: 'http://geo.gisogvrt.ru/geoserver/gwc/service/wms',
-    maxZoom: 18,
-    minZoom: 1,
-    startZoom: 11,
-    layers: "worldmap",
-    format: "image/png",
-    version: "1.1.1",
-});
-mapOpt.mapsList.push({
-    name: "kosmosnimkiSAT",
-    type: "0. Спутниковые снимки",
-    src: "Internet",
-    server: "img",
-    title: 'Космоснимки SAT',
-    tiles: 'http://maps.kosmosnimki.ru/TileSender.ashx?ModeKey=tile&MapName=Kosmosnimki&LayerName=C7B2E6510209444E80673F3C37519F7E&z={z}&x={x_kosmo}&y={y_kosmo}&key=BDY%2F%2Brk8pOLTOFTvDC8MM54h%2BJCcGG5Ag4ggD01W%2FCr51iFE%2FWOBxtA%2FNSJflAbDKbr1oV1QtDMt2PxGE3P2MY%2FzVabjK3O%2F1c2tlRmsdYXnVvAs0%2BHPXruvQ6d%2F6Th8fR5n%2FNmtg8cnwflfHfXxBcFzDy0qet4SdpQs6Gd55g94YiFckoi%2FUroyw7YvtvdbFgiNY%2BONEZK4ligXKR1rcVooBnEpHhPqAjayL0pNPyXGzQUBYYePUOTfxS2Nnp4JyvAYuJQJtgMUaOlnsPINj77HNpMVTUmaqM4PT%2Bv00l8%3D',
-    maxZoom: 18,
-    minZoom: 1,
-    startZoom: 13,
-});
-mapOpt.mapsList.push({
-    name: "yandexSATLocal",
-    type: "0. Спутниковые снимки",
-    src: "Local",
-    server: "img",
-    title: 'Yandex Local',
-    tiles: 'file:///D:/SASCache/yasat/z{_z_1}/{x1000}/x{x}/{y1000}/y{y}.jpg',
-    maxZoom: 20,
-    minZoom: 0,
-    startZoom: 13,
-    crs: "EPSG3395",
-});
-
-
-http://kartofan.comuf.com/qa/
-    https://github.com/alixandru/q2a-open-login - OAuth
-
-http://kartofan.ianswer.me/questions/
