@@ -38,7 +38,6 @@ var Options = (function(){
         "mapCache": true,
         "mapCacheLoad": "",
 
-
         "gpsAutoStart": true,
         "gpsMarker": true,
         "gpsAccuracy": true,
@@ -139,7 +138,7 @@ var Options = (function(){
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
         "baseNamesSync": ["html", "global", "current", "stages", "places", "maps"],
-    }
+     }
 
     this._init = function(){
         bases._initBase();
@@ -330,7 +329,7 @@ var Bases = (function(){
 
     this.initBaseMapCache = function(mapName){
         if (!mapName){ return }
-        parent.mapCache[mapName] = new Pouch(mapName, {}, function(){})
+        parent.mapCache["map_"+mapName] = new Pouch("map_"+mapName, {}, function(){})
      }
 
     this._initBase = function(){

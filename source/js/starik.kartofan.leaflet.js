@@ -36,75 +36,83 @@ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
  });
 
 L.TileLayerCache = L.TileLayer.extend({
-    // _imageToDataUri: function (image) {
-    //     var canvas = window.document.createElement('canvas');
-    //     canvas.width = image.naturalWidth || image.width;
-    //     canvas.height = image.naturalHeight || image.height;
+    _imageToDataUri: function (image) {
+        var canvas = window.document.createElement('canvas');
+        canvas.width = image.naturalWidth || image.width;
+        canvas.height = image.naturalHeight || image.height;
 
-    //     var context = canvas.getContext('2d');
-    //     context.drawImage(image, 0, 0);
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0);
 
-    //     return canvas.toDataURL('image/png');
-    // },
+        return canvas.toDataURL('image/png');
+    },
 
-    // _tileOnLoadWithCache: function () {
-    //     var storage = this._layer.options.storage;
-    //     if (storage) {
-    //         storage.add(this._storageKey, this._layer._imageToDataUri(this));
-    //     }
-    //     L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
-    // },
+    _tileOnLoadWithCache: function () {
 
-    // _setUpTile: function (tile, key, value, cache) {
-    //     tile._layer = this;
-    //     if (cache) {
-    //         tile._storageKey = key;
-    //         tile.onload = this._tileOnLoadWithCache;
-    //         tile.crossOrigin = 'Anonymous';
-    //     } else {
-    //         tile.onload = this._tileOnLoad;
-    //     }
-    //     tile.onerror = this._tileOnError;
-    //     tile.src = value;
-    // },
+        var mapCacheBase = this._layer.mapCacheBase;
 
-    // _loadTile: function (tile, tilePoint) {
+        // var storage = this._layer.options.storage;
+        if (mapCacheBase) {
+            mapCacheBase.put({"_id": this._storageKey, "tile": this._layer._imageToDataUri(this)}, {}, function(err, data){
+                console.log(err, data)
+            });
+        }
+        L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
+    },
 
-    //     tile._layer  = this;
-    //     tile.onload  = this._tileOnLoad;
-    //     tile.onerror = this._tileOnError;
+    _setUpTile: function (tile, key, value, cache) {
+        tile._layer = this;
 
-    //     this._adjustTilePoint(tilePoint);
-    //     tile.src     = this.getTileUrl(tilePoint);
+        if (cache) {
+            tile._storageKey = key;
+            tile.onload = this._tileOnLoadWithCache;
+            tile.crossOrigin = 'Anonymous';
+        } 
+        else {
+            tile.onload = this._tileOnLoad;
+        }
 
-    //     this.fire('tileloadstart', {
-    //         tile: tile,
-    //         url: tile.src
-    //     });
+        tile.onerror = this._tileOnError;
+        tile.src = value;
+    },
 
-        // window.bases = new Bases();
-        // window.opt = new Options();
+    _loadTile: function (tile, tilePoint) {
 
-        // this._adjustTilePoint(tilePoint);
-        // var key = tilePoint.x + ',' + tilePoint.y + ',' + tilePoint.z;
+        window.bases = new Bases();
+        window.opt = new Options();
 
-        // var parent = this;
-        // var mapCache = base.mapCache;
+        this._adjustTilePoint(tilePoint);
+        var key = tilePoint.x + ',' + tilePoint.y + ',' + tilePoint.z;
 
-        // if (opt.getOption("global", "mapCache")) {
-        //     mapCache.get(key, function (value) {
-        //         if (value) {
-        //             parent._setUpTile(tile, key, value, false);
-        //         } else {
-        //             parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
-        //         }
-        //     }, function () {
-        //         parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
-        //     });
-        // } else {
-        //     parent._setUpTile(tile, key, self.getTileUrl(tilePoint), false);
-        // }
-    // }
+        var parent = this;
+        this.mapCacheBase = bases.mapCache["map_"+this.options.mapName];
+
+        // console.log(this)
+
+        // If chached
+        // if (false) {
+        if (opt.getOption("global", "mapCache")) {
+            // mapCacheBase.get(key, function (value) {
+            //     if (value) { parent._setUpTile(tile, key, value, false) } 
+            //     else { parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true) }
+            // }, function () {
+            //     parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
+            // });
+            parent.mapCacheBase.get(key, function(err, data){
+                if (err){
+                    parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true)
+                }
+                if (data){
+                    parent._setUpTile(tile, key, data.tile, false);
+                }
+                // console.log(err, data, tile, key, parent.getTileUrl(tilePoint))
+            })
+        } 
+        // If no cache
+        else {
+            parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), false);
+        }
+    }
  })
 
 L.tileLayerCache = function(url, options){
@@ -403,8 +411,6 @@ var LeafletMap = function(mapId){
 
         this.updateCurrentStageName();
         this.updateCurrentStageZoom();
-
-        console.log(this.mapTilesLayer)
 
         bases.initBaseMapCache(this.mapTilesLayer.mapName);
      }
