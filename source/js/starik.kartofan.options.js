@@ -35,6 +35,9 @@ var Options = (function(){
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
         "mapVizirVisible": true,
         "mapCursorAllMapsVisible": true,
+        "mapCache": true,
+        "mapCacheLoad": "",
+
 
         "gpsAutoStart": true,
         "gpsMarker": true,
@@ -45,7 +48,6 @@ var Options = (function(){
             {
                 "title": "Main Repository",
                 "url": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
-                // "type": "GitHub",
             },
         ],
 
@@ -56,8 +58,8 @@ var Options = (function(){
         "resetToDefaultIfHashClear": true,
 
         "dbPointsStorySave": 1000,
-        "dbSyncIn": false,
-        "dbSyncOut": false,
+        "dbSyncIn": true,
+        "dbSyncOut": true,
         "dbExtServerIn": "http://localhost:5984/", // Ended with /
         "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
 
@@ -140,37 +142,34 @@ var Options = (function(){
     }
 
     this._init = function(){
-        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
-            bases.db[v] = bases._initBase(v);
-        })
+        bases._initBase();
 
         this.initLocalization();
      }
     
     this._afterInit = function(container){
-        if (bases.basesLoaded == opt.getOption("appVars", "baseNamesSync").length){ 
+        if (!bases.checkBasesLoaded()){ return }
 
-            this.getHash();
-            container = container ? container : this.getOption("html", "containerAllMapsId");
-            window.stage = new StageMaps();
-            window.stage.initContainer(container);
+        this.getHash();
+        container = container ? container : this.getOption("html", "containerAllMapsId");
+        window.stage = new StageMaps();
+        window.stage.initContainer(container);
 
-            // First visit automaticaly start tour
-            if (opt.getOption("global", "isTourFirstShown")){
-                tourMain.start(true);
-                opt.setOption("global", "isTourFirstShown", false);
-            }
-
-            if (opt.getOption("global", "gpsAutoStart")){
-                gps.startGPS();
-            }
-
-            if (opt.getOption("global", "isSetLangFirstShown")){
-                window.mapvents = new Events();
-                mapvents.langChoise();
-                opt.setOption("global", "isSetLangFirstShown", false);
-            }            
+        // First visit automaticaly start tour
+        if (opt.getOption("global", "isTourFirstShown")){
+            tourMain.start(true);
+            opt.setOption("global", "isTourFirstShown", false);
         }
+
+        if (opt.getOption("global", "gpsAutoStart")){
+            gps.startGPS();
+        }
+
+        if (opt.getOption("global", "isSetLangFirstShown")){
+            window.mapvents = new Events();
+            mapvents.langChoise();
+            opt.setOption("global", "isSetLangFirstShown", false);
+        }            
      }
 
     this.setOption = function(collection, option, value, callback){
@@ -315,45 +314,64 @@ var Bases = (function(){
     window.opt = new Options();
 
     this.basesLoaded = 0;
+
     this.db = {};
+    this.mapCache = {};
 
-    this._initBase = function(collection){
-        return new Pouch(collection, {}, function(){
-            parent.db[collection].allDocs({include_docs: true}, function(err, doc){
+    this.checkBasesLoaded = function(){
 
-                if (err) {console.log(err)}
+        var syncBases = opt.getOption("appVars", "baseNamesSync").length ? opt.getOption("appVars", "baseNamesSync").length : 0;
 
-                $.each(doc.rows, function(i, v){
-                    opt[collection][v.id] = v.doc.val;
-                });
+        if (this.basesLoaded >= syncBases){ 
+            return true;
+        }
+        return false;
+     }
 
-                // When first start, set all values from default into DB
-                $.each(opt[collection], function(i, v){
-                    parent.db[collection].get(i, {}, function(errG, docG){
-                        if (errG){
-                            opt.setOption(collection, i, v);
-                        }
+    this.initBaseMapCache = function(mapName){
+        if (!mapName){ return }
+        parent.mapCache[mapName] = new Pouch(mapName, {}, function(){})
+     }
+
+    this._initBase = function(){
+        $.each(opt.getOption("appVars", "baseNamesSync"), function(c, collection){
+            parent.db[collection] =  new Pouch(collection, {}, function(){
+                parent.db[collection].allDocs({include_docs: true}, function(err, doc){
+
+                    if (err) {console.log(err)}
+
+                    $.each(doc.rows, function(i, v){
+                        opt[collection][v.id] = v.doc.val;
+                    });
+
+                    // When first start, set all values from default into DB
+                    $.each(opt[collection], function(i, v){
+                        parent.db[collection].get(i, {}, function(errG, docG){
+                            if (errG){
+                                opt.setOption(collection, i, v);
+                            }
+                        })
                     })
+
+                    parent.basesLoaded++;
+
+                    parent._initSync();
+                    opt._afterInit();
                 })
-
-                parent.basesLoaded++;
-
-                parent._initSync();
-                opt._afterInit();
             })
-        })
+        })        
+
      };
 
     this._initSync = function(){
-        if (this.basesLoaded == opt.getOption("appVars", "baseNamesSync").length){ 
-            
-            if (opt.getOption("global","dbSyncOut")){
-                parent.syncOut();
-            }
+        if (!this.checkBasesLoaded()){return};
 
-            if (opt.getOption("global","dbSyncIn")){
-                parent.syncIn();
-            }
+        if (opt.getOption("global","dbSyncOut")){
+            parent.syncOut();
+        }
+
+        if (opt.getOption("global","dbSyncIn")){
+            parent.syncIn();
         }
      }
 

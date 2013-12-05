@@ -35,6 +35,82 @@ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
     transformation: new L.Transformation(0.5 / Math.PI, 0.5, -0.5 / Math.PI, 0.5),
  });
 
+L.TileLayerCache = L.TileLayer.extend({
+    // _imageToDataUri: function (image) {
+    //     var canvas = window.document.createElement('canvas');
+    //     canvas.width = image.naturalWidth || image.width;
+    //     canvas.height = image.naturalHeight || image.height;
+
+    //     var context = canvas.getContext('2d');
+    //     context.drawImage(image, 0, 0);
+
+    //     return canvas.toDataURL('image/png');
+    // },
+
+    // _tileOnLoadWithCache: function () {
+    //     var storage = this._layer.options.storage;
+    //     if (storage) {
+    //         storage.add(this._storageKey, this._layer._imageToDataUri(this));
+    //     }
+    //     L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
+    // },
+
+    // _setUpTile: function (tile, key, value, cache) {
+    //     tile._layer = this;
+    //     if (cache) {
+    //         tile._storageKey = key;
+    //         tile.onload = this._tileOnLoadWithCache;
+    //         tile.crossOrigin = 'Anonymous';
+    //     } else {
+    //         tile.onload = this._tileOnLoad;
+    //     }
+    //     tile.onerror = this._tileOnError;
+    //     tile.src = value;
+    // },
+
+    // _loadTile: function (tile, tilePoint) {
+
+    //     tile._layer  = this;
+    //     tile.onload  = this._tileOnLoad;
+    //     tile.onerror = this._tileOnError;
+
+    //     this._adjustTilePoint(tilePoint);
+    //     tile.src     = this.getTileUrl(tilePoint);
+
+    //     this.fire('tileloadstart', {
+    //         tile: tile,
+    //         url: tile.src
+    //     });
+
+        // window.bases = new Bases();
+        // window.opt = new Options();
+
+        // this._adjustTilePoint(tilePoint);
+        // var key = tilePoint.x + ',' + tilePoint.y + ',' + tilePoint.z;
+
+        // var parent = this;
+        // var mapCache = base.mapCache;
+
+        // if (opt.getOption("global", "mapCache")) {
+        //     mapCache.get(key, function (value) {
+        //         if (value) {
+        //             parent._setUpTile(tile, key, value, false);
+        //         } else {
+        //             parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
+        //         }
+        //     }, function () {
+        //         parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true);
+        //     });
+        // } else {
+        //     parent._setUpTile(tile, key, self.getTileUrl(tilePoint), false);
+        // }
+    // }
+ })
+
+L.tileLayerCache = function(url, options){
+    return new L.TileLayerCache(url, options)
+ }
+
 var LeafletMap = function(mapId){
 
     if (!mapId && !$("#"+mapId)){ return }
@@ -43,6 +119,7 @@ var LeafletMap = function(mapId){
     window.opt = new Options();
     window.mapvents = new Events();
     window.gps = new GPS();
+    window.bases = new Bases();
 
     var parent = this;
 
@@ -326,6 +403,10 @@ var LeafletMap = function(mapId){
 
         this.updateCurrentStageName();
         this.updateCurrentStageZoom();
+
+        console.log(this.mapTilesLayer)
+
+        bases.initBaseMapCache(this.mapTilesLayer.mapName);
      }
 
     this._setCRS = function(crs){
@@ -531,12 +612,15 @@ var LeafletTiles = function(mapName, mapData){
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
                 layer: this.mapData.layer,
+                mapName: mapName,
             }, tileLayerExtendKeys));
         }
         else {
-            this.layer = L.tileLayer(this.mapData.tilesURL, $.extend({
+            // this.layer = L.tileLayer(this.mapData.tilesURL, $.extend({
+            this.layer = L.tileLayerCache(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,
                 minZoom: this.mapData.minZoom,
+                mapName: mapName,
             }, tileLayerExtendKeys));
         }
      }
