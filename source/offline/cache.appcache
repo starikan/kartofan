@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# 2013-12-06 : v2.0.0
+
+CACHE:
+/index.html
+/app.css
+/bottom.js
+/top.js
+/vendor.css
+/fonts/glyphicons-halflings-regular.eot
+/fonts/glyphicons-halflings-regular.svg
+/fonts/glyphicons-halflings-regular.ttf
+/fonts/glyphicons-halflings-regular.woff
+/images/cursorAllMaps_32x32.png
+/images/favicon_256x256.png
+/images/layers-2x.png
+/images/layers.png
+/images/mainCursor.png
+/images/marker-icon-2x.png
+/images/marker-icon.png
+/images/marker-shadow.png
+/images/vizir_32x32.png
+/data/localization_en_US.json
+/data/localization_ru_RU.json
