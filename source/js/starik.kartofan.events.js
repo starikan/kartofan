@@ -105,6 +105,9 @@ var Events = (function(){
         { type: "line", text: "Export All Data In JSON", callback: function(){
             opt.exportAllInJSON();
         }},
+        { type: "line", text: "Set Language", callback: function(){
+            parent.langChoise();
+        }},
 
         { type: "paragraf", text: "GPS" },
         { type: "line", text: "Start Location", callback: function(){
@@ -120,7 +123,7 @@ var Events = (function(){
         }},        
      ];
 
-    this.mainMenu = new CSSMenu(opt.getOption("html", "containerMainMenuId"), this.contextMenuArray, false);
+    this.mainMenu = new CSSMenu(this.contextMenuArray, opt.getOption("html", "containerMainMenuId"), false);
 
     // TODO: touch event to context menu
     this.bindMainMenu = function(){
@@ -152,7 +155,7 @@ var Events = (function(){
         }},        
      ];
 
-    this.stageEditorMenu = new CSSMenu(opt.getOption("html", "containerStageEditorMenuId"), this.stageEditorMenuArray, false);
+    this.stageEditorMenu = new CSSMenu(this.stageEditorMenuArray, opt.getOption("html", "containerStageEditorMenuId"), false);
 
     // TODO: touch event to context menu
     this.bindStageEditorMenu = function(){
@@ -165,14 +168,23 @@ var Events = (function(){
 
     // ********** MAP EDITOR MENU **********
 
-    this.mapLocalGeneratedMenu = new CSSMenu("mapSelectMenu", [], false);
+    this.mapLocalGeneratedMenu = new CSSMenu([], "mapSelectMenu", false);
 
 
     // ********** STAGE EDITOR MENU **********
 
-    this.stageLocalGeneratedMenu = new CSSMenu("stageSelectMenu", [], false);
+    this.stageLocalGeneratedMenu = new CSSMenu([], "stageSelectMenu", false);
 
+    // ********** LANG CHOISE MENU **********
 
+    this.langChoiseMenu = [
+        { type: "paragraf", text: "Choose Your Language", active: true },
+        { type: "line", text: "English", callback: function(){ opt.setOption("global", "lang", "en_US")}},
+        { type: "line", text: "Russian", callback: function(){ opt.setOption("global", "lang", "ru_RU")}},
+     ]
+    this.langChoise = function(){
+        var menu = new CSSMenu(this.langChoiseMenu);
+     }
 
 
     // *******************************************
@@ -200,7 +212,7 @@ var Events = (function(){
         { "type": "input", "id": "dbExtServerIn", "description": "dbExtServerIn" },
         { "type": "textarea", "id": "dbExtServerOut", "description": "dbExtServerOut", "rows": 4 },
         { "type": "input", "id": "stageViewConstructorElasticSizeErrorPersent", "description": "stageViewConstructorElasticSizeErrorPersent", "check": "^1?\\d$" },
-        { "type": "select", "id": "lang", "description": "lang", "options": ["en_US", "ru_RU"] },
+        { "type": "select", "id": "lang", "description": "lang", "options": opt.getOption("global", "langs") },
         { 
             "type": "button", 
             "val": "Update", 

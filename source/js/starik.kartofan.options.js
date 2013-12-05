@@ -64,6 +64,7 @@ var Options = (function(){
         "stageViewConstructorElasticSizeErrorPersent": 2,
 
         "lang": "en_US",
+        "langs": ["en_US", "ru_RU"],
      };
 
     this.current = {
@@ -163,6 +164,12 @@ var Options = (function(){
             if (opt.getOption("global", "gpsAutoStart")){
                 gps.startGPS();
             }
+
+            if (opt.getOption("global", "isSetLangFirstShown")){
+                window.mapvents = new Events();
+                mapvents.langChoise();
+                opt.setOption("global", "isSetLangFirstShown", false);
+            }            
         }
      }
 
@@ -254,12 +261,15 @@ var Options = (function(){
     this.localization = {};
 
     this.initLocalization = function(){
-        var lang = this.getOption("global", "lang");
-        $.getJSON("data/localization_"+lang+".json", function(data){
-            if(data){
-                parent.setOption("localization", lang, data);
-            }
+        var langs = this.getOption("global", "langs");
+        $.each(langs, function(i, lang){
+            $.getJSON("data/localization_"+lang+".json", function(data){
+                if(data){
+                    parent.setOption("localization", lang, data);
+                }
+            })            
         })
+
      }
 
     // *************** JSON ****************

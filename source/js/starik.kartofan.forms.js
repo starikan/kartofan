@@ -407,12 +407,13 @@ var EditableForm = function(arr, funcs, id, show){
     this.makeFromObj();
  }
 
-var CSSMenu = function(id, arr, show){
+var CSSMenu = function(arr, id, show){
     
     var parent = this;
 
+    if (arr == undefined){ return }
     if (!id) {id = "nonamemenu"}
-    if (show == "undefined") {show = true}
+    if (show == undefined) {show = true}
 
     this.$container;
     this.$menu;
