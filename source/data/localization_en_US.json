@@ -17,5 +17,9 @@
   },
   "gps": {
     "error": "GPS Error"
+  },
+  "offline": {
+    "offline": "The application offline. Recommend switch map in cache mode.",
+    "online": "The application online. Recommend reload application to sync external bases."
   }
 }

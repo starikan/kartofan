@@ -53,6 +53,21 @@ var Events = (function(){
 
     document.oncontextmenu = function(){ return false };
 
+    // ********** ONLINE/OFFLINE EVENT **********
+
+    window.onLineHandler = function(){
+        if (this.offline) {
+            this.offline = false
+            console.log("online");
+            noty({text: loc("offline:online"), type: "error"});
+        }
+     };
+    window.offLineHandler = function(){
+        console.log("offline");
+        this.offline = true;
+        noty({text: loc("offline:offline"), type: "error"});
+     };
+
     // *******************************************
     // ***************** MENUES ******************
     // *******************************************

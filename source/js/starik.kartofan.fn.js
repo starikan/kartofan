@@ -74,13 +74,14 @@ function loc(params, options, lang ) {
     if (params.length) {
         for (var i = 0; i < params.length; i++) {
             code = params[i];
-            if (typeof localization[code] === 'object') {
-                localization = localization[code];
-            }
             if (typeof localization[code] === 'string') {
                 translated = localization[code];
                 break;
             }
+            if (typeof localization[code] === 'object') {
+                localization = localization[code];
+            }
+
         }
     }
 

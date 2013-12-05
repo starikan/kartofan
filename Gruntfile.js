@@ -16,6 +16,7 @@ module.exports = function(grunt) {
       "source/js_vendor/bootstrap-tagsinput.js",
       "source/js_vendor/hammer.js",
       "source/js_vendor/jquery.hammer.js",
+      "source/js_vendor/online.js",
      ];
 
     var bottomJs = [
