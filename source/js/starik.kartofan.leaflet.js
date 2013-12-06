@@ -71,14 +71,18 @@ L.Control.Measure = L.Control.Measure.extend({
 L.TileLayerCache = L.TileLayer.extend({
     _imageToDataUri: function (image) {
 
-        var canvas = window.document.createElement('canvas');
-        canvas.width = image.naturalWidth || image.width;
-        canvas.height = image.naturalHeight || image.height;
+        var img = new Image();
+        img.src = URL;
+        img.onload = function () {
+            var canvas = document.createElement("canvas");
+            canvas.width =this.width;
+            canvas.height =this.height;
 
-        var context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0);
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0);
 
-        return canvas.toDataURL('image/png');
+            return canvas.toDataURL("image/png");
+        }        
      },
 
     _tileOnLoadWithCache: function () {
@@ -95,12 +99,15 @@ L.TileLayerCache = L.TileLayer.extend({
      },
 
     _setUpTile: function (tile, key, value, cache) {
+
+        console.log(tile, key, value, cache)
+
         tile._layer = this;
 
         if (cache) {
             tile._storageKey = key;
             tile.onload = this._tileOnLoadWithCache;
-            tile.crossOrigin = 'Anonymous';
+            // tile.crossOrigin = 'Anonymous';
         } 
         else {
             tile.onload = this._tileOnLoad;
@@ -111,8 +118,6 @@ L.TileLayerCache = L.TileLayer.extend({
      },
 
     _loadTile: function (tile, tilePoint) {
-
-        console.log("load")
 
         window.bases = new Bases();
         window.opt = new Options();
@@ -739,6 +744,7 @@ var LeafletTiles = function(mapName, mapData){
     this._setLayerOptions = function(){
 
         if (this.mapData.server && this.mapData.server === "wms"){
+            console.log(123)
             if (!this.mapData.layer) { return }
             this.layer = L.tileLayerCache.wms(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,
