@@ -35,6 +35,39 @@ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
     transformation: new L.Transformation(0.5 / Math.PI, 0.5, -0.5 / Math.PI, 0.5),
  });
 
+L.Control.Measure = L.Control.Measure.extend({
+    onAdd: function (map) {
+        var className = 'leaflet-control-zoom leaflet-bar leaflet-control',
+            container = L.DomUtil.create('div', className);
+
+        this._createButton('↔', loc("controls:measureTip"), 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
+
+        return container;
+    },
+    _updateTooltipDistance: function(total, difference) {
+        var totalRound = this._round(total),
+            differenceRound = this._round(difference);
+
+        var text;
+        if (totalRound<1000){
+            text = '<div class="leaflet-measure-tooltip-total">' + totalRound + ' m</div>';
+        }
+        else {
+            text = '<div class="leaflet-measure-tooltip-total">' + (totalRound/1000).toFixed(2) + ' km</div>';
+        }
+
+        // if(differenceRound > 0 && totalRound != differenceRound) {
+            text += '<div class="leaflet-measure-tooltip-difference">(+' + differenceRound + ' m)</div>';
+        // }
+
+        this._tooltip._icon.innerHTML = text;
+    },
+    _round: function(val) {
+        // return Math.round((val / 1852) * 10) / 10;
+        return Math.round(val)
+    },    
+})
+
 L.TileLayerCache = L.TileLayer.extend({
     _imageToDataUri: function (image) {
 
@@ -138,6 +171,7 @@ var LeafletMap = function(mapId){
     this.copyrightControl;
     this.nameControl;
     this.zoomLevelControl;
+    this.measureControl;
 
     this.crs;
 
@@ -283,6 +317,14 @@ var LeafletMap = function(mapId){
             })
             this.map.addControl(this.zoomLevelControl);
          }                   
+
+        // Measure Control
+        if (ctrls.measure){
+            this.measureControl = new L.Control.Measure({
+                position: ctrls.measure.pos ? ctrls.measure.pos : "topleft",
+            });
+            this.map.addControl(this.measureControl);
+         }   
 
      }
 

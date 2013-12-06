@@ -32,5 +32,8 @@
     "form_submit": "Добавить",
     "form_delete": "Удалить",
     "form_cancel": "Отмена"
+  },
+  "controls": {
+    "measureTip": "Измерение расстояний"
   }
 }

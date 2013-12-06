@@ -35,5 +35,8 @@
     "confirmDeletePoint": "Do you realy want to delete fast point with ID = {0}?",
     "errorCheckForm": "Errors in form! Check values.",
     "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?"
+  },
+  "controls": {
+    "measureTip": "Measuring"
   }
 }

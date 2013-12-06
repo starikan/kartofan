@@ -49,3 +49,8 @@ body {
 .ui-resizable-e, .ui-resizable-s, .ui-resizable-se {
     cursor: move !important;
 }
+
+/*Measure control when active*/
+.leaflet-control-measure-on .leaflet-control-measure {
+    background-color: rgba(100, 0, 5, 1);
+}

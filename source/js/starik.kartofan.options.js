@@ -94,6 +94,7 @@ var Options = (function(){
                     "infoCopyright": {"pos": "bottomright", "text": "Copyleft by Starik"},
                     "mapTitle": {"pos": "bottomright"},
                     "zoomLevel": {"pos": "bottomright"},
+                    "measure": {"pos": "topleft"},
                 },
                 {
                     "zoom": {"pos": "topleft"},
@@ -136,7 +137,7 @@ var Options = (function(){
     this.maps = {};
 
     this.appVars = {
-        "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
+        "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel", "measure" ],
         "baseNamesSync": ["html", "global", "current", "stages", "points", "maps"],
      }
 
