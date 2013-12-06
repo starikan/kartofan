@@ -46,7 +46,7 @@ L.TileLayerCache = L.TileLayer.extend({
         context.drawImage(image, 0, 0);
 
         return canvas.toDataURL('image/png');
-    },
+     },
 
     _tileOnLoadWithCache: function () {
 
@@ -59,7 +59,7 @@ L.TileLayerCache = L.TileLayer.extend({
         }
 
         L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
-    },
+     },
 
     _setUpTile: function (tile, key, value, cache) {
         tile._layer = this;
@@ -75,7 +75,7 @@ L.TileLayerCache = L.TileLayer.extend({
 
         tile.onerror = this._tileOnError;
         tile.src = value;
-    },
+     },
 
     _loadTile: function (tile, tilePoint) {
 
@@ -105,7 +105,7 @@ L.TileLayerCache = L.TileLayer.extend({
         else {
             parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), false);
         }
-    }
+     }
  })
 
 L.tileLayerCache = function(url, options){
@@ -732,32 +732,6 @@ var MapsEditor = (function(){
         form.hideForm();
         opt.setOption("maps", form.data.id, form.data)
         console.log(form.data.id, opt.getOption("maps", form.data.id));            
-     }
-
-    // *************** JSON ****************
- 
-    this.getAllMapsJSON = function(url){
-        if (!url){
-            url = prompt(loc("editMaps:mapsJSONAdd"), opt.getOption("global", "externalFeeds")[0].url);
-        }
-
-        $.getJSON(url, function(data){
-
-            try {
-                data = JSON.parse(Base64.decode(data.content));
-            }
-            catch(e){}
-
-            $.each(data.maps, function(i,v){
-                if (opt.getOption("maps", i)){
-                    if (!confirm(loc("editMaps:mapRewriteConfirm"))) {
-                        return;
-                    }
-                }
-                opt.setOption("maps", i, v);
-            })
-        }); 
-
      }
 
  }}());

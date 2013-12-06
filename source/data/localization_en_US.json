@@ -1,15 +1,16 @@
 {
   "editMaps": {
     "errorCheckForm": "Errors in form! Check values.",
-    "mapRewriteConfirm": "Map already exist. Rewrite it?",
-    "mapsJSONAdd": "Type here URL of JSON with maps.",
     "deleteMap": "Do you realy want to delete {0} map?"
   },
   "editStage": {
     "errorCheckForm": "Errors in form! Check values.",
     "inputStageID": "Input Stage ID",
-    "stageRewriteConfirm": "Stage with ID = {0} already exist. Rewrite it?",
     "deleteStage": "Do you realy want to delete stage with ID = {0}?"
+  },
+  "jsonImport": {
+    "jsonAdd": "Type here URL of JSON with maps.",
+    "rewriteConfirm": "Item {0} already exist in base {1}. Rewrite it?"
   },
   "syncBases": {
     "errorExtSync": "Access to the external database {0} denied", 
@@ -22,15 +23,15 @@
     "offline": "The application offline. Recommend switch map in cache mode.",
     "online": "The application online. Recommend reload application to sync external bases."
   },
-  "addPointForm": {
-    "header": "Add Fast Moving",
-    "id": "ID",
-    "title": "Title",
-    "group": "Group",
-    "latlng": "Lantitude and Lontitude",
-    "submit": "Add Point",
-    "delete": "Delete Point",
-    "cancel": "Cancel",
+  "editPoints": {
+    "form_header": "Add Fast Moving",
+    "form_id": "ID",
+    "form_title": "Title",
+    "form_group": "Group",
+    "form_latlng": "Lantitude and Lontitude",
+    "form_submit": "Add Point",
+    "form_delete": "Delete Point",
+    "form_cancel": "Cancel",
     "confirmDeletePoint": "Do you realy want to delete fast point with ID = {0}?",
     "errorCheckForm": "Errors in form! Check values.",
     "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?"

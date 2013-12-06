@@ -64,7 +64,7 @@ var Events = (function(){
             console.log("offline");
             noty({text: loc("offline:offline"), type: "error"});
         });
-    }
+     }
 
     // *******************************************
     // ***************** MENUES ******************
@@ -87,7 +87,7 @@ var Events = (function(){
             mapsEditor.editMap();
         }},
         { type: "line", text: "Get All Maps From JSON", callback: function(){
-            mapsEditor.getAllMapsJSON();
+            opt.getAllDataFromJSON("maps")
         }},
 
         { type: "paragraf", text: "Stage" },
@@ -115,10 +115,10 @@ var Events = (function(){
             parent.editPoint()
         }}, 
         { type: "line", text: "Edit Points", callback: function(){
-            parent.stageLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
+            parent.pointsLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
         }},         
         { type: "line", text: "Load External Points", callback: function(){
-
+            opt.getAllDataFromJSON("points");
         }},
 
         { type: "paragraf", text: "Options" },
@@ -212,7 +212,67 @@ var Events = (function(){
     this.langChoise = function(){
         var menu = new CSSMenu(this.langChoiseMenu);
      }
+    
+    // ********** POINTS MENU **********
 
+    this.pointsLocalGeneratedMenu = new CSSMenu([], "stageSelectMenu", false);
+
+    this.editPointsForm = [
+        { "type": "header","val": loc("editPoints:form_header") },
+        { "type": "input", "id": "id", "description": loc("editPoints:form_id"), "check": "^.+?" },
+        { "type": "input", "id": "title", "description": loc("editPoints:form_title") },
+        { "type": "input", "id": "group", "description": loc("editPoints:form_group") },
+        { "type": "input", "id": "latlng", "description": loc("editPoints:form_latlng") },
+        { "type": "button", "val": loc("editPoints:form_submit"), "id": "submit", callback: function(form)
+            {
+                form.getAllData(); 
+                if (!form.checkForm){
+                    alert(loc("editPoints:errorCheckForm"));
+                    return;
+                }
+
+                if (opt.getOption("points", form.data.id)){
+                    if (!confirm(loc("editPoints:confirmRewritePoint", form.data.id))) { return }
+                }
+
+                form.hideForm();
+
+                var pointVals = opt.getOption("points", form.data.id) || {};
+
+                $.each(form.data, function(i, v){
+                    pointVals[i] = v;
+                })
+
+                opt.setOption("points", form.data.id, pointVals)
+                console.log(form.data.id, opt.getOption("points", form.data.id));  
+            } 
+         },
+        { "type": "button", "val": loc("editPoints:form_delete"), "id": "delete", callback: function(form)
+            {
+                form.getAllData();
+                var data = form.data;
+                if (opt.getOption("points", data.id)){
+                    if (confirm(loc("editPoints:confirmDeletePoint", data.id))) {
+                        console.log(data)
+                        form.hideForm();
+                        opt.deleteOption("points", data.id);
+                        console.log(data.id + "deleted")
+                    }
+                }   
+            }   
+         },    
+        { "type": "button", "val": loc("editPoints:form_cancel"), "id": "cancel", callback: function(form){form.hideForm()} }      
+     ]
+    
+    this.editPoint = function(namePoint, dataPoint){
+        var eform = new EditableForm(parent.editPointsForm);
+        if (namePoint){
+            eform.fillForm(opt.getOption("points", namePoint))
+        }
+        if (dataPoint){
+            eform.fillForm(dataPoint)
+        }
+     }
 
     // *******************************************
     // ****************** FORMS ******************
@@ -342,61 +402,5 @@ var Events = (function(){
         { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} } 
      ];
 
-    this.addPointForm = [
-        { "type": "header","val": loc("addPointForm:header") },
-        { "type": "input", "id": "id", "description": loc("addPointForm:id"), "check": "^.+?" },
-        { "type": "input", "id": "title", "description": loc("addPointForm:title") },
-        { "type": "input", "id": "group", "description": loc("addPointForm:group") },
-        { "type": "input", "id": "latlng", "description": loc("addPointForm:latlng") },
-        { "type": "button", "val": loc("addPointForm:submit"), "id": "submit", callback: function(form)
-            {
-                form.getAllData(); 
-                if (!form.checkForm){
-                    alert(loc("addPointForm:errorCheckForm"));
-                    return;
-                }
-
-                if (opt.getOption("points", form.data.id)){
-                    if (!confirm(loc("addPointForm:confirmRewritePoint", form.data.id))) { return }
-                }
-
-                form.hideForm();
-
-                var pointVals = opt.getOption("points", form.data.id) || {};
-
-                $.each(form.data, function(i, v){
-                    pointVals[i] = v;
-                })
-
-                opt.setOption("points", form.data.id, pointVals)
-                console.log(form.data.id, opt.getOption("points", form.data.id));  
-            } 
-         },
-        { "type": "button", "val": loc("addPointForm:delete"), "id": "delete", callback: function(form)
-            {
-                form.getAllData();
-                var data = form.data;
-                if (opt.getOption("points", data.id)){
-                    if (confirm(loc("addPointForm:confirmDeletePoint", data.id))) {
-                        console.log(data)
-                        form.hideForm();
-                        opt.deleteOption("points", data.id);
-                        console.log(data.id + "deleted")
-                    }
-                }   
-            }   
-         },    
-        { "type": "button", "val": loc("addPointForm:cancel"), "id": "cancel", callback: function(form){form.hideForm()} }      
-     ]
-    
-    this.editPoint = function(namePoint, dataPoint){
-        var eform = new EditableForm(parent.addPointForm);
-        if (namePoint){
-            eform.fillForm(opt.getOption("points", namePoint))
-        }
-        if (dataPoint){
-            eform.fillForm(dataPoint)
-        }
-     }
 
  }}());

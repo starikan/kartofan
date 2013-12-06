@@ -14,12 +14,15 @@ function Dec2Bin(n) {
     return s;
  }
 
-String.prototype.format = String.prototype.f = function() {
+String.prototype.format = String.prototype.f = function(options) {
+
+    options = options ? options : [];
+
     var s = this,
-        i = arguments.length;
+        i = options.length;
 
     while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), options[i]);
     }        
 
     return s;
@@ -64,7 +67,8 @@ function loc(params, options, lang ) {
     var localization = opt.getOption("localization", "en_US");
     var localization_ext = opt.getOption("localization", lang)
     $.each(localization, function(i, v){
-        $.extend(v, localization_ext[i]);
+        try {$.extend(v, localization_ext[i])}
+        catch(e){}
     })
 
     if (!localization) { 
@@ -73,8 +77,6 @@ function loc(params, options, lang ) {
     }
 
     params = params.split(':');
-
-    // console.log(lang, localization, translated, params);
 
     if (params.length) {
         for (var i = 0; i < params.length; i++) {
@@ -91,7 +93,7 @@ function loc(params, options, lang ) {
     }
 
     if (options){
-        if (typeof options !== "object"){ options = [options] }
+        if (!$.isArray(options)){ options = [options] }
         translated = translated.format(options);
     }
 

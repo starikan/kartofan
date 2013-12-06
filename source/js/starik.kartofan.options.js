@@ -216,7 +216,6 @@ var Options = (function(){
 
      }
 
-
     // *************** HASH ****************
 
     this.setHash = function(){
@@ -287,7 +286,31 @@ var Options = (function(){
         saveAs(blob, "allData.json");
      }
 
+    this.getAllDataFromJSON = function(baseJson, url){
 
+        url = url ? url : prompt(loc("jsonImport:jsonAdd"), this.getOption("global", "externalFeeds")[0].url)
+        baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNamesSync");
+
+        $.getJSON(url, function(data){
+
+            try { data = JSON.parse(Base64.decode(data.content)) }
+            catch(e){}
+
+            $.each(baseJson, function(b, base){
+                console.log(data[base], base, !data[base] && !data[base].length)
+
+                if (!data[base] && !data[base].length){ return }
+                $.each(data[base], function(i, v){
+                    if (opt.getOption(base, i)){
+                        if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
+                            return;
+                        }
+                    }
+                    opt.setOption(base, i, v);
+                })                
+            })
+        }); 
+     }
 
     this._init();
 
