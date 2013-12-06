@@ -131,13 +131,13 @@ var Options = (function(){
 
     this.stages = {};
 
-    this.places = {};
+    this.points = {};
 
     this.maps = {};
 
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
-        "baseNamesSync": ["html", "global", "current", "stages", "places", "maps"],
+        "baseNamesSync": ["html", "global", "current", "stages", "points", "maps"],
      }
 
     this._init = function(){

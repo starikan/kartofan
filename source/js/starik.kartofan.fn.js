@@ -58,11 +58,14 @@ function loc(params, options, lang ) {
     window.opt = new Options();
 
     var lang = lang || opt.getOption("global", "lang"),
-        localization = opt.getOption("localization", "en_US"),
         translated = 'ERROR', 
         code;
 
-    $.extend(localization, opt.getOption("localization", lang));
+    var localization = opt.getOption("localization", "en_US");
+    var localization_ext = opt.getOption("localization", lang)
+    $.each(localization, function(i, v){
+        $.extend(v, localization_ext[i]);
+    })
 
     if (!localization) { 
         console.log("Error: Cant`t get localization to " + lang);
@@ -70,6 +73,8 @@ function loc(params, options, lang ) {
     }
 
     params = params.split(':');
+
+    // console.log(lang, localization, translated, params);
 
     if (params.length) {
         for (var i = 0; i < params.length; i++) {

@@ -21,5 +21,18 @@
   "offline": {
     "offline": "The application offline. Recommend switch map in cache mode.",
     "online": "The application online. Recommend reload application to sync external bases."
+  },
+  "addPointForm": {
+    "header": "Add Fast Moving",
+    "id": "ID",
+    "title": "Title",
+    "group": "Group",
+    "latlng": "Lantitude and Lontitude",
+    "submit": "Add Point",
+    "delete": "Delete Point",
+    "cancel": "Cancel",
+    "confirmDeletePoint": "Do you realy want to delete fast point with ID = {0}?",
+    "errorCheckForm": "Errors in form! Check values.",
+    "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?"
   }
 }
