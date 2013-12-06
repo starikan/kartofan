@@ -86,9 +86,6 @@ var Events = (function(){
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             mapsEditor.editMap();
         }},
-        { type: "line", text: "Get All Maps From JSON", callback: function(){
-            opt.getAllDataFromJSON("maps")
-        }},
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
@@ -117,9 +114,7 @@ var Events = (function(){
         { type: "line", text: "Edit Points", callback: function(){
             parent.pointsLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
         }},         
-        { type: "line", text: "Load External Points", callback: function(){
-            opt.getAllDataFromJSON("points");
-        }},
+ 
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Set Global Settings", callback: opt.editGlobalForm },
@@ -134,6 +129,20 @@ var Events = (function(){
         }},
         { type: "line", text: "Set Language", callback: function(){
             parent.langChoise();
+        }},
+
+        { type: "paragraf", text: "JSON" },
+        { type: "line", text: "Get All External Points", callback: function(){
+            opt.getAllDataFromJSON("points");
+        }},
+        { type: "line", text: "Get All External Maps", callback: function(){
+            opt.getAllDataFromJSON("maps");
+        }},
+        { type: "line", text: "Get All External Stages", callback: function(){
+            opt.getAllDataFromJSON("stages");
+        }},
+        { type: "line", text: "Get All From JSON", callback: function(){
+            opt.getAllDataFromJSON();
         }},
 
         { type: "paragraf", text: "GPS" },

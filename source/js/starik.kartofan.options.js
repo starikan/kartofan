@@ -297,9 +297,7 @@ var Options = (function(){
             catch(e){}
 
             $.each(baseJson, function(b, base){
-                console.log(data[base], base, !data[base] && !data[base].length)
-
-                if (!data[base] && !data[base].length){ return }
+                if (!data[base] || $.isEmptyObject(data[base])){ return }
                 $.each(data[base], function(i, v){
                     if (opt.getOption(base, i)){
                         if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
