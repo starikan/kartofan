@@ -14,6 +14,8 @@ var GPS = (function(){
             return new Construct_singletone();
         }
 
+    window.opt = new Options();
+
     this.map;
 
     this.startGPS = function(){
@@ -45,6 +47,31 @@ var GPS = (function(){
         if (this.map){
             this.map.stopLocate();
         }
+     }
+
+ }}());
+
+var Locations = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    window.opt = new Options();
+
+    this.createForm = function(){
+        // var arr = [
+        //     { "type": "input", "id": "title", "description": loc("usage:locationFormInput") },
+        //  ];
+        // var eform = new EditableForm(arr);
      }
 
  }}());

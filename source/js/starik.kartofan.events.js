@@ -22,6 +22,7 @@ var Events = (function(){
     window.stageEditor = new StageEditor();
     window.mapsEditor = new MapsEditor();
     window.bases = new Bases();
+    window.locations = new Locations();
 
 
     // ********** WINDOW RESIZE EVENT **********
@@ -115,6 +116,9 @@ var Events = (function(){
             parent.pointsLocalMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
         }},         
  
+        { type: "paragraf", text: "Usage" },
+        { type: "line", text: "Find Locationd", callback: locations.createForm },
+
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Set Global Settings", callback: opt.editGlobalForm },
