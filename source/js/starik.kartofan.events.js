@@ -75,13 +75,13 @@ var Events = (function(){
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
-            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.setMap, true, "group");
+            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.setMap, true, "group");
          }},
         { type: "line", text: "Edit Maps", callback: function(){
-            parent.mapLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.editMap, true, "group");
+            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.editMap, true, "group");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
-            parent.mapLocalGeneratedMenu.groupedCollectionMenuExteranlJSON("maps", mapsEditor.setMap)
+            parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapsEditor.setMap)
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             mapsEditor.editMap();
@@ -89,10 +89,10 @@ var Events = (function(){
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
-            parent.stageLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.loadStage, true, "group");
+            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.loadStage, true, "group");
         }},
         { type: "line", text: "Edit Stages", callback: function(){
-            parent.stageLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.editStage, true, "group");
+            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.editStage, true, "group");
         }},         
         { type: "line", text: "Edit Stage View", callback: function(){
             stageEditor.editView();
@@ -101,18 +101,18 @@ var Events = (function(){
             stageEditor.saveStage();
         }},
         { type: "line", text: "Load External Stages", callback: function(){
-            parent.stageLocalGeneratedMenu.groupedCollectionMenuExteranlJSON("stages", stageEditor.loadStage)
+            parent.stageLocalMenu.groupedCollectionMenuExteranlJSON("stages", stageEditor.loadStage)
         }},        
 
         { type: "paragraf", text: "Fast Moving" },
         { type: "line", text: "Go To Point", callback: function(){
-            
+            parent.pointsLocalMenu.groupedCollectionMenu(opt.getOption("points"), parent.moveToPoint, true, "group");
         }},
         { type: "line", text: "Add Point", callback: function(){
             parent.editPoint()
         }}, 
         { type: "line", text: "Edit Points", callback: function(){
-            parent.pointsLocalGeneratedMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
+            parent.pointsLocalMenu.groupedCollectionMenu(opt.getOption("points"), parent.editPoint, true, "group");
         }},         
  
 
@@ -204,12 +204,12 @@ var Events = (function(){
 
     // ********** MAP EDITOR MENU **********
 
-    this.mapLocalGeneratedMenu = new CSSMenu([], "mapSelectMenu", false);
+    this.mapLocalMenu = new CSSMenu([], "mapSelectMenu", false);
 
 
     // ********** STAGE EDITOR MENU **********
 
-    this.stageLocalGeneratedMenu = new CSSMenu([], "stageSelectMenu", false);
+    this.stageLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
     // ********** LANG CHOISE MENU **********
 
@@ -224,14 +224,14 @@ var Events = (function(){
     
     // ********** POINTS MENU **********
 
-    this.pointsLocalGeneratedMenu = new CSSMenu([], "stageSelectMenu", false);
+    this.pointsLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
     this.editPointsForm = [
         { "type": "header","val": loc("editPoints:form_header") },
-        { "type": "input", "id": "id", "description": loc("editPoints:form_id"), "check": "^.+?" },
+        { "type": "input", "val": 10000*Math.random()|0, "id": "id", "description": loc("editPoints:form_id"), "check": "^.+?" },
         { "type": "input", "id": "title", "description": loc("editPoints:form_title") },
         { "type": "input", "id": "group", "description": loc("editPoints:form_group") },
-        { "type": "input", "id": "latlng", "description": loc("editPoints:form_latlng") },
+        { "type": "input", "val": opt.getOption("current", "mapCenterLatLng").join(","), "id": "latlng", "description": loc("editPoints:form_latlng"), "check": "^\\d+\\.\\d+,\\d+\\.\\d+?" },
         { "type": "button", "val": loc("editPoints:form_submit"), "id": "submit", callback: function(form)
             {
                 form.getAllData(); 
@@ -251,6 +251,8 @@ var Events = (function(){
                 $.each(form.data, function(i, v){
                     pointVals[i] = v;
                 })
+
+                pointVals.latlng = pointVals.latlng.split(",");
 
                 opt.setOption("points", form.data.id, pointVals)
                 console.log(form.data.id, opt.getOption("points", form.data.id));  
@@ -275,12 +277,18 @@ var Events = (function(){
     
     this.editPoint = function(namePoint, dataPoint){
         var eform = new EditableForm(parent.editPointsForm);
+
         if (namePoint){
             eform.fillForm(opt.getOption("points", namePoint))
+            return;
         }
         if (dataPoint){
             eform.fillForm(dataPoint)
         }
+     }
+
+    this.moveToPoint = function(namePoint, dataPoint){
+        window.map0.moveAllMaps(dataPoint.latlng);
      }
 
     // *******************************************
@@ -289,7 +297,7 @@ var Events = (function(){
 
     this.globalOptionsForm = [
         { "type": "header", "val": "Global Options" },
-        { "type": "input", "id": "mapDefaultCenterLatLng", "description": "mapDefaultCenterLatLng" },
+        { "type": "input", "id": "mapDefaultCenterLatLng", "description": "mapDefaultCenterLatLng", "check": "^\\d+\\.\\d+,\\d+\\.\\d+?" },
         { "type": "input", "id": "mapDefaultZoom", "description": "mapDefaultZoom", "check": "^1?\\d$|^20$" },
         { "type": "checkbox", "id": "mapSyncMoving", "description": "mapSyncMoving" },
         { "type": "checkbox", "id": "mapSyncZooming", "description": "mapSyncZooming" },
