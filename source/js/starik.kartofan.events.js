@@ -55,18 +55,16 @@ var Events = (function(){
 
     // ********** ONLINE/OFFLINE EVENT **********
 
-    window.onLineHandler = function(){
-        if (this.offline) {
-            this.offline = false
+    if (window.navigator.onLine != undefined){
+        window.addEventListener('online',  function(){
             console.log("online");
-            noty({text: loc("offline:online"), type: "error"});
-        }
-     };
-    window.offLineHandler = function(){
-        console.log("offline");
-        this.offline = true;
-        noty({text: loc("offline:offline"), type: "error"});
-     };
+            noty({text: loc("offline:online"), type: "error"});            
+        });
+        window.addEventListener('offline', function(){
+            console.log("offline");
+            noty({text: loc("offline:offline"), type: "error"});
+        });
+    }
 
     // *******************************************
     // ***************** MENUES ******************

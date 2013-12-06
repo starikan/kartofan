@@ -1,5 +1,13 @@
 doctype html
+
+<!-- @if production=false -->
+html
+<!-- @endif -->
+
+<!-- @if production=true -->
 html(manifest="offline/cache.appcache")
+<!-- @endif -->
+
     head
         
         meta(charset="UTF-8")
@@ -25,7 +33,6 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/bootstrap-tagsinput.js")
         script(src="js_vendor/hammer.js")
         script(src="js_vendor/jquery.hammer.js")
-        script(src="js_vendor/online.js")
 
         // CSS    
         
