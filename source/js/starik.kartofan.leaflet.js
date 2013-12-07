@@ -69,50 +69,23 @@ L.Control.Measure = L.Control.Measure.extend({
  })
 
 L.TileLayerCache = L.TileLayer.extend({
-    _imageToDataUri: function (image) {
 
-        var img = new Image();
-        img.src = URL;
-        img.onload = function () {
-            var canvas = document.createElement("canvas");
-            canvas.width =this.width;
-            canvas.height =this.height;
+    _storeTile: function(key, url){
+            console.log(key, url)
 
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(this, 0, 0);
+            var tileBase64;
 
-            return canvas.toDataURL("image/png");
-        }        
-     },
+            // TODO: get tiles to cache
 
-    _tileOnLoadWithCache: function () {
-
-        var mapCacheBase = this._layer.mapCacheBase;
-
-        if (mapCacheBase) {
-            mapCacheBase.put({"_id": this._storageKey, "tile": this._layer._imageToDataUri(this)}, {}, function(err, data){
+            // mapCacheBase.put({"_id": key, "tile": tileBase64}, {}, function(err, data){
                 // console.log(err, data)
-            });
-        }
-
-        L.TileLayer.prototype._tileOnLoad.apply(this, arguments);
+            // });
      },
 
-    _setUpTile: function (tile, key, value, cache) {
-
-        console.log(tile, key, value, cache)
+    _setUpTile: function (tile, value) {
 
         tile._layer = this;
-
-        if (cache) {
-            tile._storageKey = key;
-            tile.onload = this._tileOnLoadWithCache;
-            // tile.crossOrigin = 'Anonymous';
-        } 
-        else {
-            tile.onload = this._tileOnLoad;
-        }
-
+        tile.onload = this._tileOnLoad;
         tile.onerror = this._tileOnError;
         tile.src = value;
      },
@@ -126,24 +99,58 @@ L.TileLayerCache = L.TileLayer.extend({
         var key = tilePoint.x + ',' + tilePoint.y + ',' + tilePoint.z;
 
         var parent = this;
+
         this.mapCacheBase = bases.mapCache["map_"+this.options.mapName];
 
         var flag = opt.getOption("global", "mapCacheLoad") || "internet";
+                
+        console.log(flag)
 
         // If chached
-        if (opt.getOption("global", "mapCache") && flag != "internet") {
-            parent.mapCacheBase.get(key, function(err, data){
-                if (err && flag != "cache"){
-                    parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), true)
-                }
-                if (data){
-                    parent._setUpTile(tile, key, data.tile, false);
-                }
-            })
+        if (opt.getOption("global", "mapCache") && this.mapCacheBase) {
+            
+            if (flag == "cache") {
+                parent.mapCacheBase.get(key, function(err, data){
+                    if (data && data.tile){
+                        parent._setUpTile(tile, data.tile);
+                    }
+                })  
+            }
+
+            // Get tiles from cache
+            // If not exist load from internet
+            if (flag == "cache+internet") {
+                parent.mapCacheBase.get(key, function(err, data){
+
+                    if (data && data.tile){
+                        parent._setUpTile(tile, data.tile);
+                    }
+                    if (err){
+                        parent._setUpTile(tile, parent.getTileUrl(tilePoint))
+                    }
+                })    
+            }
+
+            // Get tiles from internet
+            // Then check tiles in base and if it`s not exist caching it
+            if (flag == "internet+cache") {
+
+                parent._setUpTile(tile, parent.getTileUrl(tilePoint))
+
+                parent.mapCacheBase.get(key, function(err, data){
+                    if (err){
+                        parent._storeTile(key, parent.getTileUrl(tilePoint));
+                    }
+                })  
+            }      
+
+            if (flag == "internet") {
+                parent._setUpTile(tile, parent.getTileUrl(tilePoint));            
+            }  
         } 
         // If no cache
         else {
-            parent._setUpTile(tile, key, parent.getTileUrl(tilePoint), false);
+            parent._setUpTile(tile, parent.getTileUrl(tilePoint));
         }
      }
  })
@@ -213,7 +220,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
 
             url = L.Util.template(this._url, {s: this._getSubdomain(tilePoint)});
 
-        console.log(this.wmsParams)
+        // console.log(this.wmsParams)
 
         return url + L.Util.getParamString(this.wmsParams, url, true) + '&BBOX=' + bbox;
     },
@@ -524,6 +531,8 @@ var LeafletMap = function(mapId){
     
     this.setMapTilesLayer = function(layerObj){
 
+        bases.initBaseMapCache(layerObj.mapName);
+
         if (this.map){
             this.map.removeLayer(this.mapTilesLayer.layer)
         }
@@ -540,7 +549,6 @@ var LeafletMap = function(mapId){
         this.updateCurrentStageName();
         this.updateCurrentStageZoom();
 
-        bases.initBaseMapCache(this.mapTilesLayer.mapName);
      }
 
     this._setCRS = function(crs){
@@ -744,7 +752,6 @@ var LeafletTiles = function(mapName, mapData){
     this._setLayerOptions = function(){
 
         if (this.mapData.server && this.mapData.server === "wms"){
-            console.log(123)
             if (!this.mapData.layer) { return }
             this.layer = L.tileLayerCache.wms(this.mapData.tilesURL, $.extend({
                 maxZoom: this.mapData.maxZoom,

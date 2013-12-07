@@ -309,7 +309,7 @@ var Events = (function(){
         { "type": "checkbox", "id": "mapVizirVisible", "description": "mapVizirVisible" },
         { "type": "checkbox", "id": "mapCursorAllMapsVisible", "description": "mapCursorAllMapsVisible" },
         { "type": "checkbox", "id": "mapCache", "description": "mapCache" },
-        { "type": "select", "id": "mapCacheLoad", "description": "mapCacheLoad", "options": ["internet", "cache", "internet+cach"] },
+        { "type": "select", "id": "mapCacheLoad", "description": "mapCacheLoad", "options": ["internet", "cache", "internet+cache", "cache+internet"] },
         { "type": "checkbox", "id": "gpsAutoStart", "description": "gpsAutoStart" },
         { "type": "checkbox", "id": "gpsMarker", "description": "gpsMarker" },
         { "type": "checkbox", "id": "gpsAccuracy", "description": "gpsAccuracy" },
