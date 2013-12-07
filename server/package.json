@@ -1,0 +1,9 @@
+{
+  "author": "Starik",
+  "name": "Kartofan_Server",
+  "version": "0.0.1",
+  "devDependencies": {
+    "express": "latest",
+    "request": "latest"
+  }
+}

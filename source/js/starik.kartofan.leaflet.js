@@ -70,16 +70,22 @@ L.Control.Measure = L.Control.Measure.extend({
 
 L.TileLayerCache = L.TileLayer.extend({
 
-    _storeTile: function(key, url){
-            console.log(key, url)
+    _storeTile: function(x, y, z, base, url){
+        console.log(x, y, z, base, url)
 
-            var tileBase64;
+        if (!x && !y && !z && !base && !url){ return }
 
-            // TODO: get tiles to cache
+        var parent = this;
+        
+        window.opt = new Options();
 
-            // mapCacheBase.put({"_id": key, "tile": tileBase64}, {}, function(err, data){
-                // console.log(err, data)
-            // });
+        $.getJSON(opt.getOption("global", "mapCachedService")+"/cache?url="+ escape(url) + "&x="+x+"&y="+y+"&z="+z+"&base="+base+"&callback=?", function(data){
+            if(data){
+                parent.mapCacheBase.put({"_id": x+','+y+','+z, "tile": data}, {}, function(err, data){
+                    console.log(err, data)
+                });                    
+            }
+        })
      },
 
     _setUpTile: function (tile, value) {
@@ -139,7 +145,7 @@ L.TileLayerCache = L.TileLayer.extend({
 
                 parent.mapCacheBase.get(key, function(err, data){
                     if (err){
-                        parent._storeTile(key, parent.getTileUrl(tilePoint));
+                        parent._storeTile(tilePoint.x, tilePoint.y, tilePoint.z, parent.options.mapName, parent.getTileUrl(tilePoint));
                     }
                 })  
             }      

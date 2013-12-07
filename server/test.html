@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+<body>
+<div id="test"></div>
+<script type="text/javascript">
+
+    var url = "http://sat03.maps.yandex.net/tiles?l=sat&x=2609&y=1306&z=12&g=G";
+
+    $.getJSON("http://127.0.0.1:3000/cache?url="+ escape(url) + "&x=100&y=100&z=20&base=123&callback=?", function(data){
+        $("#test").text(data);
+    })
+
+</script>
+</body>
+</html>
