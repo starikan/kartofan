@@ -817,6 +817,7 @@ var MapsEditor = (function(){
     var parent = this;
 
     window.opt = new Options();
+    window.stage = new StageMaps();
 
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
@@ -884,6 +885,45 @@ var MapsEditor = (function(){
         form.hideForm();
         opt.setOption("maps", form.data.id, form.data)
         console.log(form.data.id, opt.getOption("maps", form.data.id));            
+     }
+
+    this.toggleFullScreen = function(){
+
+        if (opt.getOption("appVars", "fullScreenStage")){
+            var fullStage = opt.getOption("appVars", "fullScreenStage");
+            var prevStage = opt.getOption("appVars", "prevStage");
+            var currStage = opt.getOption("current", "stage");
+
+            console.log(JSON.stringify(fullStage) == JSON.stringify(currStage))
+
+            if (JSON.stringify(fullStage) == JSON.stringify(currStage)){
+                opt.setOption("current", "stage", prevStage);
+            } 
+            opt.deleteOption("appVars", "fullScreenStage");
+            opt.deleteOption("appVars", "prevStage");
+
+        }
+        else {
+            var activeMapNum = opt.getOption("current", "activeMapNum");
+            var currStage = opt.getOption("current", "stage");
+
+            opt.setOption("appVars", "prevStage", currStage);
+            var fullStage = {};
+            $.each(currStage, function(i, v){
+                fullStage[i] = $.isArray(v) ? [v[activeMapNum]] : v;
+            })
+
+            fullStage.tags = "";
+            fullStage.title = "1 x 1";
+            fullStage.id = "1x1";
+            fullStage.stageMapsGrid = [[0,0,100,100]];
+
+            opt.setOption("current", "stage", fullStage);
+            opt.setOption("appVars", "fullScreenStage", JSON.parse(JSON.stringify(fullStage)));
+        }
+
+        stage.createStage()
+
      }
 
  }}());

@@ -204,6 +204,7 @@ var Options = (function(){
     this.deleteOption = function(collection, option){
         delete this[collection][option];
 
+        if (!bases.db[collection]) {return}
         bases.db[collection].get(option, function(err, doc) {
             bases.db[collection].remove(doc, function(errRemove, responseRemove) {  });
         });  

@@ -87,6 +87,9 @@ var Events = (function(){
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
             mapsEditor.editMap();
         }},
+        { type: "line", text: "Toggle Full Screen This Map", callback: function(){
+            mapsEditor.toggleFullScreen();
+        }},
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
