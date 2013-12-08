@@ -50,6 +50,9 @@ var Events = (function(){
     $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
         parent.closeContextMenu();
         parent.closeAllForms();
+
+        opt.setOption("appVars", "viewToolsPanelShowAlways", false);
+        parent.updatePanelsView();
      });
 
     document.oncontextmenu = function(){ return false };
@@ -426,5 +429,45 @@ var Events = (function(){
         { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} } 
      ];
 
+
+    // *******************************************
+    // ************* PANEL AND INFO  *************
+    // *******************************************
+
+    // TODO: touch
+    $("#toolsPanelEventer").on("click", function(){
+        opt.setOption("appVars", "viewToolsPanelShowAlways", true);
+        parent.updatePanelsView();
+     });
+
+    this.updatePanelsView = function(){
+
+        var toolsVisible = opt.getOption("appVars", "viewToolsPanelShowAlways") != undefined ? opt.getOption("appVars", "viewToolsPanelShowAlways") : opt.getOption("global", "viewToolsPanelShowAlways");
+        var infoVisible = opt.getOption("appVars", "viewInfoPanelShowAlways") != undefined ? opt.getOption("appVars", "viewInfoPanelShowAlways") : opt.getOption("global", "viewInfoPanelShowAlways");
+
+        var $tools = $("#"+opt.getOption("html", "toolsPanelID"));
+        var $info = $("#"+opt.getOption("html", "infoPanelID"));
+        var $mapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
+
+        if (toolsVisible) {
+            $tools.css({heigth: "30px"})
+            $mapsContainer.css({top: "30px"})
+        } 
+        else {
+            $tools.css({heigth: "0px"})
+            $mapsContainer.css({top: "0px"})
+        }
+
+        if (infoVisible) {
+            $info.css({heigth: "15px"})
+            $mapsContainer.css({bottom: "15px"})
+        }
+        else {
+            $info.css({heigth: "0px"})
+            $mapsContainer.css({bottom: "0px"})
+        }
+     }
+
+    this.updatePanelsView();
 
  }}());

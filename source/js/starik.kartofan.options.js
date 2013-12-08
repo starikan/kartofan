@@ -25,6 +25,8 @@ var Options = (function(){
         "containerMainMenuId": "mainMenu",
         "containerStageEditorMenuId": "stageEditorMenu",
         "containerAllMapsId": "container",
+        "toolsPanelID": "toolsPanel",
+        "infoPanelID": "infoPanelBottom",
      };
 
     this.global = {
@@ -38,6 +40,9 @@ var Options = (function(){
         "mapCache": true,
         "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
         "mapCachedService": "http://127.0.0.1:3000",
+
+        "viewToolsPanelShowAlways": false,
+        "viewInfoPanelShowAlways": true,
 
         "gpsAutoStart": true,
         "gpsMarker": true,
