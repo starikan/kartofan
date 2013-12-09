@@ -31,6 +31,7 @@ TODO:
         - залить кэширующий сервер на хостинг
         - при обновлении глобаьных настроек обновлять и то что с ними связано
         - Добавить ArcGIS.Imagery и высоты
+        - http://oridomi.com/
 
     Mid:
         - при переключении стадий если в стадии не указаны явно карты то оставлять карты открытые до этого
@@ -54,7 +55,7 @@ TODO:
             - Дополнительные KML слои
             - слои wikimapia, panoramio, яндекс картинки
         - ночной режим
-        разные форматы кэша
+        - разные форматы кэша
 
     Low:
         - если в меню всего одна группа то сразу же ее открывать
@@ -93,6 +94,24 @@ TODO:
 - http://blog.laptopmag.com/android-web-server
 
 
+
+UI
+- http://jquerytools.org/
+- http://www.zkoss.org - Таблицы есть
+- http://ninjaui.com - очень маленько и просто
+- http://wijmo.com/demos/ - есть таблицы
+- http://dojotoolkit.org
+
+- http://alloyui.com
+- http://maker.github.io/ratchet/
+- http://semantic-ui.com
+- http://ink.sapo.pt
+- http://websymphony.net/almost-flat-ui/#
+- http://purecss.io
+- http://getuikit.com
+- http://www.flathemes.com/index.html - bootflat
+
+- http://leonuh.github.io/uikm/ - UIKit Maker
 
 
 https://drive.google.com/folderview?id=0B1gRcO428ISsbEg2c25oUkRVSkE&usp=sharing - В папке google

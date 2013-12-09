@@ -51,7 +51,7 @@ var Events = (function(){
         parent.closeContextMenu();
         parent.closeAllForms();
 
-        opt.setOption("appVars", "viewToolsPanelShowAlways", false);
+        opt.setOption("appVars", "viewToolsPanel", false);
         parent.updatePanelsView();
      });
 
@@ -436,36 +436,21 @@ var Events = (function(){
 
     // TODO: touch
     $("#toolsPanelEventer").on("click", function(){
-        opt.setOption("appVars", "viewToolsPanelShowAlways", true);
+        opt.setOption("appVars", "viewToolsPanel", true);
         parent.updatePanelsView();
      });
 
     this.updatePanelsView = function(){
 
-        var toolsVisible = opt.getOption("appVars", "viewToolsPanelShowAlways") != undefined ? opt.getOption("appVars", "viewToolsPanelShowAlways") : opt.getOption("global", "viewToolsPanelShowAlways");
-        var infoVisible = opt.getOption("appVars", "viewInfoPanelShowAlways") != undefined ? opt.getOption("appVars", "viewInfoPanelShowAlways") : opt.getOption("global", "viewInfoPanelShowAlways");
+        var toolsVisible = opt.getOption("appVars", "viewToolsPanel") != undefined ? opt.getOption("appVars", "viewToolsPanel") : opt.getOption("global", "viewToolsPanelShowAlways");
+        var infoVisible = opt.getOption("appVars", "viewInfoPanel") != undefined ? opt.getOption("appVars", "viewInfoPanel") : opt.getOption("global", "viewInfoPanelShowAlways");
 
-        var $tools = $("#"+opt.getOption("html", "toolsPanelID"));
-        var $info = $("#"+opt.getOption("html", "infoPanelID"));
         var $mapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
 
-        if (toolsVisible) {
-            $tools.css({heigth: "30px"})
-            $mapsContainer.css({top: "30px"})
-        } 
-        else {
-            $tools.css({heigth: "0px"})
-            $mapsContainer.css({top: "0px"})
-        }
+        var top = toolsVisible ? 45 : 0;
+        var bottom = infoVisible ? 15 : 0;
+        $mapsContainer.css({top: top+"px", bottom: bottom+"px"})
 
-        if (infoVisible) {
-            $info.css({heigth: "15px"})
-            $mapsContainer.css({bottom: "15px"})
-        }
-        else {
-            $info.css({heigth: "0px"})
-            $mapsContainer.css({bottom: "0px"})
-        }
      }
 
     this.updatePanelsView();

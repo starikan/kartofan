@@ -42,6 +42,7 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/bootstrap-tour.css", rel="stylesheet")
         link(href="css_vendor/jquery-ui.css", rel="stylesheet")
         link(href="css_vendor/leaflet.measure.css", rel="stylesheet")
+        link(href="css_vendor/foundation.css", rel="stylesheet")
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
         link(href="css/starik.kartofan.menu.css", rel="stylesheet")
@@ -60,12 +61,21 @@ html(manifest="offline/cache.appcache")
 
         div#appContainer
             div#toolsPanel
-            div#toolsPanelEventer
+                nav.top-bar(data-topbar)
+                    ul.title-area 
+                        li.name
+                            h1
+                                a Kartofan
+
             div.mapContainer#container
             div#infoPanelBottom
 
+        div#toolsPanelEventer
+
         <!-- @if production=false -->
         // Bottom JS
+
+        script(src="js_vendor/foundation.js")
 
         script(src="js/starik.kartofan.fn.js")
         script(src="js/starik.kartofan.leaflet.js")

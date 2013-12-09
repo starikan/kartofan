@@ -20,6 +20,7 @@ module.exports = function(grunt) {
      ];
 
     var bottomJs = [
+      "source/js_vendor/foundation.js",
       "source/js/starik.kartofan.fn.js",
       "source/js/starik.kartofan.leaflet.js",
       "source/js/starik.kartofan.options.js",
@@ -37,6 +38,7 @@ module.exports = function(grunt) {
       "source/css_vendor/bootstrap-tour.css",
       "source/css_vendor/jquery-ui.css",
       "source/css_vendor/leaflet.measure.css",
+      "source/css_vendor/foundation.css",
      ];
 
     var appCss = [
