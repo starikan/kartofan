@@ -442,14 +442,18 @@ var Events = (function(){
 
     this.updatePanelsView = function(){
 
-        var toolsVisible = opt.getOption("appVars", "viewToolsPanel") != undefined ? opt.getOption("appVars", "viewToolsPanel") : opt.getOption("global", "viewToolsPanelShowAlways");
-        var infoVisible = opt.getOption("appVars", "viewInfoPanel") != undefined ? opt.getOption("appVars", "viewInfoPanel") : opt.getOption("global", "viewInfoPanelShowAlways");
+        var toolsVisible = opt.getOption("global", "viewToolsPanelShowAlways") ? opt.getOption("global", "viewToolsPanelShowAlways") : opt.getOption("appVars", "viewToolsPanel");
+        var infoVisible = opt.getOption("global", "viewInfoPanelShowAlways") ? opt.getOption("global", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         var $mapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
+        var $topMenuContainer = $("#"+opt.getOption("html", "toolsPanelID"));
+        var $infoContainer = $("#"+opt.getOption("html", "infoPanelID"));
 
         var top = toolsVisible ? 45 : 0;
+        var topZIndex = toolsVisible ? 9999 : 0;
         var bottom = infoVisible ? 15 : 0;
-        $mapsContainer.css({top: top+"px", bottom: bottom+"px"})
+        $mapsContainer.css({"top": top+"px", "bottom": bottom+"px"});
+        $topMenuContainer.css({"z-index": topZIndex});
 
      }
 

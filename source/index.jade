@@ -24,8 +24,8 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/leaflet-src.js")
         script(src="js_vendor/FileSaver.js")
         script(src="js_vendor/base64.js ")
-        script(src="js_vendor/bootstrap.js")
-        script(src="js_vendor/bootstrap-tour.js")
+        //script(src="js_vendor/bootstrap.js")
+        //script(src="js_vendor/bootstrap-tour.js")
         script(src="js_vendor/pouchdb.js")
         script(src="js_vendor/jquery.noty.js")
         script(src="js_vendor/jquery.noty.topRight.js")
@@ -38,11 +38,12 @@ html(manifest="offline/cache.appcache")
         // CSS    
         
         link(href="css_vendor/leaflet.css", rel="stylesheet")
-        link(href="css_vendor/bootstrap.css", rel="stylesheet")
-        link(href="css_vendor/bootstrap-tour.css", rel="stylesheet")
+        //link(href="css_vendor/bootstrap.css", rel="stylesheet")
+        //link(href="css_vendor/bootstrap-tour.css", rel="stylesheet")
         link(href="css_vendor/jquery-ui.css", rel="stylesheet")
         link(href="css_vendor/leaflet.measure.css", rel="stylesheet")
         link(href="css_vendor/foundation.css", rel="stylesheet")
+        link(href="css_vendor/normalize.css", rel="stylesheet")
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
         link(href="css/starik.kartofan.menu.css", rel="stylesheet")
@@ -66,6 +67,16 @@ html(manifest="offline/cache.appcache")
                         li.name
                             h1
                                 a Kartofan
+                    section.top-bar-section
+                        ul.left
+                            li.has-dropdown
+                                a(href="#") Maps
+                                ul.dropdown
+                                    li
+                                        a(href="#") Set Map
+                        ul.right
+                            li.active
+                                a(href="#") Left
 
             div.mapContainer#container
             div#infoPanelBottom
@@ -75,7 +86,10 @@ html(manifest="offline/cache.appcache")
         <!-- @if production=false -->
         // Bottom JS
 
+        script(src="js_vendor/modernizr.js")
         script(src="js_vendor/foundation.js")
+        script(src="js_vendor/foundation.dropdown.js")
+        script(src="js_vendor/foundation.topbar.js")
 
         script(src="js/starik.kartofan.fn.js")
         script(src="js/starik.kartofan.leaflet.js")
@@ -83,7 +97,7 @@ html(manifest="offline/cache.appcache")
         script(src="js/starik.kartofan.stages.js")
         script(src="js/starik.kartofan.forms.js")
         script(src="js/starik.kartofan.events.js")
-        script(src="js/starik.kartofan.trip.js")
+        //script(src="js/starik.kartofan.trip.js")
         script(src="js/starik.kartofan.gps.js")
         script(src="js/starik.kartofan.main.js")
         <!-- @endif -->
