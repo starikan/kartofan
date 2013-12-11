@@ -24,7 +24,6 @@ var StageMaps = (function(){
 
     this.initContainer = function(container){
         if (!container) { return }
-        opt.setOption("html", "containerAllMapsId", container);
         this.$container = $("#"+container);
         this.createStage();
      }
@@ -103,7 +102,7 @@ var StageEditor = (function(){
 
     var _getPersentPosition = function(div){
 
-        var $container = $("#"+opt.getOption("html", "containerAllMapsId"));
+        var $container = $("#container");
 
         var widthContainer = $container.width();
         var heightContainer = $container.height();

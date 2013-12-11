@@ -21,14 +21,6 @@ var Options = (function(){
 
     // ********* ALL SETTINGS ************
 
-    this.html = {
-        "containerMainMenuId": "mainMenu",
-        "containerStageEditorMenuId": "stageEditorMenu",
-        "containerAllMapsId": "container",
-        "topMenuID": "topMenu",
-        "infoPanelID": "infoPanelBottom",
-     };
-
     this.global = {
         "mapDefaultCenterLatLng": [54.31081536133442, 48.362503051757805],
         "mapDefaultZoom": 12,
@@ -147,7 +139,7 @@ var Options = (function(){
 
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel", "measure" ],
-        "baseNamesSync": ["html", "global", "gps", "stages", "points", "maps"],
+        "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
         "activeMap": undefined,
         "activeMapNum": undefined,        
      }
@@ -162,7 +154,7 @@ var Options = (function(){
         if (!bases.checkBasesLoaded()){ return }
 
         this.getHash();
-        container = container ? container : this.getOption("html", "containerAllMapsId");
+        container = container ? container : "container";
         window.stage = new StageMaps();
         window.stage.initContainer(container);
 

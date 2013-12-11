@@ -35,7 +35,7 @@ var Events = (function(){
      }
 
     // TODO: touch event to context menu
-    $("#"+opt.getOption("html", "containerAllMapsId")).bind("mousedown click", function(){
+    $("#container").bind("mousedown click", function(){
         parent.closeContextMenu();
         parent.closeAllForms();
 
@@ -157,7 +157,7 @@ var Events = (function(){
         }},        
      ];
 
-    this.mainMenu = new CSSMenu(this.contextMenuArray, opt.getOption("html", "containerMainMenuId"), false);
+    this.mainMenu = new CSSMenu(this.contextMenuArray, "mainMenu", false);
 
     // TODO: touch event to context menu
     this.bindMainMenu = function(){
@@ -189,7 +189,7 @@ var Events = (function(){
         }},        
      ];
 
-    this.stageEditorMenu = new CSSMenu(this.stageEditorMenuArray, opt.getOption("html", "containerStageEditorMenuId"), false);
+    this.stageEditorMenu = new CSSMenu(this.stageEditorMenuArray, "stageEditorMenu", false);
 
     // TODO: touch event to context menu
     this.bindStageEditorMenu = function(){
@@ -446,15 +446,15 @@ var Events = (function(){
 
     this._updatePanelsView = function(){
 
-        var toolsVisible = opt.getOption("current", "viewTopMenuShowAlways") != undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
+        var topMenuVisible = opt.getOption("current", "viewTopMenuShowAlways") != undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
         var infoVisible = opt.getOption("current", "viewInfoPanelShowAlways") != undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
-        var $mapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
-        var $topMenuContainer = $("#"+opt.getOption("html", "topMenuID"));
-        var $infoContainer = $("#"+opt.getOption("html", "infoPanelID"));
+        var $mapsContainer = $("#container");
+        var $topMenuContainer = $("#topMenu");
+        var $infoContainer = $("#infoMenu");
 
-        var top = toolsVisible ? 45 : 0;
-        var topZIndex = toolsVisible ? 9999 : 0;
+        var top = topMenuVisible ? 45 : 0;
+        var topZIndex = topMenuVisible ? 9999 : 0;
         var bottom = infoVisible ? 15 : 0;
         $mapsContainer.css({"top": top+"px", "bottom": bottom+"px"});
         $topMenuContainer.css({"z-index": topZIndex});
