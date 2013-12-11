@@ -60,7 +60,7 @@ html(manifest="offline/cache.appcache")
         <!-- @endif -->
 
     body
-        div#topMenu
+        div#topMenuKartofan
             nav.top-bar(data-topbar)
                 ul.title-area 
                     li.name: h1: a Kartofan
@@ -78,14 +78,14 @@ html(manifest="offline/cache.appcache")
                             a: span.topMenuMenu Menu
                             ul.dropdown 
                                 li.has-dropdown
-                                    a Maps 
+                                    a.topMenuMap Maps 
                                     ul.dropdown
                                         li: a.topMenuMapSet Set Map
                                         li: a.topMenuMapEdit Edit Map
                                         li: a.topMenuMapExternal Get External Map
                                         li: a.topMenuMapSave Save Map
                                 li.has-dropdown
-                                    a Stages 
+                                    a.topMenuStages Stages 
                                     ul.dropdown 
                                         li: a.topMenuStageSet Set Stage
                                         li: a.topMenuStageEdit Edit Stage
@@ -93,20 +93,20 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuStageEditView Edit This Stage View
                                         li: a.topMenuStageSave Save This Stage
                                 li.has-dropdown
-                                    a Moves 
+                                    a.topMenuMoves Moves 
                                     ul.dropdown 
                                         li: a.topMenuMove Move To
                                         li: a.topMenuMoveAdd Add Move
                                         li: a.topMenuMoveEdit Edit Move
                                 li.has-dropdown
-                                    a Options 
+                                    a.topMenuOptions Options 
                                     ul.dropdown 
                                         li: a.topMenuOptGlobal Set Global Options
                                         li: a.topMenuOptUpdate Update Options From External Base
                                         li: a.topMenuOptLang Set Language 
                                         li: a.topMenuOptReset Reset All Settings
                                 li.has-dropdown
-                                    a JSON 
+                                    a.topMenuJSON JSON 
                                     ul.dropdown 
                                         li: a.topMenuJSONMaps Get All External Maps
                                         li: a.topMenuJSONStages Get All External Stages
@@ -114,12 +114,12 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuJSONAll Get All From JSON
                                         li: a.topMenuJSONExport Export All Data To JSON
                                 li.has-dropdown
-                                    a GPS 
+                                    a.topMenuGPS GPS 
                                     ul.dropdown 
                                         li: a.topMenuGPSStart GPS Start
                                         li: a.topMenuGPSStop GPS Stop
                                 li.has-dropdown
-                                    a Help 
+                                    a.topMenuHelp Help 
                                     ul.dropdown 
                                         li: a.topMenuHelpTourMain TourMain
                             

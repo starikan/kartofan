@@ -18,31 +18,48 @@ var TopMenu = (function(){
 
     var _this = this;
 
+    this.topMenuId = arguments[0];
+    this.mapsContainerId = arguments[1];
+
+    if (!this.topMenuId || !this.mapsContainerId) return;
+
     this.topMenuArray = [
-        { "class": "topMenuMapSet", "loc": "", "callback": ""},
-        { "class": "topMenuMapEdit", "loc": "", "callback": ""},
-        { "class": "topMenuMapExternal", "loc": "", "callback": ""},
-        { "class": "topMenuMapSave", "loc": "", "callback": ""},
-        { "class": "topMenuStageSet", "loc": "", "callback": ""},
-        { "class": "topMenuStageEdit", "loc": "", "callback": ""},
-        { "class": "topMenuStageExternal", "loc": "", "callback": ""},
-        { "class": "topMenuStageEditView", "loc": "", "callback": ""},
-        { "class": "topMenuStageSave", "loc": "", "callback": ""},
-        { "class": "topMenuMove", "loc": "", "callback": ""},
-        { "class": "topMenuMoveAdd", "loc": "", "callback": ""},
-        { "class": "topMenuMoveEdit", "loc": "", "callback": ""},
-        { "class": "topMenuOptGlobal", "loc": "", "callback": ""},
-        { "class": "topMenuOptUpdate", "loc": "", "callback": ""},
-        { "class": "topMenuOptLang", "loc": "", "callback": ""},
-        { "class": "topMenuOptReset", "loc": "", "callback": ""},
-        { "class": "topMenuJSONMaps", "loc": "", "callback": ""},
-        { "class": "topMenuJSONStages", "loc": "", "callback": ""},
-        { "class": "topMenuJSONMoves", "loc": "", "callback": ""},
-        { "class": "topMenuJSONAll", "loc": "", "callback": ""},
-        { "class": "topMenuJSONExport", "loc": "", "callback": ""},
-        { "class": "topMenuGPSStart", "loc": "", "callback": ""},
-        { "class": "topMenuGPSStop", "loc": "", "callback": ""},
-        { "class": "topMenuHelpTourMain", "loc": "", "callback": ""},
+        { "type": "topMenuMenu", "loc": "topMenu:topMenuMenu", "callback": ""},
+        { "type": "topMenuMapSet", "loc": "topMenu:topMenuMapSet", "callback": ""},
+        { "type": "topMenuMapEdit", "loc": "topMenu:topMenuMapEdit", "callback": ""},
+        { "type": "topMenuMapExternal", "loc": "topMenu:topMenuMapExternal", "callback": ""},
+        { "type": "topMenuMapSave", "loc": "topMenu:topMenuMapSave", "callback": ""},
+        { "type": "topMenuStageSet", "loc": "topMenu:topMenuStageSet", "callback": ""},
+        { "type": "topMenuStageEdit", "loc": "topMenu:topMenuStageEdit", "callback": ""},
+        { "type": "topMenuStageExternal", "loc": "topMenu:topMenuStageExternal", "callback": ""},
+        { "type": "topMenuStageEditView", "loc": "topMenu:topMenuStageEditView", "callback": ""},
+        { "type": "topMenuStageSave", "loc": "topMenu:topMenuStageSave", "callback": ""},
+        { "type": "topMenuMove", "loc": "topMenu:topMenuMove", "callback": ""},
+        { "type": "topMenuMoveAdd", "loc": "topMenu:topMenuMoveAdd", "callback": ""},
+        { "type": "topMenuMoveEdit", "loc": "topMenu:topMenuMoveEdit", "callback": ""},
+        { "type": "topMenuOptGlobal", "loc": "topMenu:topMenuOptGlobal", "callback": ""},
+        { "type": "topMenuOptUpdate", "loc": "topMenu:topMenuOptUpdate", "callback": ""},
+        { "type": "topMenuOptLang", "loc": "topMenu:topMenuOptLang", "callback": ""},
+        { "type": "topMenuOptReset", "loc": "topMenu:topMenuOptReset", "callback": ""},
+        { "type": "topMenuJSONMaps", "loc": "topMenu:topMenuJSONMaps", "callback": ""},
+        { "type": "topMenuJSONStages", "loc": "topMenu:topMenuJSONStages", "callback": ""},
+        { "type": "topMenuJSONMoves", "loc": "topMenu:topMenuJSONMoves", "callback": ""},
+        { "type": "topMenuJSONAll", "loc": "topMenu:topMenuJSONAll", "callback": ""},
+        { "type": "topMenuJSONExport", "loc": "topMenu:topMenuJSONExport", "callback": ""},
+        { "type": "topMenuGPSStart", "loc": "topMenu:topMenuGPSStart", "callback": ""},
+        { "type": "topMenuGPSStop", "loc": "topMenu:topMenuGPSStop", "callback": ""},
+        { "type": "topMenuHelpTourMain", "loc": "topMenu:topMenuHelpTourMain", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
+        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
      ];
 
     this.showTopMenuView = function() {
@@ -55,12 +72,12 @@ var TopMenu = (function(){
         _this._updateTopMenuView();
      }
 
-    this._updateTopMenuView = function(){
+    this._updateTopMenuView = function() {
 
         var topMenuVisible = opt.getOption("appVars", "viewTopMenu") == undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
 
-        var $mapsContainer = $("#container");
-        var $topMenuContainer = $("#topMenu");
+        var $mapsContainer = $("#"+this.mapsContainerId);
+        var $topMenuContainer = $("#"+this.topMenuId);
 
         var top = topMenuVisible ? 45 : 0;
         var topZIndex = topMenuVisible ? 9999 : 0;
@@ -69,7 +86,21 @@ var TopMenu = (function(){
 
      }
 
+    this._setLocalization = function() {
+        var $topMenu = $("#"+this.topMenuId);
+
+        $.each(this.topMenuArray, function(i, v) {
+            if (v.loc) {
+                var $elem = $topMenu.find("."+v.type);
+                if ($elem.text()) {
+                    $elem.text(loc(v.loc));
+                }
+            }
+        })
+     }
+
     this._updateTopMenuView();
+    this._setLocalization();
 
  }}());
 

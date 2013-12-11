@@ -264,7 +264,7 @@ var LeafletMap = function(mapId){
     window.mapvents = new Events();
     window.gps = new GPS();
     window.bases = new Bases();
-    window.topmenu = new TopMenu();
+    window.topmenu = new TopMenu("topMenuKartofan", "container");
 
     var parent = this;
 
