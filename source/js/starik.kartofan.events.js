@@ -14,7 +14,6 @@ var Events = (function(){
             return new Construct_singletone();
         }
 
-
     var parent = this;
 
     window.opt = new Options();
@@ -23,17 +22,6 @@ var Events = (function(){
     window.mapsEditor = new MapsEditor();
     window.bases = new Bases();
     window.locations = new Locations();
-
-
-    // ********** WINDOW RESIZE EVENT **********
-
-    this.eventResizeWindow = function(e){
-        for (var i=0; i<LeafletMap.prototype.instances.length; i++){
-            LeafletMap.prototype.instances[i].refreshMapAfterResize();
-        }            
-     }
-
-    window.onresize = this.eventResizeWindow;
 
 
     // ********** CONTEXT MENU EVENT **********

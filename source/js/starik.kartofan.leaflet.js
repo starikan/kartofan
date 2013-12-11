@@ -31,8 +31,10 @@ L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
 
             return new L.LatLng(lat, lng);
         }
-    },
+     },
+
     transformation: new L.Transformation(0.5 / Math.PI, 0.5, -0.5 / Math.PI, 0.5),
+
  });
 
 L.Control.Measure = L.Control.Measure.extend({
@@ -43,7 +45,8 @@ L.Control.Measure = L.Control.Measure.extend({
         this._createButton('↔', loc("controls:measureTip"), 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
 
         return container;
-    },
+     },
+
     _updateTooltipDistance: function(total, difference) {
         var totalRound = this._round(total),
             differenceRound = this._round(difference);
@@ -61,11 +64,12 @@ L.Control.Measure = L.Control.Measure.extend({
         // }
 
         this._tooltip._icon.innerHTML = text;
-    },
+     },
+
     _round: function(val) {
         // return Math.round((val / 1852) * 10) / 10;
         return Math.round(val)
-    },    
+     },   
  })
 
 L.TileLayerCache = L.TileLayer.extend({
@@ -171,7 +175,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
         styles: '',
         format: 'image/jpeg',
         transparent: false
-    },
+     },
 
     initialize: function (url, options) { // (String, Object)
 
@@ -196,7 +200,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
         this.wmsParams = wmsParams;
 
         L.setOptions(this, options);
-    },
+     },
 
     onAdd: function (map) {
 
@@ -208,7 +212,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
         this.wmsParams[projectionKey] = this._crs.code;
 
         L.TileLayer.prototype.onAdd.call(this, map);
-    },
+     },
 
     getTileUrl: function (tilePoint) { // (Point, Number) -> String
 
@@ -229,7 +233,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
         // console.log(this.wmsParams)
 
         return url + L.Util.getParamString(this.wmsParams, url, true) + '&BBOX=' + bbox;
-    },
+     },
 
     setParams: function (params, noRedraw) {
 
@@ -240,7 +244,7 @@ L.TileLayerCache.WMS = L.TileLayerCache.extend({
         }
 
         return this;
-    }
+     }
  })
 
 L.tileLayerCache = function(url, options){
@@ -502,8 +506,9 @@ var LeafletMap = function(mapId){
         this.map.on("mousedown", this.onClickMap);
         this.map.on("focus", this.onFocusMap);
         this.map.on("mousemove", this.moveCursor);
-        this.map.on("locationfound", gps.onGPS)
-        this.map.on("locationerror", gps.errorGPS)
+        this.map.on("locationfound", gps.onGPS);
+        this.map.on("locationerror", gps.errorGPS);
+        this.map.on("resize", this.refreshMapAfterResize);
 
         this._setMapControls();
         this.updateMapControls();
