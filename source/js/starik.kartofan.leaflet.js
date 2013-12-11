@@ -112,12 +112,12 @@ L.TileLayerCache = L.TileLayer.extend({
 
         this.mapCacheBase = bases.mapCache["map_"+this.options.mapName];
 
-        var flag = opt.getOption("global", "mapCacheLoad") || "internet";
+        var flag = opt.getOption("current", "mapCacheLoad") || "internet";
                 
         console.log(flag)
 
         // If chached
-        if (opt.getOption("global", "mapCache") && this.mapCacheBase) {
+        if (opt.getOption("current", "mapCache") && this.mapCacheBase) {
             
             if (flag == "cache") {
                 parent.mapCacheBase.get(key, function(err, data){
@@ -289,8 +289,8 @@ var LeafletMap = function(mapId){
     this.markerCursor;
 
     this.onFocusMap = function(){
-        opt.setOption("current", "activeMap", mapId);
-        opt.setOption("current", "activeMapNum", mapId.replace("map", ""));
+        opt.setOption("appVars", "activeMap", mapId);
+        opt.setOption("appVars", "activeMapNum", mapId.replace("map", ""));
         parent.$allMaps.removeClass("activemap");
         parent.$map.addClass("activemap");
      }
@@ -315,7 +315,7 @@ var LeafletMap = function(mapId){
         opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);   
         opt.setHash();
         
-        if (opt.getOption("global", "mapSyncMoving")){
+        if (opt.getOption("current", "mapSyncMoving")){
             parent.moveAllMaps(latlng);
         }
      }
@@ -499,6 +499,16 @@ var LeafletMap = function(mapId){
             this.map.addLayer(this.mapTilesLayer.layer);
         }
 
+        this.setEvents();
+        this._setMapControls();
+        this.updateMapControls();
+        this.updateCurrentStageName();
+        this.updateCurrentStageZoom();
+        this.addVizir();
+        this.addCursor();
+     }
+
+    this.setEvents = function() {
         this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
         // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
@@ -508,14 +518,8 @@ var LeafletMap = function(mapId){
         this.map.on("mousemove", this.moveCursor);
         this.map.on("locationfound", gps.onGPS);
         this.map.on("locationerror", gps.errorGPS);
-        this.map.on("resize", this.refreshMapAfterResize);
-
-        this._setMapControls();
-        this.updateMapControls();
-        this.updateCurrentStageName();
-        this.updateCurrentStageZoom();
-        this.addVizir();
-        this.addCursor();
+        this.map.on("resize", this.refreshMapAfterResize);   
+        this.map.on("contextmenu", mapvents.showTopMenuView);   
      }
 
     this.setMapCenter = function(latlng){
@@ -589,7 +593,7 @@ var LeafletMap = function(mapId){
      }
 
     this.addVizir = function(){
-        if (!opt.getOption("global", "mapVizirVisible")){ return }
+        if (!opt.getOption("current", "mapVizirVisible")){ return }
 
         var iconVizir = L.icon({
             iconUrl: 'images/vizir_32x32.png',
@@ -608,7 +612,7 @@ var LeafletMap = function(mapId){
      }
 
     this.addCursor = function(){
-        if (!opt.getOption("global", "mapCursorAllMapsVisible")){ return }
+        if (!opt.getOption("current", "mapCursorAllMapsVisible")){ return }
 
         var iconCursor = L.icon({
             iconUrl: 'images/cursorAllMaps_32x32.png',
@@ -826,7 +830,7 @@ var MapsEditor = (function(){
 
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
-        var activeMap = opt.getOption("current", "activeMap");
+        var activeMap = opt.getOption("appVars", "activeMap");
 
         window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
@@ -834,7 +838,7 @@ var MapsEditor = (function(){
     this.editMap = function(mapId){
 
         var maps = opt.getOption("maps");
-        var activeMap = opt.getOption("current", "activeMap");
+        var activeMap = opt.getOption("appVars", "activeMap");
         var mapVals;
 
         // If no mapId get active map
@@ -909,7 +913,7 @@ var MapsEditor = (function(){
 
         }
         else {
-            var activeMapNum = opt.getOption("current", "activeMapNum");
+            var activeMapNum = opt.getOption("appVars", "activeMapNum");
             var currStage = opt.getOption("current", "stage");
 
             opt.setOption("appVars", "prevStage", currStage);

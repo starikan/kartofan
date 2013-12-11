@@ -39,8 +39,8 @@ var Events = (function(){
         parent.closeContextMenu();
         parent.closeAllForms();
 
-        opt.setOption("appVars", "viewToolsPanel", false);
-        parent.updatePanelsView();
+        opt.setOption("appVars", "viewTopMenu", false);
+        parent._updatePanelsView();
      });
 
     document.oncontextmenu = function(){ return false };
@@ -429,19 +429,28 @@ var Events = (function(){
 
      ];
 
-    // TODO: touch
-    $("#toolsPanelEventer").on("click", function(){
-        opt.setOption("appVars", "viewToolsPanel", true);
-        parent.updatePanelsView();
-     });
+    this.toggleTopMenuView = function() {
+        opt.setOption("appVars", "viewTopMenu", 1 - opt.getOption("appVars", "viewTopMenu"));
+        parent._updatePanelsView();
+     }
 
-    this.updatePanelsView = function(){
+    this.showTopMenuView = function() {
+        opt.setOption("appVars", "viewTopMenu", true);
+        parent._updatePanelsView();
+     }
 
-        var toolsVisible = opt.getOption("global", "viewToolsPanelShowAlways") ? opt.getOption("global", "viewToolsPanelShowAlways") : opt.getOption("appVars", "viewToolsPanel");
-        var infoVisible = opt.getOption("global", "viewInfoPanelShowAlways") ? opt.getOption("global", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
+    this.hideTopMenuView = function() {
+        opt.setOption("appVars", "viewTopMenu", false);
+        parent._updatePanelsView();
+     }
+
+    this._updatePanelsView = function(){
+
+        var toolsVisible = opt.getOption("current", "viewTopMenuShowAlways") != undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
+        var infoVisible = opt.getOption("current", "viewInfoPanelShowAlways") != undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         var $mapsContainer = $("#"+opt.getOption("html", "containerAllMapsId"));
-        var $topMenuContainer = $("#"+opt.getOption("html", "toolsPanelID"));
+        var $topMenuContainer = $("#"+opt.getOption("html", "topMenuID"));
         var $infoContainer = $("#"+opt.getOption("html", "infoPanelID"));
 
         var top = toolsVisible ? 45 : 0;
@@ -452,6 +461,6 @@ var Events = (function(){
 
      }
 
-    this.updatePanelsView();
+    this._updatePanelsView();
 
  }}());

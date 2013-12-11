@@ -25,29 +25,15 @@ var Options = (function(){
         "containerMainMenuId": "mainMenu",
         "containerStageEditorMenuId": "stageEditorMenu",
         "containerAllMapsId": "container",
-        "toolsPanelID": "toolsPanel",
+        "topMenuID": "topMenu",
         "infoPanelID": "infoPanelBottom",
      };
 
     this.global = {
         "mapDefaultCenterLatLng": [54.31081536133442, 48.362503051757805],
         "mapDefaultZoom": 12,
-        "mapSyncMoving": true,
-        "mapSyncZooming": false,
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
-        "mapVizirVisible": true,
-        "mapCursorAllMapsVisible": true,
-        "mapCache": true,
-        "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
         "mapCachedService": "http://127.0.0.1:3000",
-
-        "viewToolsPanelShowAlways": true,
-        "viewInfoPanelShowAlways": true,
-
-        "gpsAutoStart": true,
-        "gpsMarker": true,
-        "gpsAccuracy": true,
-        "gpsFollowing": true,
 
         "externalFeeds": [
             {
@@ -62,9 +48,6 @@ var Options = (function(){
         "hashChange": true,
         "resetToDefaultIfHashClear": true,
 
-        "dbPointsStorySave": 1000,
-        "dbSyncIn": true,
-        "dbSyncOut": true,
         "dbExtServerIn": "http://localhost:5984/", // Ended with /
         "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
 
@@ -77,8 +60,13 @@ var Options = (function(){
     this.current = {
         "mapCenterLatLng": [],
         "mapZoom": undefined,
-        "activeMap": undefined,
-        "activeMapNum": undefined,
+        "mapSyncMoving": true,
+        "mapSyncZooming": false,
+        "mapVizirVisible": true,
+        "mapCursorAllMapsVisible": true,
+        "mapCache": true,
+        "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
+
         "stage": {
             "title": "current",
             "id": "current",
@@ -124,8 +112,19 @@ var Options = (function(){
                     "zoomLevel": {"pos": "bottomright"},
                 },                
             ]
-        },
-        "gps": {
+         },
+
+        "viewTopMenuShowAlways": false,
+        "viewInfoPanelShowAlways": true,   
+
+        "dbPointsStorySave": 1000,
+        "dbSyncIn": true,
+        "dbSyncOut": true,
+
+     };
+
+    this.gps = {
+        "gpsData": {
             "latlng": [],
             "accuracy": "",
             "altitude": "",
@@ -133,8 +132,12 @@ var Options = (function(){
             "heading": "",
             "speed": "",
             "timestamp": "",
-        }
-     };
+         },
+        "gpsAutoStart": true,
+        "gpsMarker": true,
+        "gpsAccuracy": true,
+        "gpsFollowing": true,
+     }
 
     this.stages = {};
 
@@ -144,7 +147,9 @@ var Options = (function(){
 
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel", "measure" ],
-        "baseNamesSync": ["html", "global", "current", "stages", "points", "maps"],
+        "baseNamesSync": ["html", "global", "gps", "stages", "points", "maps"],
+        "activeMap": undefined,
+        "activeMapNum": undefined,        
      }
 
     this._init = function(){
@@ -167,7 +172,7 @@ var Options = (function(){
             opt.setOption("global", "isTourFirstShown", false);
         }
 
-        if (opt.getOption("global", "gpsAutoStart")){
+        if (opt.getOption("gps", "gpsAutoStart")){
             gps.startGPS();
         }
 
@@ -228,7 +233,7 @@ var Options = (function(){
 
     this.setHash = function(){
         
-        if (!this.getOption("global", "hashChange") || !this.getOption("global", "mapSyncMoving")) { 
+        if (!this.getOption("global", "hashChange") || !this.getOption("current", "mapSyncMoving")) { 
             window.location.hash = "";
             return 
         }
@@ -394,11 +399,11 @@ var Bases = (function(){
     this._initSync = function(){
         if (!this.checkBasesLoaded()){return};
 
-        if (opt.getOption("global","dbSyncOut")){
+        if (opt.getOption("current", "dbSyncOut")){
             parent.syncOut();
         }
 
-        if (opt.getOption("global","dbSyncIn")){
+        if (opt.getOption("current", "dbSyncIn")){
             parent.syncIn();
         }
      }

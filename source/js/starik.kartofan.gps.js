@@ -35,7 +35,7 @@ var GPS = (function(){
             "speed": e.speed,
             "timestamp": e.timestamp,
         }
-        opt.setOption("current", "gps", gpsVals);
+        opt.setOption("gps", "gpsData", gpsVals);
      }  
 
     this.errorGPS = function(e){

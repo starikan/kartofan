@@ -211,7 +211,7 @@ var StageEditor = (function(){
      }
 
     this.removeMapFromStage = function(){
-        var activeMap = opt.getOption("current", "activeMap");
+        var activeMap = opt.getOption("appVars", "activeMap");
         var mapsCount = $(".maps").length;
 
         if (mapsCount>1){ $("#"+activeMap).remove() }
@@ -255,8 +255,8 @@ var StageEditor = (function(){
 
     this.editMapsControls = function(){
         // TODOЖ сделать в суггкте номер карты
-        var activeMap = opt.getOption("current", "activeMap");
-        var mapNum = opt.getOption("current", "activeMapNum");
+        var activeMap = opt.getOption("appVars", "activeMap");
+        var mapNum = opt.getOption("appVars", "activeMapNum");
         var currStage = opt.getOption("current", "stage");
 
         var mapControlsForm = [
