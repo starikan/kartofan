@@ -1,5 +1,78 @@
 "use strict"
 
+var TopMenu = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    window.opt = new Options();
+
+    var _this = this;
+
+    this.topMenuArray = [
+        { "class": "topMenuMapSet", "loc": "", "callback": ""},
+        { "class": "topMenuMapEdit", "loc": "", "callback": ""},
+        { "class": "topMenuMapExternal", "loc": "", "callback": ""},
+        { "class": "topMenuMapSave", "loc": "", "callback": ""},
+        { "class": "topMenuStageSet", "loc": "", "callback": ""},
+        { "class": "topMenuStageEdit", "loc": "", "callback": ""},
+        { "class": "topMenuStageExternal", "loc": "", "callback": ""},
+        { "class": "topMenuStageEditView", "loc": "", "callback": ""},
+        { "class": "topMenuStageSave", "loc": "", "callback": ""},
+        { "class": "topMenuMove", "loc": "", "callback": ""},
+        { "class": "topMenuMoveAdd", "loc": "", "callback": ""},
+        { "class": "topMenuMoveEdit", "loc": "", "callback": ""},
+        { "class": "topMenuOptGlobal", "loc": "", "callback": ""},
+        { "class": "topMenuOptUpdate", "loc": "", "callback": ""},
+        { "class": "topMenuOptLang", "loc": "", "callback": ""},
+        { "class": "topMenuOptReset", "loc": "", "callback": ""},
+        { "class": "topMenuJSONMaps", "loc": "", "callback": ""},
+        { "class": "topMenuJSONStages", "loc": "", "callback": ""},
+        { "class": "topMenuJSONMoves", "loc": "", "callback": ""},
+        { "class": "topMenuJSONAll", "loc": "", "callback": ""},
+        { "class": "topMenuJSONExport", "loc": "", "callback": ""},
+        { "class": "topMenuGPSStart", "loc": "", "callback": ""},
+        { "class": "topMenuGPSStop", "loc": "", "callback": ""},
+        { "class": "topMenuHelpTourMain", "loc": "", "callback": ""},
+     ];
+
+    this.showTopMenuView = function() {
+        opt.setOption("appVars", "viewTopMenu", true);
+        _this._updateTopMenuView();
+     }
+
+    this.hideTopMenuView = function() {
+        opt.setOption("appVars", "viewTopMenu", false);
+        _this._updateTopMenuView();
+     }
+
+    this._updateTopMenuView = function(){
+
+        var topMenuVisible = opt.getOption("appVars", "viewTopMenu") == undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
+
+        var $mapsContainer = $("#container");
+        var $topMenuContainer = $("#topMenu");
+
+        var top = topMenuVisible ? 45 : 0;
+        var topZIndex = topMenuVisible ? 9999 : 0;
+        $mapsContainer.css({"top": top+"px"});
+        $topMenuContainer.css({"z-index": topZIndex});
+
+     }
+
+    this._updateTopMenuView();
+
+ }}());
+
 var EditableForm = function(arr, funcs, id, show){
     
     var parent = this;

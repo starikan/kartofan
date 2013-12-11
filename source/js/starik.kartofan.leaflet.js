@@ -264,6 +264,7 @@ var LeafletMap = function(mapId){
     window.mapvents = new Events();
     window.gps = new GPS();
     window.bases = new Bases();
+    window.topmenu = new TopMenu();
 
     var parent = this;
 
@@ -307,12 +308,12 @@ var LeafletMap = function(mapId){
             parent.moveAllMaps(e.latlng)
         }
         if (e.originalEvent.button !== 2){
-            mapvents.hideTopMenuView();
+            topmenu.hideTopMenuView();
         }
      }
 
     this.onClickMap = function(e){
-        mapvents.hideTopMenuView();
+        topmenu.hideTopMenuView();
      }
 
     this.onMapMoveEnd = function(e){
@@ -526,7 +527,7 @@ var LeafletMap = function(mapId){
         this.map.on("locationfound", gps.onGPS);
         this.map.on("locationerror", gps.errorGPS);
         this.map.on("resize", this.refreshMapAfterResize);   
-        this.map.on("contextmenu", mapvents.showTopMenuView);   
+        this.map.on("contextmenu", topmenu.showTopMenuView);   
         this.map.on("click", this.onClickMap);
      }
 

@@ -26,9 +26,9 @@ var Events = (function(){
 
     // ********** CONTEXT MENU EVENT **********
 
-    this.closeContextMenu = function(id){
-        id ? $(".cssmenu_container#"+id).addClass("hide") : $(".cssmenu_container").addClass("hide");
-     }
+    // this.closeContextMenu = function(id){
+    //     id ? $(".cssmenu_container#"+id).addClass("hide") : $(".cssmenu_container").addClass("hide");
+    //  }
 
     this.closeAllForms = function(){
         $(".eform").addClass("hide");
@@ -40,7 +40,7 @@ var Events = (function(){
     //     parent.closeAllForms();
 
     //     opt.setOption("appVars", "viewTopMenu", false);
-    //     parent._updatePanelsView();
+    //     parent._updateMenuesView();
     //  });
 
     document.oncontextmenu = function(){ return false };
@@ -425,37 +425,18 @@ var Events = (function(){
 
     // ************ TOP MENU ************
 
-    this.topMenuArray = [
+    this._updateInfoMenuView = function(){
 
-     ];
-
-    this.showTopMenuView = function() {
-        opt.setOption("appVars", "viewTopMenu", true);
-        parent._updatePanelsView();
-     }
-
-    this.hideTopMenuView = function() {
-        opt.setOption("appVars", "viewTopMenu", false);
-        parent._updatePanelsView();
-     }
-
-    this._updatePanelsView = function(){
-
-        var topMenuVisible = opt.getOption("appVars", "viewTopMenu") == undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
         var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         var $mapsContainer = $("#container");
-        var $topMenuContainer = $("#topMenu");
         var $infoContainer = $("#infoMenu");
 
-        var top = topMenuVisible ? 45 : 0;
-        var topZIndex = topMenuVisible ? 9999 : 0;
         var bottom = infoVisible ? 15 : 0;
-        $mapsContainer.css({"top": top+"px", "bottom": bottom+"px"});
-        $topMenuContainer.css({"z-index": topZIndex});
+        $mapsContainer.css({"bottom": bottom+"px"});
 
      }
 
-    this._updatePanelsView();
+    this._updateInfoMenuView();
 
  }}());

@@ -69,9 +69,9 @@ html(manifest="offline/cache.appcache")
                 section.top-bar-section
 
                     ul.left.show-for-medium-up
-                        li: a: span.icon-map.topMenuMapSet
-                        li: a: span.icon-grid.topMenuStageSet
-                        li: a: span.icon-aim.topMenuMove
+                        li: a.topMenuMapSet: span.icon-map
+                        li: a.topMenuStageSet: span.icon-grid
+                        li: a.topMenuMove: span.icon-aim
 
                     ul.right
                         li.has-dropdown
@@ -122,6 +122,7 @@ html(manifest="offline/cache.appcache")
                                     a Help 
                                     ul.dropdown 
                                         li: a.topMenuHelpTourMain TourMain
+                            
                             li.active: a.icon-iconic.topMenuPin
 
         div#infoMenu
