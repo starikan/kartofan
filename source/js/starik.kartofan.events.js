@@ -22,6 +22,7 @@ var Events = (function(){
     window.mapsEditor = new MapsEditor();
     window.bases = new Bases();
     window.locations = new Locations();
+    window.infomenu = new InfoMenu();
 
 
     // ********** CONTEXT MENU EVENT **********
@@ -416,27 +417,5 @@ var Events = (function(){
          },    
         { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} } 
      ];
-
-
-    // *******************************************
-    // ************* PANEL AND INFO  *************
-    // *******************************************
-
-
-    // ************ TOP MENU ************
-
-    this._updateInfoMenuView = function(){
-
-        var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
-
-        var $mapsContainer = $("#container");
-        var $infoContainer = $("#infoMenu");
-
-        var bottom = infoVisible ? 15 : 0;
-        $mapsContainer.css({"bottom": bottom+"px"});
-
-     }
-
-    this._updateInfoMenuView();
 
  }}());

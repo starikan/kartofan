@@ -73,6 +73,55 @@ var TopMenu = (function(){
 
  }}());
 
+
+var InfoMenu = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    window.opt = new Options();
+
+    var _this = this;
+
+    this.infoMenuArray = [
+
+     ];
+
+    this.showInfoMenuView = function() {
+        opt.setOption("appVars", "viewInfoMenu", true);
+        _this._updateInfoMenuView();
+     }
+
+    this.hideInfoMenuView = function() {
+        opt.setOption("appVars", "viewInfoMenu", false);
+        _this._updateInfoMenuView();
+     }
+
+    this._updateInfoMenuView = function(){
+
+        var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
+
+        var $mapsContainer = $("#container");
+        var $infoContainer = $("#infoMenu");
+
+        var bottom = infoVisible ? 15 : 0;
+        $mapsContainer.css({"bottom": bottom+"px"});
+     }
+
+    this._updateInfoMenuView();
+
+ }}());
+
+
 var EditableForm = function(arr, funcs, id, show){
     
     var parent = this;
