@@ -434,6 +434,13 @@ var Events = (function(){
     // ************* PANEL AND INFO  *************
     // *******************************************
 
+
+    // ************ TOP MENU ************
+
+    this.topMenuArray = [
+
+     ];
+
     // TODO: touch
     $("#toolsPanelEventer").on("click", function(){
         opt.setOption("appVars", "viewToolsPanel", true);

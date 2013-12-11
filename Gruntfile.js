@@ -21,9 +21,7 @@ module.exports = function(grunt) {
 
     var bottomJs = [
       "source/js_vendor/modernizr.js",
-      "source/js_vendor/foundation.js",
-      "source/js_vendor/foundation.dropdown.js",
-      "source/js_vendor/foundation.topbar.js",
+      "source/js_vendor/foundation.min.js",
       "source/js/starik.kartofan.fn.js",
       "source/js/starik.kartofan.leaflet.js",
       "source/js/starik.kartofan.options.js",
@@ -49,6 +47,7 @@ module.exports = function(grunt) {
       "source/css/starik.kartofan.main.css",
       "source/css/starik.kartofan.menu.css",
       "source/css/starik.kartofan.forms.css",
+      "source/css/starik.kartofan.fonts.css",
      ];
 
      // Load Grunt tasks declared in the package.json file

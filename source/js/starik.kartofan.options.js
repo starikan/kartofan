@@ -41,7 +41,7 @@ var Options = (function(){
         "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
         "mapCachedService": "http://127.0.0.1:3000",
 
-        "viewToolsPanelShowAlways": false,
+        "viewToolsPanelShowAlways": true,
         "viewInfoPanelShowAlways": true,
 
         "gpsAutoStart": true,
@@ -163,7 +163,7 @@ var Options = (function(){
 
         // First visit automaticaly start tour
         if (opt.getOption("global", "isTourFirstShown")){
-            tourMain.start(true);
+            //tourMain.start(true);
             opt.setOption("global", "isTourFirstShown", false);
         }
 

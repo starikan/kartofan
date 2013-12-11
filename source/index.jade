@@ -48,6 +48,7 @@ html(manifest="offline/cache.appcache")
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
         link(href="css/starik.kartofan.menu.css", rel="stylesheet")
         link(href="css/starik.kartofan.forms.css", rel="stylesheet")
+        link(href="css/starik.kartofan.fonts.css", rel="stylesheet")
         <!-- @endif -->
 
         <!-- @if production=true -->
@@ -59,27 +60,73 @@ html(manifest="offline/cache.appcache")
         <!-- @endif -->
 
     body
+        div#toolsPanel
+            nav.top-bar(data-topbar)
+                ul.title-area 
+                    li.name: h1: a Kartofan
+                    li.toggle-topbar.menu-icon: a: span.topMenuMenu Menu
 
-        div#appContainer
-            div#toolsPanel
-                nav.top-bar(data-topbar)
-                    ul.title-area 
-                        li.name
-                            h1
-                                a Kartofan
-                    section.top-bar-section
-                        ul.left
-                            li.has-dropdown
-                                a(href="#") Maps
-                                ul.dropdown
-                                    li
-                                        a(href="#") Set Map
-                        ul.right
-                            li.active
-                                a(href="#") Left
+                section.top-bar-section
 
-            div.mapContainer#container
-            div#infoPanelBottom
+                    ul.left.show-for-medium-up
+                        li: a: span.icon-map.topMenuMapSet
+                        li: a: span.icon-grid.topMenuStageSet
+                        li: a: span.icon-aim.topMenuMove
+
+                    ul.right
+                        li.has-dropdown
+                            a: span.topMenuMenu Menu
+                            ul.dropdown 
+                                li.has-dropdown
+                                    a Maps 
+                                    ul.dropdown
+                                        li: a.topMenuMapSet Set Map
+                                        li: a.topMenuMapEdit Edit Map
+                                        li: a.topMenuMapExternal Get External Map
+                                        li: a.topMenuMapSave Save Map
+                                li.has-dropdown
+                                    a Stages 
+                                    ul.dropdown 
+                                        li: a.topMenuStageSet Set Stage
+                                        li: a.topMenuStageEdit Edit Stage
+                                        li: a.topMenuStageExternal Get External Stage
+                                        li: a.topMenuStageEditView Edit This Stage View
+                                        li: a.topMenuStageSave Save This Stage
+                                li.has-dropdown
+                                    a Moves 
+                                    ul.dropdown 
+                                        li: a.topMenuMove Move To
+                                        li: a.topMenuMoveAdd Add Move
+                                        li: a.topMenuMoveEdit Edit Move
+                                li.has-dropdown
+                                    a Options 
+                                    ul.dropdown 
+                                        li: a.topMenuOptGlobal Set Global Options
+                                        li: a.topMenuOptUpdate Update Options From External Base
+                                        li: a.topMenuOptLang Set Language 
+                                        li: a.topMenuOptReset Reset All Settings
+                                li.has-dropdown
+                                    a JSON 
+                                    ul.dropdown 
+                                        li: a.topMenuJSONMaps Get All External Maps
+                                        li: a.topMenuJSONStages Get All External Stages
+                                        li: a.topMenuJSONMoves Get All External Moves 
+                                        li: a.topMenuJSONAll Get All From JSON
+                                        li: a.topMenuJSONExport Export All Data To JSON
+                                li.has-dropdown
+                                    a GPS 
+                                    ul.dropdown 
+                                        li: a.topMenuGPSStart GPS Start
+                                        li: a.topMenuGPSStop GPS Stop
+                                li.has-dropdown
+                                    a Help 
+                                    ul.dropdown 
+                                        li: a.topMenuHelpTourMain TourMain
+                            li.active: a.icon-iconic.topMenuPin
+
+        div#infoPanelBottom
+
+        div.mapContainer#container
 
         div#toolsPanelEventer
 
@@ -87,9 +134,7 @@ html(manifest="offline/cache.appcache")
         // Bottom JS
 
         script(src="js_vendor/modernizr.js")
-        script(src="js_vendor/foundation.js")
-        script(src="js_vendor/foundation.dropdown.js")
-        script(src="js_vendor/foundation.topbar.js")
+        script(src="js_vendor/foundation.min.js")
 
         script(src="js/starik.kartofan.fn.js")
         script(src="js/starik.kartofan.leaflet.js")

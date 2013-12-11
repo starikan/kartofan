@@ -24,6 +24,9 @@ TODO:
     Top:
         - панель инструментов
         - сделать что-тотипа информационной строки снизу экрана для оповещений и всякой информации
+        - новые формы
+        - новый акордеон
+        - тур
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
         - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
         - Чат и видеочат
@@ -110,8 +113,13 @@ UI
 - http://purecss.io
 - http://getuikit.com
 - http://www.flathemes.com/index.html - bootflat
-
+- https://docs.atlassian.com/aui
 - http://leonuh.github.io/uikm/ - UIKit Maker
+
+Шрифты
+- http://fontastic.me/ - Генератор
+
+- http://krisbulman.github.io/font-icons/
 
 
 https://drive.google.com/folderview?id=0B1gRcO428ISsbEg2c25oUkRVSkE&usp=sharing - В папке google
