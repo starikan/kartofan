@@ -301,11 +301,18 @@ var LeafletMap = function(mapId){
         };        
      }
 
-    this.onClickMap = function(e){
-        if (e.originalEvent.button == 1){
+    this.onMouseDownMap = function(e){
+        if (e.originalEvent.button === 1){
             e.originalEvent.preventDefault();
             parent.moveAllMaps(e.latlng)
         }
+        if (e.originalEvent.button !== 2){
+            mapvents.hideTopMenuView();
+        }
+     }
+
+    this.onClickMap = function(e){
+        mapvents.hideTopMenuView();
      }
 
     this.onMapMoveEnd = function(e){
@@ -513,13 +520,14 @@ var LeafletMap = function(mapId){
         // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
         // TODO: touch
-        this.map.on("mousedown", this.onClickMap);
+        this.map.on("mousedown", this.onMouseDownMap);
         this.map.on("focus", this.onFocusMap);
         this.map.on("mousemove", this.moveCursor);
         this.map.on("locationfound", gps.onGPS);
         this.map.on("locationerror", gps.errorGPS);
         this.map.on("resize", this.refreshMapAfterResize);   
         this.map.on("contextmenu", mapvents.showTopMenuView);   
+        this.map.on("click", this.onClickMap);
      }
 
     this.setMapCenter = function(latlng){

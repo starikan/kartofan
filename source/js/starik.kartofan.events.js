@@ -35,13 +35,13 @@ var Events = (function(){
      }
 
     // TODO: touch event to context menu
-    $("#container").bind("mousedown click", function(){
-        parent.closeContextMenu();
-        parent.closeAllForms();
+    // $("#container").bind("mousedown click", function(){
+    //     parent.closeContextMenu();
+    //     parent.closeAllForms();
 
-        opt.setOption("appVars", "viewTopMenu", false);
-        parent._updatePanelsView();
-     });
+    //     opt.setOption("appVars", "viewTopMenu", false);
+    //     parent._updatePanelsView();
+    //  });
 
     document.oncontextmenu = function(){ return false };
 
@@ -157,17 +157,17 @@ var Events = (function(){
         }},        
      ];
 
-    this.mainMenu = new CSSMenu(this.contextMenuArray, "mainMenu", false);
+    // this.mainMenu = new CSSMenu(this.contextMenuArray, "mainMenu", false);
 
     // TODO: touch event to context menu
-    this.bindMainMenu = function(){
-        $(window).unbind("contextmenu");
-        $(window).bind("contextmenu", function(e){
-            parent.mainMenu.showMenu();
-        });
-     }
+    // this.bindMainMenu = function(){
+    //     $(window).unbind("contextmenu");
+    //     $(window).bind("contextmenu", function(e){
+    //         parent.mainMenu.showMenu();
+    //     });
+    //  }
 
-    this.bindMainMenu();
+    // this.bindMainMenu();
 
 
     // ************ STAGES EDITOR CONTEXT MENU ************
@@ -429,11 +429,6 @@ var Events = (function(){
 
      ];
 
-    this.toggleTopMenuView = function() {
-        opt.setOption("appVars", "viewTopMenu", 1 - opt.getOption("appVars", "viewTopMenu"));
-        parent._updatePanelsView();
-     }
-
     this.showTopMenuView = function() {
         opt.setOption("appVars", "viewTopMenu", true);
         parent._updatePanelsView();
@@ -446,8 +441,8 @@ var Events = (function(){
 
     this._updatePanelsView = function(){
 
-        var topMenuVisible = opt.getOption("current", "viewTopMenuShowAlways") != undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
-        var infoVisible = opt.getOption("current", "viewInfoPanelShowAlways") != undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
+        var topMenuVisible = opt.getOption("appVars", "viewTopMenu") == undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
+        var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         var $mapsContainer = $("#container");
         var $topMenuContainer = $("#topMenu");
