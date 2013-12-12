@@ -18,7 +18,7 @@ var Events = (function(){
 
     window.opt = new Options();
     window.gps = new GPS();
-    window.stageEditor = new StageEditor();
+    window.stageeditor = new StageEditor();
     window.mapseditor = new MapsEditor();
     window.bases = new Bases();
     window.locations = new Locations();
@@ -27,22 +27,14 @@ var Events = (function(){
 
     // ********** CONTEXT MENU EVENT **********
 
-    // this.closeContextMenu = function(id){
-    //     id ? $(".cssmenu_container#"+id).addClass("hide") : $(".cssmenu_container").addClass("hide");
-    //  }
-
     this.closeAllForms = function(){
         $(".eform").addClass("hide");
      }
 
     // TODO: touch event to context menu
-    // $("#container").bind("mousedown click", function(){
-    //     parent.closeContextMenu();
-    //     parent.closeAllForms();
-
-    //     opt.setOption("appVars", "viewTopMenu", false);
-    //     parent._updateMenuesView();
-    //  });
+    $("#container").bind("mousedown click", function(){
+        parent.closeAllForms();
+     });
 
     document.oncontextmenu = function(){ return false };
 
@@ -76,28 +68,16 @@ var Events = (function(){
         { type: "line", text: "Get External Maps", callback: function(){
             parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapseditor.setMap)
          }},
-        { type: "line", text: "Add Selected Map To Storage", callback: function(){
-            mapseditor.editMap();
-        }},
-        { type: "line", text: "Toggle Full Screen This Map", callback: function(){
-            mapseditor.toggleFullScreen();
-        }},
 
         { type: "paragraf", text: "Stage" },
         { type: "line", text: "Set Stage", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.loadStage, true, "group");
+            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageeditor.loadStage, true, "group");
         }},
         { type: "line", text: "Edit Stages", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageEditor.editStage, true, "group");
+            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageeditor.editStage, true, "group");
         }},         
-        { type: "line", text: "Edit Stage View", callback: function(){
-            stageEditor.editView();
-        }},
-        { type: "line", text: "Save Stage", callback: function(){
-            stageEditor.saveStage();
-        }},
         { type: "line", text: "Load External Stages", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenuExteranlJSON("stages", stageEditor.loadStage)
+            parent.stageLocalMenu.groupedCollectionMenuExteranlJSON("stages", stageeditor.loadStage)
         }},        
 
         { type: "paragraf", text: "Fast Moving" },
@@ -117,39 +97,8 @@ var Events = (function(){
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Set Global Settings", callback: opt.editGlobalForm },
-        { type: "line", text: "Settings Reset", callback: function(){
-            bases._clearAllBases();
-        }},
-        { type: "line", text: "Update from External Storage", callback: function(){
-            bases.syncIn();
-        }},
-        { type: "line", text: "Export All Data In JSON", callback: function(){
-            opt.exportAllInJSON();
-        }},
-        { type: "line", text: "Set Language", callback: function(){
+         { type: "line", text: "Set Language", callback: function(){
             parent.langChoise();
-        }},
-
-        { type: "paragraf", text: "JSON" },
-        { type: "line", text: "Get All External Points", callback: function(){
-            opt.getAllDataFromJSON("points");
-        }},
-        { type: "line", text: "Get All External Maps", callback: function(){
-            opt.getAllDataFromJSON("maps");
-        }},
-        { type: "line", text: "Get All External Stages", callback: function(){
-            opt.getAllDataFromJSON("stages");
-        }},
-        { type: "line", text: "Get All From JSON", callback: function(){
-            opt.getAllDataFromJSON();
-        }},
-
-        { type: "paragraf", text: "GPS" },
-        { type: "line", text: "Start Location", callback: function(){
-            gps.startGPS();
-        }},
-        { type: "line", text: "Stop Location", callback: function(){
-            gps.stopGPS();
         }},
 
         { type: "paragraf", text: "Help" },
@@ -158,18 +107,6 @@ var Events = (function(){
         }},        
      ];
 
-    // this.mainMenu = new CSSMenu(this.contextMenuArray, "mainMenu", false);
-
-    // TODO: touch event to context menu
-    // this.bindMainMenu = function(){
-    //     $(window).unbind("contextmenu");
-    //     $(window).bind("contextmenu", function(e){
-    //         parent.mainMenu.showMenu();
-    //     });
-    //  }
-
-    // this.bindMainMenu();
-
 
     // ************ STAGES EDITOR CONTEXT MENU ************
 
@@ -177,16 +114,16 @@ var Events = (function(){
  
         { type: "paragraf", text: "Stage", active: true },
         { type: "line", text: "Save Stage View", callback: function(){
-            stageEditor.saveView();
+            stageeditor.saveView();
         }},
         { type: "line", text: "Add Map", callback: function(){
-            stageEditor.addMapToStage();
+            stageeditor.addMapToStage();
         }},
         { type: "line", text: "Remove Map", callback: function(){
-            stageEditor.removeMapFromStage();
+            stageeditor.removeMapFromStage();
         }},
         { type: "line", text: "Edit Controls", callback: function(){
-            stageEditor.editMapsControls();
+            stageeditor.editMapsControls();
         }},        
      ];
 

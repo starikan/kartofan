@@ -844,22 +844,13 @@ var MapsEditor = (function(){
         window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
-    this.editMap = function(mapId){
+    this.editMap = function(mapId, mapVals) {
 
         var maps = opt.getOption("maps");
         var activeMap = opt.getOption("appVars", "activeMap");
-        var mapVals;
 
-        // If no mapId get active map
-        if (!mapId){
-            mapVals = window[activeMap].mapTilesLayer.mapData;
-            mapVals.id = window[activeMap].mapTilesLayer.mapName;
-            console.log(mapVals.id, activeMap, window[activeMap].mapTilesLayer)
-        }
-        else {
-            mapVals = opt.getOption("maps", mapId);
-            mapVals.id = mapVals.id ? mapVals.id : mapId;
-        }
+        var mapVals = mapVals ? mapVals : opt.getOption("maps", mapId);
+        mapVals.id = mapVals.id ? mapVals.id : mapId;
 
         // Groups suggestions
         var mapOptions = {}
@@ -872,6 +863,16 @@ var MapsEditor = (function(){
         eform.fillForm(mapVals);
         eform.fillOptions(mapOptions);
      }     
+
+    this.editMapActiveWindow = function() {
+        var activeMap = opt.getOption("appVars", "activeMap");
+        var mapVals = window[activeMap].mapTilesLayer.mapData;
+        mapVals.id = window[activeMap].mapTilesLayer.mapName;
+
+        console.log(mapVals.id, activeMap, window[activeMap].mapTilesLayer);
+
+        parent.editMap("", mapVals);
+     }
 
     this._deleteMapFunc = function(form){
         form.getAllData(); 

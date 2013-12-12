@@ -110,3 +110,9 @@
 .icon-aim:before {
   content: "x";
 }
+.icon-iconic-5:before {
+  content: "y";
+}
+.icon-arrows-out:before {
+  content: "z";
+}
