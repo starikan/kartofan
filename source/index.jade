@@ -71,14 +71,15 @@ html(manifest="offline/cache.appcache")
                     ul.left.show-for-medium-up
                         li: a.topMenuMapSet: span.icon-map
                         li: a.topMenuStageSet: span.icon-grid
-                        li: a.topMenuMove: span.icon-aim
+                        li: a.topMenuMoveMove: span.icon-aim
+                        li: a.topMenuUtilsToggleFulscreen: span.icon-aim
 
                     ul.right
                         li.has-dropdown
                             a: span.topMenuMenu Menu
                             ul.dropdown 
                                 li.has-dropdown
-                                    a.topMenuMap Maps 
+                                    a.topMenuMaps Maps 
                                     ul.dropdown
                                         li: a.topMenuMapSet Set Map
                                         li: a.topMenuMapEdit Edit Map
@@ -93,9 +94,13 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuStageEditView Edit This Stage View
                                         li: a.topMenuStageSave Save This Stage
                                 li.has-dropdown
-                                    a.topMenuMoves Moves 
+                                    a.topMenuUtils Utils
                                     ul.dropdown 
-                                        li: a.topMenuMove Move To
+                                        li: a.topMenuUtilsToggleFulscreen Toggle Fullscreen Select Map
+                                li.has-dropdown
+                                    a.topMenuMove Moves 
+                                    ul.dropdown 
+                                        li: a.topMenuMoveMove Move To
                                         li: a.topMenuMoveAdd Add Move
                                         li: a.topMenuMoveEdit Edit Move
                                 li.has-dropdown
@@ -125,7 +130,7 @@ html(manifest="offline/cache.appcache")
                             
                             li.active: a.icon-iconic.topMenuPin
 
-        div#infoMenu
+        div#infoMenuKartofan
 
         div.mapContainer#container
 

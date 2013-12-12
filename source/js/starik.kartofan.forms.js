@@ -15,6 +15,7 @@ var TopMenu = (function(){
         }
 
     window.opt = new Options();
+    window.mapseditor = new MapsEditor();
 
     var _this = this;
 
@@ -24,41 +25,40 @@ var TopMenu = (function(){
     if (!this.topMenuId || !this.mapsContainerId) return;
 
     this.topMenuArray = [
-        { "type": "topMenuMenu", "loc": "topMenu:topMenuMenu", "callback": ""},
+        { "type": "topMenuMenu", "loc": "topMenu:topMenuMenu"},
+        { "type": "topMenuMaps", "loc": "topMenu:topMenuMaps"},
         { "type": "topMenuMapSet", "loc": "topMenu:topMenuMapSet", "callback": ""},
         { "type": "topMenuMapEdit", "loc": "topMenu:topMenuMapEdit", "callback": ""},
         { "type": "topMenuMapExternal", "loc": "topMenu:topMenuMapExternal", "callback": ""},
         { "type": "topMenuMapSave", "loc": "topMenu:topMenuMapSave", "callback": ""},
+        { "type": "topMenuStages", "loc": "topMenu:topMenuStages"},
         { "type": "topMenuStageSet", "loc": "topMenu:topMenuStageSet", "callback": ""},
         { "type": "topMenuStageEdit", "loc": "topMenu:topMenuStageEdit", "callback": ""},
         { "type": "topMenuStageExternal", "loc": "topMenu:topMenuStageExternal", "callback": ""},
         { "type": "topMenuStageEditView", "loc": "topMenu:topMenuStageEditView", "callback": ""},
         { "type": "topMenuStageSave", "loc": "topMenu:topMenuStageSave", "callback": ""},
-        { "type": "topMenuMove", "loc": "topMenu:topMenuMove", "callback": ""},
+        { "type": "topMenuMove", "loc": "topMenu:topMenuMove"},
+        { "type": "topMenuMoveMove", "loc": "topMenu:topMenuMoveMove", "callback": ""},
         { "type": "topMenuMoveAdd", "loc": "topMenu:topMenuMoveAdd", "callback": ""},
         { "type": "topMenuMoveEdit", "loc": "topMenu:topMenuMoveEdit", "callback": ""},
+        { "type": "topMenuUtils", "loc": "topMenu:topMenuUtils"},
+        { "type": "topMenuUtilsToggleFulscreen", "loc": "topMenu:topMenuUtilsToggleFulscreen", "callback": mapseditor.toggleFullScreen},
+        { "type": "topMenuOptions", "loc": "topMenu:topMenuOptions"},
         { "type": "topMenuOptGlobal", "loc": "topMenu:topMenuOptGlobal", "callback": ""},
         { "type": "topMenuOptUpdate", "loc": "topMenu:topMenuOptUpdate", "callback": ""},
         { "type": "topMenuOptLang", "loc": "topMenu:topMenuOptLang", "callback": ""},
         { "type": "topMenuOptReset", "loc": "topMenu:topMenuOptReset", "callback": ""},
+        { "type": "topMenuJSON", "loc": "topMenu:topMenuJSON"},
         { "type": "topMenuJSONMaps", "loc": "topMenu:topMenuJSONMaps", "callback": ""},
         { "type": "topMenuJSONStages", "loc": "topMenu:topMenuJSONStages", "callback": ""},
         { "type": "topMenuJSONMoves", "loc": "topMenu:topMenuJSONMoves", "callback": ""},
         { "type": "topMenuJSONAll", "loc": "topMenu:topMenuJSONAll", "callback": ""},
         { "type": "topMenuJSONExport", "loc": "topMenu:topMenuJSONExport", "callback": ""},
+        { "type": "topMenuGPS", "loc": "topMenu:topMenuGPS"},
         { "type": "topMenuGPSStart", "loc": "topMenu:topMenuGPSStart", "callback": ""},
         { "type": "topMenuGPSStop", "loc": "topMenu:topMenuGPSStop", "callback": ""},
+        { "type": "topMenuHelp", "loc": "topMenu:topMenuHelp"},
         { "type": "topMenuHelpTourMain", "loc": "topMenu:topMenuHelpTourMain", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
-        { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
         { "type": "topMenuPin", "loc": "topMenu:topMenuPin", "callback": ""},
      ];
 
@@ -91,16 +91,33 @@ var TopMenu = (function(){
 
         $.each(this.topMenuArray, function(i, v) {
             if (v.loc) {
-                var $elem = $topMenu.find("."+v.type);
-                if ($elem.text()) {
-                    $elem.text(loc(v.loc));
-                }
+
+                var $elements = $topMenu.find("."+v.type);
+                var local = loc(v.loc, "", "", $elements.html());
+
+                // console.log($elements.html(), local)
+
+                if ($elements.html() && local && !$elements.children().length) {
+                    $elements.html(local);
+                } 
+            }
+        })
+     }
+
+    this._setFunctions = function() {
+        var $topMenu = $("#"+this.topMenuId);
+
+        $.each(this.topMenuArray, function(i, v) {
+            if (v.callback) {
+                // TODO: touch
+                $topMenu.find("."+v.type).click(v.callback);
             }
         })
      }
 
     this._updateTopMenuView();
     this._setLocalization();
+    this._setFunctions();
 
  }}());
 
@@ -142,7 +159,7 @@ var InfoMenu = (function(){
         var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         var $mapsContainer = $("#container");
-        var $infoContainer = $("#infoMenu");
+        var $infoContainer = $("#infoMenuKartofan");
 
         var bottom = infoVisible ? 15 : 0;
         $mapsContainer.css({"bottom": bottom+"px"});

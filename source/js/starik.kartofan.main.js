@@ -7,4 +7,3 @@ var stage;
 $(document).foundation();
 
 var opt = new Options();        // Options
-

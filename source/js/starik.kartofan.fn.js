@@ -56,12 +56,12 @@ $.noty.defaults = {
  };
 
 // https://github.com/selevit/translate-js
-function loc(params, options, lang ) {
+function loc(params, options, lang, orig) {
 
     window.opt = new Options();
 
     var lang = lang || opt.getOption("global", "lang"),
-        translated = 'ERROR', 
+        translated = orig ? orig : 'ERROR', 
         code;
 
     var localization = opt.getOption("localization", "en_US");

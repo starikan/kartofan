@@ -19,7 +19,7 @@ var Events = (function(){
     window.opt = new Options();
     window.gps = new GPS();
     window.stageEditor = new StageEditor();
-    window.mapsEditor = new MapsEditor();
+    window.mapseditor = new MapsEditor();
     window.bases = new Bases();
     window.locations = new Locations();
     window.infomenu = new InfoMenu();
@@ -68,19 +68,19 @@ var Events = (function(){
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Set Map", callback: function(){
-            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.setMap, true, "group");
+            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapseditor.setMap, true, "group");
          }},
         { type: "line", text: "Edit Maps", callback: function(){
-            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapsEditor.editMap, true, "group");
+            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapseditor.editMap, true, "group");
         }},        
         { type: "line", text: "Get External Maps", callback: function(){
-            parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapsEditor.setMap)
+            parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapseditor.setMap)
          }},
         { type: "line", text: "Add Selected Map To Storage", callback: function(){
-            mapsEditor.editMap();
+            mapseditor.editMap();
         }},
         { type: "line", text: "Toggle Full Screen This Map", callback: function(){
-            mapsEditor.toggleFullScreen();
+            mapseditor.toggleFullScreen();
         }},
 
         { type: "paragraf", text: "Stage" },
@@ -365,8 +365,8 @@ var Events = (function(){
         { "type": "input", "id": "maxZoom", "placeholder": "", "description": "maxZoom", "check": "^1?\\d$|^20$" },
         { "type": "input", "id": "minZoom", "placeholder": "", "description": "minZoom","check": "^1?\\d$|^20$" },
         { "type": "input", "id": "startZoom", "placeholder": "", "description": "startZoom", "check": "^1?\\d$|^20$" },
-        { "type": "button", "val": "Add Map", "id": "submit", callback: function(form){mapsEditor._submitMapFunc(form)}  },
-        { "type": "button", "val": "Delete Map", "id": "delete", callback: function(form){mapsEditor._deleteMapFunc(form)}  },    
+        { "type": "button", "val": "Add Map", "id": "submit", callback: function(form){mapseditor._submitMapFunc(form)}  },
+        { "type": "button", "val": "Delete Map", "id": "delete", callback: function(form){mapseditor._deleteMapFunc(form)}  },    
         { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} },
      ];
 
