@@ -110,7 +110,7 @@ var TopMenu = (function(){
         var top = topMenuVisible ? 45 : 0;
         var topZIndex = topMenuVisible ? 9999 : 0;
         $mapsContainer.css({"top": top+"px"});
-        $topMenuContainer.css({"z-index": topZIndex});
+        $topMenuContainer.css({"z-index": topZIndex, "top": (top-45)+"px"});
 
      }
 

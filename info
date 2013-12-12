@@ -29,7 +29,7 @@ TODO:
         - сделать что-то типа информационной строки снизу экрана для оповещений и всякой информации
         - тур
             - тур по сайту вынести в JSON
-        - оповещения новые вместо noty2 b cltkfnm b[ dybpe]
+        - оповещения новые вместо noty2 и сделать их внизу
         - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
 
         - поиск названий (https://github.com/stefanocudini/leaflet-search)

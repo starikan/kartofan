@@ -51,6 +51,10 @@ body {
     display: none;
 }
 
+.show {
+    display: inline;
+}
+
 .activemap {
 
 }

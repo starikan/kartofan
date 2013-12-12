@@ -108,37 +108,7 @@ var Events = (function(){
      ];
 
 
-    // // ************ STAGES EDITOR CONTEXT MENU ************
-
-    // this.stageEditorMenuArray = [
- 
-    //     { type: "paragraf", text: "Stage", active: true },
-    //     { type: "line", text: "Save Stage View", callback: function(){
-    //         stageeditor.saveView();
-    //     }},
-    //     { type: "line", text: "Add Map", callback: function(){
-    //         stageeditor.addMapToStage();
-    //     }},
-    //     { type: "line", text: "Remove Map", callback: function(){
-    //         stageeditor.removeMapFromStage();
-    //     }},
-    //     { type: "line", text: "Edit Controls", callback: function(){
-    //         stageeditor.editMapsControls();
-    //     }},        
-    //  ];
-
-    // this.stageEditorMenu = new CSSMenu(this.stageEditorMenuArray, "stageEditorMenu", false);
-
-    // // TODO: touch event to context menu
-    // this.bindStageEditorMenu = function(){
-    //     $(window).unbind("contextmenu");
-    //     $(window).bind("contextmenu", function(e){
-    //         parent.stageEditorMenu.showMenu();
-    //     });
-    //  }
-
-
-    // ********** MAP EDITOR MENU **********
+     // ********** MAP EDITOR MENU **********
 
     this.mapLocalMenu = new CSSMenu([], "mapSelectMenu", false);
 
