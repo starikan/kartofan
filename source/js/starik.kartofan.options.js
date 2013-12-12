@@ -181,7 +181,11 @@ var Options = (function(){
         this[collection][option] = value;
 
         // PouchDB
-        if (!bases.db[collection]) {return}
+        if (!bases.db[collection]) {
+            callback ? callback() : "";
+            return
+        }
+
         bases.db[collection].get(option, function(err, doc){
             if (doc) {
                 if (doc.val !== value){

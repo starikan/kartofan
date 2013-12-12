@@ -141,8 +141,8 @@ var StageEditor = (function(){
         $.each(opt.getOption("current", "stage").stageMapsGrid, function(i, v){
             parent.editMapView(i)
         });
-    
-        mapvents.bindStageEditorMenu();
+
+        topmenu.showStageMenu();
      }
 
     this.editMapView = function(i){
@@ -194,7 +194,7 @@ var StageEditor = (function(){
             }
         });
 
-        mapvents.bindMainMenu();
+        topmenu.hideStageMenu();
 
      }
 
@@ -298,6 +298,6 @@ var StageEditor = (function(){
 
         var eform = new EditableForm(mapControlsForm);
         eform.fillForm(currStage.stageMapsControlls[mapNum]);
-    }
+     }
 
  }}());

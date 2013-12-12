@@ -75,6 +75,14 @@ html(manifest="offline/cache.appcache")
                         li: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
 
                     ul.right
+                        li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
+                            a: span.topMenuStageEditor Stage Editor
+                            ul.dropdown 
+                                li: a.topMenuStageEditorSaveView Save View
+                                li: a.topMenuStageEditorAddMap Add Map To Stage
+                                li: a.topMenuStageEditorRemoveMap Remove Map From Stage
+                                li: a.topMenuStageEditorEditControls Edit Controls On Selected Map
+
                         li.has-dropdown
                             a: span.topMenuMenu Menu
                             ul.dropdown 

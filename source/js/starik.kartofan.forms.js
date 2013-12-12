@@ -27,41 +27,57 @@ var TopMenu = (function(){
     if (!this.topMenuId || !this.mapsContainerId) return;
 
     this.topMenuArray = [
-        { type: "topMenuMenu", loc: "topMenu:topMenuMenu"},
-        { type: "topMenuMaps", loc: "topMenu:topMenuMaps"},
-        { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: ""},
-        { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: ""},
-        { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: ""},
-        { type: "topMenuMapSave", loc: "topMenu:topMenuMapSave", callback: mapseditor.editMapActiveWindow},
-        { type: "topMenuStages", loc: "topMenu:topMenuStages"},
-        { type: "topMenuStageSet", loc: "topMenu:topMenuStageSet", callback: ""},
-        { type: "topMenuStageEdit", loc: "topMenu:topMenuStageEdit", callback: ""},
-        { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: ""},
+        { type: "topMenuMenu", loc: "topMenu:topMenuMenu" },
+
+        { type: "topMenuMaps", loc: "topMenu:topMenuMaps" },
+        { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: "" },
+        { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: "" },
+        { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: "" },
+        { type: "topMenuMapSave", loc: "topMenu:topMenuMapSave", callback: mapseditor.editMapActiveWindow },
+        
+        { type: "topMenuStages", loc: "topMenu:topMenuStages" },
+        { type: "topMenuStageSet", loc: "topMenu:topMenuStageSet", callback: "" },
+        { type: "topMenuStageEdit", loc: "topMenu:topMenuStageEdit", callback: "" },
+        { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: "" },
         { type: "topMenuStageEditView", loc: "topMenu:topMenuStageEditView", callback: stageeditor.editView },
-        { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage},
-        { type: "topMenuMove", loc: "topMenu:topMenuMove"},
-        { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: ""},
-        { type: "topMenuMoveAdd", loc: "topMenu:topMenuMoveAdd", callback: ""},
-        { type: "topMenuMoveEdit", loc: "topMenu:topMenuMoveEdit", callback: ""},
-        { type: "topMenuUtils", loc: "topMenu:topMenuUtils"},
-        { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen},
-        { type: "topMenuOptions", loc: "topMenu:topMenuOptions"},
-        { type: "topMenuOptGlobal", loc: "topMenu:topMenuOptGlobal", callback: ""},
-        { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn},
-        { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: ""},
-        { type: "topMenuOptReset", loc: "topMenu:topMenuOptReset", callback: bases._clearAllBases},
-        { type: "topMenuJSON", loc: "topMenu:topMenuJSON"},
+        { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
+        
+        { type: "topMenuMove", loc: "topMenu:topMenuMove" },
+        { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: "" },
+        { type: "topMenuMoveAdd", loc: "topMenu:topMenuMoveAdd", callback: "" },
+        { type: "topMenuMoveEdit", loc: "topMenu:topMenuMoveEdit", callback: "" },
+        
+        { type: "topMenuUtils", loc: "topMenu:topMenuUtils" },
+        { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen },
+        
+        { type: "topMenuOptions", loc: "topMenu:topMenuOptions" },
+        { type: "topMenuOptGlobal", loc: "topMenu:topMenuOptGlobal", callback: "" },
+        { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn },
+        { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: "" },
+        { type: "topMenuOptReset", loc: "topMenu:topMenuOptReset", callback: bases._clearAllBases },
+        
+        { type: "topMenuJSON", loc: "topMenu:topMenuJSON" },
         { type: "topMenuJSONMaps", loc: "topMenu:topMenuJSONMaps", callback: function(){opt.getAllDataFromJSON("maps")} },
-        { type: "topMenuJSONStages", loc: "topMenu:topMenuJSONStages", callback: function(){opt.getAllDataFromJSON("stages")}},
-        { type: "topMenuJSONMoves", loc: "topMenu:topMenuJSONMoves", callback: function(){opt.getAllDataFromJSON("points")}},
-        { type: "topMenuJSONAll", loc: "topMenu:topMenuJSONAll", callback: function(){opt.getAllDataFromJSON()}},
-        { type: "topMenuJSONExport", loc: "topMenu:topMenuJSONExport", callback: opt.exportAllInJSON},
-        { type: "topMenuGPS", loc: "topMenu:topMenuGPS"},
-        { type: "topMenuGPSStart", loc: "topMenu:topMenuGPSStart", callback: gps.startGPS},
-        { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS},
-        { type: "topMenuHelp", loc: "topMenu:topMenuHelp"},
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: ""},
-        { type: "topMenuPin", loc: "topMenu:topMenuPin", callback: ""},
+        { type: "topMenuJSONStages", loc: "topMenu:topMenuJSONStages", callback: function(){opt.getAllDataFromJSON("stages")} },
+        { type: "topMenuJSONMoves", loc: "topMenu:topMenuJSONMoves", callback: function(){opt.getAllDataFromJSON("points")} },
+        { type: "topMenuJSONAll", loc: "topMenu:topMenuJSONAll", callback: function(){opt.getAllDataFromJSON()} },
+        { type: "topMenuJSONExport", loc: "topMenu:topMenuJSONExport", callback: opt.exportAllInJSON },
+        
+        { type: "topMenuGPS", loc: "topMenu:topMenuGPS" },
+        { type: "topMenuGPSStart", loc: "topMenu:topMenuGPSStart", callback: gps.startGPS },
+        { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
+        
+        { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
+        
+        { type: "topMenuPin", loc: "topMenu:topMenuPin", callback: "" },
+        
+
+        { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
+        { type: "topMenuStageEditorSaveView", loc: "topMenuStageEditor:topMenuStageEditorSaveView", callback: stageeditor.saveView },
+        { type: "topMenuStageEditorAddMap", loc: "topMenuStageEditor:topMenuStageEditorAddMap", callback: stageeditor.addMapToStage },
+        { type: "topMenuStageEditorRemoveMap", loc: "topMenuStageEditor:topMenuStageEditorRemoveMap", callback: stageeditor.removeMapFromStage },
+        { type: "topMenuStageEditorEditControls", loc: "topMenuStageEditor:topMenuStageEditorEditControls", callback: stageeditor.editMapsControls },
      ];
 
     this.showTopMenuView = function() {
@@ -72,6 +88,16 @@ var TopMenu = (function(){
     this.hideTopMenuView = function() {
         opt.setOption("appVars", "viewTopMenu", false);
         _this._updateTopMenuView();
+     }
+
+    this.showStageMenu = function() {
+        var $stageMenu = $("#topMenuStageEditor");
+        $stageMenu.removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge-up hide-for-xxlarge-up")
+     }
+
+    this.hideStageMenu = function() {
+        var $stageMenu = $("#topMenuStageEditor");
+        $stageMenu.addClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge-up hide-for-xxlarge-up")
      }
 
     this._updateTopMenuView = function() {
