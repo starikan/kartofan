@@ -31,13 +31,13 @@ var TopMenu = (function(){
 
         { type: "topMenuMaps", loc: "topMenu:topMenuMaps" },
         { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: mapseditor.setMapMenu },
-        { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: "" },
+        { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: mapseditor.editMapMenu },
         { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: "" },
         { type: "topMenuMapSave", loc: "topMenu:topMenuMapSave", callback: mapseditor.editMapActiveWindow },
         
         { type: "topMenuStages", loc: "topMenu:topMenuStages" },
-        { type: "topMenuStageSet", loc: "topMenu:topMenuStageSet", callback: "" },
-        { type: "topMenuStageEdit", loc: "topMenu:topMenuStageEdit", callback: "" },
+        { type: "topMenuStageSet", loc: "topMenu:topMenuStageSet", callback: stageeditor.setStageMenu },
+        { type: "topMenuStageEdit", loc: "topMenu:topMenuStageEdit", callback: stageeditor.editStageMenu },
         { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: "" },
         { type: "topMenuStageEditView", loc: "topMenu:topMenuStageEditView", callback: stageeditor.editView },
         { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
@@ -217,9 +217,10 @@ var InfoMenu = (function(){
 
  }}());
 
-var AccordeonMenu = function(arr, id) {
+var AccordeonMenu = function(arr, base, id) {
 
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
+    if (base == undefined){ return }
     if (!id) {id = "nonamemenu"}
 
     var _this = this;
@@ -258,24 +259,27 @@ var AccordeonMenu = function(arr, id) {
 
             var rows = [];
             $.each(v, function(j, callback){
-                var title = opt.getOption("maps", j).title;
+                var title = opt.getOption(base, j).title;
                 rows.push('<div class="row" id="{0}">\
                     <div class="small-12 large-12 columns">\
-                    {1}</div></div>'.format([j, title]));
+                    {1}</div></div>'.format(["menuItem"+count, title]));
+                count++;
             });
 
             $accordionHtml.find(".content").html(rows.join(""));
             $accordion.append($accordionHtml);
-            count++;
         });
 
         $(document).foundation();
      }
 
     this._setCallbacks = function() {
+        var count = 0;
         $.each(this.arr, function(i, v){
             $.each(v, function(j, callback){
-                $("#"+j).click(function(){callback(j)})
+                $("#menuItem"+count).click(function(){callback(j)})
+                console.log(j, callback)
+                count++;
             });
         });
      }

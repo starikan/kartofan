@@ -59,9 +59,6 @@ var Events = (function(){
 
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
-        { type: "line", text: "Edit Maps", callback: function(){
-            parent.mapLocalMenu.groupedCollectionMenu(opt.getOption("maps"), mapseditor.editMap, true, "group");
-        }},        
         { type: "line", text: "Get External Maps", callback: function(){
             parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapseditor.setMap)
          }},

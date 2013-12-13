@@ -232,12 +232,22 @@ var StageEditor = (function(){
         }
      }  
 
-    this.loadStage = function(title, stageData){
+    this.setStage = function(title, stageData){
         // console.log(title!=undefined, stageData, opt.getOption("stages", title), opt.getOption("current", "stage"))
         stageData = opt.getOption("stages", title) ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
         opt.setOption("current", "stage", stageData);
         // console.log(stageData)
         stage.createStage();
+     }
+
+    this.setStageMenu = function() {
+        var arr = opt._createMenuArrFromBase("stages");
+        $.each(arr, function(g, group){
+            $.each(group, function(i, v){
+                arr[g][i] = function(i){parent.setStage(i)};
+            })
+        })
+        var menu = new AccordeonMenu(arr, "stages");
      }
 
     this.editStage = function(stageId){
@@ -250,6 +260,16 @@ var StageEditor = (function(){
 
         eform = new EditableForm(mapvents.stageEditForm);
         eform.fillForm(stageVals);     
+     }
+
+    this.editStageMenu = function() {
+        var arr = opt._createMenuArrFromBase("stages");
+        $.each(arr, function(g, group){
+            $.each(group, function(i, v){
+                arr[g][i] = function(i){parent.editStage(i)};
+            })
+        })
+        var menu = new AccordeonMenu(arr, "stages");
      }
 
     this.editMapsControls = function(){

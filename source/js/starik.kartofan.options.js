@@ -226,6 +226,21 @@ var Options = (function(){
 
      }
 
+    this._createMenuArrFromBase = function(base) {
+        var arr = {};
+        var data = this.getOption(base);
+
+        $.each(data, function(i, v){
+            v.group = v.group ? v.group : "Unknown";
+            if (!arr[v.group]){
+                arr[v.group] = {};
+            }
+            arr[v.group][v.id ? v.id : i] = "";
+        })
+
+        return arr;
+     }     
+
     // *************** HASH ****************
 
     this.setHash = function(){
