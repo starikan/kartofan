@@ -141,8 +141,8 @@ var Options = (function(){
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel", "measure" ],
         "baseNames": ["global", "gps", "stages", "points", "maps", "current"],
         "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
-        "activeMap": undefined,
-        "activeMapNum": undefined,        
+        "activeMap": "map0",
+        "activeMapNum": 0,        
      }
 
     this._init = function(){

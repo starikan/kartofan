@@ -99,3 +99,15 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     vertical-align: baseline;
     background: transparent;
 }
+
+.accordion .content {
+    padding: 0px;
+}
+
+.accordion .content .row {
+    padding: 15px 0px;
+}
+
+.accordion .content .row:hover {
+    background-color: #708090;
+}

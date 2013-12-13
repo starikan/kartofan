@@ -17,6 +17,7 @@ function Dec2Bin(n) {
 String.prototype.format = String.prototype.f = function(options) {
 
     options = options ? options : [];
+    if (typeof options != "object") options = [options];
 
     var s = this,
         i = options.length;

@@ -239,7 +239,11 @@ var AccordeonMenu = function(arr, id) {
         this.$container.empty();
         this.$container.append("<dl class='accordion' data-accordion></dl>");
 
-        this.$container.arcticmodal();
+        this.$container.arcticmodal({
+            afterClose: function(){
+                _this.$container.empty();
+            }
+        });
 
      }
 
@@ -248,19 +252,37 @@ var AccordeonMenu = function(arr, id) {
         var count = 0;
         $.each(this.arr, function(i, v){
             
-            var accordionHtml = "<dd><a href='#accordion{0}'>{1}</a>\
+            var $accordionHtml = $("<dd><a href='#accordion{0}'>{1}</a>\
             <div id='accordion{0}' class='content'></div></dd>"
-            .format([count, i]);
+            .format([count, i]));
 
-            $accordion.append(accordionHtml);
+            var rows = [];
+            $.each(v, function(j, callback){
+                var title = opt.getOption("maps", j).title;
+                rows.push('<div class="row" id="{0}">\
+                    <div class="small-12 large-12 columns">\
+                    {1}</div></div>'.format([j, title]));
+            });
+
+            $accordionHtml.find(".content").html(rows.join(""));
+            $accordion.append($accordionHtml);
             count++;
         });
 
         $(document).foundation();
      }
 
+    this._setCallbacks = function() {
+        $.each(this.arr, function(i, v){
+            $.each(v, function(j, callback){
+                $("#"+j).click(function(){callback(j)})
+            });
+        });
+     }
+
     this._initMenu();
     this._generateAccordeon();
+    this._setCallbacks();
  }
 
 var EditableForm = function(arr, funcs, id, show){

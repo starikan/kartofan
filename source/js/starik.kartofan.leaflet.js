@@ -844,9 +844,9 @@ var MapsEditor = (function(){
         $.each(maps, function(i, v){
             v.group = v.group ? v.group : "Unknown";
             if (!arr[v.group]){
-                arr[v.group] = [];
+                arr[v.group] = {};
             }
-            arr[v.group].push(v.id ? v.id : i);
+            arr[v.group][v.id ? v.id : i] = "";
         })
 
         return arr;
@@ -861,7 +861,12 @@ var MapsEditor = (function(){
 
     this.setMapMenu = function() {
         var arr = parent._createMapMenuArr();
-        console.log(arr);
+        $.each(arr, function(g, group){
+            $.each(group, function(i, v){
+                arr[g][i] = function(i){parent.setMap(i)};
+            })
+        })
+        console.log(arr)
         var menu = new AccordeonMenu(arr);
      }
 
