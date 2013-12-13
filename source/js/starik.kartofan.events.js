@@ -64,12 +64,6 @@ var Events = (function(){
          }},
 
         { type: "paragraf", text: "Stage" },
-        { type: "line", text: "Set Stage", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageeditor.loadStage, true, "group");
-        }},
-        { type: "line", text: "Edit Stages", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenu(opt.getOption("stages"), stageeditor.editStage, true, "group");
-        }},         
         { type: "line", text: "Load External Stages", callback: function(){
             parent.stageLocalMenu.groupedCollectionMenuExteranlJSON("stages", stageeditor.loadStage)
         }},        

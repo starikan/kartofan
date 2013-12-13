@@ -846,13 +846,25 @@ var MapsEditor = (function(){
 
     this.setMapMenu = function() {
         var arr = opt._createMenuArrFromBase("maps");
+        console.log(arr)
         $.each(arr, function(g, group){
             $.each(group, function(i, v){
-                arr[g][i] = function(i){parent.setMap(i)};
+                arr[g][i].callback = function(i){parent.setMap(i)};
+                arr[g][i].title = opt.getOption("maps", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr, "maps");
+        var menu = new AccordeonMenu(arr);
      }
+
+    // this.externalMapMenu = function() {
+    //     var arr = opt._createMenuArrFromJSON("maps");
+    //     $.each(arr, function(g, group){
+    //         $.each(group, function(i, v){
+    //             arr[g][i] = (function(i, v){parent.setMap(i, v)})(i, v);
+    //         })
+    //     })
+    //     var menu = new AccordeonMenu(arr, "maps");
+    //  }
 
     this.editMap = function(mapId, mapVals) {
 
@@ -878,10 +890,11 @@ var MapsEditor = (function(){
         var arr = opt._createMenuArrFromBase("maps");
         $.each(arr, function(g, group){
             $.each(group, function(i, v){
-                arr[g][i] = function(i){parent.editMap(i)};
+                arr[g][i].callback = function(i){parent.editMap(i)};
+                arr[g][i].title = opt.getOption("maps", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr, "maps");
+        var menu = new AccordeonMenu(arr);
      }
 
     this.editMapActiveWindow = function() {

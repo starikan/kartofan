@@ -31,6 +31,7 @@ TODO:
             - тур по сайту вынести в JSON
         - оповещения новые вместо noty2 и сделать их внизу
         - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
+        - Сделать стадии для мобильных и для больших экранов
 
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
         - Чат и видеочат

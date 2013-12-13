@@ -244,10 +244,11 @@ var StageEditor = (function(){
         var arr = opt._createMenuArrFromBase("stages");
         $.each(arr, function(g, group){
             $.each(group, function(i, v){
-                arr[g][i] = function(i){parent.setStage(i)};
+                arr[g][i].callback = function(i){parent.setStage(i)};
+                arr[g][i].title = opt.getOption("stages", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr, "stages");
+        var menu = new AccordeonMenu(arr);
      }
 
     this.editStage = function(stageId){
@@ -266,10 +267,11 @@ var StageEditor = (function(){
         var arr = opt._createMenuArrFromBase("stages");
         $.each(arr, function(g, group){
             $.each(group, function(i, v){
-                arr[g][i] = function(i){parent.editStage(i)};
+                arr[g][i].callback = function(i){parent.editStage(i)};
+                arr[g][i].title = opt.getOption("stages", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr, "stages");
+        var menu = new AccordeonMenu(arr);
      }
 
     this.editMapsControls = function(){

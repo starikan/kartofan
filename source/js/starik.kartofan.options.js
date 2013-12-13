@@ -235,7 +235,7 @@ var Options = (function(){
             if (!arr[v.group]){
                 arr[v.group] = {};
             }
-            arr[v.group][v.id ? v.id : i] = "";
+            arr[v.group][v.id ? v.id : i] = {};
         })
 
         return arr;

@@ -217,10 +217,9 @@ var InfoMenu = (function(){
 
  }}());
 
-var AccordeonMenu = function(arr, base, id) {
+var AccordeonMenu = function(arr, id) {
 
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
-    if (base == undefined){ return }
     if (!id) {id = "nonamemenu"}
 
     var _this = this;
@@ -258,11 +257,10 @@ var AccordeonMenu = function(arr, base, id) {
             .format([count, i]));
 
             var rows = [];
-            $.each(v, function(j, callback){
-                var title = opt.getOption(base, j).title;
+            $.each(v, function(j, data){
                 rows.push('<div class="row" id="{0}">\
                     <div class="small-12 large-12 columns">\
-                    {1}</div></div>'.format(["menuItem"+count, title]));
+                    {1}</div></div>'.format(["menuItem"+count, data.title]));
                 count++;
             });
 
@@ -276,9 +274,8 @@ var AccordeonMenu = function(arr, base, id) {
     this._setCallbacks = function() {
         var count = 0;
         $.each(this.arr, function(i, v){
-            $.each(v, function(j, callback){
-                $("#menuItem"+count).click(function(){callback(j)})
-                console.log(j, callback)
+            $.each(v, function(j, data){
+                $("#menuItem"+count).click(function(){data.callback(j)})
                 count++;
             });
         });
