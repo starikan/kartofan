@@ -40,10 +40,9 @@ module.exports = function(grunt) {
       //"source/css_vendor/bootstrap-tour.css",
       "source/css_vendor/jquery-ui.css",
       "source/css_vendor/leaflet.measure.css",
+      "source/css_vendor/jquery.arcticmodal-0.3.css",
       "source/css_vendor/foundation.css",
       "source/css_vendor/normalize.css",
-      "source/css_vendor/jquery.arcticmodal-0.3.css",
-      "source/css_vendor/jquery.arcticmodal-0.3.simple.css",
      ];
 
     var appCss = [
