@@ -598,7 +598,7 @@ var LeafletMap = function(mapId){
      }
     
     this.refreshMapAfterResize = function(){
-        this.map.invalidateSize();
+        parent.map.invalidateSize();
      }
 
     this.addVizir = function(){
@@ -837,11 +837,32 @@ var MapsEditor = (function(){
     window.opt = new Options();
     window.stage = new StageMaps();
 
+    this._createMapMenuArr = function() {
+        var arr = {};
+        var maps = opt.getOption("maps");
+
+        $.each(maps, function(i, v){
+            v.group = v.group ? v.group : "Unknown";
+            if (!arr[v.group]){
+                arr[v.group] = [];
+            }
+            arr[v.group].push(v.id ? v.id : i);
+        })
+
+        return arr;
+     }
+
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
         var activeMap = opt.getOption("appVars", "activeMap");
 
         window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
+     }
+
+    this.setMapMenu = function() {
+        var arr = parent._createMapMenuArr();
+        console.log(arr);
+        var menu = new AccordeonMenu(arr);
      }
 
     this.editMap = function(mapId, mapVals) {
@@ -913,11 +934,15 @@ var MapsEditor = (function(){
             var prevStage = opt.getOption("appVars", "prevStage");
             var currStage = opt.getOption("current", "stage");
 
-            console.log(JSON.stringify(fullStage) == JSON.stringify(currStage))
+            // console.log(JSON.stringify(fullStage) == JSON.stringify(currStage))
 
-            if (JSON.stringify(fullStage) == JSON.stringify(currStage)){
+            if (JSON.stringify(fullStage.stageMapsGrid) == JSON.stringify(currStage.stageMapsGrid) &&
+                JSON.stringify(fullStage.stageMapsNames) == JSON.stringify(currStage.stageMapsNames) &&
+                JSON.stringify(fullStage.stageMapsControlls) == JSON.stringify(currStage.stageMapsControlls))
+            {
                 opt.setOption("current", "stage", prevStage);
             } 
+
             opt.deleteOption("appVars", "fullScreenStage");
             opt.deleteOption("appVars", "prevStage");
 
@@ -928,6 +953,7 @@ var MapsEditor = (function(){
 
             opt.setOption("appVars", "prevStage", currStage);
             var fullStage = {};
+
             $.each(currStage, function(i, v){
                 fullStage[i] = $.isArray(v) ? [v[activeMapNum]] : v;
             })
@@ -941,7 +967,7 @@ var MapsEditor = (function(){
             opt.setOption("appVars", "fullScreenStage", JSON.parse(JSON.stringify(fullStage)));
         }
 
-        stage.createStage()
+        stage.createStage();
 
      }
 

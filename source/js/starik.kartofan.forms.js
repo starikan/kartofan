@@ -30,7 +30,7 @@ var TopMenu = (function(){
         { type: "topMenuMenu", loc: "topMenu:topMenuMenu" },
 
         { type: "topMenuMaps", loc: "topMenu:topMenuMaps" },
-        { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: "" },
+        { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: mapseditor.setMapMenu },
         { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: "" },
         { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: "" },
         { type: "topMenuMapSave", loc: "topMenu:topMenuMapSave", callback: mapseditor.editMapActiveWindow },
@@ -70,7 +70,7 @@ var TopMenu = (function(){
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
         
-        { type: "topMenuPin", loc: "topMenu:topMenuPin", callback: "" },
+        { type: "topMenuPin", loc: "topMenu:topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -81,13 +81,21 @@ var TopMenu = (function(){
      ];
 
     this.showTopMenuView = function() {
-        opt.setOption("appVars", "viewTopMenu", true);
-        _this._updateTopMenuView();
+        var $mapsContainer = $("#"+_this.mapsContainerId);
+        var $topMenuContainer = $("#"+_this.topMenuId);
+
+        $mapsContainer.css({"top": 45+"px"});
+        $topMenuContainer.css({"z-index": 9999, "top": 0+"px"});
      }
 
     this.hideTopMenuView = function() {
-        opt.setOption("appVars", "viewTopMenu", false);
-        _this._updateTopMenuView();
+        if (opt.getOption("current", "viewTopMenuShowAlways")) return;
+
+        var $mapsContainer = $("#"+_this.mapsContainerId);
+        var $topMenuContainer = $("#"+_this.topMenuId);
+
+        $mapsContainer.css({"top": "0px"});
+        $topMenuContainer.css({"z-index": 0, "top": "-45px"});
      }
 
     this.showStageMenu = function() {
@@ -100,17 +108,29 @@ var TopMenu = (function(){
         $stageMenu.addClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge-up hide-for-xxlarge-up")
      }
 
+    this.toggleAlwaywMenuPin = function() {
+        opt.setOption("current", "viewTopMenuShowAlways", 1 - opt.getOption("current", "viewTopMenuShowAlways"));
+
+        this.setActiveOnButtons();
+        this._updateTopMenuView();
+     }
+
+    this.setActiveOnButtons = function() {
+
+        // Pin Button
+        if (opt.getOption("current", "viewTopMenuShowAlways")){
+            $(".topMenuPin").parent().addClass("active");
+        }
+        else {
+            $(".topMenuPin").parent().removeClass("active");
+        }
+     }
+
     this._updateTopMenuView = function() {
 
-        var topMenuVisible = opt.getOption("appVars", "viewTopMenu") == undefined ? opt.getOption("current", "viewTopMenuShowAlways") : opt.getOption("appVars", "viewTopMenu");
+        var topMenuVisible = opt.getOption("current", "viewTopMenuShowAlways");
 
-        var $mapsContainer = $("#"+this.mapsContainerId);
-        var $topMenuContainer = $("#"+this.topMenuId);
-
-        var top = topMenuVisible ? 45 : 0;
-        var topZIndex = topMenuVisible ? 9999 : 0;
-        $mapsContainer.css({"top": top+"px"});
-        $topMenuContainer.css({"z-index": topZIndex, "top": (top-45)+"px"});
+        topMenuVisible ? this.showTopMenuView() : this.hideTopMenuView();
 
      }
 
@@ -143,12 +163,12 @@ var TopMenu = (function(){
         })
      }
 
-    this._updateTopMenuView();
     this._setLocalization();
     this._setFunctions();
+    this._updateTopMenuView();
+    this.setActiveOnButtons();
 
  }}());
-
 
 var InfoMenu = (function(){
 
@@ -197,6 +217,51 @@ var InfoMenu = (function(){
 
  }}());
 
+var AccordeonMenu = function(arr, id) {
+
+    if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
+    if (!id) {id = "nonamemenu"}
+
+    var _this = this;
+
+    this.$container;
+    this.$menu;
+    this.arr = arr;
+
+    this._initMenu = function(){
+        var $id = "#"+id;
+
+        if (!$("div").is($id)){
+            $("<div></div>").appendTo($("body")).attr("id", id);
+        }
+
+        this.$container = $("div"+$id);
+        this.$container.empty();
+        this.$container.append("<dl class='accordion' data-accordion></dl>");
+
+        this.$container.arcticmodal();
+
+     }
+
+    this._generateAccordeon = function() {
+        var $accordion = this.$container.find(".accordion");
+        var count = 0;
+        $.each(this.arr, function(i, v){
+            
+            var accordionHtml = "<dd><a href='#accordion{0}'>{1}</a>\
+            <div id='accordion{0}' class='content'></div></dd>"
+            .format([count, i]);
+
+            $accordion.append(accordionHtml);
+            count++;
+        });
+
+        $(document).foundation();
+     }
+
+    this._initMenu();
+    this._generateAccordeon();
+ }
 
 var EditableForm = function(arr, funcs, id, show){
     

@@ -139,6 +139,7 @@ var Options = (function(){
 
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel", "measure" ],
+        "baseNames": ["global", "gps", "stages", "points", "maps", "current"],
         "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
         "activeMap": undefined,
         "activeMapNum": undefined,        
@@ -282,7 +283,7 @@ var Options = (function(){
 
     this.exportAllInJSON = function(){
         var data = {};
-        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
+        $.each(opt.getOption("appVars", "baseNames"), function(i, v){
             data[v] = parent[v];
         })
 
@@ -298,7 +299,7 @@ var Options = (function(){
     this.getAllDataFromJSON = function(baseJson, url){
 
         url = url ? url : prompt(loc("jsonImport:jsonAdd"), this.getOption("global", "externalFeeds")[0].url)
-        baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNamesSync");
+        baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNames");
 
         $.getJSON(url, function(data){
 
@@ -363,7 +364,7 @@ var Bases = (function(){
      }
 
     this._initBase = function(){
-        $.each(opt.getOption("appVars", "baseNamesSync"), function(c, collection){
+        $.each(opt.getOption("appVars", "baseNames"), function(c, collection){
             parent.db[collection] =  new Pouch(collection, {}, function(){
                 parent.db[collection].allDocs({include_docs: true}, function(err, doc){
 
@@ -382,7 +383,9 @@ var Bases = (function(){
                         })
                     })
 
-                    parent.basesLoaded++;
+                    if (opt.getOption("appVars", "baseNamesSync").indexOf(collection) != -1){
+                        parent.basesLoaded++;
+                    }
 
                     parent._initSync();
                     opt._afterInit();
@@ -432,7 +435,7 @@ var Bases = (function(){
      }
 
     this._clearAllBases = function(){
-        $.each(opt.getOption("appVars", "baseNamesSync"), function(i, v){
+        $.each(opt.getOption("appVars", "baseNames"), function(i, v){
             parent.db[v].allDocs({include_docs: true}, function(errBase, docBase){
                 console.log(errBase, docBase)
                 $.each(docBase.rows, function(iRow, vRow){

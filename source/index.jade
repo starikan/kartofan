@@ -34,6 +34,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/hammer.js")
         script(src="js_vendor/jquery.hammer.js")
         script(src="js_vendor/leaflet.measure.js")
+        script(src="js_vendor/jquery.arcticmodal-0.3.min.js")
 
         // CSS    
         
@@ -44,6 +45,8 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/leaflet.measure.css", rel="stylesheet")
         link(href="css_vendor/foundation.css", rel="stylesheet")
         link(href="css_vendor/normalize.css", rel="stylesheet")
+        link(href="css_vendor/jquery.arcticmodal-0.3.css", rel="stylesheet")
+        link(href="css_vendor/jquery.arcticmodal-0.3.simple.css", rel="stylesheet")
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
         link(href="css/starik.kartofan.menu.css", rel="stylesheet")
@@ -136,7 +139,7 @@ html(manifest="offline/cache.appcache")
                                     ul.dropdown 
                                         li: a.topMenuHelpTourMain TourMain
                             
-                            li.active: a.icon-iconic.topMenuPin
+                            li: a.icon-iconic.topMenuPin
 
         div#infoMenuKartofan
 
