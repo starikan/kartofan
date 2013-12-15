@@ -189,6 +189,11 @@ html(manifest="offline/cache.appcache")
                         div.small-3.columns: span.prefix.formEditMap_startZoom startZoom
                         div.small-9.columns: input.formEditMap_startZoom(type="text", required, pattern="^1?\\d$|^20$")
 
+                    div.row.collapse 
+                        div.small-12.medium-4.columns.text-center: a.small.button.formEditMap_submit Submit
+                        div.small-12.medium-4.columns.text-center: a.small.button.formEditMap_delete Delete
+                        div.small-12.medium-4.columns.text-center: a.small.button.formEditMap_cancel Cancel
+
         div#infoMenuKartofan
 
         div.mapContainer#container

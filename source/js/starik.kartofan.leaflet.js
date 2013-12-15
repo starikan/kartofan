@@ -890,15 +890,12 @@ var MapsEditor = (function(){
             { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "description": "maxZoom", "check": "^1?\\d$|^20$" },
             { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "description": "minZoom","check": "^1?\\d$|^20$" },
             { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "description": "startZoom", "check": "^1?\\d$|^20$" },
-            // { "type": "submit",      "val": "Add Map", callback: function(form){mapseditor._submitMapFunc(form)}  },
-            // { "type": "delete",      "val": "Delete Map", callback: function(form){mapseditor._deleteMapFunc(form)} },
-            // { "type": "cancel",      "val": "Cancel", callback: function(form){form.hideForm()} },
+            // { "type": "submit", callback: function(form){mapseditor._submitMapFunc(form)}  },
+            // { "type": "delete", callback: function(form){mapseditor._deleteMapFunc(form)} },
+            { "type": "formEditMap_cancel", callback: function(form){form.hideForm()} },
         ];
 
         eform = new FoundationForm(arr, "formEditMap");
-        // eform = new EditableForm(mapvents.mapEditForm);
-        // eform.fillForm(mapVals);
-        // eform.fillOptions(mapOptions);
      }     
 
     this.editMapMenu = function() {

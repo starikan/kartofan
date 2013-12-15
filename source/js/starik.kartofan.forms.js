@@ -314,12 +314,6 @@ var FoundationForm = function(arr, id) {
         }
 
         this.showForm();
-
-        this.$form.arcticmodal({
-            afterClose: function(){
-                _this.hideForm();
-            }
-        });
      }
 
     this.setView = function() {
@@ -366,7 +360,17 @@ var FoundationForm = function(arr, id) {
 
      }
 
-    this.checkForm = function(){
+    this.setCallbacks = function() {
+        $.each(this.arr, function(i, v){
+            if (!v.type) return;
+            var $elem = _this.$form.find("a."+v.type);
+            if (!$elem.length || v.callback == undefined) return;
+            // TODO: touch
+            $elem.bind("click", function(){v.callback(_this)});
+        })        
+     }
+
+    this.checkForm = function() {
         this.$form.find("form").submit();
         var $errors = this.$form.find("[data-invalid]");
         this.checkFormFlag = !$errors.length;
@@ -381,22 +385,28 @@ var FoundationForm = function(arr, id) {
                 return;
             }
             _this.data[v.name] = $elem.val();            
-        })
-        console.log(this.data)
+        });
      }
 
-    this.showForm = function(){
+    this.showForm = function() {
         this.$form.removeClass("hide");
+        this.$form.arcticmodal({
+            afterClose: function(){
+                _this.hideForm();
+            }
+        });        
      }
 
-    this.hideForm = function(){
+    this.hideForm = function() {
         this.$form.addClass("hide");
+        this.$form.arcticmodal("close");
      }
 
     this._initForm();
     this.setView();
     this.setValues();
     this.setOptions();
+    this.setCallbacks();
     this.checkForm();
     this.getValues();
 }
