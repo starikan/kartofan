@@ -116,6 +116,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     width: 400px;
 }
 
+.arcticmodal-container { 
+    z-index: 19999; 
+}
+
+
 .foundationForm {
     background-color: white;
 }
