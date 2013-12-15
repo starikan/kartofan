@@ -890,12 +890,24 @@ var MapsEditor = (function(){
             { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "description": "maxZoom", "check": "^1?\\d$|^20$" },
             { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "description": "minZoom","check": "^1?\\d$|^20$" },
             { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "description": "startZoom", "check": "^1?\\d$|^20$" },
-            // { "type": "submit", callback: function(form){mapseditor._submitMapFunc(form)}  },
-            // { "type": "delete", callback: function(form){mapseditor._deleteMapFunc(form)} },
-            { "type": "formEditMap_cancel", callback: function(form){form.hideForm()} },
+            { "type": "formEditMap_submit", callback: function(form){
+                if (!form.checkFormFlag){
+                    alert(loc("editMaps:errorCheckForm"));
+                    return;
+                } else {
+                    mapseditor.submitMapFunc(form.data);
+                    form.hideForm();
+                }
+            }},
+            { "type": "formEditMap_delete", callback: function(form){
+                mapseditor.deleteMapFunc(form.data, function(){eform.hideForm()});
+            }},
+            { "type": "formEditMap_cancel", callback: function(form){
+                form.hideForm();
+            }},
         ];
 
-        eform = new FoundationForm(arr, "formEditMap");
+        var eform = new FoundationForm(arr, "formEditMap");
      }     
 
     this.editMapMenu = function() {
@@ -919,36 +931,25 @@ var MapsEditor = (function(){
         parent.editMap("", mapVals);
      }
 
-    this._deleteMapFunc = function(form){
-        form.getAllData(); 
-        console.log(form.data)
-        if (confirm(loc("editMaps:deleteMap", form.data.id))) {
-            if (form.data.id){
-                form.hideForm();
-                opt.deleteOption("maps", form.data.id);
-                console.log(form.data.id + "deleted")
+    this.deleteMapFunc = function(data, callback){
+        if (confirm(loc("editMaps:deleteMap", data.id))) {
+            if (data.id){
+                opt.deleteOption("maps", data.id);
+                callback();
+                console.log(data.id + " deleted")
             }
         }                    
      }
 
-    this._submitMapFunc = function(form){
-        form.getAllData(); 
-
-        console.log(form)
-        if (!form.checkForm){
-            alert(loc("editMaps:errorCheckForm"));
-            return;
-        }
-
-        if (opt.getOption("maps", form.data.id)){
-            if (!confirm(loc("editMaps:mapRewriteConfirm", form.data.id))) {
+    this.submitMapFunc = function(data){
+        if (opt.getOption("maps", data.id)){
+            if (!confirm(loc("editMaps:mapRewriteConfirm", data.id))) {
                 return;
             }
         }
 
-        form.hideForm();
-        opt.setOption("maps", form.data.id, form.data)
-        console.log(form.data.id, opt.getOption("maps", form.data.id));            
+        opt.setOption("maps", data.id, data)
+        console.log(data.id, opt.getOption("maps", data.id));            
      }
 
     this.toggleFullScreen = function(){

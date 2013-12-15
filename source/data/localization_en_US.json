@@ -1,6 +1,7 @@
 {
   "editMaps": {
     "errorCheckForm": "Errors in form! Check values.",
+    "mapRewriteConfirm": "Map with ID = {0} already exist. Rewrite it?",
     "deleteMap": "Do you realy want to delete {0} map?"
   },
   "editStage": {

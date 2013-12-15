@@ -71,7 +71,7 @@ var TopMenu = (function(){
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
         
         { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
-        { type: "test", callback: function(){mapseditor.editMap("ggc025k")} },
+        { type: "test", callback: function(){mapseditor.editMap("bingBirdEye")} },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -313,7 +313,18 @@ var FoundationForm = function(arr, id) {
             this.$form = $("div"+$id);
         }
 
+        this.clearForm();
         this.showForm();
+     }
+
+    this.clearForm = function() {
+        $.each(this.arr, function(i, v){
+            if (!v.type) return;
+            var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
+            if (!$elem.length) return;
+            $elem.val("");
+            $elem.html("");
+        })        
      }
 
     this.setView = function() {
@@ -331,7 +342,7 @@ var FoundationForm = function(arr, id) {
             var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
             if (!$elem.length || v.val == undefined) return;
             $elem.val(v.val);
-        })
+        });
      }
 
     this.setOptions = function() {
@@ -366,7 +377,11 @@ var FoundationForm = function(arr, id) {
             var $elem = _this.$form.find("a."+v.type);
             if (!$elem.length || v.callback == undefined) return;
             // TODO: touch
-            $elem.bind("click", function(){v.callback(_this)});
+            $elem.bind("click", function(){
+                _this.checkForm();
+                _this.getValues();
+                v.callback(_this)
+            });
         })        
      }
 
@@ -380,8 +395,7 @@ var FoundationForm = function(arr, id) {
         $.each(this.arr, function(i, v){
             if (!v.type) return;
             var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
-            if (!$elem.length && !v.name) {
-                console.log("Name of field not exist");
+            if (!$elem.length || !v.name) {
                 return;
             }
             _this.data[v.name] = $elem.val();            
@@ -404,8 +418,8 @@ var FoundationForm = function(arr, id) {
 
     this._initForm();
     this.setView();
-    this.setValues();
     this.setOptions();
+    this.setValues();
     this.setCallbacks();
     this.checkForm();
     this.getValues();
