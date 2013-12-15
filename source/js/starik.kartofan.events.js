@@ -277,30 +277,4 @@ var Events = (function(){
         { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} } 
      ];
 
-
-
-
-
-
-
-
-    // this.mapEditForm = [
-    //     { "type": "header","val": "Active Map Add" },
-    //     { "type": "input", "id": "id", "description": "id"},
-    //     { "type": "input", "id": "title", "description": "title" },
-    //     { "type": "select", "val": "img", "options": ["img", "wms"], "id": "server", "description": "server" },
-    //     { "type": "input", "id": "layer", "description": "layer" },
-    //     { "type": "tags", "id": "tags", "description": "tags" },
-    //     { "type": "datalist", "id": "group", "placeholder": "", "description": "group" },
-    //     { "type": "select", "id": "src", "options": ["Internet", "Storage", "Local"], "description": "src"},
-    //     { "type": "select", "id": "crs", "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "description": "CRS" },    
-    //     { "type": "textarea", "id": "tilesURL", "rows": 3, "description": "tilesURL" },
-    //     { "type": "input", "id": "maxZoom", "placeholder": "", "description": "maxZoom", "check": "^1?\\d$|^20$" },
-    //     { "type": "input", "id": "minZoom", "placeholder": "", "description": "minZoom","check": "^1?\\d$|^20$" },
-    //     { "type": "input", "id": "startZoom", "placeholder": "", "description": "startZoom", "check": "^1?\\d$|^20$" },
-    //     { "type": "button", "val": "Add Map", "id": "submit", callback: function(form){mapseditor._submitMapFunc(form)}  },
-    //     { "type": "button", "val": "Delete Map", "id": "delete", callback: function(form){mapseditor._deleteMapFunc(form)}  },    
-    //     { "type": "button", "val": "Cancel", "id": "cancel", callback: function(form){form.hideForm()} },
-    //  ];
-
  }}());

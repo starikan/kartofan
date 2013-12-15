@@ -43,6 +43,7 @@ TODO:
         - http://oridomi.com/
 
     Mid:
+        - тэги в формах http://www.strangeplanet.fr/work/jquery-highlighttextarea/
         - переименовать контейнера в уникальные ID
         - Добавление и редактирование меток рызных типов
             - для маркеров в иде шрифтов https://github.com/lvoogdt/Leaflet.awesome-markers

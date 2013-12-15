@@ -294,7 +294,7 @@ var FoundationForm = function(arr, id) {
 
     this.$form;
     this.arr = arr; 
-    this.data;
+    this.data = {};
     this.checkFormFlag = true;
     
     this._initForm = function(){
@@ -371,8 +371,15 @@ var FoundationForm = function(arr, id) {
 
     this.getValues = function() {
         $.each(this.arr, function(i, v){
-            
+            if (!v.type) return;
+            var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
+            if (!$elem.length && !v.name) {
+                console.log("Name of field not exist");
+                return;
+            }
+            _this.data[v.name] = $elem.val();            
         })
+        console.log(this.data)
      }
 
     this.showForm = function(){
@@ -388,6 +395,7 @@ var FoundationForm = function(arr, id) {
     this.setValues();
     this.setOptions();
     this.checkForm();
+    this.getValues();
 }
 
 var EditableForm = function(arr, funcs, id, show){
