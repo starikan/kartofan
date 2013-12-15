@@ -147,14 +147,20 @@ var Options = (function(){
 
     this._init = function(){
         bases._initBase();
-
-        this.initLocalization();
+        // this.initLocalization()
      }
     
     this._afterInit = function(container){
         if (!bases.checkBasesLoaded()){ return }
 
-        this.getHash();
+        // If no localization create it and then repeat again
+        if ($.isEmptyObject(parent.localization)){
+            parent.initLocalization(parent._afterInit);
+            return;
+        }
+
+        opt.getHash();
+
         container = container ? container : "container";
         window.stage = new StageMaps();
         window.stage.initContainer(container);
@@ -170,8 +176,7 @@ var Options = (function(){
         }
 
         if (opt.getOption("global", "isSetLangFirstShown")){
-            window.mapvents = new Events();
-            mapvents.langChoise();
+            opt.setLang();
             opt.setOption("global", "isSetLangFirstShown", false);
         }            
      }
@@ -239,7 +244,7 @@ var Options = (function(){
         })
 
         return arr;
-     }     
+     }  
 
     // *************** HASH ****************
 
@@ -282,17 +287,34 @@ var Options = (function(){
 
     this.localization = {};
 
-    this.initLocalization = function(){
-        var langs = this.getOption("global", "langs");
-        $.each(langs, function(i, lang){
+    // Callback neded because localization must loaded before all code but after all bases sync, look this._afterInit
+    this.initLocalization = function(callback){
+        var lang = this.getOption("global", "lang");
+        $.getJSON("data/localization_en_US.json", function(data){
+            if(data){ parent.setOption("localization", "en_US", data) }
             $.getJSON("data/localization_"+lang+".json", function(data){
-                if(data){
-                    parent.setOption("localization", lang, data);
-                }
-            })            
-        })
-
+                if(data){ parent.setOption("localization", lang, data, callback) }
+            })             
+        });
+       
      }
+
+    this.setLang = function() {
+        var menuLangChoise = {
+            "Choose Your Language": {
+                "English": {
+                    title: "English", 
+                    callback: function(){ opt.setOption("global", "lang", "en_US")}
+                },
+                "Russian":{
+                    title: "Russian", 
+                    callback: function(){ opt.setOption("global", "lang", "ru_RU")}
+                }
+            }
+         };
+
+        var menu = new AccordionMenu(menuLangChoise);
+     }     
 
     // *************** JSON ****************
 

@@ -233,10 +233,8 @@ var StageEditor = (function(){
      }  
 
     this.setStage = function(title, stageData){
-        // console.log(title!=undefined, stageData, opt.getOption("stages", title), opt.getOption("current", "stage"))
         stageData = opt.getOption("stages", title) ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
         opt.setOption("current", "stage", stageData);
-        // console.log(stageData)
         stage.createStage();
      }
 
@@ -248,7 +246,7 @@ var StageEditor = (function(){
                 arr[g][i].title = opt.getOption("stages", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr);
+        var menu = new AccordionMenu(arr);
      }
 
     this.editStage = function(stageId){
@@ -271,7 +269,7 @@ var StageEditor = (function(){
                 arr[g][i].title = opt.getOption("stages", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr);
+        var menu = new AccordionMenu(arr);
      }
 
     this.editMapsControls = function(){

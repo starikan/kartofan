@@ -25,16 +25,6 @@ var Events = (function(){
     window.infomenu = new InfoMenu();
 
 
-    // ********** CONTEXT MENU EVENT **********
-
-    this.closeAllForms = function(){
-        $(".eform").addClass("hide");
-     }
-
-    // TODO: touch event to context menu
-    $("#container").bind("mousedown click", function(){
-        parent.closeAllForms();
-     });
 
     document.oncontextmenu = function(){ return false };
 
@@ -94,18 +84,9 @@ var Events = (function(){
 
     // this.mapLocalMenu = new CSSMenu([], "mapSelectMenu", false);
 
-    this.stageLocalMenu = new CSSMenu([], "stageSelectMenu", false);
+    // this.stageLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
-    this.langChoiseMenu = [
-        { type: "paragraf", text: "Choose Your Language", active: true },
-        { type: "line", text: "English", callback: function(){ opt.setOption("global", "lang", "en_US")}},
-        { type: "line", text: "Russian", callback: function(){ opt.setOption("global", "lang", "ru_RU")}},
-     ]
-    this.langChoise = function(){
-        var menu = new CSSMenu(this.langChoiseMenu);
-     }
-    
-    this.pointsLocalMenu = new CSSMenu([], "stageSelectMenu", false);
+    // this.pointsLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
     this.editPointsForm = [
         { "type": "header","val": loc("editPoints:form_header") },

@@ -853,7 +853,7 @@ var MapsEditor = (function(){
                 arr[g][i].title = opt.getOption("maps", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr);
+        var menu = new AccordionMenu(arr);
      }
 
     // this.externalMapMenu = function() {
@@ -863,7 +863,7 @@ var MapsEditor = (function(){
     //             arr[g][i] = (function(i, v){parent.setMap(i, v)})(i, v);
     //         })
     //     })
-    //     var menu = new AccordeonMenu(arr, "maps");
+    //     var menu = new AccordionMenu(arr, "maps");
     //  }
 
     this.editMap = function(mapId, vals) {
@@ -918,7 +918,7 @@ var MapsEditor = (function(){
                 arr[g][i].title = opt.getOption("maps", i).title;
             })
         })
-        var menu = new AccordeonMenu(arr);
+        var menu = new AccordionMenu(arr);
      }
 
     this.editMapActiveWindow = function() {

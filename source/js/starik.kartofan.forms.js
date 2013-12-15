@@ -18,6 +18,7 @@ var TopMenu = (function(){
     window.mapseditor = new MapsEditor();
     window.stageeditor = new StageEditor();
     window.bases = new Bases();
+    window.gps = new GPS();
 
     var _this = this;
 
@@ -53,7 +54,7 @@ var TopMenu = (function(){
         { type: "topMenuOptions", loc: "topMenu:topMenuOptions" },
         { type: "topMenuOptGlobal", loc: "topMenu:topMenuOptGlobal", callback: "" },
         { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn },
-        { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: "" },
+        { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: opt.setLang },
         { type: "topMenuOptReset", loc: "topMenu:topMenuOptReset", callback: bases._clearAllBases },
         
         { type: "topMenuJSON", loc: "topMenu:topMenuJSON" },
@@ -143,7 +144,7 @@ var TopMenu = (function(){
 
                 var $elements = $topMenu.find("."+v.type);
                 var local = loc(v.loc, "", "", $elements.html());
-                console.log($elements.html(), local)
+                // console.log($elements.html(), local)
 
                 if ($elements.html() && local && !$elements.children().length) {
                     $elements.html(local);
@@ -217,7 +218,17 @@ var InfoMenu = (function(){
 
  }}());
 
-var AccordeonMenu = function(arr, id) {
+/**
+    arr = [
+        "group": {
+            id: {
+                title: "", 
+                callback: function
+            }
+        }
+    ]
+*/
+var AccordionMenu = function(arr, id) {
 
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
     if (!id) {id = "nonamemenu"}
@@ -250,10 +261,12 @@ var AccordeonMenu = function(arr, id) {
         var $accordion = this.$container.find(".accordion");
         var count = 0;
         $.each(this.arr, function(i, v){
+
+            var active = Object.keys(_this.arr).length === 1 ? "active" : "";
             
             var $accordionHtml = $("<dd><a href='#accordion{0}'>{1}</a>\
-            <div id='accordion{0}' class='content'></div></dd>"
-            .format([count, i]));
+            <div id='accordion{0}' class='content {2}'></div></dd>"
+            .format([count, i, active]));
 
             var rows = [];
             $.each(v, function(j, data){
