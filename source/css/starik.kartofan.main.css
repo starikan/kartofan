@@ -124,3 +124,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .foundationForm select {
     margin: 0px;
 }
+
+input[data-invalid],
+select[data-invalid],
+textarea[data-invalid] {
+    background-color: red;
+}

@@ -144,14 +144,14 @@ html(manifest="offline/cache.appcache")
 
         div#formEditMap.foundationForm.hide
             div.box-modal
-                form
+                form(data-abide)
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMap_id ID
-                        div.small-9.columns: input.formEditMap_id(type="text")
+                        div.small-9.columns: input.formEditMap_id(type="text", required)
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMap_title Title
-                        div.small-9.columns: input.formEditMap_title(type="text")
+                        div.small-9.columns: input.formEditMap_title(type="text", required)
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMap_layers Layers
@@ -175,19 +175,19 @@ html(manifest="offline/cache.appcache")
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMap_tilesURL Tiles URL
-                        div.small-9.columns: textarea.formEditMap_tilesURL
+                        div.small-9.columns: textarea.formEditMap_tilesURL(required, pattern="url")
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMap_maxZoom maxZoom
-                        div.small-9.columns: input.formEditMap_maxZoom(type="text")
+                        div.small-9.columns: input.formEditMap_maxZoom(type="text", required, pattern="^1?\\d$|^20$")
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMap_minZoom minZoom
-                        div.small-9.columns: input.formEditMap_minZoom(type="text")
+                        div.small-9.columns: input.formEditMap_minZoom(type="text", required, pattern="^1?\\d$|^20$")
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMap_startZoom startZoom
-                        div.small-9.columns: input.formEditMap_startZoom(type="text")
+                        div.small-9.columns: input.formEditMap_startZoom(type="text", required, pattern="^1?\\d$|^20$")
 
         div#infoMenuKartofan
 

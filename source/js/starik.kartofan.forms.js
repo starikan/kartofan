@@ -295,7 +295,6 @@ var FoundationForm = function(arr, id) {
     this.$form;
     this.arr = arr; 
     this.data;
-    this.checkFields;
     this.checkFormFlag = true;
     
     this._initForm = function(){
@@ -335,7 +334,6 @@ var FoundationForm = function(arr, id) {
             var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
             if (!$elem.length || v.val == undefined) return;
             $elem.val(v.val);
-            $elem.text(v.val);
         })
      }
 
@@ -357,12 +355,18 @@ var FoundationForm = function(arr, id) {
             $elem = _this.$form.find("select."+v.type);
             if ($elem.length && v.options && typeof v.options == "object" && v.options.length){
                 $.each(v.options, function(j, option){
-                    $elem.append("<option></option>").val(option);
+                    $elem.append("<option>"+option+"</option>");
                 });
             }
 
         });
 
+     }
+
+    this.checkForm = function(){
+        this.$form.find("form").submit();
+        var $errors = this.$form.find("[data-invalid]");
+        this.checkFormFlag = !$errors.length;
      }
 
     this.getValues = function() {
@@ -383,6 +387,7 @@ var FoundationForm = function(arr, id) {
     this.setView();
     this.setValues();
     this.setOptions();
+    this.checkForm();
 }
 
 var EditableForm = function(arr, funcs, id, show){
