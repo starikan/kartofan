@@ -320,10 +320,18 @@ var FoundationForm = function(arr, id) {
     this.clearForm = function() {
         $.each(this.arr, function(i, v){
             if (!v.type) return;
-            var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
-            if (!$elem.length) return;
-            $elem.val("");
-            $elem.html("");
+            var $elem;
+
+            $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
+            if ($elem.length) {
+                $elem.val("");
+                $elem.html("");                
+            };
+
+            $elem = _this.$form.find("a."+v.type);
+            if ($elem.length) {
+                $elem.off("click");
+            }
         })        
      }
 
@@ -377,7 +385,7 @@ var FoundationForm = function(arr, id) {
             var $elem = _this.$form.find("a."+v.type);
             if (!$elem.length || v.callback == undefined) return;
             // TODO: touch
-            $elem.bind("click", function(){
+            $elem.on("click", function(){
                 _this.checkForm();
                 _this.getValues();
                 v.callback(_this)
