@@ -275,7 +275,10 @@ var AccordeonMenu = function(arr, id) {
         var count = 0;
         $.each(this.arr, function(i, v){
             $.each(v, function(j, data){
-                $("#menuItem"+count).click(function(){data.callback(j)})
+                $("#menuItem"+count).click(function(){
+                    _this.$container.arcticmodal('close');
+                    data.callback(j);
+                })
                 count++;
             });
         });
