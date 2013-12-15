@@ -1,13 +1,75 @@
 {
+  "topMenu": {
+    "topMenuMenu": "Меню",
+    "topMenuMaps": "Карты",
+    "topMenuMapSet": "Установить карту",
+    "topMenuMapEdit": "Редактировать карту",
+    "topMenuMapExternal": "Загрузить внешнюю карту",
+    "topMenuMapSave": "Сохранить карту",
+    "topMenuStages": "Наборы",
+    "topMenuStageSet": "Установить набор",
+    "topMenuStageEdit": "Редактировать данные набора",
+    "topMenuStageExternal": "Загрузить внешний набор",
+    "topMenuStageEditView": "Редактировать вид набора",
+    "topMenuStageSave": "Сохранить набор",
+    "topMenuUtils": "Полезности",
+    "topMenuUtilsToggleFulscreen": "Переключение активной карты на весь экран",
+    "topMenuMove": "Быстрые перемещения",
+    "topMenuMoveMove": "Быстрое перемещение",
+    "topMenuMoveAdd": "Добавить быстрое перемещение",
+    "topMenuMoveEdit": "Редактировать быстрое перемещение",
+    "topMenuOptions": "Настройки",
+    "topMenuOptGlobal": "Глобальные настройки",
+    "topMenuOptUpdate": "Обновить настройки из внешней базы",
+    "topMenuOptLang": "Set Language",
+    "topMenuOptReset": "Сброс всех настроек",
+    "topMenuJSON": "JSON",
+    "topMenuJSONMaps": "Загрузить все всеншние карты",
+    "topMenuJSONStages": "Загрузить все всеншние наборы",
+    "topMenuJSONMoves": "Загрузить все всеншние быстрые перемещения",
+    "topMenuJSONAll": "Загрузить все из внешенго JSON файла",
+    "topMenuJSONExport": "Экспортировать все в JSON",
+    "topMenuGPS": "GPS",
+    "topMenuGPSStart": "GPS Старт",
+    "topMenuGPSStop": "GPS Стоп",
+    "topMenuHelp": "Помощь",
+    "topMenuHelpTourMain": "Основной тур"
+  },
+  "topMenuStageEditor": {
+    "topMenuStageEditor": "Редактор набора",
+    "topMenuStageEditorSaveView": "Созранить вид",
+    "topMenuStageEditorAddMap": "Добавить карту",
+    "topMenuStageEditorRemoveMap": "Удалить карту",
+    "topMenuStageEditorEditControls": "Редактировать контроллы"
+  },  
   "editMaps": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
-    "mapsJSONAdd": "Введите адрес файла JSON с картами",
-    "deleteMap": "Вы действительно хотите удалить карту {0}?"
+    "confirmRewriteMap": "Карта с ID = {0} уже существует. Перезаписать ее?",
+    "confirmDeleteMap": "Вы действительно хотите удалить карту {0}?",
+    "formEditMap_id": "ID",
+    "formEditMap_title": "Заголовок",
+    "formEditMap_server": "Тип сервера",
+    "formEditMap_layers": "Слои",
+    "formEditMap_group": "Группа",
+    "formEditMap_src": "Источник",
+    "formEditMap_crs": "CRS",
+    "formEditMap_tilesURL": "Ссылка",
+    "formEditMap_maxZoom": "maxZoom",
+    "formEditMap_minZoom": "minZoom",
+    "formEditMap_startZoom": "startZoom",
+    "formEditMap_submit": "Отправить",
+    "formEditMap_delete": "Удалить",
+    "formEditMap_cancel": "Отмена"    
   },
-  "editStage": {
-    "errorCheckForm": "Ошибка в форме. Проверьте значения.",
-    "inputStageID": "Введите ID вида",
-    "deleteStage": "Вы действительно хотите удалить вид с ID = {0}?"
+  "offline": {
+    "offline": "Приложение отключилось от сети. Рекомендуется включить режим кэша для карт.",
+    "online": "Приложение подключилось к сети. Рекмендуется обновить внешние базы и перезагрузить приложение."
+  },
+  "gps": {
+    "error": "Ошибка GPS"
+  },
+  "controls": {
+    "measureTip": "Измерение расстояний"
   },
   "jsonImport": {
     "rewriteConfirm": "Запись {0} уже существует в базе {1}. Перезаписать?"
@@ -16,12 +78,10 @@
     "errorExtSync": "Доступ к внешней базе {0} не возможен", 
     "syncFromExtComplire": "Синхронизация из внешней базы {0} завершена. Перезагрузите приложение чтобы применить все изменения."
   },
-  "gps": {
-    "error": "Ошибка GPS"
-  },
-  "offline": {
-    "offline": "Приложение отключилось от сети. Рекомендуется включить режим кэша для карт.",
-    "online": "Приложение подключилось к сети. Рекмендуется обновить внешние базы и перезагрузить приложение."
+  "editStage": {
+    "errorCheckForm": "Ошибка в форме. Проверьте значения.",
+    "inputStageID": "Введите ID вида",
+    "deleteStage": "Вы действительно хотите удалить вид с ID = {0}?"
   },
   "editPoints": {
     "form_header": "Добавить быструю точку",
@@ -32,8 +92,5 @@
     "form_submit": "Добавить",
     "form_delete": "Удалить",
     "form_cancel": "Отмена"
-  },
-  "controls": {
-    "measureTip": "Измерение расстояний"
   }
 }

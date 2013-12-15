@@ -68,10 +68,7 @@ var Locations = (function(){
     window.opt = new Options();
 
     this.createForm = function(){
-        // var arr = [
-        //     { "type": "input", "id": "title", "description": loc("usage:locationFormInput") },
-        //  ];
-        // var eform = new EditableForm(arr);
+ 
      }
 
  }}());

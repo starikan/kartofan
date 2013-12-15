@@ -1,14 +1,76 @@
 {
+  "topMenu": {
+    "topMenuMenu": "Menu",
+    "topMenuMaps": "Maps",
+    "topMenuMapSet": "Set Map",
+    "topMenuMapEdit": "Edit Map",
+    "topMenuMapExternal": "Get External Map",
+    "topMenuMapSave": "Save Map",
+    "topMenuStages": "Stages",
+    "topMenuStageSet": "Set Stage",
+    "topMenuStageEdit": "Edit Stage",
+    "topMenuStageExternal": "Get External Stage",
+    "topMenuStageEditView": "Edit This Stage View",
+    "topMenuStageSave": "Save This Stage",
+    "topMenuUtils": "Utils",
+    "topMenuUtilsToggleFulscreen": "Toggle Fullscreen Select Map",
+    "topMenuMove": "Moves",
+    "topMenuMoveMove": "Move To",
+    "topMenuMoveAdd": "Add Move",
+    "topMenuMoveEdit": "Edit Move",
+    "topMenuOptions": "Options",
+    "topMenuOptGlobal": "Set Global Options",
+    "topMenuOptUpdate": "Update Options From External Base",
+    "topMenuOptLang": "Set Language",
+    "topMenuOptReset": "Reset All Settings",
+    "topMenuJSON": "JSON",
+    "topMenuJSONMaps": "Get All External Maps",
+    "topMenuJSONStages": "Get All External Stages",
+    "topMenuJSONMoves": "Get All External Moves",
+    "topMenuJSONAll": "Get All From JSON",
+    "topMenuJSONExport": "Export All Data To JSON",
+    "topMenuGPS": "GPS",
+    "topMenuGPSStart": "GPS Start",
+    "topMenuGPSStop": "GPS Stop",
+    "topMenuHelp": "Help",
+    "topMenuHelpTourMain": "TourMain"
+  },
+  "topMenuStageEditor": {
+    "topMenuStageEditor": "Stage Editor",
+    "topMenuStageEditorSaveView": "Save View",
+    "topMenuStageEditorAddMap": "Add Map To Stage",
+    "topMenuStageEditorRemoveMap": "Remove Map From Stage",
+    "topMenuStageEditorEditControls": "Edit Controls On Selected Map"
+  },
   "editMaps": {
     "errorCheckForm": "Errors in form! Check values.",
-    "mapRewriteConfirm": "Map with ID = {0} already exist. Rewrite it?",
-    "deleteMap": "Do you realy want to delete {0} map?"
+    "confirmRewriteMap": "Map with ID = {0} already exist. Rewrite it?",
+    "confirmDeleteMap": "Do you realy want to delete {0} map?",
+    "formEditMap_id": "ID",
+    "formEditMap_title": "Title",
+    "formEditMap_server": "Server",
+    "formEditMap_layers": "Layers",
+    "formEditMap_group": "Group",
+    "formEditMap_src": "Source",
+    "formEditMap_crs": "CRS",
+    "formEditMap_tilesURL": "URL",
+    "formEditMap_maxZoom": "maxZoom",
+    "formEditMap_minZoom": "minZoom",
+    "formEditMap_startZoom": "startZoom",
+    "formEditMap_submit": "Submit",
+    "formEditMap_delete": "Delete",
+    "formEditMap_cancel": "Cancel"
   },
-  "editStage": {
-    "errorCheckForm": "Errors in form! Check values.",
-    "inputStageID": "Input Stage ID",
-    "deleteStage": "Do you realy want to delete stage with ID = {0}?"
+  "offline": {
+    "offline": "The application offline. Recommend switch map in cache mode.",
+    "online": "The application online. Recommend reload application to sync external bases."
+  },  
+  "gps": {
+    "error": "GPS Error"
   },
+  "controls": {
+    "measureTip": "Measuring"
+  },  
   "jsonImport": {
     "jsonAdd": "Type here URL of JSON with maps.",
     "rewriteConfirm": "Item {0} already exist in base {1}. Rewrite it?"
@@ -17,12 +79,10 @@
     "errorExtSync": "Access to the external database {0} denied", 
     "syncFromExtComplire": "Syncronization from external base {0} complite. Reload application to successe all changes."
   },
-  "gps": {
-    "error": "GPS Error"
-  },
-  "offline": {
-    "offline": "The application offline. Recommend switch map in cache mode.",
-    "online": "The application online. Recommend reload application to sync external bases."
+  "editStage": {
+    "errorCheckForm": "Errors in form! Check values.",
+    "inputStageID": "Input Stage ID",
+    "deleteStage": "Do you realy want to delete stage with ID = {0}?"
   },
   "editPoints": {
     "form_header": "Add Fast Moving",
@@ -36,11 +96,5 @@
     "confirmDeletePoint": "Do you realy want to delete fast point with ID = {0}?",
     "errorCheckForm": "Errors in form! Check values.",
     "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?"
-  },
-  "controls": {
-    "measureTip": "Measuring"
-  },
-  "usage": {
-    "locationFormInput": "Input Location"
   }
 }

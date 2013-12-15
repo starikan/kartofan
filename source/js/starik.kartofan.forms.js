@@ -71,7 +71,7 @@ var TopMenu = (function(){
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
         
         { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
-        { type: "test", callback: function(){mapseditor.editMap("bingBirdEye")} },
+        { type: "test", callback: function(){} },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -143,8 +143,7 @@ var TopMenu = (function(){
 
                 var $elements = $topMenu.find("."+v.type);
                 var local = loc(v.loc, "", "", $elements.html());
-
-                // console.log($elements.html(), local)
+                console.log($elements.html(), local)
 
                 if ($elements.html() && local && !$elements.children().length) {
                     $elements.html(local);
@@ -335,10 +334,10 @@ var FoundationForm = function(arr, id) {
         })        
      }
 
-    this.setView = function() {
+    this.setLocalization = function() {
         $.each(this.arr, function(i, v){
             if (!v.type) return;
-            var $elem = _this.$form.find("span."+v.type+", label."+v.type);
+            var $elem = _this.$form.find("span."+v.type+", label."+v.type+", a."+v.type);
             if (!$elem.length || !v.loc) return;
             $elem.html(loc(v.loc));
         })
@@ -425,7 +424,7 @@ var FoundationForm = function(arr, id) {
      }
 
     this._initForm();
-    this.setView();
+    this.setLocalization();
     this.setOptions();
     this.setValues();
     this.setCallbacks();

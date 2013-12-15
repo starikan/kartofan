@@ -879,18 +879,18 @@ var MapsEditor = (function(){
         groups.sort();
 
         var arr = [
-            { "type": "formEditMap_id",        "name": "id", "val": vals.id, "description": "id"},
-            { "type": "formEditMap_title",     "name": "title", "val": vals.title, "description": "title" },
-            { "type": "formEditMap_layers",    "name": "layers", "val": vals.layers, "description": "layer" },
-            { "type": "formEditMap_server",    "name": "server", "val": vals.server || "img", "options": ["img", "wms"], "description": "server" },
-            { "type": "formEditMap_group",     "name": "group", "val": vals.group, "options": groups, "description": "group" },
-            { "type": "formEditMap_src",       "name": "src", "val": vals.src || "Internet", "options": ["Internet", "Storage", "Local"], "description": "src"},
-            { "type": "formEditMap_crs",       "name": "crs", "val": vals.crs, "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "description": "CRS" },
-            { "type": "formEditMap_tilesURL",  "name": "tilesURL", "val": vals.tilesURL, "description": "tilesURL" },
-            { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "description": "maxZoom", "check": "^1?\\d$|^20$" },
-            { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "description": "minZoom","check": "^1?\\d$|^20$" },
-            { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "description": "startZoom", "check": "^1?\\d$|^20$" },
-            { "type": "formEditMap_submit", callback: function(form){
+            { "type": "formEditMap_id",        "name": "id", "val": vals.id, "loc": "editMaps:formEditMap_id", "description": "id"},
+            { "type": "formEditMap_title",     "name": "title", "val": vals.title, "loc": "editMaps:formEditMap_title", "description": "title" },
+            { "type": "formEditMap_server",    "name": "server", "val": vals.server || "img", "options": ["img", "wms"], "loc": "editMaps:formEditMap_server", "description": "server" },
+            { "type": "formEditMap_layers",    "name": "layers", "val": vals.layers, "loc": "editMaps:formEditMap_layers", "description": "layer" },
+            { "type": "formEditMap_group",     "name": "group", "val": vals.group, "options": groups, "loc": "editMaps:formEditMap_group", "description": "group" },
+            { "type": "formEditMap_src",       "name": "src", "val": vals.src || "Internet", "options": ["Internet", "Storage", "Local"], "loc": "editMaps:formEditMap_src", "description": "src"},
+            { "type": "formEditMap_crs",       "name": "crs", "val": vals.crs, "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "loc": "editMaps:formEditMap_crs", "description": "CRS" },
+            { "type": "formEditMap_tilesURL",  "name": "tilesURL", "val": vals.tilesURL, "loc": "editMaps:formEditMap_tilesURL", "description": "tilesURL" },
+            { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "loc": "editMaps:formEditMap_maxZoom", "description": "maxZoom", "check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "loc": "editMaps:formEditMap_minZoom", "description": "minZoom","check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "loc": "editMaps:formEditMap_startZoom", "description": "startZoom", "check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_submit", "loc": "editMaps:formEditMap_submit", callback: function(form){
                 if (!form.checkFormFlag){
                     alert(loc("editMaps:errorCheckForm"));
                     return;
@@ -899,10 +899,10 @@ var MapsEditor = (function(){
                     form.hideForm();
                 }
             }},
-            { "type": "formEditMap_delete", callback: function(form){
+            { "type": "formEditMap_delete", "loc": "editMaps:formEditMap_delete", callback: function(form){
                 mapseditor.deleteMapFunc(form.data, function(){eform.hideForm()});
             }},
-            { "type": "formEditMap_cancel", callback: function(form){
+            { "type": "formEditMap_cancel", "loc": "editMaps:formEditMap_cancel", callback: function(form){
                 form.hideForm();
             }},
         ];
@@ -932,7 +932,7 @@ var MapsEditor = (function(){
      }
 
     this.deleteMapFunc = function(data, callback){
-        if (confirm(loc("editMaps:deleteMap", data.id))) {
+        if (confirm(loc("editMaps:confirmDeleteMap", data.id))) {
             if (data.id){
                 opt.deleteOption("maps", data.id);
                 callback();
@@ -943,7 +943,7 @@ var MapsEditor = (function(){
 
     this.submitMapFunc = function(data){
         if (opt.getOption("maps", data.id)){
-            if (!confirm(loc("editMaps:mapRewriteConfirm", data.id))) {
+            if (!confirm(loc("editMaps:confirmRewriteMap", data.id))) {
                 return;
             }
         }
