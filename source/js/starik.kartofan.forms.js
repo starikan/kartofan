@@ -70,7 +70,8 @@ var TopMenu = (function(){
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
         
-        { type: "topMenuPin", loc: "topMenu:topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
+        { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
+        { type: "test", callback: function(){mapseditor.editMap("ggc025k")} },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -244,7 +245,6 @@ var AccordeonMenu = function(arr, id) {
                 _this.$container.empty();
             }
         });
-
      }
 
     this._generateAccordeon = function() {
@@ -285,6 +285,105 @@ var AccordeonMenu = function(arr, id) {
     this._generateAccordeon();
     this._setCallbacks();
  }
+
+var FoundationForm = function(arr, id) {
+    if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
+    if (!id) return;
+
+    var _this = this;
+
+    this.$form;
+    this.arr = arr; 
+    this.data;
+    this.checkFields;
+    this.checkFormFlag = true;
+    
+    this._initForm = function(){
+        var $id = "#"+id;
+
+        if (!$("div").is($id)){
+            $("<div></div>").appendTo($("body")).attr("id", id);
+            this.$form = $("div"+$id);
+            this.$form.empty();
+            this.$form.append("<form></form>");
+        }
+        else {
+            this.$form = $("div"+$id);
+        }
+
+        this.showForm();
+
+        this.$form.arcticmodal({
+            afterClose: function(){
+                _this.hideForm();
+            }
+        });
+     }
+
+    this.setView = function() {
+        $.each(this.arr, function(i, v){
+            if (!v.type) return;
+            var $elem = _this.$form.find("span."+v.type+", label."+v.type);
+            if (!$elem.length || !v.loc) return;
+            $elem.html(loc(v.loc));
+        })
+     }
+
+    this.setValues = function() {
+        $.each(this.arr, function(i, v){
+            if (!v.type) return;
+            var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
+            if (!$elem.length || v.val == undefined) return;
+            $elem.val(v.val);
+            $elem.text(v.val);
+        })
+     }
+
+    this.setOptions = function() {
+        $.each(this.arr, function(i, v){
+            if (!v.type) return;
+            var $elem;
+
+            $elem = _this.$form.find("input."+v.type);
+            if ($elem.length && v.options && typeof v.options == "object" && v.options.length){
+                $elem.attr("list", v.type+"_list");
+                var $datalist = $("<datalist></datalist>").attr("id", v.type+"_list");
+                $elem.parent().append($datalist);
+                $.each(v.options, function(j, option){
+                    $datalist.append("<option>"+option+"</option>");
+                });
+            }
+
+            $elem = _this.$form.find("select."+v.type);
+            if ($elem.length && v.options && typeof v.options == "object" && v.options.length){
+                $.each(v.options, function(j, option){
+                    $elem.append("<option></option>").val(option);
+                });
+            }
+
+        });
+
+     }
+
+    this.getValues = function() {
+        $.each(this.arr, function(i, v){
+            
+        })
+     }
+
+    this.showForm = function(){
+        this.$form.removeClass("hide");
+     }
+
+    this.hideForm = function(){
+        this.$form.addClass("hide");
+     }
+
+    this._initForm();
+    this.setView();
+    this.setValues();
+    this.setOptions();
+}
 
 var EditableForm = function(arr, funcs, id, show){
     
@@ -418,7 +517,7 @@ var EditableForm = function(arr, funcs, id, show){
         });
         if (!v.options.length){
             $.each(v.options, function(i, option){
-                $datalist.appent($("<option></option>").val(option))
+                $datalist.append($("<option></option>").val(option))
             })
         };
         $datalist.appendTo(this.$formContent);

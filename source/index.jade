@@ -76,6 +76,7 @@ html(manifest="offline/cache.appcache")
                         li: a.topMenuStageSet: span.icon-grid
                         li: a.topMenuMoveMove: span.icon-aim
                         li: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
+                        li: a.test: span.icon-blind
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -140,6 +141,53 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuHelpTourMain TourMain
                             
                             li: a.icon-iconic.topMenuPin
+
+        div#formEditMap.foundationForm.hide
+            div.box-modal
+                form
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_id ID
+                        div.small-9.columns: input.formEditMap_id(type="text")
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_title Title
+                        div.small-9.columns: input.formEditMap_title(type="text")
+
+                    div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMap_layers Layers
+                        div.small-9.columns: input.formEditMap_layers(type="text")
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_server Server
+                        div.small-9.columns: select.formEditMap_server
+
+                    div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMap_group Group
+                        div.small-9.columns: input.formEditMap_group(type="text")
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_src Source
+                        div.small-9.columns: select.formEditMap_src
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_crs CRS
+                        div.small-9.columns: select.formEditMap_crs
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_tilesURL Tiles URL
+                        div.small-9.columns: textarea.formEditMap_tilesURL
+
+                    div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMap_maxZoom maxZoom
+                        div.small-9.columns: input.formEditMap_maxZoom(type="text")
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_minZoom minZoom
+                        div.small-9.columns: input.formEditMap_minZoom(type="text")
+
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.formEditMap_startZoom startZoom
+                        div.small-9.columns: input.formEditMap_startZoom(type="text")
 
         div#infoMenuKartofan
 

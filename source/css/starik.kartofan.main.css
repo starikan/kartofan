@@ -111,3 +111,16 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .accordion .content .row:hover {
     background-color: #708090;
 }
+
+.arcticmodal-container_i2 { 
+    width: 400px;
+}
+
+.foundationForm {
+    background-color: white;
+}
+
+.foundationForm input,
+.foundationForm select {
+    margin: 0px;
+}

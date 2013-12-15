@@ -866,24 +866,39 @@ var MapsEditor = (function(){
     //     var menu = new AccordeonMenu(arr, "maps");
     //  }
 
-    this.editMap = function(mapId, mapVals) {
+    this.editMap = function(mapId, vals) {
 
         var maps = opt.getOption("maps");
         var activeMap = opt.getOption("appVars", "activeMap");
 
-        var mapVals = mapVals ? mapVals : opt.getOption("maps", mapId);
-        mapVals.id = mapVals.id ? mapVals.id : mapId;
+        var vals = vals ? vals : opt.getOption("maps", mapId);
+        vals.id = vals.id ? vals.id : mapId;
 
         // Groups suggestions
-        var mapOptions = {}
-        var groups = $.pluck(maps, "group");
-        groups = $.unique(groups);
-        groups.sort()
-        mapOptions.group = groups;        
+        var groups = $.unique($.pluck(maps, "group"));
+        groups.sort();
 
-        eform = new EditableForm(mapvents.mapEditForm);
-        eform.fillForm(mapVals);
-        eform.fillOptions(mapOptions);
+        var arr = [
+            { "type": "formEditMap_id",        "val": vals.id, "description": "id"},
+            { "type": "formEditMap_title",     "val": vals.title, "description": "title" },
+            { "type": "formEditMap_layers",    "val": vals.layers, "description": "layer" },
+            { "type": "formEditMap_server",    "val": vals.server || "img", "options": ["img", "wms"], "description": "server" },
+            { "type": "formEditMap_group",     "val": vals.group, "options": groups, "description": "group" },
+            { "type": "formEditMap_src",       "val": vals.src || "Internet", "options": ["Internet", "Storage", "Local"], "description": "src"},
+            { "type": "formEditMap_crs",       "val": vals.crs, "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "description": "CRS" },
+            { "type": "formEditMap_tilesURL",   "val": vals.tilesURL, "description": "tilesURL" },
+            { "type": "formEditMap_maxZoom",   "val": vals.maxZoom, "description": "maxZoom", "check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_minZoom",   "val": vals.minZoom, "description": "minZoom","check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_startZoom", "val": vals.startZoom, "description": "startZoom", "check": "^1?\\d$|^20$" },
+            // { "type": "submit",      "val": "Add Map", callback: function(form){mapseditor._submitMapFunc(form)}  },
+            // { "type": "delete",      "val": "Delete Map", callback: function(form){mapseditor._deleteMapFunc(form)} },
+            // { "type": "cancel",      "val": "Cancel", callback: function(form){form.hideForm()} },
+        ];
+
+        eform = new FoundationForm(arr, "formEditMap");
+        // eform = new EditableForm(mapvents.mapEditForm);
+        // eform.fillForm(mapVals);
+        // eform.fillOptions(mapOptions);
      }     
 
     this.editMapMenu = function() {
