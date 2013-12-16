@@ -33,13 +33,13 @@ var TopMenu = (function(){
         { type: "topMenuMaps", loc: "topMenu:topMenuMaps" },
         { type: "topMenuMapSet", loc: "topMenu:topMenuMapSet", callback: mapseditor.setMapMenu },
         { type: "topMenuMapEdit", loc: "topMenu:topMenuMapEdit", callback: mapseditor.editMapMenu },
-        { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: "" },
+        { type: "topMenuMapExternal", loc: "topMenu:topMenuMapExternal", callback: mapseditor.externalMapMenu },
         { type: "topMenuMapSave", loc: "topMenu:topMenuMapSave", callback: mapseditor.editMapActiveWindow },
         
         { type: "topMenuStages", loc: "topMenu:topMenuStages" },
         { type: "topMenuStageSet", loc: "topMenu:topMenuStageSet", callback: stageeditor.setStageMenu },
         { type: "topMenuStageEdit", loc: "topMenu:topMenuStageEdit", callback: stageeditor.editStageMenu },
-        { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: "" },
+        { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: stageeditor.externalStageMenu },
         { type: "topMenuStageEditView", loc: "topMenu:topMenuStageEditView", callback: stageeditor.editView },
         { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
         

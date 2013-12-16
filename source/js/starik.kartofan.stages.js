@@ -247,6 +247,26 @@ var StageEditor = (function(){
         var menu = new AccordionMenu(arr);
      }
 
+    this.externalStageMenu = function(url) {
+
+        url = typeof url == "string" ? url : prompt(loc("jsonImport:jsonAdd"), opt.getOption("global", "mainFeed"));
+
+        $.getJSON(url, function(data){
+            try { data = JSON.parse(Base64.decode(data.content)) }
+            catch(e){}
+
+            var arr = opt._createMenuArrFromBase("", data.stages);
+
+            $.each(arr, function(g, group){
+                $.each(group, function(i, v){
+                    arr[g][i] = data.stages[i];
+                    arr[g][i].callback = function(i){parent.setStage(i, arr[g][i])};
+                })
+            })
+            var menu = new AccordionMenu(arr);
+        })
+     }
+
     this.editStage = function(stageId){
 
         if (!stageId){ return }

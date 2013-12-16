@@ -853,15 +853,25 @@ var MapsEditor = (function(){
         var menu = new AccordionMenu(arr);
      }
 
-    // this.externalMapMenu = function() {
-    //     var arr = opt._createMenuArrFromJSON("maps");
-    //     $.each(arr, function(g, group){
-    //         $.each(group, function(i, v){
-    //             arr[g][i] = (function(i, v){parent.setMap(i, v)})(i, v);
-    //         })
-    //     })
-    //     var menu = new AccordionMenu(arr, "maps");
-    //  }
+    this.externalMapMenu = function(url) {
+
+        url = typeof url == "string" ? url : prompt(loc("jsonImport:jsonAdd"), opt.getOption("global", "mainFeed"));
+
+        $.getJSON(url, function(data){
+            try { data = JSON.parse(Base64.decode(data.content)) }
+            catch(e){}
+
+            var arr = opt._createMenuArrFromBase("", data.maps);
+
+            $.each(arr, function(g, group){
+                $.each(group, function(i, v){
+                    arr[g][i] = data.maps[i];
+                    arr[g][i].callback = function(i){parent.setMap(i, arr[g][i])};
+                })
+            })
+            var menu = new AccordionMenu(arr);
+        })
+     }
 
     this.editMap = function(mapId, vals) {
 

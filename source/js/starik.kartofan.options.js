@@ -24,12 +24,7 @@ var Options = (function(){
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
         "mapCachedService": "http://127.0.0.1:3000",
 
-        "externalFeeds": [
-            {
-                "title": "Main Repository",
-                "url": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
-            },
-        ],
+        "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
 
         "isTourFirstShown": true,
         "isSetLangFirstShown": true,
@@ -242,9 +237,10 @@ var Options = (function(){
 
      }
 
-    this._createMenuArrFromBase = function(base) {
+    this._createMenuArrFromBase = function(base, data) {
+
         var arr = {};
-        var data = this.getOption(base);
+        data = data ? data : this.getOption(base);
 
         $.each(data, function(i, v){
             v.group = v.group ? v.group : "Unknown";
@@ -253,6 +249,8 @@ var Options = (function(){
             }
             arr[v.group][v.id ? v.id : i] = {};
         })
+
+        console.log(arr)
 
         return arr;
      }  
@@ -346,7 +344,7 @@ var Options = (function(){
 
     this.getAllDataFromJSON = function(baseJson, url){
 
-        url = url ? url : prompt(loc("jsonImport:jsonAdd"), this.getOption("global", "externalFeeds")[0].url)
+        url = url ? url : prompt(loc("jsonImport:jsonAdd"), this.getOption("global", "mainFeed"))
         baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNames");
 
         $.getJSON(url, function(data){

@@ -17,15 +17,6 @@ var Events = (function(){
     var parent = this;
 
     this.contextMenuArray = [
-        { type: "paragraf", text: "Map" },
-        { type: "line", text: "Get External Maps", callback: function(){
-            parent.mapLocalMenu.groupedCollectionMenuExteranlJSON("maps", mapseditor.setMap)
-         }},
-
-        { type: "paragraf", text: "Stage" },
-        { type: "line", text: "Load External Stages", callback: function(){
-            parent.stageLocalMenu.groupedCollectionMenuExteranlJSON("stages", stageeditor.loadStage)
-        }},        
 
         { type: "paragraf", text: "Fast Moving" },
         { type: "line", text: "Go To Point", callback: function(){
@@ -44,9 +35,6 @@ var Events = (function(){
 
         { type: "paragraf", text: "Options" },
         { type: "line", text: "Set Global Settings", callback: opt.editGlobalForm },
-         { type: "line", text: "Set Language", callback: function(){
-            parent.langChoise();
-        }},
 
         { type: "paragraf", text: "Help" },
         { type: "line", text: "Main Features", callback: function(){
@@ -54,12 +42,6 @@ var Events = (function(){
         }},        
      ];
 
-
-     // ********** MAP EDITOR MENU **********
-
-    // this.mapLocalMenu = new CSSMenu([], "mapSelectMenu", false);
-
-    // this.stageLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
     // this.pointsLocalMenu = new CSSMenu([], "stageSelectMenu", false);
 
