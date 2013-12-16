@@ -261,10 +261,8 @@ var LeafletMap = function(mapId){
     this.mapId = mapId;
 
     window.opt = new Options();
-    window.mapvents = new Events();
     window.gps = new GPS();
     window.bases = new Bases();
-    window.topmenu = new TopMenu("topMenuKartofan", "container");
 
     var parent = this;
 
@@ -736,7 +734,6 @@ var LeafletTiles = function(mapName, mapData){
     this.layer;
 
     window.opt = new Options();
-    window.mapvents = new Events();
 
     // TODO: сделать проверку что это строка и ссылка
     this._validateTilesURL = function(url){

@@ -1,11 +1,22 @@
 "use strict"
 
-var eform;      // Main Form
-var mapvents;   // Events
-var stage;
-
 $(document).foundation({
     live_validate : true,
 });
 
-var opt = new Options();        // Options
+document.oncontextmenu = function(){ return false };
+
+// ********** ONLINE/OFFLINE EVENT **********
+
+if (window.navigator.onLine != undefined){
+    window.addEventListener('online',  function(){
+        console.log("online");
+        noty({text: loc("offline:online"), type: "error"});            
+    });
+    window.addEventListener('offline', function(){
+        console.log("offline");
+        noty({text: loc("offline:offline"), type: "error"});
+    });
+ }
+
+window.opt = new Options();        // Options

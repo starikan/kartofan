@@ -17,7 +17,6 @@ var StageMaps = (function(){
     var parent = this;
 
     window.opt = new Options();
-    window.mapvents = new Events();
 
     this.$container;
     this.currStage;
@@ -81,7 +80,6 @@ var StageEditor = (function(){
     var parent = this;
 
     window.opt = new Options();
-    window.mapvents = new Events();
     window.stage = new StageMaps();
 
     var _errCorrect = function(x){
@@ -102,7 +100,7 @@ var StageEditor = (function(){
 
     var _getPersentPosition = function(div){
 
-        var $container = $("#container");
+        var $container = $("#containerKartofan");
 
         var widthContainer = $container.width();
         var heightContainer = $container.height();
@@ -257,8 +255,8 @@ var StageEditor = (function(){
         if (!stageVals){ return }
         stageVals.id = stageVals.id ? stageVals.id : stageId;
 
-        eform = new EditableForm(mapvents.stageEditForm);
-        eform.fillForm(stageVals);     
+        // eform = new EditableForm(mapvents.stageEditForm);
+        // eform.fillForm(stageVals);     
      }
 
     this.editStageMenu = function() {

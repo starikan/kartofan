@@ -14,9 +14,6 @@ var Options = (function(){
             return new Construct_singletone();
         }
 
-    window.bases = new Bases();
-    window.gps = new GPS();
-
     var parent = this;
 
     // ********* ALL SETTINGS ************
@@ -146,24 +143,25 @@ var Options = (function(){
      }
 
     this._init = function(){
+        window.bases = new Bases();
         bases._initBase();
-        // this.initLocalization()
      }
-    
-    this._afterInit = function(container){
-        if (!bases.checkBasesLoaded()){ return }
 
-        // If no localization create it and then repeat again
-        if ($.isEmptyObject(parent.localization)){
-            parent.initLocalization(parent._afterInit);
-            return;
-        }
+    this._afterInitProcessing = function () {
+
+        window.stage = new StageMaps();
+        window.topmenu = new TopMenu("topMenuKartofan", "containerKartofan");
+        window.gps = new GPS();
+        window.mapseditor = new MapsEditor();
+        window.locations = new Locations();
+        window.infomenu = new InfoMenu();
+
+        // TODO: удалить
+        window.mapvents = new Events();
 
         opt.getHash();
 
-        container = container ? container : "container";
-        window.stage = new StageMaps();
-        window.stage.initContainer(container);
+        stage.initContainer("containerKartofan");
 
         // First visit automaticaly start tour
         if (opt.getOption("global", "isTourFirstShown")){
@@ -178,7 +176,21 @@ var Options = (function(){
         if (opt.getOption("global", "isSetLangFirstShown")){
             opt.setLang();
             opt.setOption("global", "isSetLangFirstShown", false);
-        }            
+        }   
+     } 
+
+    this._afterInit = function(){
+
+        if (!bases.checkBasesLoaded()){ return }
+
+
+        // If no localization create it and then repeat again
+        if ($.isEmptyObject(parent.localization)){
+            parent.initLocalization(parent._afterInit);
+            return;
+        }
+
+        parent._afterInitProcessing();
      }
 
     this.setOption = function(collection, option, value, callback){
@@ -224,10 +236,8 @@ var Options = (function(){
 
     this.editGlobalForm = function(){
         
-        window.mapvents = new Events();
-
-        eform = new EditableForm(mapvents.globalOptionsForm);
-        eform.fillForm(parent.global);
+        // eform = new EditableForm(mapvents.globalOptionsForm);
+        // eform.fillForm(parent.global);
 
      }
 

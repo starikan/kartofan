@@ -16,31 +16,6 @@ var Events = (function(){
 
     var parent = this;
 
-    window.opt = new Options();
-    window.gps = new GPS();
-    window.stageeditor = new StageEditor();
-    window.mapseditor = new MapsEditor();
-    window.bases = new Bases();
-    window.locations = new Locations();
-    window.infomenu = new InfoMenu();
-
-
-
-    document.oncontextmenu = function(){ return false };
-
-    // ********** ONLINE/OFFLINE EVENT **********
-
-    if (window.navigator.onLine != undefined){
-        window.addEventListener('online',  function(){
-            console.log("online");
-            noty({text: loc("offline:online"), type: "error"});            
-        });
-        window.addEventListener('offline', function(){
-            console.log("offline");
-            noty({text: loc("offline:offline"), type: "error"});
-        });
-     }
-
     this.contextMenuArray = [
         { type: "paragraf", text: "Map" },
         { type: "line", text: "Get External Maps", callback: function(){

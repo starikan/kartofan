@@ -207,7 +207,7 @@ var InfoMenu = (function(){
 
         var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
-        var $mapsContainer = $("#container");
+        var $mapsContainer = $("#containerKartofan");
         var $infoContainer = $("#infoMenuKartofan");
 
         var bottom = infoVisible ? 15 : 0;
