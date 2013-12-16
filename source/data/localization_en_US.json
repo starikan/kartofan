@@ -60,6 +60,17 @@
     "formEditMap_submit": "Submit",
     "formEditMap_delete": "Delete",
     "formEditMap_cancel": "Cancel"
+  }, 
+  "editStages": {
+    "errorCheckForm": "Errors in form! Check values.",
+    "confirmRewriteMap": "Stage with ID = {0} already exist. Rewrite it?",
+    "confirmDeleteMap": "Do you realy want to delete {0} stage?",
+    "formEditStage_id": "ID",
+    "formEditStage_title": "Title",
+    "formEditStage_group": "Group",
+    "formEditStage_submit": "Submit",
+    "formEditStage_delete": "Delete",
+    "formEditStage_cancel": "Cancel"
   },
   "offline": {
     "offline": "The application offline. Recommend switch map in cache mode.",

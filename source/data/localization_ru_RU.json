@@ -61,6 +61,17 @@
     "formEditMap_delete": "Удалить",
     "formEditMap_cancel": "Отмена"    
   },
+  "editStages": {
+    "errorCheckForm": "Ошибка в форме. Проверьте значения.",
+    "confirmRewriteMap": "Набор с ID = {0} уже существует. Перезаписать ее?",
+    "confirmDeleteMap": "Вы действительно хотите удалить набор {0}",
+    "formEditStage_id": "ID",
+    "formEditStage_title": "Заголовок",
+    "formEditStage_group": "Группа",
+    "formEditStage_submit": "Отправить",
+    "formEditStage_delete": "Удалить",
+    "formEditStage_cancel": "Отмена"
+  },  
   "offline": {
     "offline": "Приложение отключилось от сети. Рекомендуется включить режим кэша для карт.",
     "online": "Приложение подключилось к сети. Рекмендуется обновить внешние базы и перезагрузить приложение."

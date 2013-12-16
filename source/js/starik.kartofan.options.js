@@ -153,6 +153,7 @@ var Options = (function(){
         window.topmenu = new TopMenu("topMenuKartofan", "containerKartofan");
         window.gps = new GPS();
         window.mapseditor = new MapsEditor();
+        window.stageeditor = new StageEditor();
         window.locations = new Locations();
         window.infomenu = new InfoMenu();
 

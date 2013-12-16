@@ -251,9 +251,36 @@ var StageEditor = (function(){
 
         if (!stageId){ return }
 
-        var stageVals = opt.getOption("stages", stageId);
-        if (!stageVals){ return }
-        stageVals.id = stageVals.id ? stageVals.id : stageId;
+        var vals = opt.getOption("stages", stageId);
+        if (!vals){ return }
+        vals.id = vals.id ? vals.id : stageId;
+
+        // Groups suggestions
+        var groups = $.unique($.pluck(vals, "group"));
+        groups.sort();
+
+        var arr = [
+            { "type": "formEditStage_id",        "name": "id", "val": vals.id, "loc": "editStages:formEditStage_id", "description": "id"},
+            { "type": "formEditStage_title",     "name": "title", "val": vals.title, "loc": "editStages:formEditStage_title", "description": "title" },
+            { "type": "formEditStage_group",     "name": "group", "val": vals.group, "options": groups, "loc": "editStages:formEditStage_group", "description": "group" },
+            { "type": "formEditStage_submit", "loc": "editStages:formEditStage_submit", callback: function(form){
+                if (!form.checkFormFlag){
+                    alert(loc("editStages:errorCheckForm"));
+                    return;
+                } else {
+                    stageeditor.submitStageFunc(form.data);
+                    form.hideForm();
+                }
+            }},
+            { "type": "formEditStage_delete", "loc": "editStages:formEditStage_delete", callback: function(form){
+                stageeditor.deleteStageFunc(form.data, function(){eform.hideForm()});
+            }},
+            { "type": "formEditStage_cancel", "loc": "editStages:formEditStage_cancel", callback: function(form){
+                form.hideForm();
+            }},
+        ];
+
+        var eform = new FoundationForm(arr, "formEditStage");
 
         // eform = new EditableForm(mapvents.stageEditForm);
         // eform.fillForm(stageVals);     
@@ -316,6 +343,27 @@ var StageEditor = (function(){
 
         var eform = new EditableForm(mapControlsForm);
         eform.fillForm(currStage.stageMapsControlls[mapNum]);
+     }
+
+    this.deleteStageFunc = function(data, callback){
+        if (confirm(loc("editStages:confirmDeleteMap", data.id))) {
+            if (data.id){
+                opt.deleteOption("stages", data.id);
+                callback();
+                console.log(data.id + " deleted")
+            }
+        }                    
+     }
+
+    this.submitStageFunc = function(data){
+        if (opt.getOption("stages", data.id)){
+            if (!confirm(loc("editStages:confirmRewriteMap", data.id))) {
+                return;
+            }
+        }
+
+        opt.setOption("stages", data.id, data)
+        console.log(data.id, opt.getOption("stages", data.id));            
      }
 
  }}());
