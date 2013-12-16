@@ -64,13 +64,25 @@
   "editStages": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
     "confirmRewriteMap": "Набор с ID = {0} уже существует. Перезаписать ее?",
-    "confirmDeleteMap": "Вы действительно хотите удалить набор {0}",
+    "confirmDeleteMap": "Вы действительно хотите удалить набор {0}?",
     "formEditStage_id": "ID",
     "formEditStage_title": "Заголовок",
     "formEditStage_group": "Группа",
     "formEditStage_submit": "Отправить",
     "formEditStage_delete": "Удалить",
     "formEditStage_cancel": "Отмена"
+  },  
+  "editPoints": {
+    "errorCheckForm": "Ошибка в форме. Проверьте значения.",
+    "confirmRewritePoint": "Точка с ID = {0} уже существует. Перезаписать ее?",
+    "confirmDeletePoint": "Вы действительно хотите удалить точку {0}?",
+    "formEditPoint_id": "ID",
+    "formEditPoint_title": "Заголовок",
+    "formEditPoint_latlng": "Координаты",
+    "formEditPoint_group": "Группа",
+    "formEditPoint_submit": "Отправить",
+    "formEditPoint_delete": "Удалить",
+    "formEditPoint_cancel": "Отмена"
   },  
   "offline": {
     "offline": "Приложение отключилось от сети. Рекомендуется включить режим кэша для карт.",
@@ -88,20 +100,5 @@
   "syncBases": {
     "errorExtSync": "Доступ к внешней базе {0} не возможен", 
     "syncFromExtComplire": "Синхронизация из внешней базы {0} завершена. Перезагрузите приложение чтобы применить все изменения."
-  },
-  "editStage": {
-    "errorCheckForm": "Ошибка в форме. Проверьте значения.",
-    "inputStageID": "Введите ID вида",
-    "deleteStage": "Вы действительно хотите удалить вид с ID = {0}?"
-  },
-  "editPoints": {
-    "form_header": "Добавить быструю точку",
-    "form_id": "Идентификатор",
-    "form_title": "Название",
-    "form_group": "Группа",
-    "form_latlng": "Координаты",
-    "form_submit": "Добавить",
-    "form_delete": "Удалить",
-    "form_cancel": "Отмена"
   }
 }

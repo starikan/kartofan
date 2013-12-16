@@ -17,6 +17,7 @@ var TopMenu = (function(){
     window.opt = new Options();
     window.mapseditor = new MapsEditor();
     window.stageeditor = new StageEditor();
+    window.fastmoving = new FastMoving();
     window.bases = new Bases();
     window.gps = new GPS();
 
@@ -44,9 +45,9 @@ var TopMenu = (function(){
         { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
         
         { type: "topMenuMove", loc: "topMenu:topMenuMove" },
-        { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: "" },
-        { type: "topMenuMoveAdd", loc: "topMenu:topMenuMoveAdd", callback: "" },
-        { type: "topMenuMoveEdit", loc: "topMenu:topMenuMoveEdit", callback: "" },
+        { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: fastmoving.moveToPointMenu },
+        { type: "topMenuMoveAdd", loc: "topMenu:topMenuMoveAdd", callback: fastmoving.editPoint },
+        { type: "topMenuMoveEdit", loc: "topMenu:topMenuMoveEdit", callback: fastmoving.editPointMenu },
         
         { type: "topMenuUtils", loc: "topMenu:topMenuUtils" },
         { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen },

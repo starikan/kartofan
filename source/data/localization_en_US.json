@@ -72,6 +72,18 @@
     "formEditStage_delete": "Delete",
     "formEditStage_cancel": "Cancel"
   },
+  "editPoints": {
+    "errorCheckForm": "Errors in form! Check values.",
+    "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?",
+    "confirmDeletePoint": "Do you realy want to delete {0} point?",
+    "formEditPoint_id": "ID",
+    "formEditPoint_title": "Title",
+    "formEditPoint_latlng": "LatLng",
+    "formEditPoint_group": "Group",
+    "formEditPoint_submit": "Submit",
+    "formEditPoint_delete": "Delete",
+    "formEditPoint_cancel": "Cancel"
+  },
   "offline": {
     "offline": "The application offline. Recommend switch map in cache mode.",
     "online": "The application online. Recommend reload application to sync external bases."
@@ -89,23 +101,5 @@
   "syncBases": {
     "errorExtSync": "Access to the external database {0} denied", 
     "syncFromExtComplire": "Syncronization from external base {0} complite. Reload application to successe all changes."
-  },
-  "editStage": {
-    "errorCheckForm": "Errors in form! Check values.",
-    "inputStageID": "Input Stage ID",
-    "deleteStage": "Do you realy want to delete stage with ID = {0}?"
-  },
-  "editPoints": {
-    "form_header": "Add Fast Moving",
-    "form_id": "ID",
-    "form_title": "Title",
-    "form_group": "Group",
-    "form_latlng": "Lantitude and Lontitude",
-    "form_submit": "Add Point",
-    "form_delete": "Delete Point",
-    "form_cancel": "Cancel",
-    "confirmDeletePoint": "Do you realy want to delete fast point with ID = {0}?",
-    "errorCheckForm": "Errors in form! Check values.",
-    "confirmRewritePoint": "Point with ID = {0} already exist. Rewrite it?"
   }
 }

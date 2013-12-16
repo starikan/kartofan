@@ -894,9 +894,9 @@ var MapsEditor = (function(){
             { "type": "formEditMap_src",       "name": "src", "val": vals.src || "Internet", "options": ["Internet", "Storage", "Local"], "loc": "editMaps:formEditMap_src", "description": "src"},
             { "type": "formEditMap_crs",       "name": "crs", "val": vals.crs, "options": ["", "EPSG3857", "EPSG3857.Ext", "EPSG3395", "Simple"], "loc": "editMaps:formEditMap_crs", "description": "CRS" },
             { "type": "formEditMap_tilesURL",  "name": "tilesURL", "val": vals.tilesURL, "loc": "editMaps:formEditMap_tilesURL", "description": "tilesURL" },
-            { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "loc": "editMaps:formEditMap_maxZoom", "description": "maxZoom", "check": "^1?\\d$|^20$" },
-            { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "loc": "editMaps:formEditMap_minZoom", "description": "minZoom","check": "^1?\\d$|^20$" },
-            { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "loc": "editMaps:formEditMap_startZoom", "description": "startZoom", "check": "^1?\\d$|^20$" },
+            { "type": "formEditMap_maxZoom",   "name": "maxZoom", "val": vals.maxZoom, "loc": "editMaps:formEditMap_maxZoom", "description": "maxZoom" },
+            { "type": "formEditMap_minZoom",   "name": "minZoom", "val": vals.minZoom, "loc": "editMaps:formEditMap_minZoom", "description": "minZoom" },
+            { "type": "formEditMap_startZoom", "name": "startZoom", "val": vals.startZoom, "loc": "editMaps:formEditMap_startZoom", "description": "startZoom" },
             { "type": "formEditMap_submit", "loc": "editMaps:formEditMap_submit", callback: function(form){
                 if (!form.checkFormFlag){
                     alert(loc("editMaps:errorCheckForm"));

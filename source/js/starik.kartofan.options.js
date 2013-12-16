@@ -151,6 +151,7 @@ var Options = (function(){
         window.stageeditor = new StageEditor();
         window.locations = new Locations();
         window.infomenu = new InfoMenu();
+        window.fastmoving = new FastMoving();
 
         // TODO: удалить
         window.mapvents = new Events();

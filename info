@@ -88,6 +88,9 @@ TODO:
         - parent заменить на self
         - deleteStageFunc submitStageFunc полное дублирование кода с mapeditor
         - externalStageMenu и externalMapsMenu дублируют друг друга
+        - moveToPointMenu и все остальные тоже рефакторинг
+        - submitMapFunc|StageFunc - rename to update
+        - все это говно в maps stages points требует глубокого рефакторинга
 
 -----------------------------------------------------------------------------------------------------
 - Сайт-визитка + форум + wiki + блог
