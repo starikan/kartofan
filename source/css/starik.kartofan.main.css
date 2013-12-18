@@ -139,3 +139,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .foundationForm a.button{
     margin: 6px 0px;
 }
+
+.foundationForm .row>span{
+    padding: 10px;
+}

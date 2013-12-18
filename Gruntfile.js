@@ -28,7 +28,6 @@ module.exports = function(grunt) {
       "source/js/starik.kartofan.options.js",
       "source/js/starik.kartofan.stages.js",
       "source/js/starik.kartofan.forms.js",
-      "source/js/starik.kartofan.events.js",
       //"source/js/starik.kartofan.trip.js",
       "source/js/starik.kartofan.gps.js",
       "source/js/starik.kartofan.main.js",

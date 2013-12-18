@@ -153,9 +153,6 @@ var Options = (function(){
         window.infomenu = new InfoMenu();
         window.fastmoving = new FastMoving();
 
-        // TODO: удалить
-        window.mapvents = new Events();
-
         opt.getHash();
 
         stage.initContainer("containerKartofan");
@@ -229,13 +226,6 @@ var Options = (function(){
         bases.db[collection].get(option, function(err, doc) {
             bases.db[collection].remove(doc, function(errRemove, responseRemove) {  });
         });  
-     }
-
-    this.editGlobalForm = function(){
-        
-        // eform = new EditableForm(mapvents.globalOptionsForm);
-        // eform.fillForm(parent.global);
-
      }
 
     this._createMenuArrFromBase = function(base, data) {
