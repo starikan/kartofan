@@ -14,6 +14,7 @@
     "topMenuStageSave": "Save This Stage",
     "topMenuUtils": "Utils",
     "topMenuUtilsToggleFulscreen": "Toggle Fullscreen Select Map",
+    "topMenuUtilsToggleMeasuring": "Measuring",
     "topMenuMove": "Moves",
     "topMenuMoveMove": "Move To",
     "topMenuMoveAdd": "Add Move",
@@ -92,9 +93,6 @@
   "gps": {
     "error": "GPS Error"
   },
-  "controls": {
-    "measureTip": "Measuring"
-  },  
   "jsonImport": {
     "jsonAdd": "Type here URL of JSON with maps.",
     "rewriteConfirm": "Item {0} already exist in base {1}. Rewrite it?"

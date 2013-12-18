@@ -59,8 +59,9 @@ var StageMaps = (function(){
         var names = this.currStage.stageMapsNames;
         var zooms = this.currStage.stageMapsZooms;
 
-        window["map"+i] = new LeafletMap("map"+i);
+        window.mapsInstance.push(new LeafletMap("map"+i));
         var latlng = opt.getOption("current","mapCenterLatLng");
+
         var zoom;
         try {
             zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
@@ -68,9 +69,9 @@ var StageMaps = (function(){
         catch(e) {
             zoom = opt.getOption("global", "mapDefaultZoom");
         }
-        console.log(names[i])
-        window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
-        window["map"+i].createMap(latlng, zoom);        
+
+        window.mapsInstance[i].setMapTilesLayer(new LeafletTiles(names[i]));
+        window.mapsInstance[i].createMap(latlng, zoom);   
      }
  
  }}());
@@ -159,7 +160,7 @@ var StageEditor = (function(){
 
         $("#map"+i).draggable({ stop: onStop }).resizable({ stop: onStop });
 
-        var map = window["map"+i];
+        var map = mapsInstance[i];
 
         map.map.dragging.disable();
         // map.map.scrollWheelZoom.disable();
@@ -340,7 +341,7 @@ var StageEditor = (function(){
 
     this.editMapsControls = function(){
         // TODOЖ сделать в суггкте номер карты
-        var activeMap = opt.getOption("appVars", "activeMap");
+        // var activeMap = opt.getOption("appVars", "activeMap");
         var mapNum = opt.getOption("appVars", "activeMapNum");
         var currStage = opt.getOption("current", "stage");
 
@@ -367,8 +368,8 @@ var StageEditor = (function(){
                             currStage.stageMapsControlls[mapNum][i] = v;
                         })
                         opt.setOption("current", "stage", currStage);
-                        window[activeMap].removeAllControls();
-                        window[activeMap]._setMapControls();
+                        mapsInstance[mapNum].removeAllControls();
+                        mapsInstance[mapNum]._setMapControls();
                     }
                 }
             },

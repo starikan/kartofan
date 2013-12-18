@@ -14,6 +14,7 @@
     "topMenuStageSave": "Сохранить набор",
     "topMenuUtils": "Полезности",
     "topMenuUtilsToggleFulscreen": "Переключение активной карты на весь экран",
+    "topMenuUtilsToggleMeasuring": "Измерения",
     "topMenuMove": "Быстрые перемещения",
     "topMenuMoveMove": "Быстрое перемещение",
     "topMenuMoveAdd": "Добавить быстрое перемещение",
@@ -91,9 +92,6 @@
   },
   "gps": {
     "error": "Ошибка GPS"
-  },
-  "controls": {
-    "measureTip": "Измерение расстояний"
   },
   "jsonImport": {
     "rewriteConfirm": "Запись {0} уже существует в базе {1}. Перезаписать?"

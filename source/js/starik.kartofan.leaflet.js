@@ -42,7 +42,7 @@ L.Control.Measure = L.Control.Measure.extend({
         var className = 'leaflet-control-zoom leaflet-bar leaflet-control',
             container = L.DomUtil.create('div', className);
 
-        this._createButton('↔', loc("controls:measureTip"), 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
+        // this._createButton('↔', loc("controls:measureTip"), 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
 
         return container;
      },
@@ -279,6 +279,7 @@ var LeafletMap = function(mapId){
     this.copyrightControl;
     this.nameControl;
     this.zoomLevelControl;
+
     this.measureControl;
 
     this.crs;
@@ -446,12 +447,8 @@ var LeafletMap = function(mapId){
          }                   
 
         // Measure Control
-        if (ctrls.measure){
-            this.measureControl = new L.Control.Measure({
-                position: ctrls.measure.pos ? ctrls.measure.pos : "topleft",
-            });
-            this.map.addControl(this.measureControl);
-         }   
+        this.measureControl = new L.Control.Measure({});
+        this.map.addControl(this.measureControl);
 
      }
 
@@ -946,11 +943,11 @@ var MapsEditor = (function(){
      }
 
     this.editMapActiveWindow = function() {
-        var activeMap = opt.getOption("appVars", "activeMap");
-        var mapVals = window[activeMap].mapTilesLayer.mapData;
-        mapVals.id = window[activeMap].mapTilesLayer.mapName;
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
+        var mapVals = mapsInstance[activeMapNum].mapTilesLayer.mapData;
+        mapVals.id = mapsInstance[activeMapNum].mapTilesLayer.mapName;
 
-        console.log(mapVals.id, activeMap, window[activeMap].mapTilesLayer);
+        console.log(mapVals.id, activeMapNum, mapsInstance[activeMapNum].mapTilesLayer);
 
         parent.editMap("", mapVals);
      }
@@ -1018,6 +1015,23 @@ var MapsEditor = (function(){
 
         stage.createStage();
 
+     }
+
+    this.toggleMeasuring = function() {
+        opt.setOption("appVars", "measuringOn", !!(1 - opt.getOption("appVars", "measuringOn")));
+
+        if (opt.getOption("appVars", "measuringOn")){
+            $.each(mapsInstance, function(i, v){
+                v.measureControl._startMeasuring();
+            });    
+            $(".topMenuUtilsToggleMeasuring").parent().addClass("active");
+        }
+        else {
+            $.each(mapsInstance, function(i, v){
+                v.measureControl._stopMeasuring();
+            });             
+            $(".topMenuUtilsToggleMeasuring").parent().removeClass("active");
+        }
      }
 
  }}());

@@ -20,7 +20,7 @@ var GPS = (function(){
 
     this.startGPS = function(){
         // Select firs map, it`s always exist
-        this.map = map0.map;
+        this.map = mapsInstance[0].map;
         this.map.locate();
      }
 
@@ -94,7 +94,7 @@ var FastMoving = (function(){
 
     this.moveToPoint = function(pointId, pointData){
         console.log(pointId, pointData)
-        window.map0.moveAllMaps(pointData.latlng);
+        mapsInstance[0].moveAllMaps(pointData.latlng);
      }
 
     this.moveToPointMenu = function(){

@@ -51,6 +51,7 @@ var TopMenu = (function(){
         
         { type: "topMenuUtils", loc: "topMenu:topMenuUtils" },
         { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen },
+        { type: "topMenuUtilsToggleMeasuring", loc: "topMenu:topMenuUtilsToggleMeasuring", callback: mapseditor.toggleMeasuring },
         
         { type: "topMenuOptions", loc: "topMenu:topMenuOptions" },
         { type: "topMenuOptGlobal", loc: "topMenu:topMenuOptGlobal", callback: "" },
@@ -73,7 +74,9 @@ var TopMenu = (function(){
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
         
         { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
-        { type: "test", callback: function(){} },
+        { type: "test", callback: function(){
+            mapseditor.toggleMeasuring();
+        } },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },

@@ -19,4 +19,6 @@ if (window.navigator.onLine != undefined){
     });
  }
 
+window.mapsInstance = [];
+
 window.opt = new Options();        // Options
