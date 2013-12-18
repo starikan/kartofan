@@ -168,10 +168,15 @@ var TopMenu = (function(){
      }
 
     // Collapse when click on menu
+    // TODO: touch
     this.closeOnClickEvent = function(){
         $('.top-bar section ul, .mapContainer').click(function() {
             $('.top-bar, [data-topbar]').css('height', '').removeClass('expanded');
-        })
+        });
+        $('.top-bar section ul li').click(function() {
+            console.log(this)
+            $(this).siblings().removeClass('hover');
+        });        
      }
 
     this._setLocalization();

@@ -65,6 +65,7 @@ var Options = (function(){
             ],
             "stageMapsNames": ["", "", "", ""],
             "stageMapsZooms": [12,12,12,12],
+            "stageMapsZoomsBlock": [false, false, false, false],
             "stageMapsControlls": [
                 {
                     "zoom": {"pos": "topleft"},

@@ -40,7 +40,8 @@
     "topMenuStageEditorSaveView": "Созранить вид",
     "topMenuStageEditorAddMap": "Добавить карту",
     "topMenuStageEditorRemoveMap": "Удалить карту",
-    "topMenuStageEditorEditControls": "Редактировать контроллы"
+    "topMenuStageEditorEditControls": "Редактировать контроллы",
+    "topMenuStageEditorToggleBlockZoom": "Переключение блокировки масштаба на активной карте"
   },  
   "editMaps": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",

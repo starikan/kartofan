@@ -40,7 +40,8 @@
     "topMenuStageEditorSaveView": "Save View",
     "topMenuStageEditorAddMap": "Add Map To Stage",
     "topMenuStageEditorRemoveMap": "Remove Map From Stage",
-    "topMenuStageEditorEditControls": "Edit Controls On Selected Map"
+    "topMenuStageEditorEditControls": "Edit Controls On Selected Map",
+    "topMenuStageEditorToggleBlockZoom": "Toggle Blocking Zoom on Active Map"
   },
   "editMaps": {
     "errorCheckForm": "Errors in form! Check values.",
