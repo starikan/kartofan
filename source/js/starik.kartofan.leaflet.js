@@ -294,12 +294,6 @@ var LeafletMap = function(mapId){
         parent.$map.addClass("activemap");
      }
 
-    this.moveAllMaps = function(latlng){
-        for (var i = 0; i < parent.instances.length; i++) {
-            parent.instances[i].setMapCenter(latlng);
-        };        
-     }
-
     this.onMouseDownMap = function(e){
         if (e.originalEvent.button === 1){
             e.originalEvent.preventDefault();
@@ -318,12 +312,19 @@ var LeafletMap = function(mapId){
         if (!parent.map){return}
 
         var latlng = parent.map.getCenter();
-        opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);   
-        opt.setHash();
         
+        parent.moveAllMaps(latlng);
+     }
+
+    this.moveAllMaps = function(latlng){
         if (opt.getOption("current", "mapSyncMoving")){
-            parent.moveAllMaps(latlng);
-        }
+            for (var i = 0; i < parent.instances.length; i++) {
+                parent.instances[i].setMapCenter(latlng);
+            };  
+        }   
+        
+        opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);  
+        opt.setHash();  
      }
 
     this.onZoomEnd = function(e){
