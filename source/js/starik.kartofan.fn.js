@@ -30,7 +30,7 @@ String.prototype.format = String.prototype.f = function(options) {
  };
 
 $.noty.defaults = {
-    layout: 'topRight',
+    layout: 'bottomRight',
     theme: 'defaultTheme',
     type: 'alert',
     text: '',

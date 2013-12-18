@@ -11,8 +11,7 @@ module.exports = function(grunt) {
       //"source/js_vendor/bootstrap-tour.js",
       "source/js_vendor/pouchdb.js",
       "source/js_vendor/jquery.noty.js",
-      "source/js_vendor/jquery.noty.topRight.js",
-      "source/js_vendor/jquery.noty.default.js",
+      "source/js_vendor/jquery.noty.bottomRight.js",
       "source/js_vendor/bootstrap-tagsinput.js",
       "source/js_vendor/hammer.js",
       "source/js_vendor/jquery.hammer.js",
@@ -21,6 +20,7 @@ module.exports = function(grunt) {
      ];
 
     var bottomJs = [
+      "source/js/jquery.noty.kartofan.js",
       "source/js_vendor/modernizr.js",
       "source/js_vendor/foundation.min.js",
       "source/js/starik.kartofan.fn.js",

@@ -1,16 +1,16 @@
 ;(function($) {
 
-	$.noty.layouts.topRight = {
-		name: 'topRight',
+	$.noty.layouts.bottomRight = {
+		name: 'bottomRight',
 		options: { // overrides options
 			
 		},
 		container: {
-			object: '<ul id="noty_topRight_layout_container" />',
-			selector: 'ul#noty_topRight_layout_container',
+			object: '<ul id="noty_bottomRight_layout_container" />',
+			selector: 'ul#noty_bottomRight_layout_container',
 			style: function() {
 				$(this).css({
-					top: 20,
+					bottom: 20,
 					right: 20,
 					position: 'fixed',
 					width: '310px',
