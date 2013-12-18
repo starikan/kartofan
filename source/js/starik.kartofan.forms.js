@@ -145,11 +145,13 @@ var TopMenu = (function(){
 
                 var $elements = $topMenu.find("."+v.type);
                 var local = loc(v.loc, "", "", $elements.html());
-                // console.log($elements.html(), local)
 
-                if ($elements.html() && local && !$elements.children().length) {
-                    $elements.html(local);
-                } 
+                $.each($elements, function(){
+                    var $el = $(this);
+                    if ($el.html() && local && $el.html() == $el.text()){
+                        $el.html(local);
+                    }
+                })
             }
         })
      }
