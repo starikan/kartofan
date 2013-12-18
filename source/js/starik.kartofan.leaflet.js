@@ -272,8 +272,7 @@ var LeafletMap = function(mapId){
     this.map;
     this.num = $(".maps").index($("#"+this.mapId));
 
-    this.$map = $("#"+this.mapId);
-    this.$allMaps = $("div.mapContainer > .maps")
+    this.$map = $(".maps#"+this.mapId);
 
     this.zoomControl;
     this.scaleControl;
@@ -289,11 +288,16 @@ var LeafletMap = function(mapId){
 
     this.zoomBlock = opt.getOption("current", "stage").stageMapsZoomsBlock[this.num];
 
+    this.removeActiveClass = function() {
+        for (var i = 0; i < parent.instances.length; i++) {
+            parent.instances[i].$map.removeClass("activemap");
+        }; 
+     }
 
     this.onFocusMap = function(){
         opt.setOption("appVars", "activeMap", mapId);
         opt.setOption("appVars", "activeMapNum", mapId.replace("map", ""));
-        parent.$allMaps.removeClass("activemap");
+        parent.removeActiveClass();
         parent.$map.addClass("activemap");
      }
 

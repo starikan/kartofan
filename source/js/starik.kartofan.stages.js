@@ -40,15 +40,19 @@ var StageMaps = (function(){
      }
 
     this.addMapDiv = function(i, v){
+        var $mapDiv = $("<div></div>")
+            .appendTo(parent.$container)
+            .attr("id", "map"+i)
+            .addClass("maps")
+            .css("position", "absolute")
+            .css("left", v[0]+"%")
+            .css("top", v[1]+"%")
+            .css("width", v[2]+"%")
+            .css("height", v[3]+"%");
+
         $("<div></div>")
-        .appendTo(parent.$container)
-        .attr("id", "map"+i)
-        .addClass("maps")
-        .css("position", "absolute")
-        .css("left", v[0]+"%")
-        .css("top", v[1]+"%")
-        .css("width", v[2]+"%")
-        .css("height", v[3]+"%");
+            .appendTo($mapDiv)
+            .addClass("active-selector")
      }
 
     this.addMapObject = function(i){
