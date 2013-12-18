@@ -64,14 +64,14 @@ html(manifest="offline/cache.appcache")
 
     body
         div#topMenuKartofan
-            nav.top-bar(data-topbar)
+            nav.top-bar(data-topbar, data-options="is_hover: false")
                 ul.title-area 
                     li.name: h1: a Kartofan
                     li.toggle-topbar.menu-icon: a: span.topMenuMenu Menu
 
                 section.top-bar-section
 
-                    ul.left.show-for-medium-up
+                    ul.left
                         li: a.topMenuMapSet: span.icon-map
                         li: a.topMenuStageSet: span.icon-grid
                         li: a.topMenuMoveMove: span.icon-aim

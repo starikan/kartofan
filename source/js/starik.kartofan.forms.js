@@ -167,10 +167,18 @@ var TopMenu = (function(){
         })
      }
 
+    // Collapse when click on menu
+    this.closeOnClickEvent = function(){
+        $('.top-bar section ul, .mapContainer').click(function() {
+            $('.top-bar, [data-topbar]').css('height', '').removeClass('expanded');
+        })
+     }
+
     this._setLocalization();
     this._setFunctions();
     this._updateTopMenuView();
     this.setActiveOnButtons();
+    this.closeOnClickEvent();
 
  }}());
 
