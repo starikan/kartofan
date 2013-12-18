@@ -59,7 +59,13 @@ var StageMaps = (function(){
         var names = this.currStage.stageMapsNames;
         var zooms = this.currStage.stageMapsZooms;
 
-        window.mapsInstance.push(new LeafletMap("map"+i));
+        if (mapsInstance[i]){
+            mapsInstance[i] = new LeafletMap("map"+i);
+        }
+        else {
+            window.mapsInstance.push(new LeafletMap("map"+i));
+        }
+
         var latlng = opt.getOption("current","mapCenterLatLng");
 
         var zoom;
