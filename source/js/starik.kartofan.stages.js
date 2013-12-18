@@ -158,8 +158,8 @@ var StageEditor = (function(){
         var map = window["map"+i];
 
         map.map.dragging.disable();
-        map.map.scrollWheelZoom.disable();
-        map.map.touchZoom.disable();
+        // map.map.scrollWheelZoom.disable();
+        // map.map.touchZoom.disable();
 
         // if (map.zoomControl) {map.map.removeControl(map.zoomControl)};
         // if (map.scaleControl) {map.map.removeControl(map.scaleControl)};
@@ -193,6 +193,7 @@ var StageEditor = (function(){
         currStage.stageMapsNames.length = currStage.stageMapsGrid.length;
         currStage.stageMapsZooms.length = currStage.stageMapsGrid.length;
         currStage.stageMapsControlls.length = currStage.stageMapsGrid.length;
+        currStage.stageMapsZoomsBlock.length = currStage.stageMapsGrid.length;
 
         opt.setOption("current", "stage", currStage, function(err, doc){
             if (!err){
@@ -401,5 +402,13 @@ var StageEditor = (function(){
         opt.setOption("stages", data.id, data)
         console.log(data.id, opt.getOption("stages", data.id));            
      }
+
+    this.blockActiveMapZoom = function() {
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
+        var currStage = opt.getOption("current", "stage");
+        var currBlockZoom = currStage.stageMapsZoomsBlock[activeMapNum];
+        currStage.stageMapsZoomsBlock[activeMapNum] = !!(1 - currBlockZoom);
+     }  
+
 
  }}());

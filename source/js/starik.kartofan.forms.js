@@ -81,6 +81,7 @@ var TopMenu = (function(){
         { type: "topMenuStageEditorAddMap", loc: "topMenuStageEditor:topMenuStageEditorAddMap", callback: stageeditor.addMapToStage },
         { type: "topMenuStageEditorRemoveMap", loc: "topMenuStageEditor:topMenuStageEditorRemoveMap", callback: stageeditor.removeMapFromStage },
         { type: "topMenuStageEditorEditControls", loc: "topMenuStageEditor:topMenuStageEditorEditControls", callback: stageeditor.editMapsControls },
+        { type: "topMenuStageEditorToggleBlockZoom", loc: "topMenuStageEditor:topMenuStageEditorToggleBlockZoom", callback: stageeditor.blockActiveMapZoom },
      ];
 
     this.showTopMenuView = function() {
@@ -174,7 +175,6 @@ var TopMenu = (function(){
             $('.top-bar, [data-topbar]').css('height', '').removeClass('expanded');
         });
         $('.top-bar section ul li').click(function() {
-            console.log(this)
             $(this).siblings().removeClass('hover');
         });        
      }

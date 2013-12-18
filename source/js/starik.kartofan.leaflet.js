@@ -287,6 +287,9 @@ var LeafletMap = function(mapId){
     this.markerVizir;
     this.markerCursor;
 
+    this.zoomBlock = opt.getOption("current", "stage").stageMapsZoomsBlock[this.num];
+
+
     this.onFocusMap = function(){
         opt.setOption("appVars", "activeMap", mapId);
         opt.setOption("appVars", "activeMapNum", mapId.replace("map", ""));
@@ -339,7 +342,9 @@ var LeafletMap = function(mapId){
         if (!this.map) { return }
 
         if (this.zoomLevelControl){
-            this.zoomLevelControl.setPrefix(this.map.getZoom());
+            var prefixZoom = this.map.getZoom();
+            this.zoomBlock ? prefixZoom += "(×)" : undefined;
+            this.zoomLevelControl.setPrefix(prefixZoom);
         }
 
         var title;
@@ -517,7 +522,13 @@ var LeafletMap = function(mapId){
      }
 
     this.setEvents = function() {
-        this.map.on("zoomend", function(e){ parent.onZoomEnd(); });
+        
+        if (this.zoomBlock) {
+            this.map.touchZoom.disable();
+            this.map.scrollWheelZoom.disable();
+        };
+
+        this.map.on("zoomend", function(e){ parent.onZoomEnd() });
         // this.map.on("zoomend", this.onZoomEnd); // Srange but this not work in Chrome ??????
         this.map.on("dragend", this.onMapMoveEnd); // if I use moveend, on setting all maps position it`s fall to recursion a little
         // TODO: touch
