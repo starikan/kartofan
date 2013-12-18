@@ -30,6 +30,7 @@ var StageMaps = (function(){
     this.createStage = function(){
         this.$container.empty();
         this.currStage = opt.getOption("current", "stage");
+        console.log(this.currStage)
         if (!this.currStage.stageMapsGrid || !this.currStage.stageMapsGrid.length){ return }
 
         $.each(this.currStage.stageMapsGrid, function(i, v){
@@ -56,7 +57,14 @@ var StageMaps = (function(){
 
         window["map"+i] = new LeafletMap("map"+i);
         var latlng = opt.getOption("current","mapCenterLatLng");
-        var zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
+        var zoom;
+        try {
+            zoom = zooms[i] || opt.getOption("maps",names[i]).startZoom;
+        }
+        catch(e) {
+            zoom = opt.getOption("global", "mapDefaultZoom");
+        }
+        console.log(names[i])
         window["map"+i].setMapTilesLayer(new LeafletTiles(names[i]));
         window["map"+i].createMap(latlng, zoom);        
      }
@@ -231,9 +239,17 @@ var StageEditor = (function(){
      }  
 
     this.setStage = function(title, stageData){
-        stageData = opt.getOption("stages", title) ? opt.getOption("stages", title) : stageData ? stageData : opt.getOption("current", "stage");
-        opt.setOption("current", "stage", stageData);
-        stage.createStage();
+        var loadStage = opt.getOption("stages", title);
+        var currStage = opt.getOption("current", "stage");
+        stageData = loadStage ? loadStage : stageData ? stageData : currStage;
+
+        $.each(stageData.stageMapsNames, function(i, v){
+            if (v === "unknown" || !v){
+                stageData.stageMapsNames[i] = currStage.stageMapsNames[i] ? currStage.stageMapsNames[i] : "unknown";
+            }
+        })
+
+        opt.setOption("current", "stage", stageData, function(){stage.createStage()});
      }
 
     this.setStageMenu = function() {

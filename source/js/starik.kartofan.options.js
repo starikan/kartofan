@@ -256,6 +256,7 @@ var Options = (function(){
         }
 
         var latlng = this.getOption("current", "mapCenterLatLng");
+
         window.location.hash = $.isArray(latlng) ? latlng.join(",") : latlng;
      }
 
