@@ -317,14 +317,15 @@ var LeafletMap = function(mapId){
      }
 
     this.moveAllMaps = function(latlng){
+        latlng = this._validateLatLng(latlng);
+        opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);  
+        opt.setHash(); 
+
         if (opt.getOption("current", "mapSyncMoving")){
             for (var i = 0; i < parent.instances.length; i++) {
                 parent.instances[i].setMapCenter(latlng);
             };  
         }   
-        
-        opt.setOption("current", "mapCenterLatLng", [latlng.lat, latlng.lng]);  
-        opt.setHash();  
      }
 
     this.onZoomEnd = function(e){
