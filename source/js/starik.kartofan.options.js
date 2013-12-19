@@ -26,14 +26,13 @@ var Options = (function(){
 
         "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
 
-        "isTourFirstShown": true,
-        "isSetLangFirstShown": true,
-
         "hashChange": true,
         "resetToDefaultIfHashClear": true,
 
-        "dbExtServerIn": "http://localhost:5984/", // Ended with /
-        "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
+        "dbExtServerIn": "", // Ended with /
+        "dbExtServerOut": [""], // Ended with /
+        // "dbExtServerIn": "http://localhost:5984/", // Ended with /
+        // "dbExtServerOut": ["http://localhost:5984/"], // Ended with /
 
         "stageViewConstructorElasticSizeErrorPersent": 2,
 
@@ -102,9 +101,10 @@ var Options = (function(){
         "viewInfoPanelShowAlways": true,   
 
         "dbPointsStorySave": 1000,
-        "dbSyncIn": true,
-        "dbSyncOut": true,
+        "dbSyncIn": false,
+        "dbSyncOut": false,
 
+        "setLang": false, 
      };
 
     this.gps = {
@@ -135,7 +135,7 @@ var Options = (function(){
         "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
         "activeMap": "map0",
         "activeMapNum": 0,   
-        "measuringOn": false,     
+        "measuringOn": false,   
      }
 
     this._init = function(){
@@ -159,19 +159,19 @@ var Options = (function(){
         stage.initContainer("containerKartofan");
 
         // First visit automaticaly start tour
-        if (opt.getOption("global", "isTourFirstShown")){
-            //tourMain.start(true);
-            opt.setOption("global", "isTourFirstShown", false);
-        }
+        // if (opt.getOption("global", "isTourFirstShown")){
+        //     //tourMain.start(true);
+        //     opt.setOption("global", "isTourFirstShown", false);
+        // }
 
         if (opt.getOption("gps", "gpsAutoStart")){
             gps.startGPS();
         }
 
-        if (opt.getOption("global", "isSetLangFirstShown")){
+        if (!opt.getOption("current", "setLang")){
             opt.setLang();
-            opt.setOption("global", "isSetLangFirstShown", false);
-        }   
+        }
+
      } 
 
     this._afterInit = function(){
@@ -204,6 +204,9 @@ var Options = (function(){
                 if (doc.val !== value){
                     doc.val = value;
                     bases.db[collection].put(doc, callback);                    
+                }
+                else {
+                    callback ? callback() : "";
                 }
             }
             else {
@@ -302,15 +305,31 @@ var Options = (function(){
      }
 
     this.setLang = function() {
+
         var menuLangChoise = {
             "Choose Your Language": {
                 "English": {
                     title: "English", 
-                    callback: function(){ opt.setOption("global", "lang", "en_US")}
+                    callback: function(){ 
+                        opt.setOption("global", "lang", "en_US");
+                        opt.setOption("current", "setLang", true, function(){
+                            parent.initLocalization(function(){
+                                topmenu._setLocalization();
+                            })
+                        });
+
+                    }
                 },
                 "Russian":{
-                    title: "Russian", 
-                    callback: function(){ opt.setOption("global", "lang", "ru_RU")}
+                    title: "Русский", 
+                    callback: function(){ 
+                        opt.setOption("global", "lang", "ru_RU");
+                        opt.setOption("current", "setLang", true, function(){
+                            parent.initLocalization(function(){
+                                topmenu._setLocalization();
+                            })
+                        });
+                    }
                 }
             }
          };
@@ -485,7 +504,7 @@ var Bases = (function(){
                     });                    
                 });
             });
-        })
+        });
      }
 
  }}());
