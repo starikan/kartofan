@@ -97,8 +97,8 @@ var Options = (function(){
             ]
          },
 
-        "viewTopMenuShowAlways": false,
-        "viewInfoPanelShowAlways": true,   
+        "viewTopMenuShowAlways": true,
+        "viewInfoPanelShowAlways": false,   
 
         "dbPointsStorySave": 1000,
         "dbSyncIn": false,

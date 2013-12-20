@@ -72,11 +72,9 @@ var TopMenu = (function(){
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
+        { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         
         { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
-        { type: "test", callback: function(){
-            mapseditor.toggleMeasuring();
-        } },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -152,6 +150,7 @@ var TopMenu = (function(){
 
                 $.each($elements, function(){
                     var $el = $(this);
+                    // console.log(local, $el.html(), $el.text())
                     if ($el.html() && local && $el.html() == $el.text()){
                         $el.html(local);
                     }

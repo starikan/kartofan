@@ -850,9 +850,9 @@ var MapsEditor = (function(){
 
     this.setMap = function(mapName, mapData){
         mapName = mapName ? mapName : "";
-        var activeMap = opt.getOption("appVars", "activeMap");
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
 
-        window[activeMap].setMapTilesLayer(new LeafletTiles(mapName, mapData));
+        mapsInstance[activeMapNum].setMapTilesLayer(new LeafletTiles(mapName, mapData));
      }
 
     this.setMapMenu = function() {
@@ -890,7 +890,6 @@ var MapsEditor = (function(){
     this.editMap = function(mapId, vals) {
 
         var maps = opt.getOption("maps");
-        var activeMap = opt.getOption("appVars", "activeMap");
 
         var vals = vals ? vals : opt.getOption("maps", mapId);
         vals.id = vals.id ? vals.id : mapId;

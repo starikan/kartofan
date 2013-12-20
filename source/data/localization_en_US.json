@@ -34,7 +34,8 @@
     "topMenuGPSStart": "GPS Start",
     "topMenuGPSStop": "GPS Stop",
     "topMenuHelp": "Help",
-    "topMenuHelpTourMain": "TourMain"
+    "topMenuHelpTourMain": "TourMain",
+    "topMenuHelpFAQ": "Q&A Site"
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Stage Editor",

@@ -76,7 +76,6 @@ html(manifest="offline/cache.appcache")
                         li: a.topMenuMoveMove: span.icon-aim
                         li: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
                         li: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
-                        li: a.test: span.icon-blind
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -140,8 +139,14 @@ html(manifest="offline/cache.appcache")
                                 li.has-dropdown
                                     a.topMenuHelp Help 
                                     ul.dropdown 
+                                        li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                         li: a.topMenuHelpTourMain TourMain
                             
+                            li.has-dropdown
+                                a.icon-blind.topMenuHelp
+                                ul.dropdown 
+                                    li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
+                                    li: a.topMenuHelpTourMain Tour Main                                
                             li: a.icon-iconic.topMenuPin
 
         div#formEditMap.foundationForm.hide

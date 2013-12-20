@@ -34,7 +34,8 @@
     "topMenuGPSStart": "GPS Старт",
     "topMenuGPSStop": "GPS Стоп",
     "topMenuHelp": "Помощь",
-    "topMenuHelpTourMain": "Основной тур"
+    "topMenuHelpTourMain": "Основной тур",
+    "topMenuHelpFAQ": "Сайт вопросов-ответов"
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Редактор набора",

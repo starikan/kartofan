@@ -98,5 +98,7 @@ function loc(params, options, lang, orig) {
         translated = translated.format(options);
     }
 
+    // console.log(code, translated)
+
     return translated;
  };
