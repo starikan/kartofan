@@ -7,8 +7,6 @@ module.exports = function(grunt) {
       "source/js_vendor/leaflet-src.js",
       "source/js_vendor/FileSaver.js",
       "source/js_vendor/base64.js ",
-      //"source/js_vendor/bootstrap.js",
-      //"source/js_vendor/bootstrap-tour.js",
       "source/js_vendor/pouchdb.js",
       "source/js_vendor/jquery.noty.js",
       "source/js_vendor/jquery.noty.bottomRight.js",
@@ -28,15 +26,13 @@ module.exports = function(grunt) {
       "source/js/starik.kartofan.options.js",
       "source/js/starik.kartofan.stages.js",
       "source/js/starik.kartofan.forms.js",
-      //"source/js/starik.kartofan.trip.js",
+      "source/js/starik.kartofan.tour.js",
       "source/js/starik.kartofan.gps.js",
       "source/js/starik.kartofan.main.js",
      ];
      
     var vendorCss = [
       "source/css_vendor/leaflet.css",
-      //"source/css_vendor/bootstrap.css",
-      //"source/css_vendor/bootstrap-tour.css",
       "source/css_vendor/jquery-ui.css",
       "source/css_vendor/leaflet.measure.css",
       "source/css_vendor/jquery.arcticmodal-0.3.css",

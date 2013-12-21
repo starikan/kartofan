@@ -23,6 +23,7 @@ TODO:
 
     Top:
 
+        - при загрузке ставить фокус на первую карту
         - подтверждение выбора языка
         - таб на картах выделяет визир и зеленую стрелку
         - сделать у визира контрастный обожур
@@ -111,6 +112,7 @@ TODO:
 - карусель из разных наборов карт (один  набор - второй - третий - опять первый)
 - что делать с коллизиями в базе если одновременно работать с двух устройств?
 - http://blog.laptopmag.com/android-web-server
+- http://www.gadm.org/ - административное деление 
 
 
 
@@ -134,8 +136,8 @@ UI
 
 Шрифты
 - http://fontastic.me/ - Генератор
-
 - http://krisbulman.github.io/font-icons/
+http://iconmonstr
 
 
 https://drive.google.com/folderview?id=0B1gRcO428ISsbEg2c25oUkRVSkE&usp=sharing - В папке google

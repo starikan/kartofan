@@ -149,3 +149,12 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .foundationForm .row>span{
     padding: 10px;
 }
+
+.introjs-helperLayer {
+    /*display: none;*/
+    /*z-index: 0;*/
+}
+
+.introjs-tooltip {
+    /*z-index: 999999999;*/
+}

@@ -160,7 +160,7 @@ var Options = (function(){
 
         // First visit automaticaly start tour
         // if (opt.getOption("global", "isTourFirstShown")){
-        //     //tourMain.start(true);
+        opt.startTour();
         //     opt.setOption("global", "isTourFirstShown", false);
         // }
 
@@ -171,7 +171,6 @@ var Options = (function(){
         if (!opt.getOption("current", "setLang")){
             opt.setLang();
         }
-
      } 
 
     this._afterInit = function(){
@@ -376,6 +375,36 @@ var Options = (function(){
                 })                
             })
         }); 
+     }
+
+    // *************** TOUR ****************
+
+    this.startTour = function() {
+        window.tour = new Tour();
+
+        var steps = [
+            {
+                id: "1",
+                target: "map0",
+                targetEffect: {},
+                width: "30%",
+                // height: "30%",
+                top: "60%",
+                left: "60%",
+                buttons: [
+                    { title: "Prev", func: "prev", addClass: "" },
+                    { title: "Cancel", func: "cancel", addClass: "" },
+                    { title: "Next", func: "next", addClass: "" }
+                ],
+                content: {
+                    "tourTitle": "Ttitle",
+                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
+                }
+            }
+        ];
+
+        tour.setSteps(steps);
+        tour.generateTour();
      }
 
     this._init();

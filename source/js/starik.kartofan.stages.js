@@ -30,7 +30,7 @@ var StageMaps = (function(){
     this.createStage = function(){
         this.$container.empty();
         this.currStage = opt.getOption("current", "stage");
-        console.log(this.currStage)
+        // console.log(this.currStage)
         if (!this.currStage.stageMapsGrid || !this.currStage.stageMapsGrid.length){ return }
 
         $.each(this.currStage.stageMapsGrid, function(i, v){

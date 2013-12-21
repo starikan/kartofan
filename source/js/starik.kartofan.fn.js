@@ -102,3 +102,4 @@ function loc(params, options, lang, orig) {
 
     return translated;
  };
+
