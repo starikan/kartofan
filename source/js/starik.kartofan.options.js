@@ -385,26 +385,71 @@ var Options = (function(){
         var steps = [
             {
                 id: "1",
-                target: "map0",
-                targetEffect: {},
+                target: "#map0",
+                targetAddClass: "",
                 width: "30%",
                 // height: "30%",
-                top: "60%",
-                left: "60%",
+                top: "50%",
+                dtop: "-50%",
+                left: "50%",
+                dleft: "-50%",
+                opacityLayer: 0.7,
                 buttons: [
                     { title: "Prev", func: "prev", addClass: "" },
                     { title: "Cancel", func: "cancel", addClass: "" },
-                    { title: "Next", func: "next", addClass: "" }
+                    { title: "Next", func: "next", addClass: "" },
+                    { title: "GoTo", func: "goto", addClass: "", id: "3" }
                 ],
                 content: {
                     "tourTitle": "Ttitle",
                     "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
                 }
-            }
+            },
+            {
+                id: "2",
+                target: "#map1",
+                targetAddClass: "",
+                width: "30%",
+                // height: "30%",
+                top: "20%",
+                left: "60%",
+                opacityLayer: 0.7,
+                buttons: [
+                    { title: "Prev", func: "prev", addClass: "" },
+                    { title: "Cancel", func: "cancel", addClass: "" },
+                    { title: "Next", func: "next", addClass: "" },
+                    { title: "GoTo", func: "goto", addClass: "", id: "1" }
+                ],
+                content: {
+                    "tourTitle": "Ttitle",
+                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
+                }
+            },
+            {
+                id: "3",
+                target: "#map2",
+                targetAddClass: "",
+                width: "30%",
+                // height: "30%",
+                top: "60%",
+                left: "20%",
+                opacityLayer: 0.7,
+                buttons: [
+                    { title: "Prev", func: "prev", addClass: "" },
+                    { title: "Cancel", func: "cancel", addClass: "" },
+                    { title: "Next", func: "next", addClass: "" },
+                    { title: "GoTo", func: "goto", addClass: "", id: "1" }
+                ],
+                content: {
+                    "tourTitle": "Ttitle",
+                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
+                }
+            }            
         ];
 
         tour.setSteps(steps);
         tour.generateTour();
+        tour.startTour();
      }
 
     this._init();
