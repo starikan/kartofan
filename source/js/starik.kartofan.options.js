@@ -386,7 +386,7 @@ var Options = (function(){
             {
                 id: "1",
                 target: "#map0",
-                targetAddClass: "",
+                targetAddClass: "animated tada",
                 width: "30%",
                 // height: "30%",
                 top: "50%",

@@ -13,11 +13,7 @@ http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/ - Tags
 
 
 ToAdd:
-https://github.com/mapbox/leaflet-image - экспорт изображения карты
 https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
-http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
-http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для привязки
-
 
 TODO:
 
@@ -36,11 +32,13 @@ TODO:
         - тач события
             - http://www.developerdrive.com/2013/12/introducing-touchswipe/
             - если тач интерфейс то не добавлять зеленую стрелку на каждую карту, но сделать опцию чтобы можно  было добавить принудительно.
+            - http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
 
     Социальщина:
         - тур
             - тур по сайту вынести в JSON    
         - При обновлении окно новых возможностей
+            - а можно сделать просто кнопку в меню типа информация а на нейциферка сколько информаций
             - версию приложения сохранять в настройках
             - сделать модальное окно и чтобы при обновлении была ссылка на обновления сделанные в версии
             - при первом включении окно должно вылазить после выбора языка и уже на выбранном языке ?????
@@ -69,8 +67,10 @@ TODO:
             - азимут
         - азимутальное кольцо как в саспланете, только лучи чтобы до краев экрана шли
         - сохранение куска экрана в файл и создание привязки к озику
+            - https://github.com/mapbox/leaflet-image - экспорт изображения карты
         - коррекция привязки
         - привязка карт (continuousWorld: continuousWorld)
+            - http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для привязки
         - коллаж из нескольких карт, как изначально хотел на печать
         - высоты под курсором
         - отображение списка карт которые есть под точкой

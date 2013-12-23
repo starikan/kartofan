@@ -38,6 +38,7 @@ module.exports = function(grunt) {
       "source/css_vendor/jquery.arcticmodal-0.3.css",
       "source/css_vendor/foundation.css",
       "source/css_vendor/normalize.css",
+      "source/css_vendor/animate.css",
      ];
 
     var appCss = [
