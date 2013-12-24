@@ -166,6 +166,8 @@ var Options = (function(){
         if (!opt.getOption("current", "setLang")){
             opt.setLang(opt.startTour);
         }
+
+        $("#map0").addClass("activemap");
      } 
 
     this._afterInit = function(){
