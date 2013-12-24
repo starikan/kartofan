@@ -157,6 +157,8 @@ var Options = (function(){
 
         opt.getHash();
 
+        opt.closeLoader();
+
         stage.initContainer("containerKartofan");
 
         if (opt.getOption("gps", "gpsAutoStart")){
@@ -399,6 +401,13 @@ var Options = (function(){
             tour.generateTour();
             tour.startTour(id);            
         })
+     }
+
+    this.closeLoader = function() {
+        $("#loaderText").addClass("hide");
+        $("#topMenuKartofan").removeClass("hide");
+        $("#infoMenuKartofan").removeClass("hide");
+        $("#containerKartofan").removeClass("hide");
      }
 
     this._init();

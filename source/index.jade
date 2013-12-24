@@ -60,7 +60,12 @@ html(manifest="offline/cache.appcache")
         <!-- @endif -->
 
     body
-        div#topMenuKartofan
+
+        div#loaderText(style="font: 30px fantasy !important; text-align: center;")
+            h1 Loading... about 2MB. Be patient it`s dev version.
+            h1 Загружается... около 2Мб. Будьте терпеливы это же тестовая версия.
+
+        div#topMenuKartofan.hide
             nav.top-bar(data-topbar, data-options="is_hover: false")
                 ul.title-area 
                     li.name: h1: a Kartofan
@@ -243,9 +248,9 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditPoint_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditPoint_cancel Cancel
 
-        div#infoMenuKartofan
+        div#infoMenuKartofan.hide
 
-        div.mapContainer#containerKartofan
+        div.mapContainer#containerKartofan.hide
 
         <!-- @if production=false -->
         // Bottom JS
