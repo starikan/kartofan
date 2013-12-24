@@ -305,32 +305,37 @@ var Options = (function(){
                 "English": {
                     title: "English", 
                     callback: function(){ 
-                        opt.setOption("global", "lang", "en_US");
-                        opt.setOption("current", "setLang", true, function(){
-                            parent.initLocalization(function(){
-                                topmenu._setLocalization();
-                                typeof callback == "function" ? callback() : undefined;
-                            })
-                        });
-
+                        if (confirm("Do you want to set the main language - English?")){
+                            opt.setOption("global", "lang", "en_US");
+                            opt.setOption("current", "setLang", true, function(){
+                                parent.initLocalization(function(){
+                                    topmenu._setLocalization();
+                                    typeof callback == "function" ? callback() : undefined;
+                                })
+                            });
+                            $.arcticmodal("close");
+                        }
                     }
                 },
                 "Russian":{
                     title: "Русский", 
                     callback: function(){ 
-                        opt.setOption("global", "lang", "ru_RU");
-                        opt.setOption("current", "setLang", true, function(){
-                            parent.initLocalization(function(){
-                                topmenu._setLocalization();
-                                typeof callback == "function" ? callback() : undefined;
-                            })
-                        });
+                        if (confirm("Вы действительно хотите установить основным чзыком Русский?")){
+                            opt.setOption("global", "lang", "ru_RU");
+                            opt.setOption("current", "setLang", true, function(){
+                                parent.initLocalization(function(){
+                                    topmenu._setLocalization();
+                                    typeof callback == "function" ? callback() : undefined;
+                                })
+                            });
+                            $.arcticmodal("close");
+                        }
                     }
                 }
             }
          };
 
-        var menu = new AccordionMenu(menuLangChoise);
+        var menu = new AccordionMenu(menuLangChoise, "", true);
      }     
 
     // *************** JSON ****************

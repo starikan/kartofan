@@ -246,7 +246,7 @@ var InfoMenu = (function(){
         }
     ]
 */
-var AccordionMenu = function(arr, id) {
+var AccordionMenu = function(arr, id, required) {
 
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
     if (!id) {id = "nonamemenu"}
@@ -269,6 +269,8 @@ var AccordionMenu = function(arr, id) {
         this.$container.append("<dl class='accordion' data-accordion></dl>");
 
         this.$container.arcticmodal({
+            closeOnEsc: required ? false : true,
+            closeOnOverlayClick: required ? false : true,
             afterClose: function(){
                 _this.$container.empty();
             }
@@ -306,7 +308,7 @@ var AccordionMenu = function(arr, id) {
         $.each(this.arr, function(i, v){
             $.each(v, function(j, data){
                 $("#menuItem"+count).click(function(){
-                    _this.$container.arcticmodal('close');
+                    if (!required) _this.$container.arcticmodal('close');
                     data.callback(j);
                 })
                 count++;
