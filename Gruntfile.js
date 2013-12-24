@@ -15,11 +15,11 @@ module.exports = function(grunt) {
       "source/js_vendor/jquery.hammer.js",
       "source/js_vendor/leaflet.measure.js",
       "source/js_vendor/jquery.arcticmodal-0.3.min.js",
+      "source/js_vendor/modernizr.js",
      ];
 
     var bottomJs = [
       "source/js/jquery.noty.kartofan.js",
-      "source/js_vendor/modernizr.js",
       "source/js_vendor/foundation.min.js",
       "source/js/starik.kartofan.fn.js",
       "source/js/starik.kartofan.leaflet.js",
@@ -217,6 +217,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ["clean:dev", "clean:prod", "copy", "preprocess", "jade", "uglify", "cssmin", "clean:temp"]);
     grunt.registerTask('dev', ["clean:dev", "copy:dev", "preprocess:dev", "jade:dev", "clean:temp", "connect:dev", "watch:dev"]);
-    grunt.registerTask('prod', ["clean:prod", "copy:prod", "uglify", "cssmin", "preprocess:prod", "jade:prod", "clean:temp"]);
+    grunt.registerTask('prod', ["clean:prod", "copy:prod", "concat", "cssmin", "preprocess:prod", "jade:prod", "clean:temp"]);
+    // grunt.registerTask('prod', ["clean:prod", "copy:prod", "uglify", "cssmin", "preprocess:prod", "jade:prod", "clean:temp"]);
 
  };
