@@ -105,6 +105,7 @@ var Options = (function(){
         "dbSyncOut": false,
 
         "setLang": false, 
+        "showTourFirst": false, 
      };
 
     this.gps = {
@@ -158,18 +159,12 @@ var Options = (function(){
 
         stage.initContainer("containerKartofan");
 
-        // First visit automaticaly start tour
-        // if (opt.getOption("global", "isTourFirstShown")){
-        opt.startTour();
-        //     opt.setOption("global", "isTourFirstShown", false);
-        // }
-
         if (opt.getOption("gps", "gpsAutoStart")){
             gps.startGPS();
         }
 
         if (!opt.getOption("current", "setLang")){
-            opt.setLang();
+            opt.setLang(opt.startTour);
         }
      } 
 
@@ -303,7 +298,7 @@ var Options = (function(){
        
      }
 
-    this.setLang = function() {
+    this.setLang = function(callback) {
 
         var menuLangChoise = {
             "Choose Your Language": {
@@ -314,6 +309,7 @@ var Options = (function(){
                         opt.setOption("current", "setLang", true, function(){
                             parent.initLocalization(function(){
                                 topmenu._setLocalization();
+                                typeof callback == "function" ? callback() : undefined;
                             })
                         });
 
@@ -326,6 +322,7 @@ var Options = (function(){
                         opt.setOption("current", "setLang", true, function(){
                             parent.initLocalization(function(){
                                 topmenu._setLocalization();
+                                typeof callback == "function" ? callback() : undefined;
                             })
                         });
                     }
@@ -379,77 +376,22 @@ var Options = (function(){
 
     // *************** TOUR ****************
 
-    this.startTour = function() {
-        window.tour = new Tour();
+    this.startTour = function(force, id) {
 
-        var steps = [
-            {
-                id: "1",
-                target: "#map0",
-                targetAddClass: "animated tada",
-                width: "30%",
-                // height: "30%",
-                top: "50%",
-                dtop: "-50%",
-                left: "50%",
-                dleft: "-50%",
-                opacityLayer: 0.7,
-                buttons: [
-                    { title: "Prev", func: "prev", addClass: "" },
-                    { title: "Cancel", func: "cancel", addClass: "" },
-                    { title: "Next", func: "next", addClass: "" },
-                    { title: "GoTo", func: "goto", addClass: "", id: "3" }
-                ],
-                content: {
-                    "tourTitle": "Ttitle",
-                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
-                }
-            },
-            {
-                id: "2",
-                target: "#map1",
-                targetAddClass: "",
-                width: "30%",
-                // height: "30%",
-                top: "20%",
-                left: "60%",
-                opacityLayer: 0.7,
-                buttons: [
-                    { title: "Prev", func: "prev", addClass: "" },
-                    { title: "Cancel", func: "cancel", addClass: "" },
-                    { title: "Next", func: "next", addClass: "" },
-                    { title: "GoTo", func: "goto", addClass: "", id: "1" }
-                ],
-                content: {
-                    "tourTitle": "Ttitle",
-                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
-                }
-            },
-            {
-                id: "3",
-                target: "#map2",
-                targetAddClass: "",
-                width: "30%",
-                // height: "30%",
-                top: "60%",
-                left: "20%",
-                opacityLayer: 0.7,
-                buttons: [
-                    { title: "Prev", func: "prev", addClass: "" },
-                    { title: "Cancel", func: "cancel", addClass: "" },
-                    { title: "Next", func: "next", addClass: "" },
-                    { title: "GoTo", func: "goto", addClass: "", id: "1" }
-                ],
-                content: {
-                    "tourTitle": "Ttitle",
-                    "tourDescription": "Text Text Text Text Text Text Text Text !!!!",
-                }
-            }            
-        ];
+        if (!force) {
+            if (!opt.getOption("current", "showTourFirst")) {
+                opt.setOption("current", "showTourFirst", true);
+            }
+            else return;
+        }
 
-        tour.setSteps(steps);
-        tour.generateTour();
-        tour.startTour();
+        var tour = new Tour();
+
+        $.getJSON("data/tourMain.json", function(steps){
+            tour.setSteps(steps);
+            tour.generateTour();
+            tour.startTour(id);            
+        })
      }
 
     this._init();

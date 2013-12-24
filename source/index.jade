@@ -68,11 +68,11 @@ html(manifest="offline/cache.appcache")
                 section.top-bar-section
 
                     ul.left
-                        li: a.topMenuMapSet: span.icon-map
-                        li: a.topMenuStageSet: span.icon-grid
-                        li: a.topMenuMoveMove: span.icon-aim
-                        li: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
-                        li: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
+                        li#topMenuMapSetTour: a.topMenuMapSet: span.icon-map
+                        li#topMenuStageSetTour: a.topMenuStageSet: span.icon-grid
+                        li#topMenuMoveMoveTour: a.topMenuMoveMove: span.icon-aim
+                        li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
+                        li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -84,7 +84,7 @@ html(manifest="offline/cache.appcache")
                                 li: a.topMenuStageEditorEditControls Edit Controls On Selected Map
                                 li: a.topMenuStageEditorToggleBlockZoom Toggle Blocking Zoom on Active Map
 
-                        li.has-dropdown
+                        li.has-dropdown#topMenuMenuTour
                             a: span.topMenuMenu Menu
                             ul.dropdown 
                                 li.has-dropdown
@@ -139,12 +139,12 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                         li: a.topMenuHelpTourMain TourMain
                             
-                            li.has-dropdown
+                            li.has-dropdown#topMenuHelp
                                 a.icon-iconic-10.topMenuHelp
                                 ul.dropdown 
                                     li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                     li: a.topMenuHelpTourMain Tour Main                                
-                            li: a.icon-iconic.topMenuPin
+                            li#topMenuPin: a.icon-iconic.topMenuPin
 
         div#formEditMap.foundationForm.hide
             div.box-modal

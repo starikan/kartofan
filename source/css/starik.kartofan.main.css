@@ -150,11 +150,12 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     padding: 10px;
 }
 
-.introjs-helperLayer {
-    /*display: none;*/
-    /*z-index: 0;*/
-}
 
-.introjs-tooltip {
-    /*z-index: 999999999;*/
+/*.row {
+    max-width: 100%;
+}*/
+
+.mainColumn {
+    background-color: white;
+
 }

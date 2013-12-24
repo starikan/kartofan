@@ -6,14 +6,30 @@ var Tour = function() {
     this.$container;
     this.currId;
 
-    this._htmlStep = [
-        "<div class='tourStep panel small-12 medium-6'>",
-        "  <div class='tourContent'>",
-        "    <h4 class='tourTitle'></h4>",
-        "    <p class='tourDescription'></p>",
-        "  </div>",
-        "</div>"
-     ].join("");
+    this._htmlStep = '\
+        <div class="tourStep row">\
+            <div class="mainColumn small-11 small-centered columns">\
+                <div class="row">\
+                    <div class="columns small-12 text-right"><div class="tiny" id="close"></div></div>\
+                </div>\
+                <div class="row">\
+                    <div class="columns small-8 small-centered text-center"><h4 class="tourTitle"></h4></div>\
+                </div>\
+                <div class="row">\
+                    <div class="columns small-12"><p class="tourDescription"></p></div>\
+                </div>\
+                <div class="row">\
+                    <div class="columns small-12 medium-6">\
+                        <div class="show-for-small-only text-center"><div class="tiny" id="prev"></div></div>\
+                        <div class="show-for-medium-up text-right"><div class="tiny" id="prev"></div></div>\
+                    </div>\
+                    <div class="columns small-12 medium-6">\
+                        <div class="show-for-small-only text-center"><div class="tiny" id="next"></div></div>\
+                        <div class="show-for-medium-up"><div class="tiny" id="next"></div></div>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>';
 
     this._htmlButton = "<a class='button'></a>";
 
@@ -40,6 +56,7 @@ var Tour = function() {
 
     this.init = function() {
         $("#tourContainer").remove();
+        $(".tourOverlay").remove();
         $("body").append("<div id='tourContainer'></div>");
         $("body").append("<div id='tourOverlay1' class='tourOverlay'></div>");
         $("body").append("<div id='tourOverlay2' class='tourOverlay'></div>");
@@ -61,18 +78,44 @@ var Tour = function() {
      }
 
     this.setOptions = function() {
-        // Настройки по умолчанию
+        this.settings = {
+            "id": "1",
+            "target": "#map0",
+            "targetAddClass": "animated tada",
+            "width": "30%",
+            "height": "30%", "top": "50%",
+            "dtop": "-50%",
+            "left": "50%",
+            "dleft": "-50%",
+            "opacityLayer": 0.7,
+            "addClass": [
+                { "target": "", "addClass": "" }
+            ],
+            "buttons": [
+                { "title": "Prev", "func": "prev", "appendTo": ".button-group", "addClass": "" },
+                { "title": "Cancel", "func": "cancel", "appendTo": ".button-group", "addClass": "" },
+                { "title": "Next", "func": "next", "appendTo": ".button-group", "addClass": "" },
+                { "title": "GoTo", "func": "goto", "id": "3", "appendTo": ".button-group", "addClass": "" }
+            ],
+            "content": {
+                "tourTitle": "Title",
+                "tourDescription": "Text"
+            }
+        }  
      }
 
     this.setSteps = function(steps) {
         if (!steps || !$.isArray(steps)) return;
+        $.each(steps, function(i, v){
+            if (!v.id) v.id = i+"";
+        })
         this.steps = steps;
      }
 
     this.getStep = function(id) {
         var step;
         $.each(_this.steps, function(i, v){
-            if (v.id === id) step = v;
+            if (v.id == id) step = v;
         });
         return step;
      }
@@ -87,12 +130,23 @@ var Tour = function() {
                     .html(butt.title)
                     .click(_this.buttonFuncs[butt.func]);
 
-                $step.append($button);
+                $step.find(butt.appendTo).append($button);
             })
             
             $.each(v.content, function(t, text){
                 $step.find("."+t).html(text);
             })
+
+            v.dleft = v.dleft ? v.dleft : "0px";
+            v.dtop = v.dtop ? v.dtop : "0px";
+
+            if (v.addClass){
+                $.each(v.addClass, function(c, cl){
+                  $step.find(cl.target).addClass(cl.addClass);
+                })
+            }
+
+            v.zindex = v.zindex ? v.zindex : 10000;
 
             $step
                 .attr("id", "_id_"+v.id)
@@ -102,7 +156,7 @@ var Tour = function() {
                 .css("top", v.top)
                 .css("left", v.left)
                 .css("display", "none")
-                .css("z-index", "10000")
+                .css("z-index", v.zindex)
                 .css("-webkit-transform", "translate("+v.dleft+","+v.dtop+")")
                 .css("-moz-transform", "translate("+v.dleft+","+v.dtop+")")
                 .css("-ms-transform", "translate("+v.dleft+","+v.dtop+")")
@@ -113,9 +167,9 @@ var Tour = function() {
         })
      }
 
-    this.startTour = function() {
+    this.startTour = function(id) {
         if (!this.steps || !this.steps.length) return;
-        this.showStep(this.steps[0].id);
+        this.showStep(id || this.steps[0].id);
      }
 
     this.showStep = function(id) {
@@ -147,7 +201,7 @@ var Tour = function() {
         var len = this.steps.length;
         var next = false;
         $.each(this.steps, function(i, v){
-            if (v.id === id && i<len-1){
+            if (v.id == id && i<len-1){
                 next = _this.steps[i+1].id;
             }
         });
@@ -158,7 +212,7 @@ var Tour = function() {
         var len = this.steps.length;
         var prev = false;
         $.each(this.steps, function(i, v){
-            if (v.id === id && i>0){
+            if (v.id == id && i>0){
                 prev = _this.steps[i-1].id;
             }
         });
@@ -175,51 +229,70 @@ var Tour = function() {
 
         if (!step || !step.opacityLayer) return;
 
-        var $target = $(step.target);
+        var zindex = step.zindex ? step.zindex-1 : 9999;
 
-        $("#tourOverlay1")
-            .css("top", "0px")
-            .css("left", "0px")
-            .css("width", $target.offset().left)
-            .css("height", $(document).height())
-            .css("position", "absolute")
-            .css("display", "block")
-            .css("z-index", "9999")
-            .css("background-color", "black")
-            .css("opacity", step.opacityLayer);
+        if (step.target) {
 
-        $("#tourOverlay2")
-            .css("top", "0px")
-            .css("left", $target.offset().left)
-            .css("width", $target.width())
-            .css("height", $target.offset().top)
-            .css("position", "absolute")
-            .css("display", "block")
-            .css("z-index", "9999")
-            .css("background-color", "black")
-            .css("opacity", step.opacityLayer);
+            var $target = $(step.target);
 
-        $("#tourOverlay3")
-            .css("top", $target.offset().top + $target.height())
-            .css("left", $target.offset().left)
-            .css("width", $target.width())
-            .css("height", $(document).height() - $target.offset().top - $target.height())
-            .css("position", "absolute")
-            .css("display", "block")
-            .css("z-index", "9999")
-            .css("background-color", "black")
-            .css("opacity", step.opacityLayer);
+            $("#tourOverlay1")
+                .css("top", "0px")
+                .css("left", "0px")
+                .css("width", $target.offset().left)
+                .css("height", $(document).height())
+                .css("position", "absolute")
+                .css("display", "block")
+                .css("z-index", zindex)
+                .css("background-color", "black")
+                .css("opacity", step.opacityLayer);
 
-        $("#tourOverlay4")
-            .css("top", "0px")
-            .css("left", $target.width()+$target.offset().left)
-            .css("width", $target.width()+$target.offset().left)
-            .css("height", $(document).height())
-            .css("position", "absolute")
-            .css("display", "block")
-            .css("z-index", "9999")
-            .css("background-color", "black")
-            .css("opacity", step.opacityLayer);                        
+            $("#tourOverlay2")
+                .css("top", "0px")
+                .css("left", $target.offset().left)
+                .css("width", $target.width())
+                .css("height", $target.offset().top)
+                .css("position", "absolute")
+                .css("display", "block")
+                .css("z-index", zindex)
+                .css("background-color", "black")
+                .css("opacity", step.opacityLayer);
+
+            $("#tourOverlay3")
+                .css("top", $target.offset().top + $target.height())
+                .css("left", $target.offset().left)
+                .css("width", $target.width())
+                .css("height", $(document).height() - $target.offset().top - $target.height())
+                .css("position", "absolute")
+                .css("display", "block")
+                .css("z-index", zindex)
+                .css("background-color", "black")
+                .css("opacity", step.opacityLayer);
+
+            $("#tourOverlay4")
+                .css("top", "0px")
+                .css("left", $target.width()+$target.offset().left)
+                .css("width", $(document).width()-$target.offset().left-$target.width())
+                .css("height", $(document).height())
+                .css("position", "absolute")
+                .css("display", "block")
+                .css("z-index", zindex)
+                .css("background-color", "black")
+                .css("opacity", step.opacityLayer);         
+        }
+
+        else {
+            $("#tourOverlay1")
+                .css("top", "0px")
+                .css("left", "0px")
+                .css("width", $(document).width())
+                .css("height", $(document).height())
+                .css("position", "absolute")
+                .css("display", "block")
+                .css("z-index", zindex)
+                .css("background-color", "black")
+                .css("opacity", step.opacityLayer);
+
+        }               
 
      }
 

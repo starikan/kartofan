@@ -1,0 +1,479 @@
+[
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Внимание",
+            "tourDescription": "Если вы в будущем намерены пользоваться данным приложением, то просморите этот вводный тур до конца. Либо если на это в данный момент нет желания или времени, то его всегда можно найти в меню помощи. Ознакомление не займет много времени, зато сделает Вашу работу более комфортной и избавит от многих вопросов."
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",        
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Приложение состоит из двух основных частей"
+        }
+    },
+    {
+        "top": "45px",
+        "left": "0%",
+        "width": "50%",   
+        "target": "#containerKartofan",
+        "targetAddClass": "animated pulse",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Поле в котором расположены карты"
+        }
+    },
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "target": "#topMenuKartofan>nav",
+        "targetAddClass": "animated pulse",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "И основное меню программы"
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Окна",
+            "tourTitle": "Поле карт разделено на несколько окон. Количество и расположение этих окон настраивается и в каждом можно открыть отдельную карту."
+        }
+    },
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "target": "#map0",
+        "targetAddClass": "animated pulse",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Активная карта",
+            "tourDescription": "Карта активная в данный момент подсвечивается специальным образом. Активным окно карты можно сделать кликнув по нему мышью, дотронутся до нужной карты если у Вас устройство с тачскрином либо с помощью клавиш Tab или Shift+Tab"
+        }
+    },  
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Курсор",
+            "tourDescription": "При перемещении курсора мыши над любой картой виден большой курсор который сделан ярким чтобы был легко отличим на любом фоне и быстро находим взглядом, над остальными картами появляются другие курсоры кторые находятся в тех же самых координатах над которыми находится основной курсор"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Перемещение карт",
+            "tourTitle": "При перемещении любой карты все остальные перемещаются в туже самую точку"
+        }
+    },   
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Перемещение карт",
+            "tourDescription": "Попробуйте переместить карту просто щелкнув левой кнопкой и мыши и протащив до нужной точки. Если у Вас устройство с тачскрином то нужно просто провести пальцем по карте чтобы она переместилась. Так же можно воспользоваться клавишами стрелок на клавиатере."
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Получилось?",
+            "tourDescription": "Если все хорошо, то должно было одновременно произойти две вещи:<br>1. Все остальные карты синхронно переместились в ту же точку куда и та что вы перемещали.<br>2. Если в Вашем браузере видна адресная строка, то в ней после адреса сайта появился набор цифр. Эти цифры указывают координату центра всех карт. При желании вы сможете просто скопировать эту строку и тот кто это ссылку откроет попадет в туже самую точку на карте."
+        }
+    },   
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "target": "#map0",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Точный центр",
+            "tourDescription": "Если же вы хотите быть уверены что точка на которую ссылается адресная строка именно та что Вы задумали, то проследите чтобы специальная галочка, которая находится в центре каждого окна с картой была именно на том месте где Вы хотите. Тогда координаты будут те что Вы задумали."
+        }
+    },
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "target": "#map0",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Изменение масштаба",
+            "tourDescription": "Чтобы поменять масштаб карты нужно просто навести мышку на нужную карту и покрутить колесо мыши. Если у вас устройство с тачскрином, то нужно просто изменить масштаб двумя пальцами."
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Ничего не получилось?",
+            "tourDescription": "Если же у вас тачскрин не поддерживает мультитач или по каким-то причинам для изменения масштаба Вам не удобнопользоваться колесиком мыши, то можно либо воспользоваться клавишами плюс и минус на клавиатуре, либо включить экранные кнопки на нужной карте в настройках наборов окон."
+        }
+    },
+    {
+        "top": "45px",
+        "left": "50%",
+        "width": "50%",  
+        "target": "#map0",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Элементы карт",
+            "tourDescription": "На каждом окне карты могут отображаться различные информационные и управляющие элементы (наличие и их расположение можно настроить в свойствах набора карт): <br> - уровень масштаба карты<br> - название карты<br> - дополнительная информация<br> - кнопки изменения масштаба<br> - линейка масштаба<br> - панель редактирования маркеров."
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Теперь когда с интерфейсом карт более-менее понятно - можно начать работать с интересующими нас картами"
+        }
+    },    
+    {
+        "top": "45px",
+        "width": "50%",  
+        "target": "#topMenuKartofan>nav",
+        "opacityLayer": 0.7,
+        "zindex": 999,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Элементы карт",
+            "tourDescription": "Проделайте следующую последовательность действий:<br>1. На верхней понели щелкните с правой стороны на надпись меню. (Если у Вас устройство с маленьким экраном, в открышвемся меню нужно будет еще раз щелкнуть на меню)<br>2. Выберите пункт JSON<br>3. В нем найдите строку 'Загрузить все из внешенго JSON файла' и щелкните по ней.<br>4. Откроется диалоговое окно в котором нужно нажать OK<br>5. Если у Вас все в порядке с интеренет соединением, то заранее подготовленные данные уже загрузились в ваше приложение."
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Все остальные пункты меню разберем как нибудь в другой раз, теперь нужно научится основным приемам работы и основным моментам"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuKartofan>nav li.name",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Верхнее меню начинается с заголовка"
+        }
+    },  
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuMapSetTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Далее идет кнопка быстрой смены карты"
+        }
+    }, 
+    {
+        "top": "45px",
+        "width": "50%",
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Сделайте следующее:",
+            "tourDescription": " - Сделайте любую карту активной, просто щелкнув на ней <br> - Нажмите кнопку быстрой смены карты. Появится меню.<br> - В этом меню все карты разбиты на группы. Щелкните на какую либо группу и выберите интересующую вас карту.<br> - Активная карта должна переключиться на выбранную."
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuStageSetTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Кнопка быстрой смены набора карт"
+        }
+    }, 
+    {
+        "top": "45px",
+        "width": "50%",
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Сделайте следующее:",
+            "tourDescription": " - Если вас не устраивает расположение и количество карт на экране, можно нажать кнопку быстрой смены набора карт<br> - Появится меню.<br> - В этом меню все наборы карт разбиты на группы. Щелкните на какую либо группу и выберите интересующий вас набор.<br> - Нажав на него карты поменяют свое расположение в соответствии с выбором"
+        }
+    },
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuMoveMoveTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Кнопка быстрого перемещения в заранее сохраненные места"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuUtilsToggleFulscreenTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Кнопка открытия активной карты на весь экран"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuUtilsToggleMeasuringTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Кнопка измерителя расстояний"
+        }
+    },    
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuMenuTour",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Основное меню приложения"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuHelp",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Меню помощи"
+        }
+    }, 
+    {
+        "top": "50%",
+        "dtop": "-50%",
+        "left": "50%",
+        "dleft": "-50%",
+        "width": "50%",
+        "target": "#topMenuPin",
+        "opacityLayer": 0.7,
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Кнопка прикрепления панели инструментов",
+            "tourDescription": "Если она активна то панель все время находится на верху, если ее сделать не активной то панель будет скрываться, но ее всегда можно вызвать либо правой кнопкой мыши, либо долгим нажатием на карту при наличии тач интерфейса, либо клавишей контекстного меню на клавиатуре"
+        }
+    },         
+    {
+        "top": "45px",
+        "width": "100%",
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" },
+            { "title": ">>>", "func": "next", "appendTo": "#next" }
+        ],
+        "content": {
+            "tourTitle": "Ну и если Вам удалось дотерпеть до этого момента, сделаем заключение",
+            "tourDescription": "Основные возможности программы:<br>- можно работать без подключения к интеренету, предусмотрено кэширование карт (это единственная функция которая требует подключения к интеренету, если кэш есть то <r>интернет не нужен)<br>- все данные храняться исключительно на Вашем компьютере в специальной базе данных которая встроена в браузер. Но есть возможность настроить как резервное сохранение во внешнюю базу, так и синхронизацию различных рабочих мест на разных компьютерах. Без вашего ведома информация ни куда не отсылается.<br>- поддерживается работа с GPS, треки и их анализ (пока не полностью)<br>- поддержка маркеров (пока нет, но будет)<br>- социальные функции (пока нет, но будет комментирование, чат, видеочат, социалочки всякие, если конечно это будет востребовано)<br>- экспорт-импорт всего подряд (не все еще функции реализованы)<br>- привязка растровых карт (не готово)<br>- векторные слои поверх карт, например карты погоды и т.п.<br>- поддержка мобильных устройств (пока не оттестировано)<br> - лицензия на все - MIT, т.е. можете брать и использовать как хотите."
+        }
+    },  
+    {
+        "top": "45px",
+        "width": "100%",
+        "buttons": [
+            { "title": "X", "func": "cancel", "appendTo": "#close" },
+            { "title": "<<<", "func": "prev", "appendTo": "#prev" }
+        ],
+        "content": {
+            "tourTitle": "Теперь можете закрыть сайт и открыть его заново. И все настройки автоматически восстановятся. Всего хорошего!"
+        }
+    }     
+]

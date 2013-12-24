@@ -71,7 +71,7 @@ var TopMenu = (function(){
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: "" },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true, 15)} },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         
         { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
