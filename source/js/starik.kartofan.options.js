@@ -26,7 +26,7 @@ var Options = (function(){
 
         "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
 
-        "hashChange": true,
+        "hashChange": true, // TODO: delete in major version
         "resetToDefaultIfHashClear": true,
 
         "dbExtServerIn": "", // Ended with /
@@ -49,6 +49,8 @@ var Options = (function(){
         "mapCursorAllMapsVisible": true,
         "mapCache": true,
         "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
+
+        "hashChange": true,
 
         "stage": {
             "title": "current",
@@ -169,7 +171,7 @@ var Options = (function(){
             opt.setLang(opt.startTour);
         }
 
-        $("#map0").addClass("activemap");
+        $("#"+opt.getOption("appVars", "activeMap")).addClass("activemap");
      } 
 
     this._afterInit = function(){
@@ -252,7 +254,7 @@ var Options = (function(){
 
     this.setHash = function(){
         
-        if (!this.getOption("global", "hashChange") || !this.getOption("current", "mapSyncMoving")) { 
+        if (!this.getOption("current", "hashChange") || !this.getOption("current", "mapSyncMoving")) { 
             window.location.hash = "";
             return 
         }
@@ -264,7 +266,7 @@ var Options = (function(){
 
     this.getHash = function(){
         
-        if (!this.getOption("global", "hashChange")) { return }
+        if (!this.getOption("current", "hashChange")) { return }
 
         var hash = window.location.hash;
 

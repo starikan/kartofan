@@ -44,11 +44,14 @@ TODO:
 
     Mid:
         - форма для контроллов
+            - http://abpetkov.github.io/switchery/
         - форма всех настроек
             - при обновлении глобаьных настроек обновлять и то что с ними связано
         - сделать что-то типа информационной строки снизу экрана для оповещений и всякой информации
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
         - залить кэширующий сервер на хостинг    
+            - https://www.openshift.com/developers/node-js
+            - http://cloudno.de/#!/starthere
         - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
             - сдклать легкую настройку
             - хранить в глобалсах
@@ -93,7 +96,7 @@ TODO:
             - submitMapFunc|StageFunc - rename to update
             - все это говно в maps stages points требует глубокого рефакторинга
 
------------------------------------------------------------------------------------------------------
+------------------
 
 - Мобильные браузеры
 - Написать тесты
@@ -149,7 +152,10 @@ http://2.0.0.kartofan.s3.amazonaws.com/index.html
 http://habrahabr.ru/post/206514/ - аналитика
 
 
+NS09.DOMAINCONTROL.COM
+NS10.DOMAINCONTROL.COM
 
+kartofan.info
 
 
 var crsCorrect_goodPoint = function (){

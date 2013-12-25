@@ -35,7 +35,9 @@
     "topMenuGPSStop": "GPS Стоп",
     "topMenuHelp": "Помощь",
     "topMenuHelpTourMain": "Основной тур",
-    "topMenuHelpFAQ": "Сайт вопросов-ответов"
+    "topMenuHelpFAQ": "Сайт вопросов-ответов",
+    "topMenuQuickSettings": "Быстрые настройки",
+    "topMenuQuickSettingsHashChange": "Показывать координаты в адресной строке"    
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Редактор набора",

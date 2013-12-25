@@ -269,3 +269,36 @@
 .icon-entypo-12:before {
   content: "/";
 }
+.icon-entypo-13:before {
+  content: ":";
+}
+.icon-fontawesome-webfont-8:before {
+  content: ";";
+}
+.icon-fontawesome-webfont-9:before {
+  content: "<";
+}
+.icon-fontawesome-webfont-10:before {
+  content: "=";
+}
+.icon-fontawesome-webfont-11:before {
+  content: ">";
+}
+.icon-language:before {
+  content: "?";
+}
+.icon-print:before {
+  content: "@";
+}
+.icon-picture:before {
+  content: "[";
+}
+.icon-search:before {
+  content: "]";
+}
+.icon-crop:before {
+  content: "^";
+}
+.icon-dribbble:before {
+  content: "_";
+}

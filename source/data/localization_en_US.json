@@ -35,7 +35,9 @@
     "topMenuGPSStop": "GPS Stop",
     "topMenuHelp": "Help",
     "topMenuHelpTourMain": "TourMain",
-    "topMenuHelpFAQ": "Q&A Site"
+    "topMenuHelpFAQ": "Q&A Site",
+    "topMenuQuickSettings": "Quick Settings",
+    "topMenuQuickSettingsHashChange": "Addres Bar Coords Change"
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Stage Editor",

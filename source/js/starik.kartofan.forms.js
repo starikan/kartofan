@@ -71,10 +71,29 @@ var TopMenu = (function(){
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true, 15)} },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true)} },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         
-        { type: "topMenuPin", callback: function(){_this.toggleAlwaywMenuPin()} },
+        { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },
+
+        // Quick Settings
+        { 
+            type: "topMenuQuickSettingsHashChange", 
+            loc: "topMenu:topMenuQuickSettingsHashChange", 
+            callback: function(){
+                opt.setOption("current", "hashChange", 1-opt.getOption("current", "hashChange"));
+                console.log(_this)
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "hashChange") }
+        },
+
+        // Pin Button
+        { 
+            type: "topMenuPin", 
+            callback: function(){_this.toggleAlwaywMenuPin()},
+            active: function() { return opt.getOption("current", "viewTopMenuShowAlways") }
+        },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },
@@ -122,13 +141,14 @@ var TopMenu = (function(){
 
     this.setActiveOnButtons = function() {
 
-        // Pin Button
-        if (opt.getOption("current", "viewTopMenuShowAlways")){
-            $(".topMenuPin").parent().addClass("active");
-        }
-        else {
-            $(".topMenuPin").parent().removeClass("active");
-        }
+        $.each(_this.topMenuArray, function(i, v){
+            if (typeof v.active == "function" && v.active()){ 
+                $("."+v.type).parent().addClass("active") 
+            }
+            else { 
+                $("."+v.type).parent().removeClass("active") 
+            }            
+        })
      }
 
     this._updateTopMenuView = function() {
