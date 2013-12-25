@@ -20,6 +20,7 @@ var TopMenu = (function(){
     window.fastmoving = new FastMoving();
     window.bases = new Bases();
     window.gps = new GPS();
+    window.infomenu = new InfoMenu();
 
     var _this = this;
 
@@ -82,18 +83,81 @@ var TopMenu = (function(){
             loc: "topMenu:topMenuQuickSettingsHashChange", 
             callback: function(){
                 opt.setOption("current", "hashChange", 1-opt.getOption("current", "hashChange"));
-                console.log(_this)
                 _this.setActiveOnButtons();
             },
             active: function() { return opt.getOption("current", "hashChange") }
-        },
+         },
+        { 
+            type: "topMenuQuickSettingsMapsSyncMoving", 
+            loc: "topMenu:topMenuQuickSettingsMapsSyncMoving", 
+            callback: function(){
+                opt.setOption("current", "mapSyncMoving", 1-opt.getOption("current", "mapSyncMoving"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "mapSyncMoving") }
+         },
+        { 
+            type: "topMenuQuickSettingsMapSyncZooming", 
+            loc: "topMenu:topMenuQuickSettingsMapSyncZooming", 
+            callback: function(){
+                opt.setOption("current", "mapSyncZooming", 1-opt.getOption("current", "mapSyncZooming"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "mapSyncZooming") }
+         },
+        { 
+            type: "topMenuQuickSettingsMapCursorAllMapsVisible", 
+            loc: "topMenu:topMenuQuickSettingsMapCursorAllMapsVisible", 
+            callback: function(){
+                opt.setOption("current", "mapCursorAllMapsVisible", 1-opt.getOption("current", "mapCursorAllMapsVisible"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "mapCursorAllMapsVisible") }
+         },
+        { 
+            type: "topMenuQuickSettingsViewInfoPanelShowAlways", 
+            loc: "topMenu:topMenuQuickSettingsViewInfoPanelShowAlways", 
+            callback: function(){
+                opt.setOption("current", "viewInfoPanelShowAlways", 1-opt.getOption("current", "viewInfoPanelShowAlways"));
+                infomenu._updateInfoMenuView();
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "viewInfoPanelShowAlways") }
+         },         
+        { 
+            type: "topMenuQuickSettingsDbSyncIn", 
+            loc: "topMenu:topMenuQuickSettingsDbSyncIn", 
+            callback: function(){
+                opt.setOption("current", "dbSyncIn", 1-opt.getOption("current", "dbSyncIn"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "dbSyncIn") }
+         },
+        { 
+            type: "topMenuQuickSettingsDbSyncOut", 
+            loc: "topMenu:topMenuQuickSettingsDbSyncOut", 
+            callback: function(){
+                opt.setOption("current", "dbSyncOut", 1-opt.getOption("current", "dbSyncOut"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "dbSyncOut") }
+         },
+        { 
+            type: "topMenuQuickSettingsGpsAutoStart", 
+            loc: "topMenu:topMenuQuickSettingsGpsAutoStart", 
+            callback: function(){
+                opt.setOption("gps", "gpsAutoStart", 1-opt.getOption("gps", "gpsAutoStart"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("gps", "gpsAutoStart") }
+         },
 
         // Pin Button
         { 
             type: "topMenuPin", 
             callback: function(){_this.toggleAlwaywMenuPin()},
             active: function() { return opt.getOption("current", "viewTopMenuShowAlways") }
-        },
+         },
         
 
         { type: "topMenuStageEditor", loc: "topMenuStageEditor:topMenuStageEditor" },

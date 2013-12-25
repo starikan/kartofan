@@ -37,7 +37,14 @@
     "topMenuHelpTourMain": "Основной тур",
     "topMenuHelpFAQ": "Сайт вопросов-ответов",
     "topMenuQuickSettings": "Быстрые настройки",
-    "topMenuQuickSettingsHashChange": "Показывать координаты в адресной строке"    
+    "topMenuQuickSettingsHashChange": "Показывать координаты в адресной строке",
+    "topMenuQuickSettingsMapsSyncMoving": "Синхронизация карт",
+    "topMenuQuickSettingsMapSyncZooming": "Синхронизация масштабов",
+    "topMenuQuickSettingsMapCursorAllMapsVisible": "Курсоры на всех картах",
+    "topMenuQuickSettingsViewInfoPanelShowAlways": "Показать информационную панель",
+    "topMenuQuickSettingsDbSyncIn": "Синхронизация базы извне",
+    "topMenuQuickSettingsDbSyncOut": "Синхронизация базы наружу",
+    "topMenuQuickSettingsGpsAutoStart": "GPS автостарт"    
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Редактор набора",

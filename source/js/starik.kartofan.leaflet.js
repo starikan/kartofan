@@ -614,8 +614,7 @@ var LeafletMap = function(mapId){
      }
 
     this.addVizir = function(){
-        if (!opt.getOption("current", "mapVizirVisible")){ return }
-
+        
         var iconVizir = L.icon({
             iconUrl: 'images/vizir_32x32.png',
             iconSize: [32, 10],
@@ -656,12 +655,15 @@ var LeafletMap = function(mapId){
     this.moveCursor = function(e){
 
         for (var i = 0; i < parent.instances.length; i++) {
-            parent.instances[i].markerCursor.setOpacity(1.0);
-            parent.instances[i].markerCursor.setLatLng(e.latlng);
+            if (parent.instances[i].markerCursor){
+                parent.instances[i].markerCursor.setOpacity(1.0);
+                parent.instances[i].markerCursor.setLatLng(e.latlng);
+            }
         }; 
 
-        parent.markerCursor.setOpacity(0.0);
-
+        if (parent.markerCursor){
+            parent.markerCursor.setOpacity(0.0);
+        }
      }
 
     this.instances.push(this);

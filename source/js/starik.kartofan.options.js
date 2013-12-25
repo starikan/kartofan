@@ -43,10 +43,12 @@ var Options = (function(){
     this.current = {
         "mapCenterLatLng": [],
         "mapZoom": undefined,
+
         "mapSyncMoving": true,
         "mapSyncZooming": false,
-        "mapVizirVisible": true,
+        "mapVizirVisible": true, // TODO: delete on major version
         "mapCursorAllMapsVisible": true,
+
         "mapCache": true,
         "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
 

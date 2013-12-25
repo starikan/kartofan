@@ -37,7 +37,14 @@
     "topMenuHelpTourMain": "TourMain",
     "topMenuHelpFAQ": "Q&A Site",
     "topMenuQuickSettings": "Quick Settings",
-    "topMenuQuickSettingsHashChange": "Addres Bar Coords Change"
+    "topMenuQuickSettingsHashChange": "Addres Bar Coords Change",
+    "topMenuQuickSettingsMapsSyncMoving": "Maps Sync Moving",
+    "topMenuQuickSettingsMapSyncZooming": "Map Sync Zooming",
+    "topMenuQuickSettingsMapCursorAllMapsVisible": "Map Cursor On All Maps Visible",
+    "topMenuQuickSettingsViewInfoPanelShowAlways": "Info Panel Show Always",
+    "topMenuQuickSettingsDbSyncIn": "Db Sync In",
+    "topMenuQuickSettingsDbSyncOut": "Db Sync Out",
+    "topMenuQuickSettingsGpsAutoStart": "GPS Auto Start"
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Stage Editor",
