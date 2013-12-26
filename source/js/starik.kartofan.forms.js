@@ -72,8 +72,9 @@ var TopMenu = (function(){
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true)} },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
+        { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true)} },
         
         { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },
 
