@@ -45,7 +45,7 @@ var Options = (function(){
         "mapZoom": undefined,
 
         "mapSyncMoving": true,
-        "mapSyncZooming": false,
+        "mapSyncZooming": false, // TODO: delete on major version
         "mapVizirVisible": true, // TODO: delete on major version
         "mapCursorAllMapsVisible": true,
 
@@ -102,7 +102,7 @@ var Options = (function(){
          },
 
         "viewTopMenuShowAlways": true,
-        "viewInfoPanelShowAlways": false,   
+        "viewInfoPanelShowAlways": true,   
 
         "dbPointsStorySave": 1000,
         "dbSyncIn": false,
@@ -221,7 +221,7 @@ var Options = (function(){
      }
 
     this.getOption = function(collection, option){
-        if (!option) {return this[collection]}
+        if (!option) return this[collection];
         return this[collection][option];
      }
 

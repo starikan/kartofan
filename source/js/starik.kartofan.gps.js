@@ -110,6 +110,7 @@ var FastMoving = (function(){
      }
 
     this.updatePoint = function(data) {
+        
         if (opt.getOption("points", data.id)){
             if (!confirm(loc("editPoints:confirmRewritePoint", data.id))) { return }
         }
@@ -122,8 +123,8 @@ var FastMoving = (function(){
 
         pointVals.latlng = pointVals.latlng.split(",");
 
-        opt.setOption("points", data.id, pointVals)
-        console.log(data.id, opt.getOption("points", data.id));  
+        opt.setOption("points", pointVals.id, pointVals)
+        console.log(pointVals.id, opt.getOption("points"));  
      }
 
     this.deletePoint = function(data) {
@@ -137,9 +138,10 @@ var FastMoving = (function(){
 
     this.editPoint = function(pointId, pointData){
 
+        console.log(opt.getOption("points"));  
+
         pointId = typeof pointId === "string" ? pointId : "";
         var vals = pointData ? pointData : opt.getOption("points", pointId) ? opt.getOption("points", pointId) : {};
-        vals.id = vals.id ? vals.id : pointId;
 
         // Groups suggestions
         var points = opt.getOption("points");
@@ -147,7 +149,7 @@ var FastMoving = (function(){
         groups.sort();
 
         var arr = [
-            { "type": "formEditPoint_id",        "name": "id", "val": vals.id || 10000*Math.random()|0, "loc": "editPoints:formEditPoint_id", "description": "id"},
+            { "type": "formEditPoint_id",        "name": "id", "val": vals.id || pointId || 10000*Math.random()|0, "loc": "editPoints:formEditPoint_id", "description": "id"},
             { "type": "formEditPoint_title",     "name": "title", "val": vals.title, "loc": "editPoints:formEditPoint_title", "description": "title" },
             { "type": "formEditPoint_latlng",    "name": "latlng", "val": vals.latlng || opt.getOption("current", "mapCenterLatLng"), "loc": "editPoints:formEditPoint_latlng", "description": "latlng" },
             { "type": "formEditPoint_group",     "name": "group", "val": vals.group, "options": groups, "loc": "editPoints:formEditPoint_group", "description": "group" },
