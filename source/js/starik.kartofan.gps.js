@@ -138,8 +138,6 @@ var FastMoving = (function(){
 
     this.editPoint = function(pointId, pointData){
 
-        console.log(opt.getOption("points"));  
-
         pointId = typeof pointId === "string" ? pointId : "";
         var vals = pointData ? pointData : opt.getOption("points", pointId) ? opt.getOption("points", pointId) : {};
 

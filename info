@@ -35,15 +35,11 @@ TODO:
         - Чат и видеочат
             http://habrahabr.ru/post/206324/
         - Комментирование, привязка к соцсетям
-        - Сайт-визитка + форум + wiki + блог
-            - https://cartodb.com/
-            - ghost
 
     Mid:
         - форма для контроллов
             - http://abpetkov.github.io/switchery/
         - форма всех настроек
-        - сделать что-то типа информационной строки снизу экрана для оповещений и всякой информации
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
         - залить кэширующий сервер на хостинг    
             - https://www.openshift.com/developers/node-js
@@ -82,6 +78,7 @@ TODO:
         - разобраться с росреестром (принудительно кэшировать его)
         - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)
         - сделать настройку сохранять ли базы локально или очищать перед выходом (нах не надо)
+        - https://cartodb.com/
 
         - переименовать контейнера в уникальные ID
         - заменить все bind на on
@@ -151,9 +148,6 @@ http://2.0.0.kartofan.s3.amazonaws.com/index.html
 
 http://habrahabr.ru/post/206514/ - аналитика
 
-
-NS09.DOMAINCONTROL.COM
-NS10.DOMAINCONTROL.COM
 
 kartofan.info
 

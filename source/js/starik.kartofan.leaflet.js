@@ -263,6 +263,7 @@ var LeafletMap = function(mapId){
     window.opt = new Options();
     window.gps = new GPS();
     window.bases = new Bases();
+    window.infomenu = new InfoMenu();
 
     var parent = this;
 
@@ -664,6 +665,8 @@ var LeafletMap = function(mapId){
         if (parent.markerCursor){
             parent.markerCursor.setOpacity(0.0);
         }
+
+        infomenu.setCoords(e.latlng);
      }
 
     this.instances.push(this);

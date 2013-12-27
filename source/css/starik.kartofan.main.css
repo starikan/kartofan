@@ -33,15 +33,6 @@ body {
     bottom: 0px;
 }
 
-#infoMenuKartofan {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    height: 0px;
-}
-
-
 .maps {
     position: absolute !important;
     padding: 0px;
@@ -150,21 +141,27 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     padding: 10px;
 }
 
-#infoMenuKartofan.row {
-    max-width: 100%;
-    width: 100%;
-    margin: 0px !important;
-    padding: 0px;
-}
-
 #infoMenuKartofan {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     width: 100%;
     height: 15px;
     background-color: black;
-    color: white;
+}
+
+#infoMenuKartofan .row {
+    max-width: 100%;
+    width: 100%;
+}
+
+#infoMenuKartofan h6 {
+    color: #727272 !important;
+    margin: 0px;
+    line-height: 1;
 }
 
 .mainColumn {
     background-color: white;
-
 }

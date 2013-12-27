@@ -292,9 +292,8 @@ var InfoMenu = (function(){
 
     var _this = this;
 
-    this.infoMenuArray = [
-
-     ];
+    this.infoMenuArray = [];
+    this.$coords = $("#infoMenuKartofan .infoMenuLatLng");
 
     this.showInfoMenuView = function() {
         opt.setOption("appVars", "viewInfoMenu", true);
@@ -315,6 +314,11 @@ var InfoMenu = (function(){
 
         var bottom = infoVisible ? 15 : 0;
         $mapsContainer.css({"bottom": bottom+"px"});
+     }
+
+    this.setCoords = function(latlng){
+        var text = latlng.lat.toFixed(5) + ", " + latlng.lng.toFixed(5);
+        this.$coords.text(text);
      }
 
     this._updateInfoMenuView();
