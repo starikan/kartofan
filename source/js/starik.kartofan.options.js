@@ -140,7 +140,8 @@ var Options = (function(){
         "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
         "activeMap": "map0",
         "activeMapNum": 0,   
-        "measuringOn": false,   
+        "measuringOn": false, 
+        "version": "3.0.3",  
      }
 
     this._init = function(){

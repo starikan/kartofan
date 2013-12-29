@@ -72,9 +72,11 @@ var TopMenu = (function(){
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
+        { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true)} },
+        { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         
         { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },
 
@@ -228,19 +230,24 @@ var TopMenu = (function(){
         var $topMenu = $("#"+this.topMenuId);
 
         $.each(this.topMenuArray, function(i, v) {
-            if (v.loc) {
 
-                var $elements = $topMenu.find("."+v.type);
-                var local = loc(v.loc, "", "", $elements.html());
+            var $elements,
+                local,
+                text;
 
+            if (v.loc || v.text) $elements = $topMenu.find("."+v.type);
+            if (v.loc) local = loc(v.loc, "", "", $elements.html());
+            if (v.text) text = v.text();
+
+            if (v.loc || v.text) {
                 $.each($elements, function(){
                     var $el = $(this);
-                    // console.log(local, $el.html(), $el.text())
-                    if ($el.html() && local && $el.html() == $el.text()){
-                        $el.html(local);
+                    if ($el.html() && (local || text) && $el.html() == $el.text()){
+                        $el.html(text || local);
                     }
-                })
+                })                
             }
+
         })
      }
 
@@ -294,6 +301,12 @@ var InfoMenu = (function(){
 
     this.infoMenuArray = [];
     this.$coords = $("#infoMenuKartofan .infoMenuLatLng");
+    this.$right = $("#infoMenuKartofan .infoMenuRight");
+
+    this._init = function() {
+        this._updateInfoMenuView();
+        this.setVersion();
+     }
 
     this.showInfoMenuView = function() {
         opt.setOption("appVars", "viewInfoMenu", true);
@@ -321,7 +334,11 @@ var InfoMenu = (function(){
         this.$coords.text(text);
      }
 
-    this._updateInfoMenuView();
+    this.setVersion = function() {
+        this.$right.text("v."+opt.getOption("appVars", "version"));
+     }
+
+    this._init();
 
  }}());
 

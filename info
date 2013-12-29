@@ -18,6 +18,20 @@ https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 TODO:
 
     Top:
+        - http://html5.by/blog/pointer-lock-api/
+        - Новости в инфопанели
+        - Дискус
+        - Кэширование
+        - залить кэширующий сервер на хостинг    
+            - https://www.openshift.com/developers/node-js
+            - http://cloudno.de/#!/starthere
+        - изменение всех настроек описать и сделать
+        - коррекция привязки
+        - высоты под курсором
+        - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
+            - сдклать легкую настройку
+            - хранить в глобалсах
+
         - Сделать внешнюю базу для синхронизации
         - Добавить ArcGIS.Imagery и высоты
         - тур перевести
@@ -25,6 +39,7 @@ TODO:
         - тач события
             - http://www.developerdrive.com/2013/12/introducing-touchswipe/
             - http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
+            - http://blog.teamtreehouse.com/building-multi-touch-web-applications
 
     Социальщина:
         - При обновлении окно новых возможностей
@@ -39,28 +54,20 @@ TODO:
     Mid:
         - форма для контроллов
             - http://abpetkov.github.io/switchery/
-        - форма всех настроек
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
-        - залить кэширующий сервер на хостинг    
-            - https://www.openshift.com/developers/node-js
-            - http://cloudno.de/#!/starthere
-        - Горячие клавиши http://www.openjs.com/scripts/events/keyboard_shortcuts/
-            - сдклать легкую настройку
-            - хранить в глобалсах
         - Добавление и редактирование меток рызных типов
             - тэги в формах http://www.strangeplanet.fr/work/jquery-highlighttextarea/
             - для маркеров в иде шрифтов https://github.com/lvoogdt/Leaflet.awesome-markers
             - Треки GPS
             - GPS отображение параметров и маркер с кругом точности, направление, цвет маркера в завимимости от скорости
             - азимут
+            - http://www.dynatable.com/ - таблицы
         - азимутальное кольцо как в саспланете, только лучи чтобы до краев экрана шли
         - сохранение куска экрана в файл и создание привязки к озику
             - https://github.com/mapbox/leaflet-image - экспорт изображения карты
-        - коррекция привязки
         - привязка карт (continuousWorld: continuousWorld)
             - http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для привязки
         - коллаж из нескольких карт, как изначально хотел на печать
-        - высоты под курсором
         - отображение списка карт которые есть под точкой
         - наложение слоев
             - Дополнительные KML слои
@@ -106,6 +113,7 @@ TODO:
 - http://blog.laptopmag.com/android-web-server
 - http://www.gadm.org/ - административное деление 
 - https://hacks.mozilla.org/2013/12/the-gamepad-api/ - gamepad api
+- http://habrahabr.ru/post/207650/ - jekyll
 
 
 Хранилища:

@@ -153,15 +153,20 @@ html(manifest="offline/cache.appcache")
                                 li.has-dropdown
                                     a.topMenuHelp Help 
                                     ul.dropdown 
+                                        li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog                                        
                                         li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
+                                        li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
                                         li: a.topMenuHelpTourMain TourMain
+                                        li: a.topMenuVersion Version
                             
                             li.has-dropdown#topMenuHelp
                                 a.icon-iconic-10.topMenuHelp
                                 ul.dropdown 
+                                    li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog
                                     li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                     li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
                                     li: a.topMenuHelpTourMain Tour Main  
+                                    li: a.topMenuVersion Version
 
                             //li.has-dropdown#topMenuQuickSettings
                                 a.icon-fontawesome-webfont-11.topMenuQuickSettings
@@ -276,8 +281,8 @@ html(manifest="offline/cache.appcache")
         div#infoMenuKartofan.hide
             div.row
                 div.columns.small-6.medium-3: h6.infoMenuLatLng Coords
-                div.columns.small-3.medium-6.text-center: h6.infoMenuTime Time
-                div.columns.small-3.medium-3.text-right: h6.infoMenuButtons
+                div.columns.small-6.medium-6.text-center: h6.infoMenuTime Time
+                div.columns.medium-3.text-right: h6.infoMenuRight
 
         div.mapContainer#containerKartofan.hide
 
