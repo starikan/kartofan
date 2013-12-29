@@ -76,7 +76,7 @@ var TopMenu = (function(){
         { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour(true)} },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour()} },
         { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         
         { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },

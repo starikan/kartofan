@@ -173,12 +173,17 @@ var Options = (function(){
         }
 
         if (!opt.getOption("current", "setLang")){
-            opt.setLang(opt.startTour);
+            opt.setLang();
         }
 
         $("#"+opt.getOption("appVars", "activeMap")).addClass("activemap");
 
         opt.versionCheck();
+
+        // Tour button show
+        if (!opt.getOption("current", "showTourFirst")) {
+            $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
+        }
      } 
 
     this._afterInit = function(){
@@ -396,13 +401,11 @@ var Options = (function(){
 
     // *************** TOUR ****************
 
-    this.startTour = function(force, id) {
+    this.startTour = function(id) {
 
-        if (!force) {
-            if (!opt.getOption("current", "showTourFirst")) {
-                opt.setOption("current", "showTourFirst", true);
-            }
-            else return;
+        if (!opt.getOption("current", "showTourFirst")) {
+            opt.setOption("current", "showTourFirst", true);
+            $("a.topMenuHelpTourMain").addClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
 
         var tour = new Tour();
