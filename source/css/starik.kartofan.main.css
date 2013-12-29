@@ -104,9 +104,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     background-color: #708090;
 }
 
-/*.arcticmodal-container_i2 { 
-    min-width: 400px;
-}*/
+.arcticmodal-container_i2 { 
+    /*width: 100%;*/
+}
 
 .arcticmodal-container { 
     z-index: 19999; 
@@ -164,13 +164,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 #disqus_thread {
-    width: 90%;
-    height: 85%;
-    position: absolute;
-    top: 55px;
-    left: 5%;
+    width: 600px;
     background-color: white;
     padding: 15px;
+    z-index: 0;
+
 }
 
 #updatesInfo {

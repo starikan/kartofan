@@ -282,15 +282,16 @@ html(manifest="offline/cache.appcache")
 
         div#infoMenuKartofan.hide
             div.row
-                div.columns.small-6.medium-3: h6.infoMenuLatLng Coords
-                div.columns.small-6.medium-6.text-center: h6.infoMenuTime Time
-                div.columns.medium-3.text-right: h6.infoMenuVersion Version
+                div.columns.hide-for-small-only.medium-4: h6.infoMenuLatLng Coords
+                div.columns.small-6.medium-4.text-center: h6.infoMenuTime Time
+                div.columns.small-6.medium-4.text-right
+                    h6.infoMenuVersion Version
 
         div.mapContainer#containerKartofan.hide
 
         div#updatesInfo
 
-        div#disqus_thread.hide
+        div#disqus_thread
         |<script type="text/javascript">
         |    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         |    var disqus_shortname = 'kartofan'; // required: replace example with your forum shortname

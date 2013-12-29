@@ -315,7 +315,6 @@ var LeafletMap = function(mapId){
 
     this.onClickMap = function(e){
         topmenu.hideTopMenuView();
-        $("#disqus_thread").addClass("hide");
      }
 
     this.onMapMoveEnd = function(e){
