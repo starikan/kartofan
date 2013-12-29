@@ -18,7 +18,6 @@ https://github.com/mapbox/leaflet-knn - поиск ближайшей точки
 TODO:
 
     Top:
-        - автостарт GPS убрать
         - http://html5.by/blog/pointer-lock-api/
         - Кэширование
         - залить кэширующий сервер на хостинг    

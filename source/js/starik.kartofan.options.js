@@ -124,7 +124,7 @@ var Options = (function(){
             "speed": "",
             "timestamp": "",
          },
-        "gpsAutoStart": true,
+        "gpsAutoStart": false,
         "gpsMarker": true,
         "gpsAccuracy": true,
         "gpsFollowing": true,
