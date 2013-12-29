@@ -110,6 +110,8 @@ var Options = (function(){
 
         "setLang": false, 
         "showTourFirst": false, 
+       
+        "version": "3.0.3",  
      };
 
     this.gps = {
@@ -175,6 +177,8 @@ var Options = (function(){
         }
 
         $("#"+opt.getOption("appVars", "activeMap")).addClass("activemap");
+
+        opt.versionCheck();
      } 
 
     this._afterInit = function(){
@@ -319,6 +323,7 @@ var Options = (function(){
                             opt.setOption("current", "setLang", true, function(){
                                 parent.initLocalization(function(){
                                     topmenu._setLocalization();
+                                    opt.versionCheck();
                                     typeof callback == "function" ? callback() : undefined;
                                 })
                             });
@@ -334,6 +339,7 @@ var Options = (function(){
                             opt.setOption("current", "setLang", true, function(){
                                 parent.initLocalization(function(){
                                     topmenu._setLocalization();
+                                    opt.versionCheck();
                                     typeof callback == "function" ? callback() : undefined;
                                 })
                             });
@@ -413,6 +419,49 @@ var Options = (function(){
         $("#topMenuKartofan").removeClass("hide");
         $("#infoMenuKartofan").removeClass("hide");
         $("#containerKartofan").removeClass("hide");
+     }
+
+    this.versionCheck = function() {
+
+        var setVersionEvent = function(data){
+
+            if (opt.getOption("current", "version") != opt.getOption("appVars", "version")) {
+                $(".infoMenuVersion").css("color", "red");
+            }
+
+            var keys = Object.keys(data).sort().reverse();
+
+            var text = "";
+            $.each(keys, function(v, ver){
+                text += "<h2>{0}</h2><ul>".format(ver);
+                if (!data[ver].lines || !data[ver].lines.length) {
+                    text += "</ul>";
+                    return;
+                }
+                $.each(data[ver].lines, function(l, line){
+                    text += "<li>{0}</li>".format(line);
+                })
+                text += "</ul>";
+            })
+            $("#updatesInfo").html(text);
+
+
+            $(".infoMenuVersion").on("click", function(){
+                $("#updatesInfo").arcticmodal();
+                opt.setOption("current", "version", opt.getOption("appVars", "version"));
+                $(".infoMenuVersion").css("color", "");
+            });                
+        }
+
+        var lang = this.getOption("global", "lang");
+        $.getJSON("data/updates_"+lang+".json", function(data){
+            if(data){ setVersionEvent(data) } 
+            else {
+                $.getJSON("data/updates_en_US.json", function(data){
+                    if(data){ setVersionEvent(data) } 
+                })                      
+            }
+        });
      }
 
     this._init();

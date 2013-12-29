@@ -302,7 +302,7 @@ var InfoMenu = (function(){
 
     this.infoMenuArray = [];
     this.$coords = $("#infoMenuKartofan .infoMenuLatLng");
-    this.$right = $("#infoMenuKartofan .infoMenuRight");
+    this.$right = $("#infoMenuKartofan .infoMenuVersion");
 
     this._init = function() {
         this._updateInfoMenuView();

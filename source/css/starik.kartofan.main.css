@@ -70,11 +70,6 @@ body {
     background-color: grey;
 }
 
-/*Measure control when active*/
-.leaflet-control-measure-on .leaflet-control-measure {
-    background-color: rgba(100, 0, 5, 1);
-}
-
 [data-icon]:before {
   vertical-align: middle;
   font-size: 16pt;
@@ -109,9 +104,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     background-color: #708090;
 }
 
-.arcticmodal-container_i2 { 
-    width: 400px;
-}
+/*.arcticmodal-container_i2 { 
+    min-width: 400px;
+}*/
 
 .arcticmodal-container { 
     z-index: 19999; 
@@ -157,7 +152,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 
 #infoMenuKartofan h6 {
-    color: #727272 !important;
+    color: #727272;
     margin: 0px;
     line-height: 1;
 }
@@ -174,6 +169,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     position: absolute;
     top: 55px;
     left: 5%;
+    background-color: white;
+    padding: 15px;
+}
+
+#updatesInfo {
     background-color: white;
     padding: 15px;
 }
