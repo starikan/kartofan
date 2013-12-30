@@ -22,7 +22,8 @@ var Options = (function(){
         "mapDefaultCenterLatLng": [54.31081536133442, 48.362503051757805],
         "mapDefaultZoom": 12,
         "mapDefaultURL": "http://{s}.tiles.mapbox.com/v3/examples.map-y7l23tes/{z}/{x}/{y}.png",
-        "mapCachedService": "http://127.0.0.1:3000",
+        "mapCachedService": "http://kartofan.info/server.php",
+        // "mapCachedService": "http://127.0.0.1:3000/cache",
 
         "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
 
@@ -50,7 +51,7 @@ var Options = (function(){
         "mapCursorAllMapsVisible": true,
 
         "mapCache": true,
-        "mapCacheLoad": "internet", // internet, cache, internet+cach, cach+internet
+        "mapCacheLoad": "internet", // internet, cache, internet+cache, cache+internet
 
         "hashChange": true,
 

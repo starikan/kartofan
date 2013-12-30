@@ -75,7 +75,7 @@ L.Control.Measure = L.Control.Measure.extend({
 L.TileLayerCache = L.TileLayer.extend({
 
     _storeTile: function(x, y, z, base, url){
-        console.log(x, y, z, base, url)
+        // console.log(x, y, z, base, url)
 
         if (!x && !y && !z && !base && !url){ return }
 
@@ -83,7 +83,7 @@ L.TileLayerCache = L.TileLayer.extend({
         
         window.opt = new Options();
 
-        $.getJSON(opt.getOption("global", "mapCachedService")+"/cache?url="+ escape(url) + "&x="+x+"&y="+y+"&z="+z+"&base="+base+"&callback=?", function(data){
+        $.getJSON(opt.getOption("global", "mapCachedService")+"?url="+ escape(url) + "&x="+x+"&y="+y+"&z="+z+"&base="+base+"&callback=?", function(data){
             if(data){
                 parent.mapCacheBase.put({"_id": x+','+y+','+z, "tile": data}, {}, function(err, data){
                     console.log(err, data)
@@ -148,6 +148,7 @@ L.TileLayerCache = L.TileLayer.extend({
                 parent._setUpTile(tile, parent.getTileUrl(tilePoint))
 
                 parent.mapCacheBase.get(key, function(err, data){
+                    // console.log(err, data)
                     if (err){
                         parent._storeTile(tilePoint.x, tilePoint.y, tilePoint.z, parent.options.mapName, parent.getTileUrl(tilePoint));
                     }

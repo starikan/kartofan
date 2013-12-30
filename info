@@ -20,9 +20,6 @@ TODO:
     Top:
         - http://html5.by/blog/pointer-lock-api/
         - Кэширование
-        - залить кэширующий сервер на хостинг    
-            - https://www.openshift.com/developers/node-js
-            - http://cloudno.de/#!/starthere
         - изменение всех настроек описать и сделать
         - коррекция привязки
         - высоты под курсором
@@ -38,11 +35,6 @@ TODO:
             - http://www.developerdrive.com/2013/12/introducing-touchswipe/
             - http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
             - http://blog.teamtreehouse.com/building-multi-touch-web-applications
-
-    Социальщина:
-        - Чат и видеочат
-            http://habrahabr.ru/post/206324/
-        - Комментирование, привязка к соцсетям
 
     Mid:
         - форма для контроллов
@@ -79,6 +71,8 @@ TODO:
         - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)
         - сделать настройку сохранять ли базы локально или очищать перед выходом (нах не надо)
         - https://cartodb.com/
+        - Чат и видеочат
+            http://habrahabr.ru/post/206324/
 
         - переименовать контейнера в уникальные ID
         - заменить все bind на on
