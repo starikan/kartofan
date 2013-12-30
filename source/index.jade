@@ -79,6 +79,7 @@ html(manifest="offline/cache.appcache")
                         li#topMenuMoveMoveTour: a.topMenuMoveMove: span.icon-aim
                         li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
                         li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
+                        li: a.topMenuSetCache: span.icon-picture-streamline-1
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -139,6 +140,9 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuQuickSettingsDbSyncIn Db Sync In 
                                         li: a.topMenuQuickSettingsDbSyncOut Db Sync Out 
                                         li: a.topMenuQuickSettingsGpsAutoStart GPS Auto Start
+                                        li.divider
+                                        li: a.topMenuSetCache Map Cached Type
+
                                 li.has-dropdown
                                     a.topMenuJSON JSON 
                                     ul.dropdown 
@@ -287,7 +291,10 @@ html(manifest="offline/cache.appcache")
                 div.columns.hide-for-small-only.medium-4: h6.infoMenuLatLng Coords
                 div.columns.small-6.medium-4.text-center: h6.infoMenuTime Time
                 div.columns.small-6.medium-4.text-right
-                    h6.infoMenuVersion Version
+                    h6.infoMenuVersion.right Version
+                    h6.right |
+                    h6.infoMenuCache.right Cache
+                        
 
         div.mapContainer#containerKartofan.hide
 

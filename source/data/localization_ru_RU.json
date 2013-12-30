@@ -47,7 +47,15 @@
     "topMenuQuickSettingsViewInfoPanelShowAlways": "Показать информационную панель",
     "topMenuQuickSettingsDbSyncIn": "Синхронизация базы извне",
     "topMenuQuickSettingsDbSyncOut": "Синхронизация базы наружу",
-    "topMenuQuickSettingsGpsAutoStart": "GPS автостарт"    
+    "topMenuQuickSettingsGpsAutoStart": "GPS автостарт"
+  },
+  "menuCache": {
+    "topMenuSetCache": "Тип кэширования карт",
+    "menuCacheAccordGroup": "Установка типа кэширования карт",
+    "menuCacheInternet": "Интернет",
+    "menuCacheInternetCache": "Интернет+Кэш",
+    "menuCacheCacheInternet": "Кэш+Интернет",
+    "menuCacheCache": "Кэш"
   },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Редактор набора",

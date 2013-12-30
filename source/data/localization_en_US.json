@@ -49,6 +49,14 @@
     "topMenuQuickSettingsDbSyncOut": "Db Sync Out",
     "topMenuQuickSettingsGpsAutoStart": "GPS Auto Start"
   },
+  "menuCache": {
+    "topMenuSetCache": "Map Cached Type",
+    "menuCacheAccordGroup": "Set Map Cached Type",
+    "menuCacheInternet": "Internet",
+    "menuCacheInternetCache": "Internet+Cache",
+    "menuCacheCacheInternet": "Cache+Internet",
+    "menuCacheCache": "Cache"
+  },
   "topMenuStageEditor": {
     "topMenuStageEditor": "Stage Editor",
     "topMenuStageEditorSaveView": "Save View",

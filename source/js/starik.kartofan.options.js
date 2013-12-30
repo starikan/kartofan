@@ -468,6 +468,31 @@ var Options = (function(){
         });
      }
 
+    this.setCacheMenu = function(){
+        var arr = {}
+        arr[loc("menuCache:menuCacheAccordGroup")] = {
+            "i":  {title: loc("menuCache:menuCacheInternet"), callback: function(){
+                opt.setCache("internet");
+            }},
+            "ic": {title: loc("menuCache:menuCacheInternetCache"), callback: function(){
+                opt.setCache("internet+cache");
+            }},
+            "ci": {title: loc("menuCache:menuCacheCacheInternet"), callback: function(){
+                opt.setCache("cache+internet");
+            }},
+            "c":  {title: loc("menuCache:menuCacheCache"), callback: function(){
+                opt.setCache("cache");
+            }},
+        };
+        var cacheMenu = new AccordionMenu(arr);
+     };
+
+    this.setCache = function(type) {
+        if (["internet", "cache", "internet+cache", "cache+internet"].indexOf(type) == -1) return;
+        opt.setOption("current", "mapCacheLoad", type);
+        infomenu.setRight();
+     };
+
     this._init();
 
  }}());

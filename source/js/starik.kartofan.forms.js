@@ -155,6 +155,7 @@ var TopMenu = (function(){
             },
             active: function() { return opt.getOption("gps", "gpsAutoStart") }
          },
+        { type: "topMenuSetCache", loc: "menuCache:topMenuSetCache", callback: function(){opt.setCacheMenu()} },
 
         // Pin Button
         { 
@@ -302,11 +303,12 @@ var InfoMenu = (function(){
 
     this.infoMenuArray = [];
     this.$coords = $("#infoMenuKartofan .infoMenuLatLng");
-    this.$right = $("#infoMenuKartofan .infoMenuVersion");
+    this.$version = $("#infoMenuKartofan .infoMenuVersion");
+    this.$cache = $("#infoMenuKartofan .infoMenuCache");
 
     this._init = function() {
         this._updateInfoMenuView();
-        this.setVersion();
+        this.setRight();
      }
 
     this.showInfoMenuView = function() {
@@ -335,8 +337,28 @@ var InfoMenu = (function(){
         this.$coords.text(text);
      }
 
-    this.setVersion = function() {
-        this.$right.text("v."+opt.getOption("appVars", "version"));
+    this.setRight = function() {
+        this.$version.text("v."+opt.getOption("appVars", "version"));
+
+        var cache;
+        switch (opt.getOption("current", "mapCacheLoad")) {
+            case "internet":
+                cache = "<span class='icon-world'></span>";
+                break;
+            case "cache":
+                cache = "<span class='icon-folder'></span>";
+                break;
+            case "internet+cache":
+                cache = "<span class='icon-world'></span><span class='icon-folder'></span>";
+                break;
+            case "cache+internet":
+                cache = "<span class='icon-folder'></span><span class='icon-world'></span>";
+                break;
+            default:
+                cache = "????";
+        }
+        console.log(cache)
+        this.$cache.html(cache)
      }
 
     this._init();

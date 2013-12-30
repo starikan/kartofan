@@ -151,7 +151,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     width: 100%;
 }
 
-#infoMenuKartofan h6 {
+#infoMenuKartofan h6, #infoMenuKartofan h6 span {
     color: #727272;
     margin: 0px;
     line-height: 1;
