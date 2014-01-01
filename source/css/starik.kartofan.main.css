@@ -171,7 +171,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 }
 
-#updatesInfo {
+#updatesInfo, #hotkeysInfo {
     background-color: white;
     padding: 15px;
 }

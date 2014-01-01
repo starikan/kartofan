@@ -39,6 +39,11 @@ var Options = (function(){
 
         "lang": "en_US",
         "langs": ["en_US", "ru_RU"],
+
+        "hotkeys": [
+            { key: "Space", func: "mapFullScreen" },
+            { key: "Shift+Tab", func: "mapSet" },
+        ]
      };
 
     this.current = {
@@ -112,7 +117,7 @@ var Options = (function(){
         "setLang": false, 
         "showTourFirst": false, 
        
-        "version": "3.0.3",  
+        "version": "3.1.0",  
      };
 
     this.gps = {
@@ -144,7 +149,7 @@ var Options = (function(){
         "activeMap": "map0",
         "activeMapNum": 0,   
         "measuringOn": false, 
-        "version": "3.0.3",  
+        "version": "3.1.0",  
      }
 
     this._init = function(){
@@ -162,6 +167,7 @@ var Options = (function(){
         window.locations = new Locations();
         window.infomenu = new InfoMenu();
         window.fastmoving = new FastMoving();
+        window.hotkeys = new HotKeys();
 
         opt.getHash();
 
@@ -621,5 +627,98 @@ var Bases = (function(){
             });
         });
      }
+
+ }}());
+
+
+var HotKeys = (function(){
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    var _this = this;
+
+    this.$container = $("#hotkeysInfo");
+
+    this.functions = {
+        "mapFullScreen": { func: mapseditor.toggleFullScreen, desc: loc("hotkeysDesc:mapFullScreen")},
+        "mapSet": { func: mapseditor.setMapMenu, desc: loc("hotkeysDesc:mapSet")},
+    }
+
+    window.opt = new Options();
+
+    this._init = function() {
+        var keys = opt.getOption("global", "hotkeys");
+        $.each(keys, function(i, v){
+            
+            if (!_this.functions[v.func]) return;
+            else var func = _this.functions[v.func];
+            
+            shortcut.add(v.key, function() { func.func() },
+            {
+                "disable_in_input": func.disable_in_input ? func.disable_in_input : false,
+                'type': 'keydown',
+                'propagate': false,
+                'target': document
+            }); 
+        });
+
+        this.updateInfo();
+     };
+
+    this.updateInfo = function() {
+        this.$container.empty();
+        var keys = opt.getOption("global", "hotkeys");
+
+        var html = "\
+            <table>\
+              <thead>\
+                <tr>\
+                  <th width='150'>{0}</th>\
+                  <th width='450'>{1}</th>\
+                </tr>\
+              </thead>\
+              <tbody>\
+                {rows}\
+              </tbody>\
+            </table>\
+        ".format([loc("hotkeysDesc:infoTableHeaderHotkey"), loc("hotkeysDesc:infoTableHeaderDescription")]);
+
+        var rows = [];
+
+        $.each(keys, function(i, v){
+            
+            if (!_this.functions[v.func]) return;
+            else var func = _this.functions[v.func];
+
+            var keysHtml = "<kbd>"+v.key+"</kbd>";
+
+            rows.push("\
+                <tr>\
+                  <td>{0}</td>\
+                  <td>{1}</td>\
+                </tr>\
+            ".format([keysHtml, func.desc]))
+            
+        });
+
+        html = html.replace("{rows}", rows.join(""));
+
+        console.log(html);
+
+        this.$container.html(html);
+
+     };
+
+    this._init();
 
  }}());

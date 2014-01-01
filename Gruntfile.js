@@ -16,6 +16,7 @@ module.exports = function(grunt) {
       "source/js_vendor/leaflet.measure.js",
       "source/js_vendor/jquery.arcticmodal-0.3.min.js",
       "source/js_vendor/modernizr.js",
+      "source/js_vendor/shortcut.js",
      ];
 
     var bottomJs = [

@@ -33,6 +33,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/leaflet.measure.js")
         script(src="js_vendor/jquery.arcticmodal-0.3.min.js")
         script(src="js_vendor/modernizr.js")
+        script(src="js_vendor/shortcut.js")
 
         // CSS    
         
@@ -163,6 +164,7 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog                                        
                                         li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                         li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
+                                        li: a.topMenuHelpHotkeys Hotkeys List
                                         li: a.topMenuHelpTourMain TourMain
                                         li: a.topMenuVersion Version
                             
@@ -173,6 +175,7 @@ html(manifest="offline/cache.appcache")
                                     li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog
                                     li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
                                     li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
+                                    li: a.topMenuHelpHotkeys Hotkeys List
                                     li: a.topMenuHelpTourMain Tour Main  
                                     li: a.topMenuVersion Version
 
@@ -299,6 +302,8 @@ html(manifest="offline/cache.appcache")
         div.mapContainer#containerKartofan.hide
 
         div#updatesInfo
+        
+        div#hotkeysInfo
 
         div#disqus_thread
         |<script type="text/javascript">

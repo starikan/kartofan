@@ -72,10 +72,11 @@ var TopMenu = (function(){
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
-        { type: "topMenuHelpComments", loc: "topMenu:topMenuHelpComments", callback: function(){$("#disqusPanel").arcticmodal()} },
+        { type: "topMenuHelpComments", loc: "topMenu:topMenuHelpComments", callback: function(){$("#disqus_thread").arcticmodal()} },
         { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
+        { type: "topMenuHelpHotkeys", loc: "topMenu:topMenuHelpHotkeys", callback: function(){$("#hotkeysInfo").arcticmodal()} },
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour()} },
         { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         
@@ -357,7 +358,6 @@ var InfoMenu = (function(){
             default:
                 cache = "????";
         }
-        console.log(cache)
         this.$cache.html(cache)
      }
 
