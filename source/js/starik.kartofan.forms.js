@@ -78,6 +78,7 @@ var TopMenu = (function(){
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
         { type: "topMenuHelpHotkeys", loc: "topMenu:topMenuHelpHotkeys", callback: function() { hotkeys.showInfo() } },
+        { type: "topMenuHelpUpdates", loc: "topMenu:topMenuHelpUpdates" /* callback in opt.versionCheck */},
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function() { opt.startTour() } },
         { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         

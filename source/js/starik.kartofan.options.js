@@ -118,7 +118,7 @@ var Options = (function(){
         "setLang": false, 
         "showTourFirst": false, 
        
-        "version": "3.1.0",  
+        "version": "3.0.0",  
      };
 
     this.gps = {
@@ -439,7 +439,7 @@ var Options = (function(){
         var setVersionEvent = function(data){
 
             if (opt.getOption("current", "version") != opt.getOption("appVars", "version")) {
-                $(".infoMenuVersion").css("color", "red");
+                $(".topMenuHelpUpdates.button").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
             }
 
             var keys = Object.keys(data).sort().reverse();
@@ -459,10 +459,10 @@ var Options = (function(){
             $("#updatesInfo").html(text);
 
 
-            $(".infoMenuVersion").on("click", function(){
+            $(".topMenuHelpUpdates").on("click", function(){
                 $("#updatesInfo").arcticmodal();
                 opt.setOption("current", "version", opt.getOption("appVars", "version"));
-                $(".infoMenuVersion").css("color", "");
+                $(".topMenuHelpUpdates.button").addClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
             });                
         }
 
