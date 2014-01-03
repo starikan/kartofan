@@ -10,6 +10,7 @@ http://ivaynberg.github.io/select2/
 https://github.com/melanke/Watch.JS
 http://www.quirksmode.org/dom/events/contextmenu.html - context menu event browsers support
 http://timschlechter.github.io/bootstrap-tagsinput/examples/bootstrap3/ - Tags
+http://www.openjs.com/scripts/events/keyboard_shortcuts/
 
 
 ToAdd:
@@ -22,7 +23,6 @@ TODO:
         - OZI
 
     Top:
-        - сделать легкую настройку горячих клавиш
         - кнопка обновления как тур
         - изменение основных настроек
         - GPS панель

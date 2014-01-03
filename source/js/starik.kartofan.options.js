@@ -680,8 +680,6 @@ var HotKeys = (function(){
      };
 
     this.updateInfo = function() {
-        this.$container.empty();
-
         var keys = opt.getOption("global", "hotkeys");
 
         var html = "\
@@ -716,21 +714,51 @@ var HotKeys = (function(){
 
         html = html.replace("{rows}", rows.join(""));
 
+        this.$container.empty();
         this.$container.html(html);
 
-        // TODO
-        // This need because when English lang set the buttons in this form show always on top of view
-        // If set lang to Russian it`s hide. Magic
-        this.$container.addClass("hide");
+        this.setChangeKeys();
+
      };
 
     this.showInfo = function() {
         this.$container.removeClass("hide");
         $("#hotkeysInfo").arcticmodal({
-            afterClose: function(){_this.$container.addClass("hide")}
+            afterClose: function(){_this.hideInfo()}
         })
      }
 
+    this.hideInfo = function() {
+        // TODO
+        // This need because when English lang set the buttons in this form show always on top of view
+        // If set lang to Russian it`s hide. Magic        
+        this.$container.addClass("hide");
+     }
+
+    this.unbindHotkeys = function() {
+        var keys = opt.getOption("global", "hotkeys");
+        $.each(keys, function(i, v){
+            shortcut.remove(v);
+        })
+     }
+
+    this.setChangeKeys = function() {
+        $(".hk_update").click(function(){
+            var id = $(this).attr("id");
+            var keys = opt.getOption("global", "hotkeys");
+            
+            var newKey = prompt(loc("hotkeysDesc:infoTableHeaderReset"), keys[id]);
+
+            if (newKey !== null){
+                _this.unbindHotkeys();
+                keys[id] = newKey;
+                opt.setOption("global", "hotkeys", keys, function(){ _this.init() });
+                _this.updateInfo();
+            }
+        });
+     };
+
     this.init();
+    this.hideInfo();
 
  }}());
