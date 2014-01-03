@@ -22,25 +22,19 @@ TODO:
         - OZI
 
     Top:
-        - кнопка обновления как тур
-        - http://html5.by/blog/pointer-lock-api/
-        - изменение всех настроек описать и сделать
-        - коррекция привязки
-        - высоты под курсором
-        - GPS панель
         - сделать легкую настройку горячих клавиш
+        - кнопка обновления как тур
+        - изменение основных настроек
+        - GPS панель
+        - высоты под курсором
         - азимутальное кольцо как в саспланете, только лучи чтобы до краев экрана шли
         - отображение списка карт которые есть под точкой
         - ночной режим
+        - http://html5.by/blog/pointer-lock-api/
 
         - Сделать внешнюю базу для синхронизации
         - Добавить ArcGIS.Imagery и высоты
         - тур перевести
-
-        - тач события
-            - http://www.developerdrive.com/2013/12/introducing-touchswipe/
-            - http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
-            - http://blog.teamtreehouse.com/building-multi-touch-web-applications
 
     Mid:
         - форма для контроллов
@@ -53,6 +47,7 @@ TODO:
             - азимут
             - http://www.dynatable.com/ - таблицы
             - GPS отображение параметров и маркер с кругом точности, направление, цвет маркера в завимимости от скорости
+            - коррекция привязки
         - сохранение куска экрана в файл и создание привязки к озику
             - https://github.com/mapbox/leaflet-image - экспорт изображения карты
         - привязка карт (continuousWorld: continuousWorld)
@@ -63,6 +58,11 @@ TODO:
             - слои wikimapia, panoramio, яндекс картинки
         - решить что-то с перемещением с помощью таба в форме
         - переключатели http://abpetkov.github.io/switchery/
+
+        - тач события
+            - http://www.developerdrive.com/2013/12/introducing-touchswipe/
+            - http://www.queness.com/post/11755/11-multi-touch-and-touch-events-javascript-libraries - touch events
+            - http://blog.teamtreehouse.com/building-multi-touch-web-applications
 
     Low:
         - http://oridomi.com/

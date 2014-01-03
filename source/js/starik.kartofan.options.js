@@ -40,11 +40,11 @@ var Options = (function(){
         "lang": "en_US",
         "langs": ["en_US", "ru_RU"],
 
-        "hotkeys": [
-            { key: "Space", func: "hk_mapFullScreen" },
-            { key: "Shift+Tab", func: "hk_mapSet" },
-            { key: "Shift+S", func: "hk_stageSet" },
-        ]
+        "hotkeys": {
+            "hk_mapFullScreen": "Space",
+            "hk_mapSet": "Shift+Tab",
+            "hk_stageSet": "Shift+S",
+        },
      };
 
     this.current = {
@@ -653,9 +653,9 @@ var HotKeys = (function(){
     this.$container = $("#hotkeysInfo");
 
     this.functions = {
-        "hk_mapFullScreen": { func: mapseditor.toggleFullScreen, desc: loc("hotkeysDesc:hk_mapFullScreen")},
-        "hk_mapSet": { func: mapseditor.setMapMenu, desc: loc("hotkeysDesc:hk_mapSet")},
-        "hk_stageSet": { func: stageeditor.setStageMenu, desc: loc("hotkeysDesc:hk_stageSet")},
+        "hk_mapFullScreen": { func: mapseditor.toggleFullScreen },
+        "hk_mapSet": { func: mapseditor.setMapMenu },
+        "hk_stageSet": { func: stageeditor.setStageMenu },
     }
 
     window.opt = new Options();
@@ -664,10 +664,10 @@ var HotKeys = (function(){
         var keys = opt.getOption("global", "hotkeys");
         $.each(keys, function(i, v){
             
-            if (!_this.functions[v.func]) return;
-            else var func = _this.functions[v.func];
+            if (!_this.functions[i]) return;
+            else var func = _this.functions[i];
             
-            shortcut.add(v.key, function() { func.func() },
+            shortcut.add(v, function() { func.func() },
             {
                 "disable_in_input": func.disable_in_input ? func.disable_in_input : false,
                 'type': 'keydown',
@@ -701,20 +701,17 @@ var HotKeys = (function(){
 
         var rows = [];
 
-        $.each(keys, function(i, v){
+        $.each(this.functions, function(i, v){
             
-            if (!_this.functions[v.func]) return;
-            else var func = _this.functions[v.func];
-
-            var keysHtml = "<kbd>"+v.key.split("+").join("</kbd> + <kbd>")+"</kbd>";
+            var keysHtml = keys[i] ? "<kbd>"+keys[i].split("+").join("</kbd> + <kbd>")+"</kbd>" : "";
 
             rows.push("\
                 <tr>\
                   <td>{0}</td>\
                   <td>{1}</td>\
-                  <td><a class='button tiny' id='{2}'>{3}</a></td>\
+                  <td><a class='button tiny hk_update' id='{2}'>{3}</a></td>\
                 </tr>\
-            ".format([keysHtml, func.desc, v.func, loc("hotkeysDesc:infoTableHeaderReset")]));
+            ".format([keysHtml, loc("hotkeysDesc:"+i), i, loc("hotkeysDesc:infoTableHeaderReset")]));
         });
 
         html = html.replace("{rows}", rows.join(""));
