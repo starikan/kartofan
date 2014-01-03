@@ -41,8 +41,9 @@ var Options = (function(){
         "langs": ["en_US", "ru_RU"],
 
         "hotkeys": [
-            { key: "Space", func: "mapFullScreen" },
-            { key: "Shift+Tab", func: "mapSet" },
+            { key: "Space", func: "hk_mapFullScreen" },
+            { key: "Shift+Tab", func: "hk_mapSet" },
+            { key: "Shift+S", func: "hk_stageSet" },
         ]
      };
 
@@ -336,6 +337,7 @@ var Options = (function(){
                                 parent.initLocalization(function(){
                                     topmenu._setLocalization();
                                     opt.versionCheck();
+                                    hotkeys.updateInfo();
                                     typeof callback == "function" ? callback() : undefined;
                                 })
                             });
@@ -352,6 +354,7 @@ var Options = (function(){
                                 parent.initLocalization(function(){
                                     topmenu._setLocalization();
                                     opt.versionCheck();
+                                    hotkeys.updateInfo();
                                     typeof callback == "function" ? callback() : undefined;
                                 })
                             });
@@ -650,13 +653,14 @@ var HotKeys = (function(){
     this.$container = $("#hotkeysInfo");
 
     this.functions = {
-        "mapFullScreen": { func: mapseditor.toggleFullScreen, desc: loc("hotkeysDesc:mapFullScreen")},
-        "mapSet": { func: mapseditor.setMapMenu, desc: loc("hotkeysDesc:mapSet")},
+        "hk_mapFullScreen": { func: mapseditor.toggleFullScreen, desc: loc("hotkeysDesc:hk_mapFullScreen")},
+        "hk_mapSet": { func: mapseditor.setMapMenu, desc: loc("hotkeysDesc:hk_mapSet")},
+        "hk_stageSet": { func: stageeditor.setStageMenu, desc: loc("hotkeysDesc:hk_stageSet")},
     }
 
     window.opt = new Options();
 
-    this._init = function() {
+    this.init = function() {
         var keys = opt.getOption("global", "hotkeys");
         $.each(keys, function(i, v){
             
@@ -677,6 +681,7 @@ var HotKeys = (function(){
 
     this.updateInfo = function() {
         this.$container.empty();
+
         var keys = opt.getOption("global", "hotkeys");
 
         var html = "\
@@ -685,13 +690,14 @@ var HotKeys = (function(){
                 <tr>\
                   <th width='150'>{0}</th>\
                   <th width='450'>{1}</th>\
+                  <th width='50'>{2}</th>\
                 </tr>\
               </thead>\
               <tbody>\
                 {rows}\
               </tbody>\
             </table>\
-        ".format([loc("hotkeysDesc:infoTableHeaderHotkey"), loc("hotkeysDesc:infoTableHeaderDescription")]);
+        ".format([loc("hotkeysDesc:infoTableHeaderHotkey"), loc("hotkeysDesc:infoTableHeaderDescription"), loc("hotkeysDesc:infoTableHeaderReset")]);
 
         var rows = [];
 
@@ -700,25 +706,34 @@ var HotKeys = (function(){
             if (!_this.functions[v.func]) return;
             else var func = _this.functions[v.func];
 
-            var keysHtml = "<kbd>"+v.key+"</kbd>";
+            var keysHtml = "<kbd>"+v.key.split("+").join("</kbd> + <kbd>")+"</kbd>";
 
             rows.push("\
                 <tr>\
                   <td>{0}</td>\
                   <td>{1}</td>\
+                  <td><a class='button tiny' id='{2}'>{3}</a></td>\
                 </tr>\
-            ".format([keysHtml, func.desc]))
-            
+            ".format([keysHtml, func.desc, v.func, loc("hotkeysDesc:infoTableHeaderReset")]));
         });
 
         html = html.replace("{rows}", rows.join(""));
 
-        console.log(html);
-
         this.$container.html(html);
 
+        // TODO
+        // This need because when English lang set the buttons in this form show always on top of view
+        // If set lang to Russian it`s hide. Magic
+        this.$container.addClass("hide");
      };
 
-    this._init();
+    this.showInfo = function() {
+        this.$container.removeClass("hide");
+        $("#hotkeysInfo").arcticmodal({
+            afterClose: function(){_this.$container.addClass("hide")}
+        })
+     }
+
+    this.init();
 
  }}());

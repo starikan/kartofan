@@ -21,6 +21,7 @@ var TopMenu = (function(){
     window.bases = new Bases();
     window.gps = new GPS();
     window.infomenu = new InfoMenu();
+    window.hotkeys = new HotKeys();
 
     var _this = this;
 
@@ -76,8 +77,8 @@ var TopMenu = (function(){
         { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },
         { type: "topMenuHelpFAQ", loc: "topMenu:topMenuHelpFAQ" },
         { type: "topMenuHelpSource", loc: "topMenu:topMenuHelpSource" },
-        { type: "topMenuHelpHotkeys", loc: "topMenu:topMenuHelpHotkeys", callback: function(){$("#hotkeysInfo").arcticmodal()} },
-        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function(){opt.startTour()} },
+        { type: "topMenuHelpHotkeys", loc: "topMenu:topMenuHelpHotkeys", callback: function() { hotkeys.showInfo() } },
+        { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function() { opt.startTour() } },
         { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         
         { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },

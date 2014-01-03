@@ -238,15 +238,18 @@ var StageEditor = (function(){
         var allStages = opt.getOption("stages");
         var currStage = opt.getOption("current", "stage");
 
-        console.log(allStages)
+        console.log(allStages);
 
-        var newName = prompt(loc("editStage:inputStageID"), currStage.title)
-        if (newName){
-            if (allStages[newName] && !confirm(loc("editStage:stageRewriteConfirm", newName))){
+        var newID = prompt(loc("editStages:inputStageID"), currStage.id);
+        var newName = prompt(loc("editStages:inputStageName"), currStage.title);
+
+        if (newID){
+            if (allStages[newID] && !confirm(loc("editStages:confirmRewriteStage", newID))){
                 return;
             }
-            currStage.id = newName;
-            opt.setOption("stages", newName, currStage);  
+            currStage.id = newID;
+            currStage.title = newName;
+            opt.setOption("stages", newID, currStage);  
         }
      }  
 
@@ -394,7 +397,7 @@ var StageEditor = (function(){
      }
 
     this.deleteStageFunc = function(data, callback){
-        if (confirm(loc("editStages:confirmDeleteMap", data.id))) {
+        if (confirm(loc("editStages:confirmDeleteStage", data.id))) {
             if (data.id){
                 opt.deleteOption("stages", data.id);
                 callback();
@@ -405,7 +408,7 @@ var StageEditor = (function(){
 
     this.submitStageFunc = function(data){
         if (opt.getOption("stages", data.id)){
-            if (!confirm(loc("editStages:confirmRewriteMap", data.id))) {
+            if (!confirm(loc("editStages:confirmRewriteStage", data.id))) {
                 return;
             }
         }

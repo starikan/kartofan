@@ -163,15 +163,16 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 
-#disqus_thread {
-    width: 600px;
+#updatesInfo, #hotkeysInfo, #disqus_thread {
     background-color: white;
     padding: 15px;
-    z-index: 0;
-
+    z-index: -10;
 }
 
-#updatesInfo, #hotkeysInfo {
-    background-color: white;
-    padding: 15px;
+#hotkeysInfo .button {
+    margin-bottom: 0px;
+}
+
+#disqus_thread {
+    width: 600px;
 }

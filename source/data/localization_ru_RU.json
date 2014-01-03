@@ -87,8 +87,10 @@
   },
   "editStages": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
-    "confirmRewriteMap": "Набор с ID = {0} уже существует. Перезаписать ее?",
-    "confirmDeleteMap": "Вы действительно хотите удалить набор {0}?",
+    "confirmRewriteStage": "Набор с ID = {0} уже существует. Перезаписать ее?",
+    "confirmDeleteStage": "Вы действительно хотите удалить набор {0}?",
+    "inputStageID": "Введите ID набора",
+    "inputStageName": "Введите имя набора",    
     "formEditStage_id": "ID",
     "formEditStage_title": "Заголовок",
     "formEditStage_group": "Группа",
@@ -121,5 +123,27 @@
   "syncBases": {
     "errorExtSync": "Доступ к внешней базе {0} не возможен", 
     "syncFromExtComplire": "Синхронизация из внешней базы {0} завершена. Перезагрузите приложение чтобы применить все изменения."
-  }
+  },
+  "hotkeysDesc": {
+    "infoTableHeaderHotkey": "Клавиши",
+    "infoTableHeaderDescription": "Описание",
+    "infoTableHeaderReset": "Сменить",
+    "hk_mapFullScreen": "Открытие активной карты на весь экран",
+    "hk_mapSet": "Установка карты",
+    "hk_stageSet": "Установка набора",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": ""
+  }  
 }
