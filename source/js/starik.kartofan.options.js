@@ -118,7 +118,7 @@ var Options = (function(){
         "setLang": false, 
         "showTourFirst": false, 
        
-        "version": "3.0.0",  
+        "version": "3.1.0",  
      };
 
     this.gps = {
@@ -197,7 +197,6 @@ var Options = (function(){
     this._afterInit = function(){
 
         if (!bases.checkBasesLoaded()){ return }
-
 
         // If no localization create it and then repeat again
         if ($.isEmptyObject(parent.localization)){
@@ -317,8 +316,10 @@ var Options = (function(){
         var lang = this.getOption("global", "lang");
         $.getJSON("data/localization_en_US.json", function(data){
             if(data){ parent.setOption("localization", "en_US", data) }
+            else {console.log("Localization Error")}
             $.getJSON("data/localization_"+lang+".json", function(data){
                 if(data){ parent.setOption("localization", lang, data, callback) }
+                else {console.log("Localization Error")}
             })             
         });
        
@@ -587,6 +588,7 @@ var Bases = (function(){
         if (opt.getOption("current", "dbSyncIn")){
             parent.syncIn();
         }
+
      }
 
     this.syncOut = function(){

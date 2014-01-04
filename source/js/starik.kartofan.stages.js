@@ -80,6 +80,74 @@ var StageMaps = (function(){
         window.mapsInstance[i].createMap(latlng, zoom);   
      }
  
+    this.exportImageView = function() {
+        var canvasExport = document.getElementById('exportView'); 
+        var canvasCutter = document.getElementById('cutterView'); 
+        if (canvasExport.getContext && canvasCutter.getContext){
+            var ctxExp = canvasExport.getContext('2d');
+            var ctxCutt = canvasCutter.getContext('2d');
+        } 
+        else { return }
+
+        $.each(mapsInstance, function(i, v){
+
+            var $mapAll = $("#map"+i);
+            var $map = $("#map"+i+" .leaflet-map-pane");
+            var $tiles = $(".leaflet-tile-container.leaflet-zoom-animated img");
+
+            var delta = $map[0].style.cssText.match(/-?\d+px, -?\d+px/)[0].replace(/px/g, "").replace(" ", "").split(",");
+            var tiles = [];
+            var size = [$mapAll.width(), $mapAll.height()];
+            delta = [-delta[0], -delta[1], -delta[0] + size[0], -delta[1] + size[1]];
+
+            console.log(delta);
+
+            $.each($tiles, function(t, tile){
+                // var tileData = {
+                //     "x1": $(tile).offset().left,
+                //     "y1": $(tile).offset().top,
+                //     "x2": $(tile).offset().left+$(tile).width(),
+                //     "y2": $(tile).offset().top+$(tile).height(),                    
+                //     "src": $(tile).attr("src")
+                // };
+                // var checkData = (
+                //                     delta[0] < tileData.x1 < delta[2] &&
+                //                     delta[1] < tileData.y1 < delta[3]
+                //                 ) || 
+                //                 (
+                //                     delta[2] > tileData.x2 > delta[0] && 
+                //                     delta[3] > tileData.y2 > delta[1]
+                //                 );
+
+                var tileData = {
+                    "x1": $(tile).offset().left,
+                    "y1": $(tile).offset().top,
+                    "x2": $(tile).offset().left + $(tile).width(),
+                    "y2": $(tile).offset().top + $(tile).height(),
+                    "src": $(tile).attr("src")
+                };
+                console.log(tileData)
+                var checkData = (delta[0] < tileData.x2 < delta[2] && delta[1] < tileData.y2 < delta[3]) || // Top-Left
+                                (delta[0] < tileData.x2 < delta[2] && delta[1] < tileData.y1 < delta[3]) || // Bottom-Left
+                                (delta[0] < tileData.x1 < delta[2] && delta[1] < tileData.y1 < delta[3]) || // Bottom-Right
+                                (delta[0] < tileData.x1 < delta[2] && delta[1] < tileData.y2 < delta[3]) // Top-Right
+
+                console.log(checkData);
+                checkData ? tiles.push(tileData) : undefined;
+            })
+
+            console.log(delta);
+            console.log($tiles);
+            console.log(tiles);
+
+            // var image = new Image();
+            // image.src = "";
+            // image.onload = function() {
+            //     ctx.drawImage(image, 0, 0);
+            // };            
+        })
+     }
+
  }}());
 
 var StageEditor = (function(){

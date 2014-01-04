@@ -21,13 +21,11 @@ TODO:
     Статьи:
         - Кэширование
         - OZI
+        - горяие клавиши
+        - настройки
 
     Top:
-        - изменение основных настроек
         - GPS панель
-        - высоты под курсором
-            - https://developers.google.com/maps/documentation/elevation/
-        - азимутальное кольцо как в саспланете, только лучи чтобы до краев экрана шли
         - отображение списка карт которые есть под точкой
         - ночной режим
         - http://html5.by/blog/pointer-lock-api/
@@ -37,6 +35,7 @@ TODO:
         - тур перевести
 
     Mid:
+        - добавить побольше горячих клавиш
         - форма для контроллов
             - http://abpetkov.github.io/switchery/
         - поиск названий (https://github.com/stefanocudini/leaflet-search)
@@ -48,14 +47,15 @@ TODO:
             - http://www.dynatable.com/ - таблицы
             - GPS отображение параметров и маркер с кругом точности, направление, цвет маркера в завимимости от скорости
             - коррекция привязки
-        - сохранение куска экрана в файл и создание привязки к озику
+        - коллаж из нескольких карт (книга), как изначально хотел на печать
+        - сохранение куска экрана в файл
             - https://github.com/mapbox/leaflet-image - экспорт изображения карты
         - привязка карт (continuousWorld: continuousWorld)
             - http://omarriott.com/aux/leaflet-js-non-geographical-imagery/ - для привязки
-        - коллаж из нескольких карт, как изначально хотел на печать
         - наложение слоев
             - Дополнительные KML слои
             - слои wikimapia, panoramio, яндекс картинки
+            - азимутальное кольцо как в саспланете, только лучи чтобы до краев экрана шли
         - решить что-то с перемещением с помощью таба в форме
         - переключатели http://abpetkov.github.io/switchery/
 
@@ -65,10 +65,13 @@ TODO:
             - http://blog.teamtreehouse.com/building-multi-touch-web-applications
 
     Low:
+        - высоты под курсором
+            - https://developers.google.com/maps/documentation/elevation/
         - http://oridomi.com/
         - Logo при загрузке - http://codepen.io/collection/dviIy/1
         - таб на картах выделяет визир и зеленую стрелку
         - разные форматы кэша
+            - экспорт-импорт
         - превышение indexedDb отлавливать 
         - разобраться с росреестром (принудительно кэшировать его)
         - заменить алерты и конфирмы на http://www.webmasters.by/images/articles/jquery.alerts/index.html (станавливает ля поток)

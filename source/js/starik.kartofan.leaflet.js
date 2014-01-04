@@ -41,9 +41,6 @@ L.Control.Measure = L.Control.Measure.extend({
     onAdd: function (map) {
         var className = 'leaflet-control-zoom leaflet-bar leaflet-control',
             container = L.DomUtil.create('div', className);
-
-        // this._createButton('↔', loc("controls:measureTip"), 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
-
         return container;
      },
 
@@ -59,15 +56,12 @@ L.Control.Measure = L.Control.Measure.extend({
             text = '<div class="leaflet-measure-tooltip-total">' + (totalRound/1000).toFixed(2) + ' km</div>';
         }
 
-        // if(differenceRound > 0 && totalRound != differenceRound) {
-            text += '<div class="leaflet-measure-tooltip-difference">(+' + differenceRound + ' m)</div>';
-        // }
+        text += '<div class="leaflet-measure-tooltip-difference">(+' + differenceRound + ' m)</div>';
 
         this._tooltip._icon.innerHTML = text;
      },
 
     _round: function(val) {
-        // return Math.round((val / 1852) * 10) / 10;
         return Math.round(val)
      },   
  })

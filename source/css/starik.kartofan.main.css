@@ -176,3 +176,17 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 #disqus_thread {
     width: 600px;
 }
+
+#exportView {
+    width: 100%;
+    height: 100%;
+}
+
+#cutterView {
+    width: 200%;
+    height: 200%;
+    z-index: 10000000000;
+    position: absolute;
+    top: 145px;
+    left: 0px;
+}

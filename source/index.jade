@@ -81,6 +81,7 @@ html(manifest="offline/cache.appcache")
                         li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
                         li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
                         li: a.topMenuSetCache: span.icon-picture-streamline-1
+                        //li: a.topMenuStageExport Export Stage Like Image
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -114,6 +115,7 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuStageExternal Get External Stage
                                         li: a.topMenuStageEditView Edit This Stage View
                                         li: a.topMenuStageSave Save This Stage
+                                        li: a.topMenuStageExport Export Stage Like Image
                                 li.has-dropdown
                                     a.topMenuUtils Utils
                                     ul.dropdown 
@@ -125,26 +127,27 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuMoveMove Move To
                                         li: a.topMenuMoveAdd Add Move
                                         li: a.topMenuMoveEdit Edit Move
-                                li.has-dropdown
-                                    a.topMenuOptions Options 
+                                li.has-dropdown#topMenuOpt
+                                    a.topMenuOpt Settings
                                     ul.dropdown 
-                                        li: a.topMenuOptGlobal Set Global Options
                                         li: a.topMenuOptUpdate Update Options From External Base
                                         li: a.topMenuOptLang Set Language 
                                         li: a.topMenuOptReset Reset All Settings
-                                li.has-dropdown#topMenuQuickSettings
-                                    a.topMenuQuickSettings Quick Settings
-                                    ul.dropdown 
-                                        li: a.topMenuQuickSettingsHashChange Addres Bar Coords Change
-                                        li: a.topMenuQuickSettingsMapsSyncMoving Maps Sync Moving
-                                        li: a.topMenuQuickSettingsMapSyncZooming Map Sync Zooming 
-                                        li: a.topMenuQuickSettingsMapCursorAllMapsVisible Map Cursor On All Maps Visible 
-                                        li: a.topMenuQuickSettingsViewInfoPanelShowAlways Info Panel Show Always 
-                                        li: a.topMenuQuickSettingsDbSyncIn Db Sync In 
-                                        li: a.topMenuQuickSettingsDbSyncOut Db Sync Out 
-                                        li: a.topMenuQuickSettingsGpsAutoStart GPS Auto Start
+                                        li.divider
+                                        li: a.topMenuOptHashChange Addres Bar Coords Change
+                                        li: a.topMenuOptMapsSyncMoving Maps Sync Moving
+                                        li: a.topMenuOptMapSyncZooming Map Sync Zooming 
+                                        li: a.topMenuOptMapCursorAllMapsVisible Map Cursor On All Maps Visible 
+                                        li: a.topMenuOptViewInfoPanelShowAlways Info Panel Show Always 
+                                        li: a.topMenuOptDbSyncIn Db Sync In 
+                                        li: a.topMenuOptDbSyncOut Db Sync Out 
+                                        li: a.topMenuOptGpsAutoStart GPS Auto Start
                                         li.divider
                                         li: a.topMenuSetCache Map Cached Type
+                                        li: a.topMenuMapCachedService Set Map Cached Service
+                                        li: a.topMenuMapDefaultCenterLatLng Set Map Default Center LatLng 
+                                        li: a.topMenuMapDefaultURL Set Map Default URL
+                                        li: a.topMenuMainFeed Set Main Feed
 
                                 li.has-dropdown
                                     a.topMenuJSON JSON 
@@ -182,18 +185,6 @@ html(manifest="offline/cache.appcache")
                                     li: a.topMenuHelpTourMain Tour Main  
                                     li: a.topMenuHelpUpdates Updates
                                     li: a.topMenuVersion Version
-
-                            //li.has-dropdown#topMenuQuickSettings
-                                a.icon-fontawesome-webfont-11.topMenuQuickSettings
-                                ul.dropdown 
-                                    li: a.topMenuQuickSettingsHashChange Addres Bar Coords Change
-                                    li: a.topMenuQuickSettingsMapsSyncMoving Maps Sync Moving
-                                    li: a.topMenuQuickSettingsMapSyncZooming Map Sync Zooming 
-                                    li: a.topMenuQuickSettingsMapCursorAllMapsVisible Map Cursor On All Maps Visible 
-                                    li: a.topMenuQuickSettingsViewInfoPanelShowAlways Info Panel Show Always 
-                                    li: a.topMenuQuickSettingsDbSyncIn Db Sync In 
-                                    li: a.topMenuQuickSettingsDbSyncOut Db Sync Out 
-                                    li: a.topMenuQuickSettingsGpsAutoStart GPS Auto Start 
 
                             li#topMenuPin: a.icon-iconic.topMenuPin
 
@@ -308,6 +299,9 @@ html(manifest="offline/cache.appcache")
         div#updatesInfo
         
         div#hotkeysInfo
+
+        canvas#exportView.hide
+        canvas#cutterView.hide
 
         div#disqus_thread
         |<script type="text/javascript">

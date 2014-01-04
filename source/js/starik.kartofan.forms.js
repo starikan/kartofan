@@ -45,6 +45,7 @@ var TopMenu = (function(){
         { type: "topMenuStageExternal", loc: "topMenu:topMenuStageExternal", callback: stageeditor.externalStageMenu },
         { type: "topMenuStageEditView", loc: "topMenu:topMenuStageEditView", callback: stageeditor.editView },
         { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
+        { type: "topMenuStageExport", loc: "topMenu:topMenuStageExport", callback: stage.exportImageView },
         
         { type: "topMenuMove", loc: "topMenu:topMenuMove" },
         { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: fastmoving.moveToPointMenu },
@@ -55,8 +56,6 @@ var TopMenu = (function(){
         { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen },
         { type: "topMenuUtilsToggleMeasuring", loc: "topMenu:topMenuUtilsToggleMeasuring", callback: mapseditor.toggleMeasuring },
         
-        { type: "topMenuOptions", loc: "topMenu:topMenuOptions" },
-        { type: "topMenuOptGlobal", loc: "topMenu:topMenuOptGlobal", callback: "" },
         { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn },
         { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: opt.setLang },
         { type: "topMenuOptReset", loc: "topMenu:topMenuOptReset", callback: bases._clearAllBases },
@@ -82,12 +81,12 @@ var TopMenu = (function(){
         { type: "topMenuHelpTourMain", loc: "topMenu:topMenuHelpTourMain", callback: function() { opt.startTour() } },
         { type: "topMenuVersion", text: function(){return "version "+opt.getOption("appVars", "version")} },
         
-        { type: "topMenuQuickSettings", loc: "topMenu:topMenuQuickSettings" },
+        { type: "topMenuOpt", loc: "topMenu:topMenuOpt" },
 
-        // Quick Settings
+        // Settings
         { 
-            type: "topMenuQuickSettingsHashChange", 
-            loc: "topMenu:topMenuQuickSettingsHashChange", 
+            type: "topMenuOptHashChange", 
+            loc: "topMenu:topMenuOptHashChange", 
             callback: function(){
                 opt.setOption("current", "hashChange", 1-opt.getOption("current", "hashChange"));
                 _this.setActiveOnButtons();
@@ -95,8 +94,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "hashChange") }
          },
         { 
-            type: "topMenuQuickSettingsMapsSyncMoving", 
-            loc: "topMenu:topMenuQuickSettingsMapsSyncMoving", 
+            type: "topMenuOptMapsSyncMoving", 
+            loc: "topMenu:topMenuOptMapsSyncMoving", 
             callback: function(){
                 opt.setOption("current", "mapSyncMoving", 1-opt.getOption("current", "mapSyncMoving"));
                 _this.setActiveOnButtons();
@@ -104,8 +103,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "mapSyncMoving") }
          },
         { 
-            type: "topMenuQuickSettingsMapSyncZooming", 
-            loc: "topMenu:topMenuQuickSettingsMapSyncZooming", 
+            type: "topMenuOptMapSyncZooming", 
+            loc: "topMenu:topMenuOptMapSyncZooming", 
             callback: function(){
                 opt.setOption("current", "mapSyncZooming", 1-opt.getOption("current", "mapSyncZooming"));
                 _this.setActiveOnButtons();
@@ -113,8 +112,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "mapSyncZooming") }
          },
         { 
-            type: "topMenuQuickSettingsMapCursorAllMapsVisible", 
-            loc: "topMenu:topMenuQuickSettingsMapCursorAllMapsVisible", 
+            type: "topMenuOptMapCursorAllMapsVisible", 
+            loc: "topMenu:topMenuOptMapCursorAllMapsVisible", 
             callback: function(){
                 opt.setOption("current", "mapCursorAllMapsVisible", 1-opt.getOption("current", "mapCursorAllMapsVisible"));
                 _this.setActiveOnButtons();
@@ -122,8 +121,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "mapCursorAllMapsVisible") }
          },
         { 
-            type: "topMenuQuickSettingsViewInfoPanelShowAlways", 
-            loc: "topMenu:topMenuQuickSettingsViewInfoPanelShowAlways", 
+            type: "topMenuOptViewInfoPanelShowAlways", 
+            loc: "topMenu:topMenuOptViewInfoPanelShowAlways", 
             callback: function(){
                 opt.setOption("current", "viewInfoPanelShowAlways", 1-opt.getOption("current", "viewInfoPanelShowAlways"));
                 infomenu._updateInfoMenuView();
@@ -132,8 +131,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "viewInfoPanelShowAlways") }
          },         
         { 
-            type: "topMenuQuickSettingsDbSyncIn", 
-            loc: "topMenu:topMenuQuickSettingsDbSyncIn", 
+            type: "topMenuOptDbSyncIn", 
+            loc: "topMenu:topMenuOptDbSyncIn", 
             callback: function(){
                 opt.setOption("current", "dbSyncIn", 1-opt.getOption("current", "dbSyncIn"));
                 _this.setActiveOnButtons();
@@ -141,8 +140,8 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "dbSyncIn") }
          },
         { 
-            type: "topMenuQuickSettingsDbSyncOut", 
-            loc: "topMenu:topMenuQuickSettingsDbSyncOut", 
+            type: "topMenuOptDbSyncOut", 
+            loc: "topMenu:topMenuOptDbSyncOut", 
             callback: function(){
                 opt.setOption("current", "dbSyncOut", 1-opt.getOption("current", "dbSyncOut"));
                 _this.setActiveOnButtons();
@@ -150,14 +149,56 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("current", "dbSyncOut") }
          },
         { 
-            type: "topMenuQuickSettingsGpsAutoStart", 
-            loc: "topMenu:topMenuQuickSettingsGpsAutoStart", 
+            type: "topMenuOptGpsAutoStart", 
+            loc: "topMenu:topMenuOptGpsAutoStart", 
             callback: function(){
                 opt.setOption("gps", "gpsAutoStart", 1-opt.getOption("gps", "gpsAutoStart"));
                 _this.setActiveOnButtons();
             },
             active: function() { return opt.getOption("gps", "gpsAutoStart") }
          },
+        { 
+            type: "topMenuMapCachedService", 
+            loc: "topMenu:topMenuMapCachedService", 
+            callback: function(){
+                var newVal = prompt(loc("topMenu:topMenuInputNewValueQueation"), opt.getOption("global", "mapCachedService"));
+                if (newVal){
+                    opt.setOption("global", "mapCachedService", newVal);
+                }
+            }
+         },
+        { 
+            type: "topMenuMapDefaultCenterLatLng", 
+            loc: "topMenu:topMenuMapDefaultCenterLatLng", 
+            callback: function(){
+                var newVal = prompt(loc("topMenu:topMenuInputNewValueQueation"), opt.getOption("global", "mapDefaultCenterLatLng"));
+                if (newVal){
+                    newVal = newVal.split(",");
+                    newVal.length = 2;
+                    opt.setOption("global", "mapDefaultCenterLatLng", newVal);
+                }
+            }
+         },   
+        { 
+            type: "topMenuMapDefaultURL", 
+            loc: "topMenu:topMenuMapDefaultURL", 
+            callback: function(){
+                var newVal = prompt(loc("topMenu:topMenuInputNewValueQueation"), opt.getOption("global", "mapDefaultURL"));
+                if (newVal){
+                    opt.setOption("global", "mapDefaultURL", newVal);
+                }
+            }
+         },   
+        { 
+            type: "topMenuMainFeed", 
+            loc: "topMenu:topMenuMainFeed", 
+            callback: function(){
+                var newVal = prompt(loc("topMenu:topMenuInputNewValueQueation"), opt.getOption("global", "mainFeed"));
+                if (newVal){
+                    opt.setOption("global", "mainFeed", newVal);
+                }
+            }
+         },                                       
         { type: "topMenuSetCache", loc: "menuCache:topMenuSetCache", callback: function(){opt.setCacheMenu()} },
 
         // Pin Button
