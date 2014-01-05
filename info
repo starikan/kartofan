@@ -34,6 +34,8 @@ TODO:
         - Добавить ArcGIS.Imagery и высоты
         - тур перевести
 
+        - после скрытия панелей делать validateMaps
+
     Mid:
         - добавить побольше горячих клавиш
         - форма для контроллов
@@ -68,6 +70,7 @@ TODO:
         - высоты под курсором
             - https://developers.google.com/maps/documentation/elevation/
         - http://oridomi.com/
+        - http://tympanus.net/Development/SVGDrawingAnimation/index2.html
         - Logo при загрузке - http://codepen.io/collection/dviIy/1
         - таб на картах выделяет визир и зеленую стрелку
         - разные форматы кэша
