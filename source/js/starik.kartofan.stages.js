@@ -83,6 +83,9 @@ var StageMaps = (function(){
     this.exportImageView = function() {
         var canvasExport = document.getElementById('exportView'); 
         var canvasCutter = document.getElementById('cutterView'); 
+
+        canvasCutter.height = 256;
+        canvasCutter.width = 256;
         if (canvasExport.getContext && canvasCutter.getContext){
             var ctxExp = canvasExport.getContext('2d');
             var ctxCutt = canvasCutter.getContext('2d');
@@ -91,8 +94,6 @@ var StageMaps = (function(){
 
         $.each(mapsInstance, function(i, v){
 
-            // v.mapTilesLayer.layer.redraw();
-
             var $mapAll = v.$map;
             var $mapPane = $("#map"+i+" .leaflet-map-pane");
             var $mapTiles = $(v.map.getPanes().tilePane).find("img");
@@ -100,7 +101,7 @@ var StageMaps = (function(){
             var d = $mapPane[0].style.cssText.match(/-?\d+px, -?\d+px/)[0].replace(/px/g, "").replace(" ", "").split(",");
             var tiles = [];
             var size = [$mapAll.width(), $mapAll.height()];
-            // d = [-d[0], -d[1], -d[0] + size[0], -d[1] + size[1]];
+
             d = {
                 "x1" : -d[0],
                 "y1": -d[1],
@@ -108,13 +109,11 @@ var StageMaps = (function(){
                 "y2": -d[1] + size[1]
             };
 
+            var i=1
+
             $.each($mapTiles, function(t, tile){
 
                 var td = {
-                    // "x1": $(tile).offset().left,
-                    // "y1": $(tile).offset().top,
-                    // "x2": $(tile).offset().left + $(tile).width(),
-                    // "y2": $(tile).offset().top + $(tile).height(),
                     "x1": tile.x,
                     "y1": tile.y,
                     "x2": tile.x + tile.width,
@@ -122,37 +121,43 @@ var StageMaps = (function(){
                     "src": tile.src
                 };
 
-                console.log(t);
-                console.log(d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2);
-                console.log(d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2);
-                console.log(d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2);
-                console.log(d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2);
+                // console.log(t);
+                // console.log(d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2);
+                // console.log(d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2);
+                // console.log(d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2);
+                // console.log(d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2);
 
                 var checkData = ((d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2) || // Top-Left
-                                (d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2) || // Bottom-Left
-                                (d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2) || // Bottom-Right
-                                (d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2)) && // Top-Right
-                                td.src;
+                                 (d.x1 < td.x2 && td.x2 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2) || // Bottom-Left
+                                 (d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y1 && td.y1 < d.y2) || // Bottom-Right
+                                 (d.x1 < td.x1 && td.x1 < d.x2 && d.y1 < td.y2 && td.y2 < d.y2)) && // Top-Right
+                                 td.src;
 
-                // console.log(d[0] < td.x2 && td.x2 < d[2] && d[1] < td.y2 && td.y2 < d[3], td.x2, td.y2);
-                // console.log(d[0] < td.x2 < d[2] && d[1] < td.y1 < d[3], td.x2, td.y1);
-                // console.log(d[0] < td.x1 < d[2] && d[1] < td.y1 < d[3], td.x1, td.y1);
-                // console.log(d[0] < td.x1 < d[2] && d[1] < td.y2 < d[3], td.x1, td.y2);
+                // console.log(checkData);
 
-                // var checkData = (d[0] < td.x2 < d[2] && d[1] < td.y2 < d[3]) || // Top-Left
-                //                 (d[0] < td.x2 < d[2] && d[1] < td.y1 < d[3]) || // Bottom-Left
-                //                 (d[0] < td.x1 < d[2] && d[1] < td.y1 < d[3]) || // Bottom-Right
-                //                 (d[0] < td.x1 < d[2] && d[1] < td.y2 < d[3]) // Top-Right
+                if (checkData) {
 
-                console.log(checkData);
-                checkData ? tiles.push(td) : undefined;
-                // tiles.push(td);
+                    tiles.push(td);
+
+                    if (i < 100) {
+                        i += 1;
+                        var image = new Image();
+                        image.src = td.src;
+                        console.log(td.x1, td.y1, td.src);
+                        image.onload = function() {
+                            ctxCutt.drawImage(image, 0, 0, 256, 256, td.x1, td.y1, 256, 256);
+                        }; 
+                    }
+                }
+
             })
 
-            console.log(d);
-            console.log($mapTiles);
-            console.log(tiles);
-            console.log(tiles.length);
+            downloadCanvas("canvasDownload", "cutterView", "file.png");
+
+            // console.log(d);
+            // console.log($mapTiles);
+            // console.log(tiles);
+            // console.log(tiles.length);
 
             // var image = new Image();
             // image.src = "";

@@ -183,8 +183,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 
 #cutterView {
-    width: 200%;
-    height: 200%;
+/*    width: 1600px;
+    height: 1600px;*/
     z-index: 10000000000;
     position: absolute;
     top: 145px;

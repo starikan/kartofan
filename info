@@ -25,6 +25,7 @@ TODO:
         - настройки
 
     Top:
+        - пробел убрать в формах
         - GPS панель
         - отображение списка карт которые есть под точкой
         - ночной режим
@@ -35,6 +36,11 @@ TODO:
         - тур перевести
 
         - после скрытия панелей делать validateMaps
+
+        - сделать фид с русскими названиями карт
+        - что-то типа быстрых заметок
+
+        - https://dl.dropboxusercontent.com/u/2010526/karsunPgm2v.json?&callback
 
     Mid:
         - добавить побольше горячих клавиш
@@ -142,6 +148,9 @@ UI
 - http://krisbulman.github.io/font-icons/
 http://iconmonstr
 
+
+https://drive.google.com/folderview?id=0B1gRcO428ISsUmExVjF6OWNHTDQ&usp=sharing - карты
+https://googledrive.com/host/0B1gRcO428ISsUmExVjF6OWNHTDQ/
 
 https://drive.google.com/folderview?id=0B1gRcO428ISsbEg2c25oUkRVSkE&usp=sharing - В папке google
 https://googledrive.com/host/0B1gRcO428ISsbEg2c25oUkRVSkE/

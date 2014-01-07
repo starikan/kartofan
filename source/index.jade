@@ -69,7 +69,7 @@ html(manifest="offline/cache.appcache")
         div#topMenuKartofan.hide
             nav.top-bar(data-topbar, data-options="is_hover: false")
                 ul.title-area 
-                    li.name: h1: a Kartofan
+                    li.name: h1: a#canvasDownload Kartofan
                     li.toggle-topbar.menu-icon: a: span.topMenuMenu Menu
 
                 section.top-bar-section
@@ -81,7 +81,7 @@ html(manifest="offline/cache.appcache")
                         li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
                         li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
                         li: a.topMenuSetCache: span.icon-picture-streamline-1
-                        li: a.topMenuStageExport Export Stage Like Image
+                        //li: a.topMenuStageExport Export Stage Like Image
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -301,7 +301,8 @@ html(manifest="offline/cache.appcache")
         div#hotkeysInfo
 
         canvas#exportView.hide
-        canvas#cutterView.hide
+        canvas#cutterView
+        //a#canvasDownload
 
         div#disqus_thread
         |<script type="text/javascript">
