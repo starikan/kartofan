@@ -25,7 +25,7 @@ var Options = (function(){
         "mapCachedService": "http://kartofan.info/server.php",
         // "mapCachedService": "http://127.0.0.1:3000/cache",
 
-        "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed.json?callback",
+        "mainFeed": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed_en_US.json?callback",
 
         "hashChange": true, // TODO: delete in major version
         "resetToDefaultIfHashClear": true,
@@ -388,7 +388,7 @@ var Options = (function(){
 
     this.getAllDataFromJSON = function(baseJson, url){
 
-        url = url ? url : prompt(loc("jsonImport:jsonAdd"), this.getOption("global", "mainFeed"))
+        url = url ? url : prompt(loc("jsonImport:jsonAdd"), loc("feedsExternal:allJSON")!="ERROR" ? loc("feedsExternal:allJSON") : this.getOption("global", "mainFeed"))
         baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNames");
 
         $.getJSON(url, function(data){

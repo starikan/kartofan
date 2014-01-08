@@ -173,5 +173,8 @@
     "": "",
     "": "",
     "": ""
-  }
+  },
+  "feedsExternal": {
+    "allJSON": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed_en_US.json?callback"
+  }  
 }

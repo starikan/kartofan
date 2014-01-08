@@ -155,5 +155,8 @@
     "": "",
     "": "",
     "": ""
-  }  
+  },
+  "feedsExternal": {
+    "allJSON": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed_ru_RU.json?callback"
+  }
 }
