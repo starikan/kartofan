@@ -104,6 +104,15 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     background-color: #708090;
 }
 
+.accordion dd>a {
+    background-color: #7adeff;
+}
+
+.accordion dd>a:hover {
+    background-color: #7adeff;
+}
+
+
 .arcticmodal-container_i2 { 
     /*width: 100%;*/
 }

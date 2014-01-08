@@ -692,7 +692,7 @@ var HotKeys = (function(){
     this.$container = $("#hotkeysInfo");
 
     this.functions = {
-        "hk_mapFullScreen": { func: mapseditor.toggleFullScreen },
+        "hk_mapFullScreen": { func: mapseditor.toggleFullScreen, disable_in_input: true },
         "hk_mapSet": { func: mapseditor.setMapMenu },
         "hk_stageSet": { func: stageeditor.setStageMenu },
     }

@@ -375,6 +375,10 @@ var InfoMenu = (function(){
 
         var bottom = infoVisible ? 15 : 0;
         $mapsContainer.css({"bottom": bottom+"px"});
+
+        $.each(mapsInstance, function(i, v){
+            v.refreshMapAfterResize();
+        })
      }
 
     this.setCoords = function(latlng){
