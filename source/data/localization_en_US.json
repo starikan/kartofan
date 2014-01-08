@@ -26,6 +26,7 @@
     "topMenuJSONMoves": "Get All External Moves",
     "topMenuJSONAll": "Get All From JSON",
     "topMenuJSONExport": "Export All Data To JSON",
+    "topMenuJSONRawText": "Get Data From Text",
     "topMenuGPS": "GPS",
     "topMenuGPSStart": "GPS Start",
     "topMenuGPSStop": "GPS Stop",
@@ -124,7 +125,10 @@
   },
   "jsonImport": {
     "jsonAdd": "Type here URL of JSON with maps.",
-    "rewriteConfirm": "Item {0} already exist in base {1}. Rewrite it?"
+    "rewriteConfirm": "Item {0} already exist in base {1}. Rewrite it?",
+    "formRawJSON_submit": "Add",
+    "formRawJSON_cancel": "Cancel",
+    "formRawJSON_errorParce": "Parse Error"
   },
   "syncBases": {
     "errorExtSync": "Access to the external database {0} denied", 

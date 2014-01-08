@@ -66,6 +66,7 @@ var TopMenu = (function(){
         { type: "topMenuJSONMoves", loc: "topMenu:topMenuJSONMoves", callback: function(){opt.getAllDataFromJSON("points")} },
         { type: "topMenuJSONAll", loc: "topMenu:topMenuJSONAll", callback: function(){opt.getAllDataFromJSON()} },
         { type: "topMenuJSONExport", loc: "topMenu:topMenuJSONExport", callback: opt.exportAllInJSON },
+        { type: "topMenuJSONRawText", loc: "topMenu:topMenuJSONRawText", callback: opt.getRawDataFromJSON },
         
         { type: "topMenuGPS", loc: "topMenu:topMenuGPS" },
         { type: "topMenuGPSStart", loc: "topMenu:topMenuGPSStart", callback: gps.startGPS },

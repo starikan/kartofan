@@ -118,7 +118,7 @@ var Options = (function(){
         "setLang": false, 
         "showTourFirst": false, 
        
-        "version": "3.1.0",  
+        "version": "3.1.1",  
      };
 
     this.gps = {
@@ -150,7 +150,7 @@ var Options = (function(){
         "activeMap": "map0",
         "activeMapNum": 0,   
         "measuringOn": false, 
-        "version": "3.1.0",  
+        "version": "3.1.1",  
      }
 
     this._init = function(){
@@ -408,6 +408,43 @@ var Options = (function(){
                 })                
             })
         }); 
+     }
+
+    this.getRawDataFromJSON = function(){
+        var arr = [
+            { "type": "formRawJSON_rawJSON",  "name": "rawJSON", "loc": "jsonImport:formRawJSON_rawJSON"},
+            { "type": "formRawJSON_submit", "loc": "jsonImport:formRawJSON_submit", callback: function(form){
+                console.log(form.data.rawJSON);
+
+                try {
+                    var data = JSON.parse(form.data.rawJSON);
+                    var baseJson = baseJson ? [baseJson] : opt.getOption("appVars", "baseNames");
+
+                    $.each(baseJson, function(b, base){
+                        if (!data[base] || $.isEmptyObject(data[base])){ return }
+                        $.each(data[base], function(i, v){
+                            if (opt.getOption(base, i)){
+                                if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
+                                    return;
+                                }
+                            }
+                            opt.setOption(base, i, v);
+                        })                
+                    })
+
+                    form.hideForm();
+                }
+                catch (e){
+                    alert(loc("jsonImport:formRawJSON_errorParce"));
+                }
+
+            }},
+            { "type": "formRawJSON_cancel", "loc": "jsonImport:formRawJSON_cancel", callback: function(form){
+                form.hideForm();
+            }},
+        ];
+
+        var eform = new FoundationForm(arr, "formRawJSON");
      }
 
     // *************** TOUR ****************

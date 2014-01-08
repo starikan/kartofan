@@ -157,6 +157,7 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuJSONMoves Get All External Moves 
                                         li: a.topMenuJSONAll Get All From JSON
                                         li: a.topMenuJSONExport Export All Data To JSON
+                                        li: a.topMenuJSONRawText Get Data From Text
                                 li.has-dropdown
                                     a.topMenuGPS GPS 
                                     ul.dropdown 
@@ -303,6 +304,16 @@ html(manifest="offline/cache.appcache")
         canvas#exportView.hide
         canvas#cutterView
         //a#canvasDownload
+
+        div#formRawJSON.foundationForm.hide
+            div.box-modal
+                form(data-abide)
+                    div.row 
+                        div.small-11.columns.small-centered: textarea.formRawJSON_rawJSON(rows=12)
+
+                    div.row.center
+                        div.small-6.columns.text-right: a.small.button.formRawJSON_submit Send 
+                        div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
 
         div#disqus_thread
         |<script type="text/javascript">

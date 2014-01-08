@@ -190,3 +190,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     top: 145px;
     left: 0px;
 }
+
+#formRawJSON {
+    width: 560px;
+}
+
+#formRawJSON textarea {
+    height: 500px;
+}

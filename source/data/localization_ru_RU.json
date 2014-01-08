@@ -21,11 +21,12 @@
     "topMenuMoveAdd": "Добавить быстрое перемещение",
     "topMenuMoveEdit": "Редактировать быстрое перемещение",
     "topMenuJSON": "JSON",
-    "topMenuJSONMaps": "Загрузить все всеншние карты",
-    "topMenuJSONStages": "Загрузить все всеншние наборы",
-    "topMenuJSONMoves": "Загрузить все всеншние быстрые перемещения",
+    "topMenuJSONMaps": "Загрузить все внешние карты",
+    "topMenuJSONStages": "Загрузить все внешние наборы",
+    "topMenuJSONMoves": "Загрузить все внешние быстрые перемещения",
     "topMenuJSONAll": "Загрузить все из внешенго JSON файла",
     "topMenuJSONExport": "Экспортировать все в JSON",
+    "topMenuJSONRawText": "Загрузить из текста",
     "topMenuGPS": "GPS",
     "topMenuGPSStart": "GPS Старт",
     "topMenuGPSStop": "GPS Стоп",
@@ -123,7 +124,11 @@
     "error": "Ошибка GPS"
   },
   "jsonImport": {
-    "rewriteConfirm": "Запись {0} уже существует в базе {1}. Перезаписать?"
+    "jsonAdd": "Введите сюда адрес JSON файла с картами",
+    "rewriteConfirm": "Запись {0} уже существует в базе {1}. Перезаписать?",
+    "formRawJSON_submit": "Добавить",
+    "formRawJSON_cancel": "Отмена",
+    "formRawJSON_errorParce": "Текст с ошибкой"
   },
   "syncBases": {
     "errorExtSync": "Доступ к внешней базе {0} не возможен", 
