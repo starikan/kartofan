@@ -266,6 +266,7 @@ var LeafletMap = function(mapId){
     this.marksLayer; 
 
     this.map;
+    this.markers = new Markers();
     this.num = $(".maps").index($("#"+this.mapId));
 
     this.$map = $(".maps#"+this.mapId);
@@ -299,6 +300,10 @@ var LeafletMap = function(mapId){
      }
 
     this.onMouseDownMap = function(e){
+
+        opt.setOption("appVars", "cursorLatLng", e.latlng);
+        infomenu.setCoords(e.latlng);
+
         if (e.originalEvent.button === 1){
             e.originalEvent.preventDefault();
             parent.moveAllMaps(e.latlng)
@@ -310,6 +315,15 @@ var LeafletMap = function(mapId){
 
     this.onClickMap = function(e){
         topmenu.hideTopMenuView();
+
+        opt.setOption("appVars", "cursorLatLng", e.latlng);
+        infomenu.setCoords(e.latlng);
+
+        // Add Markers
+        if (opt.getOption("appVars", "markerAddModeOn")){
+            parent.markers.addMarker();
+            opt.setAddMarkerOff();
+        }
      }
 
     this.onMapMoveEnd = function(e){
@@ -509,6 +523,9 @@ var LeafletMap = function(mapId){
             this.map.addLayer(this.mapTilesLayer.layer);
         }
 
+        this.markers.setMap(this.map);
+        this.markers.showOnMap();
+
         this.setEvents();
         this._setMapControls();
         this.updateMapControls();
@@ -661,6 +678,7 @@ var LeafletMap = function(mapId){
             parent.markerCursor.setOpacity(0.0);
         }
 
+        opt.setOption("appVars", "cursorLatLng", e.latlng);
         infomenu.setCoords(e.latlng);
      }
 

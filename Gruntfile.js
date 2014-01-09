@@ -17,6 +17,7 @@ module.exports = function(grunt) {
       "source/js_vendor/jquery.arcticmodal-0.3.min.js",
       "source/js_vendor/modernizr.js",
       "source/js_vendor/shortcut.js",
+      "source/js_vendor/leaflet.markercluster-src.js",
      ];
 
     var bottomJs = [
@@ -29,6 +30,7 @@ module.exports = function(grunt) {
       "source/js/starik.kartofan.forms.js",
       "source/js/starik.kartofan.tour.js",
       "source/js/starik.kartofan.gps.js",
+      "source/js/starik.kartofan.markers.js",
       "source/js/starik.kartofan.main.js",
      ];
      
@@ -40,6 +42,7 @@ module.exports = function(grunt) {
       "source/css_vendor/foundation.css",
       "source/css_vendor/normalize.css",
       "source/css_vendor/animate.css",
+      "source/css_vendor/MarkerCluster.Default.css",
      ];
 
     var appCss = [

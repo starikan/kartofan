@@ -45,6 +45,7 @@ var Options = (function(){
             "hk_mapSet": "Shift+Tab",
             "hk_stageSet": "Shift+S",
         },
+
      };
 
     this.current = {
@@ -60,6 +61,9 @@ var Options = (function(){
         "mapCacheLoad": "internet", // internet, cache, internet+cache, cache+internet
 
         "hashChange": true,
+
+        "markersShow": false,
+        "markersFilter": {},
 
         "stage": {
             "title": "current",
@@ -143,14 +147,18 @@ var Options = (function(){
 
     this.maps = {};
 
+    this.markers = {};
+
     this.appVars = {
         "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
-        "baseNames": ["global", "gps", "stages", "points", "maps", "current"],
-        "baseNamesSync": ["global", "gps", "stages", "points", "maps"],
+        "baseNames": ["global", "gps", "stages", "points", "maps", "current", "markers"],
+        "baseNamesSync": ["global", "gps", "stages", "points", "maps", "markers"],
         "activeMap": "map0",
         "activeMapNum": 0,   
         "measuringOn": false, 
         "version": "3.1.1",  
+        "cursorLatLng": undefined,
+        "markerAddModeOn": false,
      }
 
     this._init = function(){
@@ -472,6 +480,8 @@ var Options = (function(){
         $("#containerKartofan").removeClass("hide");
      }
 
+    // *************** VERSIONS ****************
+
     this.versionCheck = function() {
 
         var setVersionEvent = function(data){
@@ -515,6 +525,8 @@ var Options = (function(){
         });
      }
 
+    // *************** CAHCE ****************
+
     this.setCacheMenu = function(){
         var arr = {}
         arr[loc("menuCache:menuCacheAccordGroup")] = {
@@ -538,6 +550,18 @@ var Options = (function(){
         if (["internet", "cache", "internet+cache", "cache+internet"].indexOf(type) == -1) return;
         opt.setOption("current", "mapCacheLoad", type);
         infomenu.setRight();
+     };
+
+    // *************** MARKERS ****************
+
+    this.setAddMarkerOn = function() {
+        opt.setOption("appVars", "markerAddModeOn", true);
+        $(".topMenuMarkerAdd").parent().addClass("active");
+     };
+
+    this.setAddMarkerOff = function() {
+        opt.setOption("appVars", "markerAddModeOn", false);
+        $(".topMenuMarkerAdd").parent().removeClass("active");
      };
 
     this._init();

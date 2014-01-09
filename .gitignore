@@ -2,6 +2,6 @@ node_modules/*
 server/node_modules/*
 bower_components/*
 client_build/*
-info
+.info
 dev/*
 production/*

@@ -72,6 +72,9 @@ var TopMenu = (function(){
         { type: "topMenuGPSStart", loc: "topMenu:topMenuGPSStart", callback: gps.startGPS },
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
+        { type: "topMenuMarkers", loc: "topMenu:topMenuMarkers" },
+        { type: "topMenuMarkerAdd", loc: "topMenu:topMenuMarkerAdd", callback: opt.setAddMarkerOn },
+
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
         { type: "topMenuHelpComments", loc: "topMenu:topMenuHelpComments", callback: function(){$("#disqus_thread").arcticmodal()} },
         { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },

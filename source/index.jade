@@ -34,6 +34,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/jquery.arcticmodal-0.3.min.js")
         script(src="js_vendor/modernizr.js")
         script(src="js_vendor/shortcut.js")
+        script(src="js_vendor/leaflet.markercluster-src.js")
 
         // CSS    
         
@@ -44,6 +45,7 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/foundation.css", rel="stylesheet")
         link(href="css_vendor/normalize.css", rel="stylesheet")
         link(href="css_vendor/animate.css", rel="stylesheet")
+        link(href="css_vendor/MarkerCluster.Default.css", rel="stylesheet")
 
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
@@ -82,6 +84,7 @@ html(manifest="offline/cache.appcache")
                         li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
                         li: a.topMenuSetCache: span.icon-picture-streamline-1
                         //li: a.topMenuStageExport Export Stage Like Image
+                        li: a.topMenuMarkerAdd: span.icon-pin
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -302,7 +305,7 @@ html(manifest="offline/cache.appcache")
         div#hotkeysInfo
 
         canvas#exportView.hide
-        canvas#cutterView
+        canvas#cutterView.hide
         //a#canvasDownload
 
         div#formRawJSON.foundationForm.hide
@@ -345,6 +348,7 @@ html(manifest="offline/cache.appcache")
         script(src="js/starik.kartofan.forms.js")
         script(src="js/starik.kartofan.tour.js")
         script(src="js/starik.kartofan.gps.js")
+        script(src="js/starik.kartofan.markers.js")
         script(src="js/starik.kartofan.main.js")
         <!-- @endif -->
 
