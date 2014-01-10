@@ -1,5 +1,9 @@
 "use strict"
 
+L.LatLng.prototype.toNormalString = function() {
+    return this.lat + ', ' + this.lng;
+ }
+
 L.CRS.EPSG3857.Ext = L.extend({}, L.CRS, {
 
     code: 'EPSG:3857.Ext',
@@ -266,7 +270,10 @@ var LeafletMap = function(mapId){
     this.marksLayer; 
 
     this.map;
+
     this.markers = new Markers();
+    this.markersLayers = {};
+
     this.num = $(".maps").index($("#"+this.mapId));
 
     this.$map = $(".maps#"+this.mapId);
@@ -321,7 +328,7 @@ var LeafletMap = function(mapId){
 
         // Add Markers
         if (opt.getOption("appVars", "markerAddModeOn")){
-            parent.markers.addMarker();
+            parent.markers.editMarkerForm();
             opt.setAddMarkerOff();
         }
      }
@@ -523,8 +530,8 @@ var LeafletMap = function(mapId){
             this.map.addLayer(this.mapTilesLayer.layer);
         }
 
-        this.markers.setMap(this.map);
-        this.markers.showOnMap();
+        this.markers.setMap(this);
+        this.markers.showMarkers();
 
         this.setEvents();
         this._setMapControls();

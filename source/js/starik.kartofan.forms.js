@@ -162,6 +162,15 @@ var TopMenu = (function(){
             active: function() { return opt.getOption("gps", "gpsAutoStart") }
          },
         { 
+            type: "topMenuOptSHowMarkers", 
+            loc: "topMenu:topMenuOptSHowMarkers", 
+            callback: function(){
+                opt.setOption("current", "markersShow", 1-opt.getOption("current", "markersShow"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("current", "markersShow") }
+         },         
+        { 
             type: "topMenuMapCachedService", 
             loc: "topMenu:topMenuMapCachedService", 
             callback: function(){

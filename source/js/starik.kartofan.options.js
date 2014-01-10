@@ -46,6 +46,8 @@ var Options = (function(){
             "hk_stageSet": "Shift+S",
         },
 
+        "markersIdPrefix": "",
+
      };
 
     this.current = {

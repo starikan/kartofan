@@ -47,6 +47,7 @@
     "topMenuOptDbSyncIn": "Db Sync In",
     "topMenuOptDbSyncOut": "Db Sync Out",
     "topMenuOptGpsAutoStart": "GPS Auto Start",
+    "topMenuOptSHowMarkers": "Show Markers",
     "topMenuOptUpdate": "Update Options From External Base",
     "topMenuOptLang": "Set Language",
     "topMenuOptReset": "Reset All Settings",
@@ -176,5 +177,16 @@
   },
   "feedsExternal": {
     "allJSON": "https://api.github.com/repos/starikan/kartofan-public-feed/contents/mainFeed_en_US.json?callback"
-  }  
+  },
+  "markers": {
+    "errorCheckForm": "Errors in form! Check values.",
+    "formEditMarker_id": "ID",
+    "formEditMarker_title": "Title",
+    "formEditMarker_group": "Group",
+    "formEditMarker_layer": "Layer",
+    "formEditMarker_latlng": "Coords",
+    "formEditMarker_submit": "Submit",
+    "formEditMarker_delete": "Delete",
+    "formEditMarker_cancel": "Cancel"
+  }
 }
