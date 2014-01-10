@@ -15,5 +15,8 @@
     "grunt-preprocess": "latest",
     "matchdep": "~0.1.2",
     "grunt-contrib-cssmin": "~0.7.0"
+  },
+  "dependencies": {
+    "connect": "~2.12.0"
   }
 }

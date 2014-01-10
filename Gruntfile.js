@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         copy: {
           dev: {
             cwd: "source",
-            src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**', "LICENSE" ],
+            src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**', "LICENSE", "local.js", "packages.json" ],
             dest: "dev",
             expand: true
           },
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
             files: [
               {
                 cwd: "source",
-                src: [ 'data/**', 'offline/**', "LICENSE" ],
+                src: [ 'data/**', 'offline/**', "LICENSE", "local.js", "packages.json" ],
                 dest: "production",
                 expand: true
               },
