@@ -5,7 +5,7 @@ var Markers = function(map) {
     var _this = this;
     
     this.mapObject;
-    this.map;
+    this.map;   
 
     this.allData = {};
     this.allDataLayers = [];
@@ -82,7 +82,7 @@ var Markers = function(map) {
             latlng: latlng.toNormalString(),
         };
 
-        vals = $.extend({}, data, vals);
+        vals = $.extend({}, vals, data);
 
         var arr = [
             { "type": "formEditMarker_id",     "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
@@ -96,7 +96,9 @@ var Markers = function(map) {
                     alert(loc("markers:errorCheckForm"));
                     return;
                 } else {
-                    _this.updateMarkerData(form.data, function(){_this.showMarkers();});
+
+                    // Update marker on every window after adding
+                    _this.updateAllMapsView(form.data);
                     console.log(form.data)
                     form.hideForm();
                 }
@@ -178,14 +180,62 @@ var Markers = function(map) {
             }
         };
 
+        marker.id = data.id;
+
+        // TODO: touch
+        marker.on("dblclick", this.onMarkerDblclick);
+        marker.on("contextmenu", this.onMarkerContextmenu);
+        marker.on("dragend", this.onMarkerDragend);
+        marker.on("mouseout", this.onMarkerMouseout);
+
         return marker;
+     };
+
+    this.onMarkerDblclick = function(e){
+        var data = opt.getOption("markers", this.id)
+        _this.editMarkerForm(data);
+     }
+
+    this.onMarkerContextmenu = function(e){
+        e.originalEvent.preventDefault();
+        this.dragging.enable();
+     }     
+
+    this.onMarkerDragend = function(e){
+        var data = opt.getOption("markers", this.id);
+        data.latlng = e.target._latlng.toNormalString();
+        _this.updateAllMapsView(data);
+     }
+
+    this.onMarkerMouseout = function(e){
+        // There is some bug if moveing mouse very fast it`s lost the hover and dragging is disable
+        setTimeout(function() {
+            if (this.draggable) {
+                this.dragging.disable();
+            }
+        }, 1000)        
+     }  
+
+    this.updateAllMapsView = function(data) {
+        this.updateMarkerData(data, function(){
+            for (var i = mapsInstance.length - 1; i >= 0; i--) {
+                mapsInstance[i].markers.init();
+                mapsInstance[i].markers.showMarkers();
+            };
+        });
      };
 
     this.showMarkers = function(callback, options) {
 
         // Create MarkerClusterGroup
         for (var i = this.filteredDataLayers.length - 1; i >= 0; i--) {
-            this.mapObject.markersLayers[this.filteredDataLayers[i]] = new L.MarkerClusterGroup(options);
+            if (this.mapObject.markersLayers[this.filteredDataLayers[i]]) {
+                // Clear all previous layers
+                this.mapObject.markersLayers[this.filteredDataLayers[i]].clearLayers();
+            }
+            else {
+                this.mapObject.markersLayers[this.filteredDataLayers[i]] = new L.MarkerClusterGroup(options);
+            }
             this.map.addLayer(this.mapObject.markersLayers[this.filteredDataLayers[i]])
         };
 
