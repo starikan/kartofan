@@ -89,7 +89,7 @@ var Markers = function(map) {
             { "type": "formEditMarker_title",  "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
             { "type": "formEditMarker_layer",  "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
             { "type": "formEditMarker_icon",   "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
-            { "type": "formEditMarker_group",  "name": "group",  "val": vals.group, "loc": "markers:formEditMarker_group", "description": "group" },
+            { "type": "formEditMarker_tags",   "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
             { "type": "formEditMarker_latlng", "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
             { "type": "formEditMarker_submit", "loc": "markers:formEditMarker_submit", callback: function(form){
                 if (!form.checkFormFlag){
@@ -114,13 +114,80 @@ var Markers = function(map) {
         var eform = new FoundationForm(arr, "formEditMarker");
 
         this._createIconPanelInForm(eform);
+        this._createTagsPanelInForm(eform);
 
      };
 
+    this._createTagsPanelInForm = function(eform) {
+        var tags = eform.data.tags ? eform.data.tags.split(",") : [];
+        var $tags = eform.$form.find("#formEditMarker_tagsPanel");
+        var $tagsSrc = eform.$form.find("#formEditMarker_tagsSrc");
+        tags = unique(tags.map(fulltrim)).sort();
+        
+        var updatePanel = function() {
+            $tags.empty();
+
+            for (var i = 0; i < tags.length; i++) {
+                // TODO: touch
+                var $addTag = $("<a>{0}</a>".format(tags[i])).addClass("button tiny formInputTag");
+                $addTag.click(function(){
+                    removeTag($(this).text());
+                });
+                $tags.append($addTag);
+            };               
+        }
+         
+        var addNewTag = function(data){
+            if (!data) return;
+            data.indexOf(",") == -1 ? tags.push(data) : tags = tags.concat(data.split(","));
+
+            tags = unique(tags.map(fulltrim)).sort();
+            $tagsSrc.val(tags.join(", "));
+
+            updatePanel();
+            addContols();
+        }
+
+        var removeTag = function(data) {
+            if (!data) return;
+            if (tags.indexOf(data) != -1) {
+                tags.splice(tags.indexOf(data), 1)
+            }
+            else return
+            
+            $tagsSrc.val(tags.join(", "));
+
+            updatePanel();
+            addContols();
+        }
+
+        var addContols = function() {
+            var $inputRow = $('<div class="row collapse">\
+                <div class="small-10 columns">\
+                  <input type="text" id="formEditMarker_tagsAddInput">\
+                </div>\
+                <div class="small-2 columns ">\
+                  <a class="button tiny postfix" id="formEditMarker_tagsAddButton">+</a>\
+                </div>\
+            </div>')
+            $tags.append($inputRow); 
+
+            // TODO: touch
+            $("#formEditMarker_tagsAddInput").on("keypress", function(e){
+                if (e.charCode === 13){ addNewTag($(this).val()); }
+            })
+            $("#formEditMarker_tagsAddButton").click(function(){addNewTag($("#formEditMarker_tagsAddInput").val())})   
+        }
+
+        updatePanel();
+        addContols();
+
+     }
+
     this._createIconPanelInForm = function(eform) {
         var icons = opt.getOption("global", "markersIcons");
-        var $icons = eform.$form.find("#iconsPanel");
-        var $iconSrc = eform.$form.find("#iconSrc");
+        var $icons = eform.$form.find("#formEditMarker_iconsPanel");
+        var $iconSrc = eform.$form.find("#formEditMarker_iconSrc");
 
         $icons.empty();
 

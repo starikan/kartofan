@@ -153,6 +153,26 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     margin: 0px;    
 }
 
+.foundationForm .panel .button {
+    margin: 0px;    
+}
+
+.foundationForm .panel .columns {
+    padding: 0px;    
+}
+
+#formEditMarker_tagsPanel {
+    padding: 0px !important;
+}
+
+.formInputTag:after {
+    margin-left: 5px;
+    background-color: white;
+    color: black;
+    padding: 1px 5px;
+    content: 'x';
+}
+
 #infoMenuKartofan {
     position: fixed;
     left: 0px;

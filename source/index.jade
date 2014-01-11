@@ -304,16 +304,18 @@ html(manifest="offline/cache.appcache")
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_icon Icon
                         div.small-9.columns
-                            input#iconSrc.hide.formEditMarker_icon(type="text")
-                            div.panel#iconsPanel
+                            input#formEditMarker_iconSrc.hide.formEditMarker_icon(type="text")
+                            div.panel#formEditMarker_iconsPanel
+
+                    div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMarker_tags Tags
+                        div.small-9.columns
+                            input#formEditMarker_tagsSrc.hide.formEditMarker_tags(type="text")
+                            div.panel#formEditMarker_tagsPanel
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_layer Layer
                         div.small-9.columns: input.formEditMarker_layer(type="text")
-
-                    div.row.collapse
-                        div.small-3.columns: span.prefix.formEditMarker_group Group
-                        div.small-9.columns: input.formEditMarker_group(type="text")
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMarker_latlng Latlng
