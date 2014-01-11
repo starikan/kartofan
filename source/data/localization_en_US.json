@@ -182,6 +182,7 @@
     "errorCheckForm": "Errors in form! Check values.",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Title",
+    "formEditMarker_icon": "Icon",
     "formEditMarker_group": "Group",
     "formEditMarker_layer": "Layer",
     "formEditMarker_latlng": "Coords",

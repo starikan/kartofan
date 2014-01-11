@@ -164,6 +164,7 @@
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Заголовок",
+    "formEditMarker_icon": "Значок",
     "formEditMarker_group": "Группа",
     "formEditMarker_layer": "Слой",
     "formEditMarker_latlng": "Коорд.",

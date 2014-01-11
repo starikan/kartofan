@@ -39,7 +39,7 @@ body {
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 .show {
@@ -143,6 +143,14 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 .foundationForm .row>span{
     padding: 10px;
+}
+
+.foundationForm .panel img.selected {
+    background-color: #0079a1;
+}
+
+.foundationForm .panel {
+    margin: 0px;    
 }
 
 #infoMenuKartofan {

@@ -47,6 +47,42 @@ var Options = (function(){
         },
 
         "markersIdPrefix": "",
+        "markersIcons": [
+            "/images/marker_akr.png",
+            "/images/marker_army.png",
+            "/images/marker_bee.png",
+            "/images/marker_blank.png",
+            "/images/marker_blank1.png",
+            "/images/marker_bridge.png",
+            "/images/marker_campfire.png",
+            "/images/marker_canyon.png",
+            "/images/marker_cave.png",
+            "/images/marker_compost.png",
+            "/images/marker_cow.png",
+            "/images/marker_cross.png",
+            "/images/marker_factory.png",
+            "/images/marker_grave.png",
+            "/images/marker_hutor.png",
+            "/images/marker_information.png",
+            "/images/marker_lake.png",
+            "/images/marker_mill.png",
+            "/images/marker_mountains.png",
+            "/images/marker_mushroom.png",
+            "/images/marker_other.png",
+            "/images/marker_poi.png",
+            "/images/marker_river.png",
+            "/images/marker_ruins.png",
+            "/images/marker_statue.png",
+            "/images/marker_tower.png",
+            "/images/marker_train.png",
+            "/images/marker_tree.png",
+            "/images/marker_uroch.png",
+            "/images/marker_val.png",
+            "/images/marker_vilage_dead.png",
+            "/images/marker_vilage_live.png",
+            "/images/marker_well.png",
+            "/images/marker_what.png",
+         ],
 
      };
 
@@ -161,6 +197,7 @@ var Options = (function(){
         "version": "3.1.1",  
         "cursorLatLng": undefined,
         "markerAddModeOn": false,
+        "markerIconsObjects": {},
      }
 
     this._init = function(){
@@ -184,6 +221,8 @@ var Options = (function(){
 
         opt.closeLoader();
 
+        // opt.updateIconsObjects();
+
         stage.initContainer("containerKartofan");
 
         if (opt.getOption("gps", "gpsAutoStart")){
@@ -202,6 +241,7 @@ var Options = (function(){
         if (!opt.getOption("current", "showTourFirst")) {
             $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
+
      } 
 
     this._afterInit = function(){
@@ -565,6 +605,43 @@ var Options = (function(){
         opt.setOption("appVars", "markerAddModeOn", false);
         $(".topMenuMarkerAdd").parent().removeClass("active");
      };
+
+    // this.updateIconsObjects = function() {
+    //     var iconsL = {}
+    //     var icons = opt.getOption("global", "markersIcons");
+
+    //     for (var i = icons.length - 1; i >= 0; i--) {
+    //         // var $icon = $("<img src={0}></img>".format(icons[i])).appendTo("body")
+    //         // .ready(function(){
+    //         //     console.log($icon)
+    //         // });
+
+    //         var img = new Image();
+    //         img.src = icons[i];
+    //         img.onload = function() {
+    //             console.log(this.width + 'x' + this.height);
+    //             iconsL[icons[i]] = new L.Icon({
+    //                 iconUrl: icons[i],
+    //                 iconRetinaUrl: icons[i],
+    //                 // iconSize: [$icon.width, $icon.height],
+    //                 iconAnchor: [this.width/2, this.height],
+    //                 // popupAnchor: [-3, -76],
+    //             })
+
+    //         }
+
+    //         // console.log($icon, $icon[0].outerHTML, $icon[0].width)
+    //         // iconsL[icons[i]] = new L.Icon({
+    //         //     iconUrl: icons[i],
+    //         //     iconRetinaUrl: icons[i],
+    //         //     // iconSize: [$icon.width, $icon.height],
+    //         //     // iconAnchor: [0, $icon.height],
+    //         //     // popupAnchor: [-3, -76],
+    //         // })
+    //     };
+
+    //     opt.setOption("appVars", "markerIconsObjects", iconsL);
+    //  }     
 
     this._init();
 
