@@ -103,7 +103,7 @@ var Options = (function(){
 
         "hashChange": true,
 
-        "markersShow": false,
+        "markersShow": true,
         "markersFilter": {},
 
         "stage": {

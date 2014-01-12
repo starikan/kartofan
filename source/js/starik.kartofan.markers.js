@@ -277,8 +277,8 @@ var Markers = function(map) {
     this.onMarkerMouseout = function(e){
         // There is some bug if moveing mouse very fast it`s lost the hover and dragging is disable
         setTimeout(function() {
-            if (this.draggable) {
-                this.dragging.disable();
+            if (e.target.dragging._enabled) {
+                e.target.dragging.disable();
             }
         }, 1000)        
      }  
@@ -471,7 +471,7 @@ var CoordsCorrection = (function(){
         };
         mapsInstance[activeMapNum].map.fireEvent("dragend");
         _this.removeMarkers();
-        
+
      }
 
     this.init();
