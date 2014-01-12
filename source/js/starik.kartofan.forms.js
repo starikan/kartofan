@@ -22,6 +22,7 @@ var TopMenu = (function(){
     window.gps = new GPS();
     window.infomenu = new InfoMenu();
     window.hotkeys = new HotKeys();
+    window.coordscorrection = new CoordsCorrection();
 
     var _this = this;
 
@@ -55,6 +56,8 @@ var TopMenu = (function(){
         { type: "topMenuUtils", loc: "topMenu:topMenuUtils" },
         { type: "topMenuUtilsToggleFulscreen", loc: "topMenu:topMenuUtilsToggleFulscreen", callback: mapseditor.toggleFullScreen },
         { type: "topMenuUtilsToggleMeasuring", loc: "topMenu:topMenuUtilsToggleMeasuring", callback: mapseditor.toggleMeasuring },
+        { type: "topMenuUtilsFastNotes", loc: "topMenu:topMenuUtilsFastNotes", callback: opt.fastNotesEditor },
+        { type: "topMenuUtilsCoordsCorrection", loc: "topMenu:topMenuUtilsCoordsCorrection", callback: coordscorrection.showMenu },
         
         { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn },
         { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: opt.setLang },
@@ -228,6 +231,15 @@ var TopMenu = (function(){
         { type: "topMenuStageEditorRemoveMap", loc: "topMenuStageEditor:topMenuStageEditorRemoveMap", callback: stageeditor.removeMapFromStage },
         { type: "topMenuStageEditorEditControls", loc: "topMenuStageEditor:topMenuStageEditorEditControls", callback: stageeditor.editMapsControls },
         { type: "topMenuStageEditorToggleBlockZoom", loc: "topMenuStageEditor:topMenuStageEditorToggleBlockZoom", callback: stageeditor.blockActiveMapZoom },
+
+        { type: "topMenuCoordsCorrection", loc: "topMenuCoordsCorrection:topMenuCoordsCorrection" },
+        { type: "topMenuCoordsCorrectionAddRight", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionAddRight", callback: coordscorrection.addRightMarker },
+        { type: "topMenuCoordsCorrectionAddWrong", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionAddWrong", callback: coordscorrection.addWrongMarker },
+        { type: "topMenuCoordsCorrectionRemoveMarkers", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionRemoveMarkers", callback: coordscorrection.removeMarkers },
+        { type: "topMenuCoordsCorrectionSaveCorrections", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionSaveCorrections", callback: coordscorrection.addCorrectionOnMaps },
+        { type: "topMenuCoordsCorrectionDropCorrectionSelect", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionDropCorrectionSelect", callback: coordscorrection.removeCorrectionFromMaps },
+        { type: "topMenuCoordsCorrectionClose", loc: "topMenuCoordsCorrection:topMenuCoordsCorrectionClose", callback: coordscorrection.hideMenu },
+
      ];
 
     this.showTopMenuView = function() {

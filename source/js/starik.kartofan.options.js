@@ -44,6 +44,9 @@ var Options = (function(){
             "hk_mapFullScreen": "Space",
             "hk_mapSet": "Shift+Tab",
             "hk_stageSet": "Shift+S",
+            "hk_coordsCorrAddRight": "Ctrl+F1",
+            "hk_coordsCorrAddWrong": "Ctrl+F2",
+            "hk_coordsCorrOnCorrect": "Ctrl+F3",
         },
 
         "markersIdPrefix": "",
@@ -198,6 +201,7 @@ var Options = (function(){
         "cursorLatLng": undefined,
         "markerAddModeOn": false,
         "markerIconsObjects": {},
+        "markersServiceLayer": "__service_markers__",
      }
 
     this._init = function(){
@@ -216,6 +220,7 @@ var Options = (function(){
         window.infomenu = new InfoMenu();
         window.fastmoving = new FastMoving();
         window.hotkeys = new HotKeys();
+        window.coordscorrection = new CoordsCorrection();
 
         opt.getHash();
 
@@ -242,6 +247,8 @@ var Options = (function(){
             $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
 
+        // CKEDITOR.replace( 'fastNotes_textarea' );
+        
      } 
 
     this._afterInit = function(){
@@ -399,7 +406,7 @@ var Options = (function(){
                 "Russian":{
                     title: "Русский", 
                     callback: function(){ 
-                        if (confirm("Вы действительно хотите установить основным чзыком Русский?")){
+                        if (confirm("Вы действительно хотите установить основным языком Русский?")){
                             opt.setOption("global", "lang", "ru_RU");
                             opt.setOption("current", "setLang", true, function(){
                                 parent.initLocalization(function(){
@@ -606,42 +613,14 @@ var Options = (function(){
         $(".topMenuMarkerAdd").parent().removeClass("active");
      };
 
-    // this.updateIconsObjects = function() {
-    //     var iconsL = {}
-    //     var icons = opt.getOption("global", "markersIcons");
+    // *************** FART NOTES ****************
 
-    //     for (var i = icons.length - 1; i >= 0; i--) {
-    //         // var $icon = $("<img src={0}></img>".format(icons[i])).appendTo("body")
-    //         // .ready(function(){
-    //         //     console.log($icon)
-    //         // });
+    this.fastNotesEditor = function(){
 
-    //         var img = new Image();
-    //         img.src = icons[i];
-    //         img.onload = function() {
-    //             console.log(this.width + 'x' + this.height);
-    //             iconsL[icons[i]] = new L.Icon({
-    //                 iconUrl: icons[i],
-    //                 iconRetinaUrl: icons[i],
-    //                 // iconSize: [$icon.width, $icon.height],
-    //                 iconAnchor: [this.width/2, this.height],
-    //                 // popupAnchor: [-3, -76],
-    //             })
+        $("#fastNotes").arcticmodal();
 
-    //         }
+     }
 
-    //         // console.log($icon, $icon[0].outerHTML, $icon[0].width)
-    //         // iconsL[icons[i]] = new L.Icon({
-    //         //     iconUrl: icons[i],
-    //         //     iconRetinaUrl: icons[i],
-    //         //     // iconSize: [$icon.width, $icon.height],
-    //         //     // iconAnchor: [0, $icon.height],
-    //         //     // popupAnchor: [-3, -76],
-    //         // })
-    //     };
-
-    //     opt.setOption("appVars", "markerIconsObjects", iconsL);
-    //  }     
 
     this._init();
 
@@ -792,15 +771,19 @@ var HotKeys = (function(){
 
     var _this = this;
 
+    window.opt = new Options();
+    window.coordscorrection = new CoordsCorrection();
+
     this.$container = $("#hotkeysInfo");
 
     this.functions = {
         "hk_mapFullScreen": { func: mapseditor.toggleFullScreen, disable_in_input: true },
         "hk_mapSet": { func: mapseditor.setMapMenu },
         "hk_stageSet": { func: stageeditor.setStageMenu },
+        "hk_coordsCorrAddRight": { func: coordscorrection.addRightMarker },
+        "hk_coordsCorrAddWrong": { func: coordscorrection.addWrongMarker },
+        "hk_coordsCorrOnCorrect": { func: coordscorrection.addCorrectionOnMaps },
     }
-
-    window.opt = new Options();
 
     this.init = function() {
         var keys = opt.getOption("global", "hotkeys");

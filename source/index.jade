@@ -36,6 +36,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/shortcut.js")
         script(src="js_vendor/leaflet.markercluster-src.js")
         script(src="js_vendor/moment-with-langs.js")
+        //script(src="js_vendor/ckeditor/ckeditor.js")
 
         // CSS    
         
@@ -97,6 +98,16 @@ html(manifest="offline/cache.appcache")
                                 li: a.topMenuStageEditorEditControls Edit Controls On Selected Map
                                 li: a.topMenuStageEditorToggleBlockZoom Toggle Blocking Zoom on Active Map
 
+                        li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuCoordsCorrection
+                            a: span.topMenuCoordsCorrection Coords Correction
+                            ul.dropdown 
+                                li: a.topMenuCoordsCorrectionAddRight Add Right Coord
+                                li: a.topMenuCoordsCorrectionAddWrong Add Wrong Coord
+                                li: a.topMenuCoordsCorrectionRemoveMarkers Remove Markers
+                                li: a.topMenuCoordsCorrectionSaveCorrections Save corrections
+                                li: a.topMenuCoordsCorrectionDropCorrectionSelect Drop Correction on Visible Maps
+                                li: a.topMenuCoordsCorrectionClose Close Menu
+
                         li: a.topMenuHelpTourMain.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge TourMain
                         li.divider
                         li: a.topMenuHelpUpdates.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge Updates
@@ -125,6 +136,8 @@ html(manifest="offline/cache.appcache")
                                     ul.dropdown 
                                         li: a.topMenuUtilsToggleFulscreen Toggle Fullscreen Select Map
                                         li: a.topMenuUtilsToggleMeasuring Measuring
+                                        li: a.topMenuUtilsFastNotes Fast Notes
+                                        li: a.topMenuUtilsCoordsCorrection Coords Correction
                                 li.has-dropdown
                                     a.topMenuMove Moves 
                                     ul.dropdown 
@@ -350,11 +363,15 @@ html(manifest="offline/cache.appcache")
             div.box-modal
                 form(data-abide)
                     div.row 
-                        div.small-11.columns.small-centered: textarea.formRawJSON_rawJSON(rows=12)
+                        div.small-11.columns.small-centered: textarea.formRawJSON_rawJSON
 
                     div.row.center
                         div.small-6.columns.text-right: a.small.button.formRawJSON_submit Send 
                         div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
+
+        div#fastNotes
+            div.box-modal
+                textarea#fastNotes_textarea Пока не работает / Not working yet
 
         div#disqus_thread
         |<script type="text/javascript">

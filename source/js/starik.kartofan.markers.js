@@ -321,3 +321,159 @@ var Markers = function(map) {
     this.init(map);
 
  }
+
+var CoordsCorrection = (function(){
+
+    window.opt = new Options();
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    var _this = this;
+
+    this.rightIcon = L.divIcon({className: 'coordsCorrection_rightMarker', iconSize: [32, 32]});
+    this.wrongIcon = L.divIcon({className: 'coordsCorrection_wrongMarker', iconSize: [32, 32]});;
+    this.$menu = $("#topMenuCoordsCorrection");
+    this.serviceLayer = opt.getOption("appVars", "markersServiceLayer");
+
+    this.init = function(){
+
+     }
+
+    this.showMenu = function(){
+        _this.$menu.removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge-up hide-for-xxlarge-up");
+     }
+
+    this.hideMenu = function(){
+        _this.$menu.addClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge-up hide-for-xxlarge-up");
+     }
+
+    this.addRightMarker = function(){
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
+        var map = mapsInstance[activeMapNum];
+
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            var layer = mapsInstance[i].markersLayers[_this.serviceLayer];
+            if (layer){
+                for (var j in layer._layers) {
+                    if (layer._layers[j].id === "__rightMarker"){
+                        layer.removeLayer(j);
+                    }
+                };
+            }
+        };
+
+        if (!map.markersLayers[_this.serviceLayer]){
+            map.markersLayers[_this.serviceLayer] = new L.LayerGroup();
+            map.map.addLayer(map.markersLayers[_this.serviceLayer]);
+        }
+
+        var marker = new L.Marker();
+        marker.setLatLng(opt.getOption("current", "mapCenterLatLng"));
+        marker.id = "__rightMarker";
+        marker.setIcon(_this.rightIcon);
+
+        map.markersLayers[_this.serviceLayer].addLayer(marker);
+     }
+
+    this.addWrongMarker = function(){
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
+        var map = mapsInstance[activeMapNum];
+
+        var layer = map.markersLayers[_this.serviceLayer];
+        if (layer){
+            for (var j in layer._layers) {
+                if (layer._layers[j].id === "__wrongMarker"){
+                    layer.removeLayer(j);
+                }
+            };
+        }
+
+        if (!map.markersLayers[_this.serviceLayer]){
+            map.markersLayers[_this.serviceLayer] = new L.LayerGroup();
+            map.map.addLayer(map.markersLayers[_this.serviceLayer]);
+        }
+
+        var marker = new L.Marker();
+        marker.setLatLng(opt.getOption("current", "mapCenterLatLng"));
+        marker.id = "__wrongMarker";
+        marker.setIcon(_this.wrongIcon);
+
+        map.markersLayers[_this.serviceLayer].addLayer(marker);
+     }
+
+    this.removeMarkers = function(){
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            var layer = mapsInstance[i].markersLayers[_this.serviceLayer];
+            if (layer){
+                layer.clearLayers();
+            }
+        };
+     }
+
+    this.addCorrectionOnMaps = function(){
+
+        var rightLatLng,
+            rightMapNumber;
+
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            var layer = mapsInstance[i].markersLayers[_this.serviceLayer];
+            if (layer){
+                for (var j in layer._layers) {
+                    if (layer._layers[j].id === "__rightMarker"){
+                        rightLatLng = layer._layers[j]._latlng;
+                        rightMapNumber = i;
+                        break;
+                    }
+                };
+            }
+            if (rightLatLng) break;
+        };
+
+        if (!rightLatLng) return;
+
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            var layer = mapsInstance[i].markersLayers[_this.serviceLayer];
+            if (layer){
+                for (var j in layer._layers) {
+                    if (layer._layers[j].id === "__wrongMarker"){
+                        var wrongLatLng = layer._layers[j]._latlng;
+                        
+                        mapsInstance[i].crs.projection.dX = wrongLatLng.lng - rightLatLng.lng;
+                        mapsInstance[i].crs.projection.dY = wrongLatLng.lat - rightLatLng.lat;
+
+                        mapsInstance[rightMapNumber].map.fireEvent("dragend");
+
+
+                    }
+                };
+            }
+        };
+
+        _this.removeMarkers();
+        _this.hideMenu();
+     }
+
+    this.removeCorrectionFromMaps = function(){
+        var activeMapNum = opt.getOption("appVars", "activeMapNum");
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            mapsInstance[i].crs.projection.dX = 0;
+            mapsInstance[i].crs.projection.dY = 0;
+        };
+        mapsInstance[activeMapNum].map.fireEvent("dragend");
+        _this.removeMarkers();
+        
+     }
+
+    this.init();
+
+ }}());

@@ -228,10 +228,29 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     left: 0px;
 }
 
-#formRawJSON {
+#formRawJSON,
+#fastNotes {
     width: 560px;
 }
 
-#formRawJSON textarea {
+#formRawJSON textarea,
+#fastNotes textarea {
     height: 500px;
+}
+
+
+
+
+.coordsCorrection_rightMarker {
+    border-top: 16px solid rgba(66, 170, 255, 1);
+    border-left: 16px solid rgba(0,0,0,0);
+    border-right: 16px solid rgba(0,0,0,0);
+    border-bottom: 16px solid rgba(0,0,0,0);
+}
+
+.coordsCorrection_wrongMarker {
+    border-top: 16px solid rgba(247, 84, 255, 1);
+    border-left: 16px solid rgba(0,0,0,0);
+    border-right: 16px solid rgba(0,0,0,0);
+    border-bottom: 16px solid rgba(0,0,0,0);
 }

@@ -16,6 +16,8 @@
     "topMenuUtils": "Utils",
     "topMenuUtilsToggleFulscreen": "Toggle Fullscreen Select Map",
     "topMenuUtilsToggleMeasuring": "Measuring",
+    "topMenuUtilsFastNotes": "Fast Notes",
+    "topMenuUtilsCoordsCorrection": "Coords Corrections",
     "topMenuMove": "Moves",
     "topMenuMoveMove": "Move To",
     "topMenuMoveAdd": "Add Move",
@@ -56,7 +58,7 @@
     "topMenuMapDefaultURL": "Set Map Default URL",
     "topMenuMainFeed": "Set Main Feed",
     "topMenuInputNewValueQueation": "Input New Value, IF YOU NOT SURE, PRESS CANCEL"
-},
+  },
   "menuCache": {
     "topMenuSetCache": "Map Cached Type",
     "menuCacheAccordGroup": "Set Map Cached Type",
@@ -73,6 +75,15 @@
     "topMenuStageEditorEditControls": "Edit Controls On Selected Map",
     "topMenuStageEditorToggleBlockZoom": "Toggle Blocking Zoom on Active Map"
   },
+  "topMenuCoordsCorrection": {
+    "topMenuCoordsCorrection": "Coords Correction",
+    "topMenuCoordsCorrectionAddRight": "Add Right Coord",
+    "topMenuCoordsCorrectionAddWrong": "Add Wrong Coord",
+    "topMenuCoordsCorrectionRemoveMarkers": "Remove Markers",
+    "topMenuCoordsCorrectionSaveCorrections": "Save corrections",
+    "topMenuCoordsCorrectionDropCorrectionSelect": "Drop Correction on Visible Maps",
+    "topMenuCoordsCorrectionClose": "Close Menu"
+  },  
   "editMaps": {
     "errorCheckForm": "Errors in form! Check values.",
     "confirmRewriteMap": "Map with ID = {0} already exist. Rewrite it?",
@@ -160,9 +171,9 @@
     "hk_mapFullScreen": "Toggle Active Map FullScreen",
     "hk_mapSet": "Set Map",
     "hk_stageSet": "Set Stage",
-    "": "",
-    "": "",
-    "": "",
+    "hk_coordsCorrAddRight": "Coords correction - Arr right point",
+    "hk_coordsCorrAddWrong": "Coords correction - Arr wrong point",
+    "hk_coordsCorrOnCorrect": "Coords correction - Append Correction",
     "": "",
     "": "",
     "": "",

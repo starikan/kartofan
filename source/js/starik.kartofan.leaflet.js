@@ -617,6 +617,8 @@ var LeafletMap = function(mapId){
                 break;
             case "EPSG3857.Ext":
                 parent.crs = L.CRS.EPSG3857.Ext;
+                parent.crs.projection.dX = parent.mapTilesLayer.mapData.dX ? parent.mapTilesLayer.mapData.dX : 0;
+                parent.crs.projection.dY = parent.mapTilesLayer.mapData.dY ? parent.mapTilesLayer.mapData.dY : 0;
                 break;
             default:
                 parent.crs = L.CRS.EPSG3857

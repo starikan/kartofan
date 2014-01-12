@@ -19,6 +19,7 @@ module.exports = function(grunt) {
       "source/js_vendor/shortcut.js",
       "source/js_vendor/leaflet.markercluster-src.js",
       "source/js_vendor/moment-with-langs.js",
+      //"source/js_vendor/ckeditor/ckeditor.js",
      ];
 
     var bottomJs = [
