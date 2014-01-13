@@ -50,6 +50,7 @@
     "topMenuOptDbSyncOut": "Синхронизация базы наружу",
     "topMenuOptGpsAutoStart": "GPS автостарт",
     "topMenuOptSHowMarkers": "Показывать маркеры",
+    "topMenuOptSaveCorrections": "Сохранять коррекции привязки",
     "topMenuOptUpdate": "Обновить настройки из внешней базы",
     "topMenuOptLang": "Set Language",
     "topMenuOptReset": "Сброс всех настроек",   

@@ -540,6 +540,7 @@ var LeafletMap = function(mapId){
         this.updateCurrentStageZoom();
         this.addVizir();
         this.addCursor();
+        this.setCoordsCorrectionFlag();
      }
 
     this.setEvents = function() {
@@ -562,6 +563,12 @@ var LeafletMap = function(mapId){
         this.map.on("contextmenu", topmenu.showTopMenuView);   
         this.map.on("click", this.onClickMap);
      }
+
+    this.setCoordsCorrectionFlag = function() {
+        if (parent.mapTilesLayer.mapData.dX || parent.mapTilesLayer.mapData.dY) {
+            parent.$map.addClass("coordscorrection");
+        }
+     };
 
     this.setMapCenter = function(latlng){
         if (!this.map){return}

@@ -172,7 +172,16 @@ var TopMenu = (function(){
                 _this.setActiveOnButtons();
             },
             active: function() { return opt.getOption("current", "markersShow") }
-         },         
+         },  
+        { 
+            type: "topMenuOptSaveCorrections", 
+            loc: "topMenu:topMenuOptSaveCorrections", 
+            callback: function(){
+                opt.setOption("global", "coordsCorrectionSaveInMaps", 1-opt.getOption("global", "coordsCorrectionSaveInMaps"));
+                _this.setActiveOnButtons();
+            },
+            active: function() { return opt.getOption("global", "coordsCorrectionSaveInMaps") }
+         },                 
         { 
             type: "topMenuMapCachedService", 
             loc: "topMenu:topMenuMapCachedService", 

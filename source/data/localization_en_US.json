@@ -50,6 +50,7 @@
     "topMenuOptDbSyncOut": "Db Sync Out",
     "topMenuOptGpsAutoStart": "GPS Auto Start",
     "topMenuOptSHowMarkers": "Show Markers",
+    "topMenuOptSaveCorrections": "Save Coords Corrections",
     "topMenuOptUpdate": "Update Options From External Base",
     "topMenuOptLang": "Set Language",
     "topMenuOptReset": "Reset All Settings",

@@ -87,6 +87,8 @@ var Options = (function(){
             "/images/marker_what.png",
          ],
 
+         "coordsCorrectionSaveInMaps": false,
+
      };
 
     this.current = {

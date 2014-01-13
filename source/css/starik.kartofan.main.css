@@ -54,6 +54,14 @@ body {
     height: 2px;
 }
 
+.coordscorrection .coordscorrection-selector {
+    background: red;
+    z-index: 999999 !important;
+    position: absolute;
+    width: 2px;
+    height: 2px;
+}
+
 .tour {
     min-width: 300px;
 }

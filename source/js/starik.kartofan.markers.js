@@ -451,8 +451,10 @@ var CoordsCorrection = (function(){
                         mapsInstance[i].crs.projection.dX = wrongLatLng.lng - rightLatLng.lng;
                         mapsInstance[i].crs.projection.dY = wrongLatLng.lat - rightLatLng.lat;
 
-                        mapsInstance[rightMapNumber].map.fireEvent("dragend");
+                        // Save corrections in maps
+                        _this.saveCorrectionInMaps(mapsInstance[i].mapTilesLayer.mapName, mapsInstance[i].crs.projection.dX, mapsInstance[i].crs.projection.dY)
 
+                        mapsInstance[rightMapNumber].map.fireEvent("dragend");
 
                     }
                 };
@@ -468,10 +470,29 @@ var CoordsCorrection = (function(){
         for (var i = mapsInstance.length - 1; i >= 0; i--) {
             mapsInstance[i].crs.projection.dX = 0;
             mapsInstance[i].crs.projection.dY = 0;
+
+            // Save corrections in maps
+            _this.saveCorrectionInMaps(mapsInstance[i].mapTilesLayer.mapName, 0, 0)
         };
+
+        mapsInstance[activeMapNum].$map.removeClass("coordscorrection");
+
         mapsInstance[activeMapNum].map.fireEvent("dragend");
         _this.removeMarkers();
 
+     }
+
+    this.saveCorrectionInMaps = function(mapName, dX, dY) {
+        if (opt.getOption("global", "coordsCorrectionSaveInMaps")){
+            var map = opt.getOption("maps", mapName);
+            
+            if (!map) return;
+
+            map.dX = dX;
+            map.dY = dY;
+
+            opt.setOption("maps", mapName, map);
+        }
      }
 
     this.init();

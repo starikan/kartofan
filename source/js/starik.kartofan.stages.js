@@ -53,6 +53,10 @@ var StageMaps = (function(){
         $("<div></div>")
             .appendTo($mapDiv)
             .addClass("active-selector")
+
+        $("<div></div>")
+            .appendTo($mapDiv)
+            .addClass("coordscorrection-selector")            
      }
 
     this.addMapObject = function(i){
