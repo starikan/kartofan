@@ -120,12 +120,26 @@ var Markers = function(map) {
 
     this._createTagsPanelInForm = function(eform) {
         var tags = eform.data.tags ? eform.data.tags.split(",") : [];
-        var $tags = eform.$form.find("#formEditMarker_tagsPanel");
+        var $tagsPanel = eform.$form.find("#formEditMarker_tagsPanel");
         var $tagsSrc = eform.$form.find("#formEditMarker_tagsSrc");
+        var $tagsAddInput = eform.$form.find("#formEditMarker_tagsAddInput");
         tags = unique(tags.map(fulltrim)).sort();
         
+        // TODO: touch
+        $tagsAddInput.on("keypress", function(e){
+            if (e.charCode === 13){ 
+                addNewTag($tagsAddInput.val());
+                $tagsAddInput.val(""); 
+            }
+        })
+        $("#formEditMarker_tagsAddButton").click(function(){
+            addNewTag($tagsAddInput.val());
+            $tagsAddInput.val(""); 
+        })   
+
+
         var updatePanel = function() {
-            $tags.empty();
+            $tagsPanel.empty();
 
             for (var i = 0; i < tags.length; i++) {
                 // TODO: touch
@@ -133,7 +147,7 @@ var Markers = function(map) {
                 $addTag.click(function(){
                     removeTag($(this).text());
                 });
-                $tags.append($addTag);
+                $tagsPanel.append($addTag);
             };               
         }
          
@@ -145,7 +159,6 @@ var Markers = function(map) {
             $tagsSrc.val(tags.join(", "));
 
             updatePanel();
-            addContols();
         }
 
         var removeTag = function(data) {
@@ -158,30 +171,9 @@ var Markers = function(map) {
             $tagsSrc.val(tags.join(", "));
 
             updatePanel();
-            addContols();
-        }
-
-        var addContols = function() {
-            var $inputRow = $('<div class="row collapse">\
-                <div class="small-10 columns">\
-                  <input type="text" id="formEditMarker_tagsAddInput">\
-                </div>\
-                <div class="small-2 columns ">\
-                  <a class="button tiny postfix" id="formEditMarker_tagsAddButton">+</a>\
-                </div>\
-            </div>')
-            $tags.append($inputRow); 
-
-            // TODO: touch
-            $("#formEditMarker_tagsAddInput").on("keypress", function(e){
-                if (e.charCode === 13){ addNewTag($(this).val()); }
-            })
-            $("#formEditMarker_tagsAddButton").click(function(){addNewTag($("#formEditMarker_tagsAddInput").val())})   
         }
 
         updatePanel();
-        addContols();
-
      }
 
     this._createIconPanelInForm = function(eform) {

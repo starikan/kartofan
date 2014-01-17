@@ -328,12 +328,32 @@ html(manifest="offline/cache.appcache")
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_tags Tags
                         div.small-9.columns
+                            // String with all tags
                             input#formEditMarker_tagsSrc.hide.formEditMarker_tags(type="text")
+                            // Panel with tags buttons
                             div.panel#formEditMarker_tagsPanel
+                            // Add tag section
+                            div.row.collapse
+                                div.small-10.columns: input#formEditMarker_tagsAddInput(type="text")
+                                div.small-2.columns: a.button.tiny.postfix.nomargin#formEditMarker_tagsAddButton +
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_layer Layer
                         div.small-9.columns: input.formEditMarker_layer(type="text")
+
+                    //div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMarker_dateStart Date
+                        div.small-9.columns
+                            input.formEditMarker_dateStart(type="text")
+
+                        //div.small-5.columns: input.formEditMarker_dateStart(type="text")
+                        //div.small-2.columns: input.formEditMarker_dateStartAddTime(type="checkbox"): label: span.formEditMarker_dateStartAddTime
+                        //div.small-2.columns: input.formEditMarker_dateStartAddFinal(type="checkbox"): label: span.formEditMarker_dateStartAddFinal
+
+                    //div.row.collapse
+                        div.small-3.columns: span.prefix.formEditMarker_dateEnd Date
+                        div.small-5.columns: input.formEditMarker_dateEnd(type="text")
+                        div.small-2.columns: input.formEditMarker_dateEndAddTime(type="checkbox"): label: span.formEditMarker_dateEndAddTime
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMarker_latlng Latlng

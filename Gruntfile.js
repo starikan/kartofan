@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       "source/js_vendor/leaflet.markercluster-src.js",
       //"source/js_vendor/moment-with-langs.js",
       //"source/js_vendor/tinymce/tinymce.min.js",
-      "source/js_vendor/jquery.dynatable.js",
+      "source/js_vendor/jquery.dataTables.min.js",
      ];
 
     var bottomJs = [
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
       "source/css_vendor/normalize.css",
       "source/css_vendor/animate.css",
       "source/css_vendor/MarkerCluster.Default.css",
-      "source/css_vendor/jquery.dynatable.css",
+      "source/css_vendor/jquery.dataTables.css",
      ];
 
     var appCss = [

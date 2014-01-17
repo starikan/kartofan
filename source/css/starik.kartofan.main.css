@@ -161,8 +161,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     margin: 0px;    
 }
 
-.foundationForm .panel .button {
-    margin: 0px;    
+.foundationForm .panel .button,
+.foundationForm .nomargin {
+    margin: 0px !important;    
 }
 
 .foundationForm .panel .columns {
@@ -275,15 +276,3 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 
 
-
-/*.modalPanel {
-    position: absolute;
-    top: 50px;
-    z-index: 999999;
-    background-color: white;
-    width: 100%;
-}
-
-.modalPanel .row {
-    max-width: 100%;
-}*/
