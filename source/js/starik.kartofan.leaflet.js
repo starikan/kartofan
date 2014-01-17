@@ -291,7 +291,7 @@ var LeafletMap = function(mapId){
     this.markerVizir;
     this.markerCursor;
 
-    this.zoomBlock = opt.getOption("current", "stage").stageMapsZoomsBlock[this.num];
+    this.zoomBlock = opt.getOption("current", "stage").stageMapsZoomsBlock ? opt.getOption("current", "stage").stageMapsZoomsBlock[this.num] : false;
 
     this.removeActiveClass = function() {
         for (var i = 0; i < parent.instances.length; i++) {
@@ -470,19 +470,18 @@ var LeafletMap = function(mapId){
      }
 
     this._validateLatLng = function(latlng){
-
         latlng = latlng ? latlng : opt.getOption("global", "mapDefaultCenterLatLng");
 
         try {
-            latlng = L.latLng(latlng);
+            if (typeof latlng == "object") {
+                latlng = L.latLng(latlng)
+            }
+            else {
+                latlng = L.latLng(latlng.replace(/s+/, "").split(","));
+            }
         }
         catch(e) {
-            try {
-                latlng = L.latLng(latlng.split(","));
-            }
-            catch(e) {
-                latlng = this._validateLatLng(opt.getOption("global", "mapDefaultCenterLatLng"));
-            }
+            latlng = parent._validateLatLng(opt.getOption("global", "mapDefaultCenterLatLng"));
         }
 
         return latlng;

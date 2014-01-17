@@ -236,15 +236,26 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     left: 0px;
 }
 
-#formRawJSON,
-#fastNotes {
+#formRawJSON {
     width: 560px;
 }
 
-#formRawJSON textarea,
-#fastNotes textarea {
+#formRawJSON textarea {
     height: 500px;
 }
+
+
+
+
+#fastNotes {
+    position: absolute;
+    top: 50px;
+    z-index: 999999;
+}
+
+ #fastNotes_panel {
+    height: 80%;
+ }
 
 
 
@@ -262,3 +273,17 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     border-right: 16px solid rgba(0,0,0,0);
     border-bottom: 16px solid rgba(0,0,0,0);
 }
+
+
+
+/*.modalPanel {
+    position: absolute;
+    top: 50px;
+    z-index: 999999;
+    background-color: white;
+    width: 100%;
+}
+
+.modalPanel .row {
+    max-width: 100%;
+}*/

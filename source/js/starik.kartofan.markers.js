@@ -74,11 +74,11 @@ var Markers = function(map) {
     this.editMarkerForm = function(data) {
         var latlng = opt.getOption("appVars", "cursorLatLng");
 
-        var now = new Date()
+        var now = moment().format("YYYY-MM-DD-HH-mm-ss-SSS");
 
         var vals = {
-            id: opt.getOption("global", "markersIdPrefix") + moment().format("YYYY-MM-DD-HH-mm-ss"),
-            title: moment().format("YYYY-MM-DD-HH-mm-ss"),
+            id: opt.getOption("global", "markersIdPrefix") + now,
+            title: now,
             latlng: latlng.toNormalString(),
         };
 
@@ -494,6 +494,88 @@ var CoordsCorrection = (function(){
             opt.setOption("maps", mapName, map);
         }
      }
+
+    this.init();
+
+ }}());
+
+var MarkersTable = (function(){
+
+    window.opt = new Options();
+
+    var instance;
+
+    return function Construct_singletone () {
+        if (instance) {
+            return instance;
+        }
+        if (this && this.constructor === Construct_singletone) {
+            instance = this;
+        } else {
+            return new Construct_singletone();
+        }
+
+    var _this = this;
+
+    this.$tableContainer = $("#markersTable");
+    this.$table = $("#markersTable_panel");
+
+    this.init = function(){
+
+     };
+
+    this.showTable = function() {
+
+        var data = opt.getOption("markers");
+        var dataNormalize = [];
+        for (var i in data) {
+            var mark = {
+                id: data[i].id,
+                title: data[i].title || "",
+                tags: data[i].tags || "",
+                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): "",
+                layer: data[i].layer || "",
+                time: data[i].time || "",
+            }
+
+            dataNormalize.push(mark);
+        };
+
+        _this.$table.dataTable({
+            "bRetrieve": true,
+            "sScrollX": "100%",
+            "bScrollCollapse": true,       
+            "aoColumns": [
+                { "mData": "id",  "bVisible": false, "bSearchable": false,},
+                { "mData": "title", "sTitle": "Name", "bSortable": true, "sWidth": "20%"},
+                { "mData": "tags", "sTitle": "Tags", "bSortable": true, "sWidth": "20%"},
+                { "mData": "icon", "sTitle": "Icon", "bSortable": true, },
+                { "mData": "layer", "sTitle": "Layer", "bSortable": true, },
+                { "mData": "time", "sTitle": "Time", "bSortable": true, },
+            ],
+            "aaData": dataNormalize,
+        });
+
+        // TODO: touch
+        _this.$table.find('tbody tr').click(function(){
+            var nTds = $('td', this);
+            var id = $(nTds[0]).text();
+            
+            var latlng = opt.getOption("markers", id).latlng;
+
+            mapsInstance[opt.getOption("appVars", "activeMapNum")].moveAllMaps(latlng);
+        })
+
+        _this.$tableContainer.arcticmodal({
+            afterClose: function(){
+                // _this.$table.dataTable({
+                //     "bFilter": false,
+                //     "bDestroy": true
+                // });
+            }
+        });
+
+     };
 
     this.init();
 

@@ -36,7 +36,9 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/shortcut.js")
         script(src="js_vendor/leaflet.markercluster-src.js")
         script(src="js_vendor/moment-with-langs.js")
+        //script(src="js_vendor/tinymce/tinymce.min.js")
         //script(src="js_vendor/ckeditor/ckeditor.js")
+        script(src="js_vendor/jquery.dataTables.min.js")
 
         // CSS    
         
@@ -48,6 +50,7 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/normalize.css", rel="stylesheet")
         link(href="css_vendor/animate.css", rel="stylesheet")
         link(href="css_vendor/MarkerCluster.Default.css", rel="stylesheet")
+        link(href="css_vendor/jquery.dataTables.css", rel="stylesheet")
 
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
@@ -138,6 +141,7 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuUtilsToggleMeasuring Measuring
                                         li: a.topMenuUtilsFastNotes Fast Notes
                                         li: a.topMenuUtilsCoordsCorrection Coords Correction
+                                        li: a.topMenuUtilsMarkersTable Editing Markers Table
                                 li.has-dropdown
                                     a.topMenuMove Moves 
                                     ul.dropdown 
@@ -370,9 +374,33 @@ html(manifest="offline/cache.appcache")
                         div.small-6.columns.text-right: a.small.button.formRawJSON_submit Send 
                         div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
 
-        div#fastNotes
-            div.box-modal
-                textarea#fastNotes_textarea Пока не работает / Not working yet
+        div#fastNotes.hide
+            div.row
+                div.columns
+                    div.panel#fastNotes_panel
+                        textarea#fastNotes_textarea Пока не работает / Not working yet
+
+        div#markersTable.modalPanel
+            div.row
+                div.columns.small-11.small-centered
+                    div.panel
+                        table#markersTable_panel
+                            thead
+                                tr
+                                    th Id
+                                    th Name
+                                    th Tags
+                                    th Icon
+                                    th Group
+                                    th Time
+                            tbody
+                                tr
+                                    td Row1
+                                    td Row1
+                                    td Row1
+                                    td Row1
+                                    td Row1
+                                    td Row1
 
         div#disqus_thread
         |<script type="text/javascript">

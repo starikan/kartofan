@@ -23,6 +23,7 @@ var TopMenu = (function(){
     window.infomenu = new InfoMenu();
     window.hotkeys = new HotKeys();
     window.coordscorrection = new CoordsCorrection();
+    window.markerstable = new MarkersTable();
 
     var _this = this;
 
@@ -58,6 +59,7 @@ var TopMenu = (function(){
         { type: "topMenuUtilsToggleMeasuring", loc: "topMenu:topMenuUtilsToggleMeasuring", callback: mapseditor.toggleMeasuring },
         { type: "topMenuUtilsFastNotes", loc: "topMenu:topMenuUtilsFastNotes", callback: opt.fastNotesEditor },
         { type: "topMenuUtilsCoordsCorrection", loc: "topMenu:topMenuUtilsCoordsCorrection", callback: coordscorrection.showMenu },
+        { type: "topMenuUtilsMarkersTable", loc: "topMenu:topMenuUtilsMarkersTable", callback: markerstable.showTable },
         
         { type: "topMenuOptUpdate", loc: "topMenu:topMenuOptUpdate", callback: bases.syncIn },
         { type: "topMenuOptLang", loc: "topMenu:topMenuOptLang", callback: opt.setLang },

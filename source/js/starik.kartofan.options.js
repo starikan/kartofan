@@ -223,6 +223,7 @@ var Options = (function(){
         window.fastmoving = new FastMoving();
         window.hotkeys = new HotKeys();
         window.coordscorrection = new CoordsCorrection();
+        window.markerstable = new MarkersTable();
 
         opt.getHash();
 
@@ -248,9 +249,9 @@ var Options = (function(){
         if (!opt.getOption("current", "showTourFirst")) {
             $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
+      
+        // CKEDITOR.replace("fastNotes_textarea");
 
-        // CKEDITOR.replace( 'fastNotes_textarea' );
-        
      } 
 
     this._afterInit = function(){
@@ -619,7 +620,15 @@ var Options = (function(){
 
     this.fastNotesEditor = function(){
 
-        $("#fastNotes").arcticmodal();
+        // $("#fastNotes").arcticmodal({
+        //     afterOpen: function(){
+                // tinymce.init({
+                //     selector: "textarea#fastNotes_textarea"
+                //  });       
+        //     }
+        // });
+
+        $("#fastNotes").removeClass("hide")
 
      }
 
