@@ -84,6 +84,8 @@ var Markers = function(map) {
 
         vals = $.extend({}, vals, data);
 
+        console.log(data)
+
         var arr = [
             { "type": "formEditMarker_id",     "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
             { "type": "formEditMarker_title",  "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
@@ -91,6 +93,21 @@ var Markers = function(map) {
             { "type": "formEditMarker_icon",   "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
             { "type": "formEditMarker_tags",   "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
             { "type": "formEditMarker_latlng", "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
+            
+            { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
+            { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },
+            { "type": "formEditMarker_dateStartAddFinal", "loc": "markers:formEditMarker_dateStartAddFinal", callback: function(){
+                $("#addDateFinalRow").toggleClass("hide");
+            } },
+            { "type": "formEditMarker_dateStartAddTime", "loc": "markers:formEditMarker_dateStartAddTime", callback: function(a, b, c){
+                $("a.formEditMarker_dateStartAddTime").toggleClass("disabled");
+                _this._createDataPicker(!$("a.formEditMarker_dateStartAddTime").hasClass("disabled"));
+            } },
+            { "type": "formEditMarker_dateEndAddTime", "loc": "markers:formEditMarker_dateEndAddTime", callback: function(){
+                $("a.formEditMarker_dateEndAddTime").toggleClass("disabled");
+                _this._createDataPicker(!$("a.formEditMarker_dateEndAddTime").hasClass("disabled"));
+            } },
+            
             { "type": "formEditMarker_submit", "loc": "markers:formEditMarker_submit", callback: function(form){
                 if (!form.checkFormFlag){
                     alert(loc("markers:errorCheckForm"));
@@ -113,9 +130,30 @@ var Markers = function(map) {
 
         var eform = new FoundationForm(arr, "formEditMarker");
 
+        vals.dateEnd ? $("#addDateFinalRow").removeClass("hide"): $("#addDateFinalRow").addClass("hide");
+
+        this._createDataPicker(false);
         this._createIconPanelInForm(eform);
         this._createTagsPanelInForm(eform);
 
+     };
+
+    this._createDataPicker = function(timeFlag) {
+        console.log(timeFlag)
+        $("input.formEditMarker_dateStart").datetimepicker({
+            datepicker: true,
+            timepicker: true,
+            closeOnDateSelect: !timeFlag,
+            format: timeFlag ? 'Y/m/d H:i' : 'Y/m/d',
+            validateOnBlur: false,
+        });
+        $("input.formEditMarker_dateEnd").datetimepicker({
+            datepicker: true,
+            timepicker: true,
+            closeOnDateSelect: !timeFlag,
+            format: timeFlag ? 'Y/m/d H:i' : 'Y/m/d',
+            validateOnBlur: false,
+        });
      };
 
     this._createTagsPanelInForm = function(eform) {

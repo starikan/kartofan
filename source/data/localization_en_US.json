@@ -199,6 +199,11 @@
     "formEditMarker_tags": "Tags",
     "formEditMarker_layer": "Layer Group",
     "formEditMarker_latlng": "Coords",
+    "formEditMarker_dateStart": "Date",
+    "formEditMarker_dateEnd": "Date End",
+    "formEditMarker_dateStartAddTime": "+Time",
+    "formEditMarker_dateStartAddFinal": "+Final",
+    "formEditMarker_dateEndAddTime": "+Time",
     "formEditMarker_submit": "Submit",
     "formEditMarker_delete": "Delete",
     "formEditMarker_cancel": "Cancel"

@@ -181,6 +181,11 @@
     "formEditMarker_tags": "Тэги",
     "formEditMarker_layer": "Группа",
     "formEditMarker_latlng": "Коорд.",
+    "formEditMarker_dateStart": "Дата",
+    "formEditMarker_dateEnd": "Дата конца",
+    "formEditMarker_dateStartAddTime": "+Время",
+    "formEditMarker_dateStartAddFinal": "+Конец",
+    "formEditMarker_dateEndAddTime": "+Время",    
     "formEditMarker_submit": "Отправить",
     "formEditMarker_delete": "Удалить",
     "formEditMarker_cancel": "Отмена"

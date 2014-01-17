@@ -21,6 +21,7 @@ module.exports = function(grunt) {
       //"source/js_vendor/moment-with-langs.js",
       //"source/js_vendor/tinymce/tinymce.min.js",
       "source/js_vendor/jquery.dataTables.min.js",
+      "source/js_vendor/jquery.datetimepicker.js",
      ];
 
     var bottomJs = [
@@ -47,6 +48,7 @@ module.exports = function(grunt) {
       "source/css_vendor/animate.css",
       "source/css_vendor/MarkerCluster.Default.css",
       "source/css_vendor/jquery.dataTables.css",
+      "source/css_vendor/jquery.datetimepicker.css",
      ];
 
     var appCss = [

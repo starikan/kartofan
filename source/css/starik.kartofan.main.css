@@ -163,7 +163,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 .foundationForm .panel .button,
 .foundationForm .nomargin {
-    margin: 0px !important;    
+    margin: 0px 1px !important;    
 }
 
 .foundationForm .panel .columns {
@@ -181,6 +181,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     padding: 1px 5px;
     content: 'x';
 }
+
+.xdsoft_datetimepicker {
+    z-index: 1000000000;
+}
+
+
+
 
 #infoMenuKartofan {
     position: fixed;

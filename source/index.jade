@@ -39,6 +39,7 @@ html(manifest="offline/cache.appcache")
         //script(src="js_vendor/tinymce/tinymce.min.js")
         //script(src="js_vendor/ckeditor/ckeditor.js")
         script(src="js_vendor/jquery.dataTables.min.js")
+        script(src="js_vendor/jquery.datetimepicker.js")
 
         // CSS    
         
@@ -51,6 +52,7 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/animate.css", rel="stylesheet")
         link(href="css_vendor/MarkerCluster.Default.css", rel="stylesheet")
         link(href="css_vendor/jquery.dataTables.css", rel="stylesheet")
+        link(href="css_vendor/jquery.datetimepicker.css", rel="stylesheet")
 
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
@@ -341,19 +343,20 @@ html(manifest="offline/cache.appcache")
                         div.small-3.columns: span.prefix.formEditMarker_layer Layer
                         div.small-9.columns: input.formEditMarker_layer(type="text")
 
-                    //div.row.collapse
+                    div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_dateStart Date
                         div.small-9.columns
-                            input.formEditMarker_dateStart(type="text")
+                            div.row.collapse
+                                div.small-8.columns: input.formEditMarker_dateStart(type="text")
+                                div.small-2.columns: a.button.tiny.postfix.nomargin.disabled.formEditMarker_dateStartAddTime: span.formEditMarker_dateStartAddTime +Time
+                                div.small-2.columns: a.button.tiny.postfix.nomargin.formEditMarker_dateStartAddFinal: span.formEditMarker_dateStartAddFinal +End
 
-                        //div.small-5.columns: input.formEditMarker_dateStart(type="text")
-                        //div.small-2.columns: input.formEditMarker_dateStartAddTime(type="checkbox"): label: span.formEditMarker_dateStartAddTime
-                        //div.small-2.columns: input.formEditMarker_dateStartAddFinal(type="checkbox"): label: span.formEditMarker_dateStartAddFinal
-
-                    //div.row.collapse
-                        div.small-3.columns: span.prefix.formEditMarker_dateEnd Date
-                        div.small-5.columns: input.formEditMarker_dateEnd(type="text")
-                        div.small-2.columns: input.formEditMarker_dateEndAddTime(type="checkbox"): label: span.formEditMarker_dateEndAddTime
+                    div.row.collapse.hide#addDateFinalRow
+                        div.small-3.columns: span.prefix.formEditMarker_dateEnd Date End
+                        div.small-9.columns
+                            div.row.collapse
+                                div.small-8.columns: input.formEditMarker_dateEnd(type="text")
+                                div.small-2.columns: a.button.tiny.postfix.nomargin.disabled.formEditMarker_dateEndAddTime: span.formEditMarker_dateEndAddTime +Time
 
                     div.row.collapse 
                         div.small-3.columns: span.prefix.formEditMarker_latlng Latlng
