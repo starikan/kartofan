@@ -47,6 +47,7 @@ var Options = (function(){
             "hk_coordsCorrAddRight": "Ctrl+F1",
             "hk_coordsCorrAddWrong": "Ctrl+F2",
             "hk_coordsCorrOnCorrect": "Ctrl+F3",
+            "hk_fastNotes": "Alt+Q",
         },
 
         "markersIdPrefix": "",
@@ -88,6 +89,8 @@ var Options = (function(){
          ],
 
          "coordsCorrectionSaveInMaps": false,
+
+         "fastNotesText": "",
 
      };
 
@@ -237,6 +240,7 @@ var Options = (function(){
             gps.startGPS();
         }
 
+        console.log(opt.getOption("current", "setLang"))
         if (!opt.getOption("current", "setLang")){
             opt.setLang();
         }
@@ -250,7 +254,7 @@ var Options = (function(){
             $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
       
-        // CKEDITOR.replace("fastNotes_textarea");
+        CKEDITOR.replace("fastNotes_textarea", {});
 
      } 
 
@@ -620,16 +624,30 @@ var Options = (function(){
 
     this.fastNotesEditor = function(){
 
-        // $("#fastNotes").arcticmodal({
-        //     afterOpen: function(){
-                // tinymce.init({
-                //     selector: "textarea#fastNotes_textarea"
-                //  });       
-        //     }
-        // });
+        var $fastNotes = $("#fastNotes");
+        var $mapsContainer = $("#containerKartofan");
 
-        $("#fastNotes").removeClass("hide")
+        if ($fastNotes.hasClass("hide")) {
+            $fastNotes.removeClass("hide");
+            $fastNotes.width($mapsContainer.width());
+            $fastNotes.height($mapsContainer.height());
 
+            CKEDITOR.instances.fastNotes_textarea.resize( $mapsContainer.width(), $mapsContainer.height() )
+
+            // TODO: размер меню и при скрытии и изменении размеров окна тоже нужног сенять
+            $fastNotes.offset($mapsContainer.offset());
+
+            // Load text
+            var text = opt.getOption("global", "fastNotesText");
+            CKEDITOR.instances.fastNotes_textarea.setData(text);
+
+        } else {
+            $fastNotes.addClass("hide");
+            
+            // Save text
+            var text = CKEDITOR.instances.fastNotes_textarea.document.getBody().getHtml();
+            opt.setOption("global", "fastNotesText", text);
+        }
      }
 
 
@@ -663,9 +681,9 @@ var Bases = (function(){
 
     this.checkBasesLoaded = function(){
 
-        var syncBases = opt.getOption("appVars", "baseNamesSync").length ? opt.getOption("appVars", "baseNamesSync").length : 0;
+        var allBases = opt.getOption("appVars", "baseNames").length ? opt.getOption("appVars", "baseNames").length : 0;
 
-        if (this.basesLoaded >= syncBases){ 
+        if (this.basesLoaded >= allBases){ 
             return true;
         }
         return false;
@@ -696,7 +714,7 @@ var Bases = (function(){
                         })
                     })
 
-                    if (opt.getOption("appVars", "baseNamesSync").indexOf(collection) != -1){
+                    if (opt.getOption("appVars", "baseNames").indexOf(collection) != -1){
                         parent.basesLoaded++;
                     }
 
@@ -794,6 +812,7 @@ var HotKeys = (function(){
         "hk_coordsCorrAddRight": { func: coordscorrection.addRightMarker },
         "hk_coordsCorrAddWrong": { func: coordscorrection.addWrongMarker },
         "hk_coordsCorrOnCorrect": { func: coordscorrection.addCorrectionOnMaps },
+        "hk_fastNotes": { func: opt.fastNotesEditor }
     }
 
     this.init = function() {

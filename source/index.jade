@@ -37,7 +37,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/leaflet.markercluster-src.js")
         script(src="js_vendor/moment-with-langs.js")
         //script(src="js_vendor/tinymce/tinymce.min.js")
-        //script(src="js_vendor/ckeditor/ckeditor.js")
+        script(src="js_vendor/ckeditor/ckeditor.js")
         script(src="js_vendor/jquery.dataTables.min.js")
         script(src="js_vendor/jquery.datetimepicker.js")
 
@@ -398,10 +398,7 @@ html(manifest="offline/cache.appcache")
                         div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
 
         div#fastNotes.hide
-            div.row
-                div.columns
-                    div.panel#fastNotes_panel
-                        textarea#fastNotes_textarea Пока не работает / Not working yet
+            textarea#fastNotes_textarea Пока не работает / Not working yet
 
         div#markersTable.modalPanel
             div.row
