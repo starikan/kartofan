@@ -538,7 +538,7 @@ var AccordionMenu = function(arr, id, required) {
     this._setCallbacks();
  }
 
-var FoundationForm = function(arr, id) {
+var FoundationForm = function(arr, id, onOpen, onClose) {
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
     if (!id) return;
 
@@ -548,6 +548,9 @@ var FoundationForm = function(arr, id) {
     this.arr = arr; 
     this.data = {};
     this.checkFormFlag = true;
+
+    this.onOpen = onOpen;
+    this.onClose = onClose;
     
     this._initForm = function(){
         var $id = "#"+id;
@@ -564,6 +567,7 @@ var FoundationForm = function(arr, id) {
 
         this.clearForm();
         this.showForm();
+        this.onOpen ? this.onOpen() : undefined;
      }
 
     this.clearForm = function() {
@@ -671,6 +675,7 @@ var FoundationForm = function(arr, id) {
     this.hideForm = function() {
         this.$form.addClass("hide");
         this.$form.arcticmodal("close");
+        this.onClose ? this.onClose() : undefined;
      }
 
     this._initForm();

@@ -254,6 +254,7 @@ var Options = (function(){
         }
       
         CKEDITOR.replace("fastNotes_textarea", {});
+        CKEDITOR.replace("formEditMarker_descriptionFullCKEDITOR", {});
 
      } 
 
