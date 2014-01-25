@@ -259,6 +259,9 @@ var TopMenu = (function(){
 
         $mapsContainer.css({"top": 45+"px"});
         $topMenuContainer.css({"z-index": 9999, "top": 0+"px"});
+
+        // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        window.onresize();        
      }
 
     this.hideTopMenuView = function() {
@@ -269,6 +272,9 @@ var TopMenu = (function(){
 
         $mapsContainer.css({"top": "0px"});
         $topMenuContainer.css({"z-index": 0, "top": "-45px"});
+
+        // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        window.onresize();        
      }
 
     this.showStageMenu = function() {
@@ -411,9 +417,8 @@ var InfoMenu = (function(){
         var bottom = infoVisible ? 15 : 0;
         $mapsContainer.css({"bottom": bottom+"px"});
 
-        $.each(mapsInstance, function(i, v){
-            v.refreshMapAfterResize();
-        })
+        // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        window.onresize();
      }
 
     this.setCoords = function(latlng){

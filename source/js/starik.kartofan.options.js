@@ -47,6 +47,7 @@ var Options = (function(){
             "hk_coordsCorrAddRight": "Ctrl+F1",
             "hk_coordsCorrAddWrong": "Ctrl+F2",
             "hk_coordsCorrOnCorrect": "Ctrl+F3",
+            "hk_fastNotesEditor": "Alt+Q",
         },
 
         "markersIdPrefix": "",
@@ -88,6 +89,8 @@ var Options = (function(){
          ],
 
          "coordsCorrectionSaveInMaps": false,
+
+         "fastNotesText": "",
 
      };
 
@@ -250,7 +253,7 @@ var Options = (function(){
             $("a.topMenuHelpTourMain").removeClass("hide-for-small-only hide-for-medium-up hide-for-large-up hide-for-xlarge");
         }
       
-        // CKEDITOR.replace("fastNotes_textarea");
+        CKEDITOR.replace("fastNotes_textarea", {});
 
      } 
 
@@ -620,15 +623,20 @@ var Options = (function(){
 
     this.fastNotesEditor = function(){
 
-        // $("#fastNotes").arcticmodal({
-        //     afterOpen: function(){
-                // tinymce.init({
-                //     selector: "textarea#fastNotes_textarea"
-                //  });       
-        //     }
-        // });
+        var $fastNotes = $("#fastNotes");
 
-        $("#fastNotes").removeClass("hide")
+        if ($fastNotes.hasClass("hide")){
+            $fastNotes.removeClass("hide");
+            var text = opt.getOption("global", "fastNotesText");
+            CKEDITOR.instances.fastNotes_textarea.setData(text);
+        } else {
+            $fastNotes.addClass("hide");
+            var text = CKEDITOR.instances.fastNotes_textarea.document.getBody().getHtml();
+            opt.setOption("global", "fastNotesText", text);
+        }
+
+        // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        window.onresize();
 
      }
 
@@ -794,6 +802,7 @@ var HotKeys = (function(){
         "hk_coordsCorrAddRight": { func: coordscorrection.addRightMarker },
         "hk_coordsCorrAddWrong": { func: coordscorrection.addWrongMarker },
         "hk_coordsCorrOnCorrect": { func: coordscorrection.addCorrectionOnMaps },
+        "hk_fastNotesEditor": { func: opt.fastNotesEditor },
     }
 
     this.init = function() {
