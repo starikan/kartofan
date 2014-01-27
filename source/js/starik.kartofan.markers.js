@@ -87,12 +87,15 @@ var Markers = function(map) {
         console.log(data)
 
         var arr = [
-            { "type": "formEditMarker_id",     "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
-            { "type": "formEditMarker_title",  "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
-            { "type": "formEditMarker_layer",  "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
-            { "type": "formEditMarker_icon",   "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
-            { "type": "formEditMarker_tags",   "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
-            { "type": "formEditMarker_latlng", "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
+            { "type": "formEditMarker_id",            "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
+            { "type": "formEditMarker_title",         "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
+            { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
+            { "type": "formEditMarker_icon",          "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
+            { "type": "formEditMarker_description",   "name": "icon",   "val": vals.description, "loc": "markers:formEditMarker_description", "description": "description" },
+            { "type": "formEditMarker_descriptionFull",    "name": "icon",   "val": vals.descriptionFull, "loc": "markers:formEditMarker_descriptionFull", "description": "descriptionFull" },
+            { "type": "formEditMarker_links",              "name": "icon",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
+            { "type": "formEditMarker_tags",           "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
+            { "type": "formEditMarker_latlng",         "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
             
             { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
             { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },

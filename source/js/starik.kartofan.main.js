@@ -19,6 +19,30 @@ if (window.navigator.onLine != undefined){
     });
  }
 
+// ********** ONRESIZE **********
+// TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+window.onresize = function() {
+    console.log("resize");
+
+    // Maps
+    $.each(mapsInstance, function(i, v){
+        v.refreshMapAfterResize();
+    });
+
+    // Fast Notes
+    var $fastNotes = $("#fastNotes");
+    if ($fastNotes.is(':visible')){
+        var $containerMaps = $("#containerKartofan");
+        $fastNotes.offset($containerMaps.offset());
+
+        try {
+            CKEDITOR.instances.fastNotes_textarea.resize( $containerMaps.width(), $containerMaps.height())
+        } catch(e) {}
+    }
+
+ };
+
+
 // ********** CLOCK **********
 (function clockloop(){
     var currentTime = new Date ( );

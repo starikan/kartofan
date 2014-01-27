@@ -47,7 +47,7 @@ var Options = (function(){
             "hk_coordsCorrAddRight": "Ctrl+F1",
             "hk_coordsCorrAddWrong": "Ctrl+F2",
             "hk_coordsCorrOnCorrect": "Ctrl+F3",
-            "hk_fastNotes": "Alt+Q",
+            "hk_fastNotesEditor": "Alt+Q",
         },
 
         "markersIdPrefix": "",
@@ -255,6 +255,7 @@ var Options = (function(){
         }
       
         CKEDITOR.replace("fastNotes_textarea", {});
+        CKEDITOR.replace("formEditMarker_descriptionFullCKEDITOR", {});
 
      } 
 
@@ -625,29 +626,20 @@ var Options = (function(){
     this.fastNotesEditor = function(){
 
         var $fastNotes = $("#fastNotes");
-        var $mapsContainer = $("#containerKartofan");
 
-        if ($fastNotes.hasClass("hide")) {
+        if ($fastNotes.hasClass("hide")){
             $fastNotes.removeClass("hide");
-            $fastNotes.width($mapsContainer.width());
-            $fastNotes.height($mapsContainer.height());
-
-            CKEDITOR.instances.fastNotes_textarea.resize( $mapsContainer.width(), $mapsContainer.height() )
-
-            // TODO: размер меню и при скрытии и изменении размеров окна тоже нужног сенять
-            $fastNotes.offset($mapsContainer.offset());
-
-            // Load text
             var text = opt.getOption("global", "fastNotesText");
             CKEDITOR.instances.fastNotes_textarea.setData(text);
-
         } else {
             $fastNotes.addClass("hide");
-            
-            // Save text
             var text = CKEDITOR.instances.fastNotes_textarea.document.getBody().getHtml();
             opt.setOption("global", "fastNotesText", text);
         }
+
+        // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        window.onresize();
+
      }
 
 
@@ -812,7 +804,7 @@ var HotKeys = (function(){
         "hk_coordsCorrAddRight": { func: coordscorrection.addRightMarker },
         "hk_coordsCorrAddWrong": { func: coordscorrection.addWrongMarker },
         "hk_coordsCorrOnCorrect": { func: coordscorrection.addCorrectionOnMaps },
-        "hk_fastNotes": { func: opt.fastNotesEditor }
+        "hk_fastNotesEditor": { func: opt.fastNotesEditor },
     }
 
     this.init = function() {

@@ -558,7 +558,7 @@ var LeafletMap = function(mapId){
         this.map.on("mousemove", this.moveCursor);
         this.map.on("locationfound", gps.onGPS);
         this.map.on("locationerror", gps.errorGPS);
-        this.map.on("resize", this.refreshMapAfterResize);   
+        // this.map.on("resize", this.refreshMapAfterResize);   
         this.map.on("contextmenu", topmenu.showTopMenuView);   
         this.map.on("click", this.onClickMap);
      }
@@ -639,6 +639,7 @@ var LeafletMap = function(mapId){
     
     this.refreshMapAfterResize = function(){
         parent.map.invalidateSize();
+        console.log("leafler resize");
      }
 
     this.addVizir = function(){
