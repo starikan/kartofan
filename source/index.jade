@@ -345,15 +345,10 @@ html(manifest="offline/cache.appcache")
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_description Description
-                        div.small-9.columns: textarea.formEditMarker_description
-
-                    div.row.collapse.hide
-                        div.small-3.columns: span.prefix.formEditMarker_descriptionFull Description Full
-                        div.small-9.columns: textarea.formEditMarker_descriptionFull
-
-                    div.row.collapse
-                        div.small-3.columns: span.prefix.formEditMarker_descriptionFull Description Full
-                        div.small-9.columns: textarea#formEditMarker_descriptionFullCKEDITOR
+                        div.small-9.columns
+                            div.row.collapse
+                                div.small-10.columns: textarea.formEditMarker_description
+                                div.small-2.columns: a.button.tiny.postfix.nomargin#formEditMarker_descriptionAddHTML HTML                        
 
                     div.row.collapse
                         div.small-3.columns: span.prefix.formEditMarker_links Links
@@ -414,7 +409,7 @@ html(manifest="offline/cache.appcache")
                         div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
 
         div#fastNotes.hide
-            textarea#fastNotes_textarea Пока не работает / Not working yet
+            textarea#fastNotes_textarea
 
         div#markersTable.modalPanel
             div.row

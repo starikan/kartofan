@@ -33,10 +33,15 @@ window.onresize = function() {
     var $fastNotes = $("#fastNotes");
     if ($fastNotes.is(':visible')){
         var $containerMaps = $("#containerKartofan");
-        $fastNotes.offset($containerMaps.offset());
+        var offset = $containerMaps.offset();
+        var newOffset = {
+            top: offset.top + $containerMaps.height() * 0.02,
+            left: offset.left + $containerMaps.width() * 0.02,
+        }
+        $fastNotes.offset(newOffset);
 
         try {
-            CKEDITOR.instances.fastNotes_textarea.resize( $containerMaps.width(), $containerMaps.height())
+            CKEDITOR.instances.fastNotes_textarea.resize( $containerMaps.width() * 0.96, $containerMaps.height() * 0.96);
         } catch(e) {}
     }
 
