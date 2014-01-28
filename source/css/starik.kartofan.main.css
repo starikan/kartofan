@@ -282,3 +282,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 
 
+
+
+
+#markerDescription {
+    background-color: white;
+    padding: 10px;
+}

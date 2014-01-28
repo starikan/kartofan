@@ -13,6 +13,8 @@ var Markers = function(map) {
     this.filteredData = {};
     this.filteredDataLayers = [];
 
+    this.clickForDescriptionFlag = false;
+
     this.init = function(map) {
         if (!opt.getOption("current", "markersShow")) return;
 
@@ -295,6 +297,7 @@ var Markers = function(map) {
 
         // TODO: touch
         marker.on("dblclick", this.onMarkerDblclick);
+        marker.on("click", this.onMarkerСlick);
         marker.on("contextmenu", this.onMarkerContextmenu);
         marker.on("dragend", this.onMarkerDragend);
         marker.on("mouseout", this.onMarkerMouseout);
@@ -302,14 +305,34 @@ var Markers = function(map) {
         return marker;
      };
 
+    this.onMarkerСlick = function(e){
+        var data = opt.getOption("markers", this.id)
+        _this.clickForDescriptionFlag = true;
+        setTimeout(function(){
+            _this.clickForDescriptionFlag = false;
+        }, 1000);
+     }
+
     this.onMarkerDblclick = function(e){
         var data = opt.getOption("markers", this.id)
         _this.editMarkerForm(data);
      }
 
     this.onMarkerContextmenu = function(e){
-        e.originalEvent.preventDefault();
-        this.dragging.enable();
+
+        // Description, shows after click
+        if (_this.clickForDescriptionFlag) {
+            var data = opt.getOption("markers", this.id)
+            var $markerDescription = $("#markerDescription");
+            $markerDescription.empty();
+            $markerDescription.append(data.description);
+            $markerDescription.arcticmodal();
+        } 
+        // Else dragg marker
+        else {
+            e.originalEvent.preventDefault();
+            this.dragging.enable();            
+        }
      }     
 
     this.onMarkerDragend = function(e){
