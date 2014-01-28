@@ -134,7 +134,7 @@ var Markers = function(map) {
             arr, 
             "formEditMarker", 
             function(){
-                CKEDITOR.replace("formEditMarker_description", {});
+                CKEDITOR.replace("formEditMarker_description", {baseFloatZIndex: 200000000000});
             },
             function(){
                 if (CKEDITOR.instances.formEditMarker_description) {
