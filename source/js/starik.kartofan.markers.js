@@ -130,7 +130,19 @@ var Markers = function(map) {
             }},
         ];
 
-        var eform = new FoundationForm(arr, "formEditMarker");
+        var eform = new FoundationForm(
+            arr, 
+            "formEditMarker", 
+            function(){
+                CKEDITOR.replace("formEditMarker_description", {});
+            },
+            function(){
+                if (CKEDITOR.instances.formEditMarker_description) {
+                    CKEDITOR.instances.formEditMarker_description.destroy();    
+                }
+            }
+        );
+
 
         vals.dateEnd ? $("#addDateFinalRow").removeClass("hide"): $("#addDateFinalRow").addClass("hide");
 

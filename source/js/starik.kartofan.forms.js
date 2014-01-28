@@ -567,7 +567,6 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
 
         this.clearForm();
         this.showForm();
-        this.onOpen ? this.onOpen() : undefined;
      }
 
     this.clearForm = function() {
@@ -670,6 +669,7 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
                 _this.hideForm();
             }
         });        
+        this.onOpen ? this.onOpen() : undefined;
      }
 
     this.hideForm = function() {

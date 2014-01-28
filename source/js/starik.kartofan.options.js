@@ -255,6 +255,7 @@ var Options = (function(){
         }
       
         CKEDITOR.replace("fastNotes_textarea", {});
+
      } 
 
     this._afterInit = function(){
