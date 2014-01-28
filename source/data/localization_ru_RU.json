@@ -175,6 +175,7 @@
   },
   "markers": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
+    "deleteMarker": "Вы действительно хотите удалить этот маркер?",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Заголовок",
     "formEditMarker_icon": "Значок",

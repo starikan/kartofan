@@ -306,12 +306,16 @@ var Options = (function(){
         return this[collection][option];
      }
 
-    this.deleteOption = function(collection, option){
+    this.deleteOption = function(collection, option, callback){
         delete this[collection][option];
 
         if (!bases.db[collection]) {return}
         bases.db[collection].get(option, function(err, doc) {
-            bases.db[collection].remove(doc, function(errRemove, responseRemove) {  });
+            bases.db[collection].remove(doc, function(errRemove, responseRemove) { 
+                if (!errRemove){
+                    callback ? callback() : undefined;
+                }
+            });
         });  
      }
 

@@ -193,6 +193,7 @@
   },
   "markers": {
     "errorCheckForm": "Errors in form! Check values.",
+    "deleteMarker": "Do you realy want to delete this marker?",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Title",
     "formEditMarker_icon": "Icon",

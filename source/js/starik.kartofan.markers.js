@@ -125,7 +125,7 @@ var Markers = function(map) {
                 }
             }},
             { "type": "formEditMarker_delete", "loc": "markers:formEditMarker_delete", callback: function(form){
-                // _this.deleteMarkerData(form.data, function(){eform.hideForm()});
+                 _this.deleteMarkerData(form.data, function(){eform.hideForm()});
             }},
             { "type": "formEditMarker_cancel", "loc": "markers:formEditMarker_cancel", callback: function(form){
                 form.hideForm();
@@ -251,7 +251,13 @@ var Markers = function(map) {
      }
 
     this.deleteMarkerData = function(data, callback) {
-
+        console.log(data);
+        if (confirm(loc("markers:deleteMarker"))){
+            opt.deleteOption("markers", data.id, function(){
+                _this.refreshView();
+            });
+            callback ? callback() : undefined;
+        }
      };     
 
     this.removeMarkers = function(filter, callback) {
@@ -350,13 +356,15 @@ var Markers = function(map) {
         }, 1000)        
      }  
 
+    this.refreshView = function(){
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            mapsInstance[i].markers.init();
+            mapsInstance[i].markers.showMarkers();
+        };
+     };
+
     this.updateAllMapsView = function(data) {
-        this.updateMarkerData(data, function(){
-            for (var i = mapsInstance.length - 1; i >= 0; i--) {
-                mapsInstance[i].markers.init();
-                mapsInstance[i].markers.showMarkers();
-            };
-        });
+        this.updateMarkerData(data, function(){_this.refreshView()});
      };
 
     this.showMarkers = function(callback, options) {
