@@ -14,9 +14,21 @@
     "grunt-contrib-concat": "latest",
     "grunt-preprocess": "latest",
     "matchdep": "~0.1.2",
-    "grunt-contrib-cssmin": "~0.7.0"
+    "grunt-contrib-cssmin": "~0.7.0",
+    "gulp-livereload": "~0.2.0",
+    "gulp-rename": "~0.2.2",
+    "tiny-lr": "0.0.5",
+    "gulp-concat": "~2.1.7",
+    "gulp-minify-css": "~0.2.0",
+    "gulp-clean": "~0.2.4",
+    "gulp-uglify": "~0.2.0",
+    "gulp-notify": "~0.3.5-0",
+    "gulp-jshint": "~1.3.4",
+    "gulp-cache": "~0.1.1",
+    "gulp-imagemin": "~0.1.4"
   },
   "dependencies": {
-    "connect": "~2.12.0"
+    "connect": "~2.12.0",
+    "gulp": "~3.5.0"
   }
 }
