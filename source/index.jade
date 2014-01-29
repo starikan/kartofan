@@ -92,7 +92,7 @@ html(manifest="offline/cache.appcache")
                         li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
                         li: a.topMenuSetCache: span.icon-picture-streamline-1
                         //li: a.topMenuStageExport Export Stage Like Image
-                        li: a.topMenuMarkerAdd: span.icon-pin
+                        li: a.topMenuMarkersAddMarker: span.icon-pin
 
                     ul.right
                         li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
@@ -137,6 +137,15 @@ html(manifest="offline/cache.appcache")
                                         li: a.topMenuStageEditView Edit This Stage View
                                         li: a.topMenuStageSave Save This Stage
                                         li: a.topMenuStageExport Export Stage Like Image
+                                li.has-dropdown
+                                    a.topMenuMarkers Markers 
+                                    ul.dropdown 
+                                        li: a.topMenuMarkersAddMarker Add Marker
+                                        //li: a.topMenuMarkersEdit Edit Markers
+                                        //li: a.topMenuMarkersExternal Get External Markers
+                                        //li: a.topMenuMarkersEditView Edit This Markers View
+                                        //li: a.topMenuMarkersSave Save This Markers
+                                        li: a.topMenuMarkersExport Export Markers
                                 li.has-dropdown
                                     a.topMenuUtils Utils
                                     ul.dropdown 

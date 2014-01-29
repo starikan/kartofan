@@ -49,6 +49,14 @@ var TopMenu = (function(){
         { type: "topMenuStageSave", loc: "topMenu:topMenuStageSave", callback: stageeditor.saveStage },
         { type: "topMenuStageExport", loc: "topMenu:topMenuStageExport", callback: stage.exportImageView },
         
+        { type: "topMenuMarkers", loc: "topMenu:topMenuMarkers" },
+        { type: "topMenuMarkersAddMarker", loc: "topMenu:topMenuMarkersAddMarker", callback: function(){opt.setAddMarkerOn();} },
+        // { type: "topMenuMarkersEdit", loc: "topMenu:topMenuMarkersEdit", callback: function(){} },
+        // { type: "topMenuMarkersExternal", loc: "topMenu:topMenuMarkersExternal", callback: function(){} },
+        // { type: "topMenuMarkersEditView", loc: "topMenu:topMenuMarkersEditView", callback: function(){} },
+        // { type: "topMenuMarkersSave", loc: "topMenu:topMenuMarkersSave", callback: function(){} },
+        { type: "topMenuMarkersExport", loc: "topMenu:topMenuMarkersExport", callback: function(){opt.exportAllInJSON(["markers"], "markers.json")} },
+
         { type: "topMenuMove", loc: "topMenu:topMenuMove" },
         { type: "topMenuMoveMove", loc: "topMenu:topMenuMoveMove", callback: fastmoving.moveToPointMenu },
         { type: "topMenuMoveAdd", loc: "topMenu:topMenuMoveAdd", callback: fastmoving.editPoint },
@@ -77,9 +85,6 @@ var TopMenu = (function(){
         { type: "topMenuGPSStart", loc: "topMenu:topMenuGPSStart", callback: gps.startGPS },
         { type: "topMenuGPSStop", loc: "topMenu:topMenuGPSStop", callback: gps.stopGPS },
         
-        { type: "topMenuMarkers", loc: "topMenu:topMenuMarkers" },
-        { type: "topMenuMarkerAdd", loc: "topMenu:topMenuMarkerAdd", callback: opt.setAddMarkerOn },
-
         { type: "topMenuHelp", loc: "topMenu:topMenuHelp" },
         { type: "topMenuHelpComments", loc: "topMenu:topMenuHelpComments", callback: function(){$("#disqus_thread").arcticmodal()} },
         { type: "topMenuHelpBlog", loc: "topMenu:topMenuHelpBlog" },

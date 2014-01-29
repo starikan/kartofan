@@ -439,7 +439,7 @@ var Options = (function(){
 
     // *************** JSON ****************
 
-    this.exportAllInJSON = function(bases, filter, fileName){
+    this.exportAllInJSON = function(bases, fileName, options){
 
         fileName = fileName ? fileName : "exportData.json";
 
@@ -621,12 +621,12 @@ var Options = (function(){
 
     this.setAddMarkerOn = function() {
         opt.setOption("appVars", "markerAddModeOn", true);
-        $(".topMenuMarkerAdd").parent().addClass("active");
+        $(".topMenuMarkersAddMarker").parent().addClass("active");
      };
 
     this.setAddMarkerOff = function() {
         opt.setOption("appVars", "markerAddModeOn", false);
-        $(".topMenuMarkerAdd").parent().removeClass("active");
+        $(".topMenuMarkersAddMarker").parent().removeClass("active");
      };
 
     // *************** FART NOTES ****************
