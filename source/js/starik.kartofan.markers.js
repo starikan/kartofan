@@ -287,6 +287,8 @@ var Markers = function(map) {
         var marker = new L.Marker();
         var icons = opt.getOption("appVars", "markerIconsObjects");
 
+        data.title ? marker.bindLabel(data.title) : undefined;
+
         marker.setLatLng(data.latlng.split(","));
         if (data.icon) {
 
