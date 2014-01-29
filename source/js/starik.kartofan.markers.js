@@ -94,9 +94,9 @@ var Markers = function(map) {
             { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
             { "type": "formEditMarker_icon",          "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
             { "type": "formEditMarker_description",   "name": "description",   "val": vals.description, "loc": "markers:formEditMarker_description", "description": "description" },
-            { "type": "formEditMarker_links",              "name": "links",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
-            { "type": "formEditMarker_tags",           "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
-            { "type": "formEditMarker_latlng",         "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
+            { "type": "formEditMarker_links",         "name": "links",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
+            { "type": "formEditMarker_tags",          "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
+            { "type": "formEditMarker_latlng",        "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
             
             { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
             { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },
@@ -111,7 +111,22 @@ var Markers = function(map) {
                 $("a.formEditMarker_dateEndAddTime").toggleClass("disabled");
                 _this._createDataPicker(!$("a.formEditMarker_dateEndAddTime").hasClass("disabled"));
             } },
-            
+          
+            // Not added fields
+            { "type": "formEditMarker_altitude",       "name": "altitude", "val": vals.altitude, "loc": "markers:formEditMarker_altitude", "description": "altitude" },
+            { "type": "formEditMarker_speed",          "name": "speed", "val": vals.speed, "loc": "markers:formEditMarker_speed", "description": "speed" },
+            { "type": "formEditMarker_velocity",       "name": "velocity", "val": vals.velocity, "loc": "markers:formEditMarker_velocity", "description": "velocity" },
+            { "type": "formEditMarker_autor",          "name": "autor", "val": vals.autor, "loc": "markers:formEditMarker_autor", "description": "autor" },
+            { "type": "formEditMarker_type",           "name": "type", "val": vals.type, "loc": "markers:formEditMarker_type", "description": "type" },
+            { "type": "formEditMarker_circleRadius",   "name": "circleRadius", "val": vals.circleRadius, "loc": "markers:formEditMarker_circleRadius", "description": "circleRadius" },
+            { "type": "formEditMarker_iconHover",      "name": "iconHover", "val": vals.iconHover, "loc": "markers:formEditMarker_iconHover", "description": "iconHover" },
+            { "type": "formEditMarker_iconHoverScale", "name": "iconHoverScale", "val": vals.iconHoverScale, "loc": "markers:formEditMarker_iconHoverScale", "description": "iconHoverScale" },
+            { "type": "formEditMarker_iconScale",      "name": "iconScale", "val": vals.iconScale, "loc": "markers:formEditMarker_iconScale", "description": "iconScale" },
+            { "type": "formEditMarker_heading",        "name": "heading", "val": vals.heading, "loc": "markers:formEditMarker_heading", "description": "heading" },
+            { "type": "formEditMarker_tilt",           "name": "tilt", "val": vals.tilt, "loc": "markers:formEditMarker_tilt", "description": "tilt" },
+            { "type": "formEditMarker_addsObj",        "name": "addsObj", "val": vals.addsObj, "loc": "markers:formEditMarker_addsObj", "description": "addsObj" },
+
+
             { "type": "formEditMarker_submit", "loc": "markers:formEditMarker_submit", callback: function(form){
                 if (!form.checkFormFlag){
                     alert(loc("markers:errorCheckForm"));

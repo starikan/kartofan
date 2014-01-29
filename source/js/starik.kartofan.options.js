@@ -439,9 +439,14 @@ var Options = (function(){
 
     // *************** JSON ****************
 
-    this.exportAllInJSON = function(){
+    this.exportAllInJSON = function(bases, filter, fileName){
+
+        fileName = fileName ? fileName : "exportData.json";
+
         var data = {};
         $.each(opt.getOption("appVars", "baseNames"), function(i, v){
+            // Filter by bases names
+            if (bases && bases.indexOf(v) == -1) return;
             data[v] = parent[v];
         })
 
@@ -451,7 +456,7 @@ var Options = (function(){
             [dataJSON], 
             { type: "text/plain;charset=utf-8" }
         );
-        saveAs(blob, "allData.json");
+        saveAs(blob, fileName);
      }
 
     this.getAllDataFromJSON = function(baseJson, url){

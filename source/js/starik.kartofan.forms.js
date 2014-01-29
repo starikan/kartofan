@@ -70,7 +70,7 @@ var TopMenu = (function(){
         { type: "topMenuJSONStages", loc: "topMenu:topMenuJSONStages", callback: function(){opt.getAllDataFromJSON("stages")} },
         { type: "topMenuJSONMoves", loc: "topMenu:topMenuJSONMoves", callback: function(){opt.getAllDataFromJSON("points")} },
         { type: "topMenuJSONAll", loc: "topMenu:topMenuJSONAll", callback: function(){opt.getAllDataFromJSON()} },
-        { type: "topMenuJSONExport", loc: "topMenu:topMenuJSONExport", callback: opt.exportAllInJSON },
+        { type: "topMenuJSONExport", loc: "topMenu:topMenuJSONExport", callback: function(){opt.exportAllInJSON();} },
         { type: "topMenuJSONRawText", loc: "topMenu:topMenuJSONRawText", callback: opt.getRawDataFromJSON },
         
         { type: "topMenuGPS", loc: "topMenu:topMenuGPS" },
