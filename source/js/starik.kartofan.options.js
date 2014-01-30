@@ -273,6 +273,8 @@ var Options = (function(){
 
     this.setOption = function(collection, option, value, callback){
 
+        // console.log(collection, option, value);
+
         // JS object if not in baseNamesNotLoaded
         if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(collection) == -1){
             this[collection][option] = value;
@@ -310,7 +312,7 @@ var Options = (function(){
 
     this.getOptionAsync = function(collection, option, callback){
         bases.db[collection].get(option, function(err, doc){
-            var data = doc ? doc.val : "";
+            var data = doc ? doc.val : undefined;
             callback(data);
             // console.log(err, doc);
         })
@@ -518,12 +520,22 @@ var Options = (function(){
             $.each(baseJson, function(b, base){
                 if (!data[base] || $.isEmptyObject(data[base])){ return }
                 $.each(data[base], function(i, v){
-                    if (opt.getOption(base, i)){
-                        if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
-                            return;
-                        }
+            
+                    if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(base) == -1){
+                        if (opt.getOption(base, i)){
+                            if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
+                                return;
+                            }
+                        }                                
+                        opt.setOption(base, i, v);
                     }
-                    opt.setOption(base, i, v);
+                    else {
+                        opt.getOptionAsync(base, i, function(data){
+                            if (data && !confirm(loc("jsonImport:rewriteConfirm", [i, base]))) return;
+                            opt.setOption(base, i, v);
+                        })
+                    }
+            
                 })                
             })
         }); 
@@ -542,18 +554,28 @@ var Options = (function(){
                     $.each(baseJson, function(b, base){
                         if (!data[base] || $.isEmptyObject(data[base])){ return }
                         $.each(data[base], function(i, v){
-                            if (opt.getOption(base, i)){
-                                if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
-                                    return;
-                                }
+
+                            if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(base) == -1){
+                                if (opt.getOption(base, i)){
+                                    if (!confirm(loc("jsonImport:rewriteConfirm", [i, base]))) {
+                                        return;
+                                    }
+                                }                                
+                                opt.setOption(base, i, v);
                             }
-                            opt.setOption(base, i, v);
+                            else {
+                                opt.getOptionAsync(base, i, function(data){
+                                    if (data && !confirm(loc("jsonImport:rewriteConfirm", [i, base]))) return;
+                                    opt.setOption(base, i, v);
+                                })
+                            }
                         })                
                     })
 
                     form.hideForm();
                 }
                 catch (e){
+                    console.log(e);
                     alert(loc("jsonImport:formRawJSON_errorParce"));
                 }
 
