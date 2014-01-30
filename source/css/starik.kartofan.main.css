@@ -187,6 +187,20 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     z-index: 1000000000;
 }
 
+.foundationForm input[type="checkbox"] {
+    content: "";
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+}
+.foundationForm input[type="checkbox"]:checked {
+    background-position: 0 -32px;
+}
+
+
+
+
+
 
 
 

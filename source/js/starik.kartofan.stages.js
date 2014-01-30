@@ -438,8 +438,6 @@ var StageEditor = (function(){
      }
 
     this.editMapsControls = function(){
-        // TODOЖ сделать в суггкте номер карты
-        // var activeMap = opt.getOption("appVars", "activeMap");
         var mapNum = opt.getOption("appVars", "activeMapNum");
         var currStage = opt.getOption("current", "stage");
         var vals;
@@ -479,47 +477,6 @@ var StageEditor = (function(){
 
         var eform = new FoundationForm(arr, "formEditStage_editMapsControls");
 
-
-        // var mapControlsForm = [
-        //     { "type": "header", "val": "Choose Controls View" },
-        // ]
-
-        // // TODO: Localization
-        // $.each(opt.getOption("appVars", "mapsControlsList"), function(i, v){
-        //     mapControlsForm.push({ "type": "checkbox", "id": v, "description": v })
-        // })
-
-        // mapControlsForm.push(
-        //     { 
-        //         "type": "button", 
-        //         "val": "Update", 
-        //         "id": "submit",
-        //         "callback": function(form){
-        //             form.getAllData();
-        //             var data = form.data;
-        //             if (form.checkForm){
-        //                 form.hideForm();
-        //                 $.each(data, function(i, v){
-        //                     currStage.stageMapsControlls[mapNum][i] = v;
-        //                 })
-        //                 opt.setOption("current", "stage", currStage);
-        //                 mapsInstance[mapNum].removeAllControls();
-        //                 mapsInstance[mapNum]._setMapControls();
-        //             }
-        //         }
-        //     },
-        //     { 
-        //         "type": "button", 
-        //         "val": "Cancel", 
-        //         "id": "cancel",
-        //         "callback": function(form){form.hideForm()}
-        //     }  
-        // )
-
-        // console.log(mapNum, currStage.stageMapsControlls[mapNum])
-
-        // var eform = new EditableForm(mapControlsForm);
-        // eform.fillForm(currStage.stageMapsControlls[mapNum]);
      }
 
     this.deleteStageFunc = function(data, callback){

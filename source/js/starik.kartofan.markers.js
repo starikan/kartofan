@@ -100,6 +100,7 @@ var Markers = function(map) {
             
             { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
             { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },
+            
             { "type": "formEditMarker_dateStartAddFinal", "loc": "markers:formEditMarker_dateStartAddFinal", callback: function(){
                 $("#addDateFinalRow").toggleClass("hide");
             } },
