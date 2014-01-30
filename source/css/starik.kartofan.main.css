@@ -254,7 +254,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 
-
+/*Position ans size changed by JS onresize*/
 #fastNotes {
     position: absolute;
 }
@@ -264,6 +264,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     height: 100%;
 }
 
+#markersTable {
+    background-color: white;
+    padding: 15px;
+}
 
 
 
@@ -288,4 +292,15 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 #markerDescription {
     background-color: white;
     padding: 10px;
+}
+
+
+
+/*Markers Table*/
+.dataTables_wrapper, .dataTables_paginate.paging_foundation {
+    margin: 0;
+}
+
+.dataTables_wrapper .button {
+    margin: 0 15px;
 }

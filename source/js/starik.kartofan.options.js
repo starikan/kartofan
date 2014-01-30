@@ -48,6 +48,7 @@ var Options = (function(){
             "hk_coordsCorrAddWrong": "Ctrl+F2",
             "hk_coordsCorrOnCorrect": "Ctrl+F3",
             "hk_fastNotesEditor": "Alt+Q",
+            "hk_markersTable": "Alt+T",
         },
 
         "markersIdPrefix": "",
@@ -802,6 +803,7 @@ var HotKeys = (function(){
 
     window.opt = new Options();
     window.coordscorrection = new CoordsCorrection();
+    window.markerstable = new MarkersTable();
 
     this.$container = $("#hotkeysInfo");
 
@@ -813,6 +815,7 @@ var HotKeys = (function(){
         "hk_coordsCorrAddWrong": { func: coordscorrection.addWrongMarker },
         "hk_coordsCorrOnCorrect": { func: coordscorrection.addCorrectionOnMaps },
         "hk_fastNotesEditor": { func: opt.fastNotesEditor },
+        "hk_markersTable": { func: markerstable.showTable },
     }
 
     this.init = function() {

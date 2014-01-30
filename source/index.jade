@@ -40,6 +40,7 @@ html(manifest="offline/cache.appcache")
         script(src="js_vendor/jquery.dataTables.min.js")
         script(src="js_vendor/jquery.datetimepicker.js")
         script(src="js_vendor/leaflet.label-src.js")
+        script(src="js_vendor/dataTables.foundation.js")
 
         // CSS    
         
@@ -54,7 +55,7 @@ html(manifest="offline/cache.appcache")
         link(href="css_vendor/jquery.dataTables.css", rel="stylesheet")
         link(href="css_vendor/jquery.datetimepicker.css", rel="stylesheet")
         link(href="css_vendor/leaflet.label.css", rel="stylesheet")
-
+        link(href="css_vendor/dataTables.foundation.css", rel="stylesheet")
 
         link(href="css/starik.kartofan.main.css", rel="stylesheet")
         link(href="css/starik.kartofan.menu.css", rel="stylesheet")
@@ -420,27 +421,31 @@ html(manifest="offline/cache.appcache")
         div#fastNotes.hide
             textarea#fastNotes_textarea
 
-        div#markersTable.modalPanel
-            div.row
-                div.columns.small-11.small-centered
-                    div.panel
-                        table#markersTable_panel
-                            thead
-                                tr
-                                    th Id
-                                    th Name
-                                    th Tags
-                                    th Icon
-                                    th Group
-                                    th Time
-                            tbody
-                                tr
-                                    td Row1
-                                    td Row1
-                                    td Row1
-                                    td Row1
-                                    td Row1
-                                    td Row1
+        div#markersTable
+            table#markersTable_table
+                thead
+                    tr
+                        th Id
+                        th Name
+                        th Tags
+                        th Icon
+                        th Group
+                        th Time
+                tbody
+                    tr
+                        td Row1
+                        td Row1
+                        td Row1
+                        td Row1
+                        td Row1
+                        td Row1
+
+        div#markersTable_colSelectForm.foundationForm.hide
+            div.box-modal
+                form(data-abide)
+                    div.row.collapse 
+                        div.small-3.columns: span.prefix.markersTable_colSelectForm_id ID
+                        div.small-9.columns: input.markersTable_colSelectForm_id(type="text", required)
 
         div#disqus_thread
         |<script type="text/javascript">

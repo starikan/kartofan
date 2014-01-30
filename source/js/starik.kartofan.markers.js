@@ -610,7 +610,7 @@ var MarkersTable = (function(){
     var _this = this;
 
     this.$tableContainer = $("#markersTable");
-    this.$table = $("#markersTable_panel");
+    this.$table = $("#markersTable_table");
 
     this.init = function(){
 
@@ -639,14 +639,19 @@ var MarkersTable = (function(){
             "bScrollCollapse": true,       
             "aoColumns": [
                 { "mData": "id",  "bVisible": false, "bSearchable": false,},
-                { "mData": "title", "sTitle": "Name", "bSortable": true, "sWidth": "20%"},
-                { "mData": "tags", "sTitle": "Tags", "bSortable": true, "sWidth": "20%"},
+                { "mData": "title", "sTitle": "Name", "bSortable": true},
+                { "mData": "tags", "sTitle": "Tags", "bSortable": true},
                 { "mData": "icon", "sTitle": "Icon", "bSortable": true, },
                 { "mData": "layer", "sTitle": "Layer", "bSortable": true, },
                 { "mData": "time", "sTitle": "Time", "bSortable": true, },
             ],
             "aaData": dataNormalize,
+            "sDom": '<"top"fl<"button markersTable_colsSelect">>t<"bottom"ip>',
         });
+
+        $(".markersTable_colsSelect").click(function(){
+            console.log(123)
+        })
 
         // TODO: touch
         _this.$table.find('tbody tr').click(function(){
