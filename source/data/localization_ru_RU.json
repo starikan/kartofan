@@ -119,7 +119,12 @@
     "formEditStage_group": "Группа",
     "formEditStage_submit": "Отправить",
     "formEditStage_delete": "Удалить",
-    "formEditStage_cancel": "Отмена"
+    "formEditStage_cancel": "Отмена",
+    "formEditStage_editMapsControls_zoom": "Кнопки масштаба",
+    "formEditStage_editMapsControls_scale": "Линейка масштаба",
+    "formEditStage_editMapsControls_infoCopyright": "Копирайт информация",
+    "formEditStage_editMapsControls_mapTitle": "Заголовок",
+    "formEditStage_editMapsControls_zoomLevel": "Индикатор масштаба"    
   },  
   "editPoints": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",

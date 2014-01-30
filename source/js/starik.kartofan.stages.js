@@ -442,47 +442,84 @@ var StageEditor = (function(){
         // var activeMap = opt.getOption("appVars", "activeMap");
         var mapNum = opt.getOption("appVars", "activeMapNum");
         var currStage = opt.getOption("current", "stage");
+        var vals;
+        try {
+            vals = currStage.stageMapsControlls[mapNum];
+        } catch(e) {return;}
 
-        var mapControlsForm = [
-            { "type": "header", "val": "Choose Controls View" },
-        ]
+        console.log(vals)
 
-        // TODO: Localization
-        $.each(opt.getOption("appVars", "mapsControlsList"), function(i, v){
-            mapControlsForm.push({ "type": "checkbox", "id": v, "description": v })
-        })
+        var arr = [
+            { "type": "formEditStage_editMapsControls_zoom", "name": "zoom", "val": vals.zoom, "loc": "editStages:formEditStage_editMapsControls_zoom", "description": "zoom"},
+            { "type": "formEditStage_editMapsControls_scale", "name": "scale", "val": vals.scale, "loc": "editStages:formEditStage_editMapsControls_scale", "description": "scale"},
+            { "type": "formEditStage_editMapsControls_infoCopyright", "name": "infoCopyright", "val": vals.infoCopyright, "loc": "editStages:formEditStage_editMapsControls_infoCopyright", "description": "infoCopyright"},
+            { "type": "formEditStage_editMapsControls_mapTitle", "name": "mapTitle", "val": vals.mapTitle, "loc": "editStages:formEditStage_editMapsControls_mapTitle", "description": "mapTitle"},
+            { "type": "formEditStage_editMapsControls_zoomLevel", "name": "zoomLevel", "val": vals.zoomLevel, "loc": "editStages:formEditStage_editMapsControls_zoomLevel", "description": "zoomLevel"},
+            { "type": "formEditStage_submit", "loc": "editStages:formEditStage_submit", callback: function(form){
+                if (!form.checkFormFlag){
+                    alert(loc("editStages:errorCheckForm"));
+                    return;
+                } else {
+                    console.log(form.data);
 
-        mapControlsForm.push(
-            { 
-                "type": "button", 
-                "val": "Update", 
-                "id": "submit",
-                "callback": function(form){
-                    form.getAllData();
-                    var data = form.data;
-                    if (form.checkForm){
-                        form.hideForm();
-                        $.each(data, function(i, v){
-                            currStage.stageMapsControlls[mapNum][i] = v;
-                        })
-                        opt.setOption("current", "stage", currStage);
-                        mapsInstance[mapNum].removeAllControls();
-                        mapsInstance[mapNum]._setMapControls();
-                    }
+                    form.hideForm();
+
+                    $.each(form.data, function(i, v){
+                        currStage.stageMapsControlls[mapNum][i] = v;
+                    })
+                    opt.setOption("current", "stage", currStage);
+                    mapsInstance[mapNum].removeAllControls();
+                    mapsInstance[mapNum]._setMapControls();                    
                 }
-            },
-            { 
-                "type": "button", 
-                "val": "Cancel", 
-                "id": "cancel",
-                "callback": function(form){form.hideForm()}
-            }  
-        )
+            }},
+            { "type": "formEditStage_cancel", "loc": "editStages:formEditStage_cancel", callback: function(form){
+                form.hideForm();
+            }},
+        ];
 
-        console.log(mapNum, currStage.stageMapsControlls[mapNum])
+        var eform = new FoundationForm(arr, "formEditStage_editMapsControls");
 
-        var eform = new EditableForm(mapControlsForm);
-        eform.fillForm(currStage.stageMapsControlls[mapNum]);
+
+        // var mapControlsForm = [
+        //     { "type": "header", "val": "Choose Controls View" },
+        // ]
+
+        // // TODO: Localization
+        // $.each(opt.getOption("appVars", "mapsControlsList"), function(i, v){
+        //     mapControlsForm.push({ "type": "checkbox", "id": v, "description": v })
+        // })
+
+        // mapControlsForm.push(
+        //     { 
+        //         "type": "button", 
+        //         "val": "Update", 
+        //         "id": "submit",
+        //         "callback": function(form){
+        //             form.getAllData();
+        //             var data = form.data;
+        //             if (form.checkForm){
+        //                 form.hideForm();
+        //                 $.each(data, function(i, v){
+        //                     currStage.stageMapsControlls[mapNum][i] = v;
+        //                 })
+        //                 opt.setOption("current", "stage", currStage);
+        //                 mapsInstance[mapNum].removeAllControls();
+        //                 mapsInstance[mapNum]._setMapControls();
+        //             }
+        //         }
+        //     },
+        //     { 
+        //         "type": "button", 
+        //         "val": "Cancel", 
+        //         "id": "cancel",
+        //         "callback": function(form){form.hideForm()}
+        //     }  
+        // )
+
+        // console.log(mapNum, currStage.stageMapsControlls[mapNum])
+
+        // var eform = new EditableForm(mapControlsForm);
+        // eform.fillForm(currStage.stageMapsControlls[mapNum]);
      }
 
     this.deleteStageFunc = function(data, callback){

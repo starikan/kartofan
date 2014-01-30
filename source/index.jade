@@ -297,6 +297,34 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditStage_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditStage_cancel Cancel
 
+        div#formEditStage_editMapsControls.foundationForm.hide
+            div.box-modal
+                form(data-abide)
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.formEditStage_editMapsControls_zoom Zoom Control
+                        div.small-2.columns: input.formEditStage_editMapsControls_zoom.text-center(type="checkbox")
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.formEditStage_editMapsControls_scale Scale Control
+                        div.small-2.columns: input.formEditStage_editMapsControls_scale(type="checkbox")
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.formEditStage_editMapsControls_infoCopyright Copyright Info
+                        div.small-2.columns: input.formEditStage_editMapsControls_infoCopyright(type="checkbox")
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.formEditStage_editMapsControls_mapTitle Title Info
+                        div.small-2.columns: input.formEditStage_editMapsControls_mapTitle(type="checkbox")
+
+                   div.row.collapse 
+                        div.small-10.columns: span.prefix.formEditStage_editMapsControls_zoomLevel ZoomLevel Info
+                        div.small-2.columns: input.formEditStage_editMapsControls_zoomLevel(type="checkbox")                        
+
+                    div.row.collapse 
+                        div.small-12.medium-6.columns.text-center: a.small.button.formEditStage_submit Submit
+                        div.small-12.medium-6.columns.text-center: a.small.button.formEditStage_cancel Cancel
+
+
         div#formEditPoint.foundationForm.hide
             div.box-modal
                 form(data-abide)

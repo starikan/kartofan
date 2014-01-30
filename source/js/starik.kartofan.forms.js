@@ -604,9 +604,13 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
     this.setValues = function() {
         $.each(this.arr, function(i, v){
             if (!v.type) return;
+
             var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
-            if (!$elem.length || v.val == undefined) return;
-            $elem.val(v.val);
+            if (!$elem.length) return;
+
+            $elem.prop("checked", !!v.val);
+            if (v.val != undefined) $elem.val(v.val);
+
         });
      }
 
@@ -645,7 +649,7 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
             $elem.on("click", function(){
                 _this.checkForm();
                 _this.getValues();
-                v.callback(_this)
+                v.callback(_this);
             });
         })        
      }
@@ -659,11 +663,11 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
     this.getValues = function() {
         $.each(this.arr, function(i, v){
             if (!v.type) return;
+
             var $elem = _this.$form.find("input."+v.type+", select."+v.type+", textarea."+v.type);
-            if (!$elem.length || !v.name) {
-                return;
-            }
-            _this.data[v.name] = $elem.val();            
+            if (!$elem.length || !v.name) return;
+
+            _this.data[v.name] = $elem.prop("type") == "checkbox" ? !!$elem.prop("checked") : $elem.val();            
         });
      }
 

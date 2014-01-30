@@ -170,7 +170,6 @@ var Markers = function(map) {
      };
 
     this._createDataPicker = function(timeFlag) {
-        console.log(timeFlag)
         $("input.formEditMarker_dateStart").datetimepicker({
             datepicker: true,
             timepicker: true,

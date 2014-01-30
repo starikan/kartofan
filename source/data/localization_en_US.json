@@ -119,7 +119,12 @@
     "formEditStage_group": "Group",
     "formEditStage_submit": "Submit",
     "formEditStage_delete": "Delete",
-    "formEditStage_cancel": "Cancel"
+    "formEditStage_cancel": "Cancel",
+    "formEditStage_editMapsControls_zoom": "Zoom Control",
+    "formEditStage_editMapsControls_scale": "Scale Control",
+    "formEditStage_editMapsControls_infoCopyright": "Copyright Info",
+    "formEditStage_editMapsControls_mapTitle": "Title Info",
+    "formEditStage_editMapsControls_zoomLevel": "ZoomLevel Info"
   },
   "editPoints": {
     "errorCheckForm": "Errors in form! Check values.",

@@ -197,7 +197,6 @@ var Options = (function(){
     this.markers = {};
 
     this.appVars = {
-        "mapsControlsList": [ "zoom", "scale", "infoCopyright", "mapTitle", "zoomLevel" ],
         "baseNames": ["global", "gps", "stages", "points", "maps", "current", "markers"],
         "baseNamesSync": ["global", "gps", "stages", "points", "maps", "markers"],
         "activeMap": "map0",
