@@ -197,8 +197,9 @@ var Options = (function(){
     this.markers = {};
 
     this.appVars = {
-        "baseNames": ["global", "gps", "stages", "points", "maps", "current", "markers"],
-        "baseNamesSync": ["global", "gps", "stages", "points", "maps", "markers"],
+        "baseNamesNotLoaded": ["markersDescriptions"],
+        "baseNames": ["global", "gps", "stages", "points", "maps", "current", "markers", "markersDescriptions"],
+        "baseNamesSync": ["global", "gps", "stages", "points", "maps", "markers", "markersDescriptions"],
         "activeMap": "map0",
         "activeMapNum": 0,   
         "measuringOn": false, 
@@ -272,8 +273,10 @@ var Options = (function(){
 
     this.setOption = function(collection, option, value, callback){
 
-        // JS object
-        this[collection][option] = value;
+        // JS object if not in baseNamesNotLoaded
+        if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(collection) == -1){
+            this[collection][option] = value;
+        }
 
         // PouchDB
         if (!bases.db[collection]) {
@@ -304,6 +307,14 @@ var Options = (function(){
         if (!option) return this[collection];
         return this[collection][option];
      }
+
+    this.getOptionAsync = function(collection, option, callback){
+        bases.db[collection].get(option, function(err, doc){
+            var data = doc ? doc.val : "";
+            callback(data);
+            console.log(err, doc);
+        })
+     }     
 
     this.deleteOption = function(collection, option, callback){
         delete this[collection][option];
@@ -694,32 +705,40 @@ var Bases = (function(){
      }
 
     this._initBase = function(){
-        $.each(opt.getOption("appVars", "baseNames"), function(c, collection){
+        var baseNotLoaded = opt.getOption("appVars", "baseNamesNotLoaded");
+        var baseNames = opt.getOption("appVars", "baseNames");
+        $.each(baseNames, function(c, collection){
             parent.db[collection] =  new Pouch(collection, {}, function(){
-                parent.db[collection].allDocs({include_docs: true}, function(err, doc){
+                // Large Bases not Loaded in memory
+                if (baseNotLoaded.indexOf(collection) == -1) {
+                    parent.db[collection].allDocs({include_docs: true}, function(err, doc){
 
-                    if (err) {console.log(err)}
+                        if (err) {console.log(err)}
 
-                    $.each(doc.rows, function(i, v){
-                        opt[collection][v.id] = v.doc.val;
-                    });
+                        $.each(doc.rows, function(i, v){
+                            opt[collection][v.id] = v.doc.val;
+                        });
 
-                    // When first start, set all values from default into DB
-                    $.each(opt[collection], function(i, v){
-                        parent.db[collection].get(i, {}, function(errG, docG){
-                            if (errG){
-                                opt.setOption(collection, i, v);
-                            }
+                        // When first start, set all values from default into DB
+                        $.each(opt[collection], function(i, v){
+                            parent.db[collection].get(i, {}, function(errG, docG){
+                                if (errG){
+                                    opt.setOption(collection, i, v);
+                                }
+                            });
                         })
-                    })
 
-                    if (opt.getOption("appVars", "baseNames").indexOf(collection) != -1){
-                        parent.basesLoaded++;
-                    }
-
+                        if (baseNames.indexOf(collection) != -1) parent.basesLoaded++;
+                        parent._initSync();
+                        opt._afterInit();
+                    })                    
+                }
+                else {
+                    if (baseNames.indexOf(collection) != -1) parent.basesLoaded++;
                     parent._initSync();
                     opt._afterInit();
-                })
+                }
+
             })
         })        
 

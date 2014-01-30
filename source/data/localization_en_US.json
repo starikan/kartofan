@@ -213,6 +213,8 @@
     "formEditMarker_tags": "Tags",
     "formEditMarker_layer": "Layer Group",
     "formEditMarker_description": "Description",
+    "formEditMarker_descriptionHTML": "Description HTML",
+    "formEditMarker_descriptionHTMLAddButton": "+HTML",
     "formEditMarker_links": "Links",
     "formEditMarker_latlng": "Coords",
     "formEditMarker_dateStart": "Date",

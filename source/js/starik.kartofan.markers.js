@@ -69,8 +69,23 @@ var Markers = function(map) {
         this.map = this.mapObject ? this.mapObject.map : this.map;
      }
 
-    this.updateMarkerData = function(data, callback) {
+    this.saveMarkerData = function(data, callback) {
+        // for (var i=0; i<150; i++){
+        //     opt.setOption("markers", i+"_"+Math.round(Math.random()*100000), data);
+        //     console.log(i);
+        // }
+
+        if (data.descriptionHTML != undefined) {
+            opt.setOption("markersDescriptions", data.id, data.descriptionHTML);
+        }      
+
+        delete data.descriptionHTML;
         opt.setOption("markers", data.id, data, callback);
+
+     };
+
+    this.updateAllMapsView = function(data) {
+        this.saveMarkerData(data, function(){_this.refreshView()});
      };
 
     this.editMarkerForm = function(data) {
@@ -88,85 +103,97 @@ var Markers = function(map) {
 
         console.log(data)
 
-        var arr = [
-            { "type": "formEditMarker_id",            "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
-            { "type": "formEditMarker_title",         "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
-            { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
-            { "type": "formEditMarker_icon",          "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
-            { "type": "formEditMarker_description",   "name": "description",   "val": vals.description, "loc": "markers:formEditMarker_description", "description": "description" },
-            { "type": "formEditMarker_links",         "name": "links",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
-            { "type": "formEditMarker_tags",          "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
-            { "type": "formEditMarker_latlng",        "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
+        opt.getOptionAsync("markersDescriptions", vals.id, function(descriptionHTML){
             
-            { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
-            { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },
-            
-            { "type": "formEditMarker_dateStartAddFinal", "loc": "markers:formEditMarker_dateStartAddFinal", callback: function(){
-                $("#addDateFinalRow").toggleClass("hide");
-            } },
-            { "type": "formEditMarker_dateStartAddTime", "loc": "markers:formEditMarker_dateStartAddTime", callback: function(a, b, c){
-                $("a.formEditMarker_dateStartAddTime").toggleClass("disabled");
-                _this._createDataPicker(!$("a.formEditMarker_dateStartAddTime").hasClass("disabled"));
-            } },
-            { "type": "formEditMarker_dateEndAddTime", "loc": "markers:formEditMarker_dateEndAddTime", callback: function(){
-                $("a.formEditMarker_dateEndAddTime").toggleClass("disabled");
-                _this._createDataPicker(!$("a.formEditMarker_dateEndAddTime").hasClass("disabled"));
-            } },
-          
-            // Not added fields
-            { "type": "formEditMarker_altitude",       "name": "altitude", "val": vals.altitude, "loc": "markers:formEditMarker_altitude", "description": "altitude" },
-            { "type": "formEditMarker_speed",          "name": "speed", "val": vals.speed, "loc": "markers:formEditMarker_speed", "description": "speed" },
-            { "type": "formEditMarker_velocity",       "name": "velocity", "val": vals.velocity, "loc": "markers:formEditMarker_velocity", "description": "velocity" },
-            { "type": "formEditMarker_autor",          "name": "autor", "val": vals.autor, "loc": "markers:formEditMarker_autor", "description": "autor" },
-            { "type": "formEditMarker_type",           "name": "type", "val": vals.type, "loc": "markers:formEditMarker_type", "description": "type" },
-            { "type": "formEditMarker_circleRadius",   "name": "circleRadius", "val": vals.circleRadius, "loc": "markers:formEditMarker_circleRadius", "description": "circleRadius" },
-            { "type": "formEditMarker_iconHover",      "name": "iconHover", "val": vals.iconHover, "loc": "markers:formEditMarker_iconHover", "description": "iconHover" },
-            { "type": "formEditMarker_iconHoverScale", "name": "iconHoverScale", "val": vals.iconHoverScale, "loc": "markers:formEditMarker_iconHoverScale", "description": "iconHoverScale" },
-            { "type": "formEditMarker_iconScale",      "name": "iconScale", "val": vals.iconScale, "loc": "markers:formEditMarker_iconScale", "description": "iconScale" },
-            { "type": "formEditMarker_heading",        "name": "heading", "val": vals.heading, "loc": "markers:formEditMarker_heading", "description": "heading" },
-            { "type": "formEditMarker_tilt",           "name": "tilt", "val": vals.tilt, "loc": "markers:formEditMarker_tilt", "description": "tilt" },
-            { "type": "formEditMarker_addsObj",        "name": "addsObj", "val": vals.addsObj, "loc": "markers:formEditMarker_addsObj", "description": "addsObj" },
+            vals.descriptionHTML = descriptionHTML;
+
+            var arr = [
+                { "type": "formEditMarker_id",            "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
+                { "type": "formEditMarker_title",         "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
+                { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
+                { "type": "formEditMarker_icon",          "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
+                { "type": "formEditMarker_description",   "name": "description",   "val": vals.description, "loc": "markers:formEditMarker_description", "description": "description" },
+                { "type": "formEditMarker_descriptionHTML",  "name": "descriptionHTML",   "val": vals.descriptionHTML, "loc": "markers:formEditMarker_descriptionHTML", "description": "descriptionHTML" },
+                { "type": "formEditMarker_links",         "name": "links",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
+                { "type": "formEditMarker_tags",          "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
+                { "type": "formEditMarker_latlng",        "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
+                
+                { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
+                { "type": "formEditMarker_dateEnd", "name": "dateEnd", "val": vals.dateEnd, "loc": "markers:formEditMarker_dateEnd" },
+                
+                { "type": "formEditMarker_dateStartAddFinal", "loc": "markers:formEditMarker_dateStartAddFinal", callback: function(){
+                    $("#addDateFinalRow").toggleClass("hide");
+                } },
+                { "type": "formEditMarker_dateStartAddTime", "loc": "markers:formEditMarker_dateStartAddTime", callback: function(a, b, c){
+                    $("a.formEditMarker_dateStartAddTime").toggleClass("disabled");
+                    _this._createDataPicker(!$("a.formEditMarker_dateStartAddTime").hasClass("disabled"));
+                } },
+                { "type": "formEditMarker_dateEndAddTime", "loc": "markers:formEditMarker_dateEndAddTime", callback: function(){
+                    $("a.formEditMarker_dateEndAddTime").toggleClass("disabled");
+                    _this._createDataPicker(!$("a.formEditMarker_dateEndAddTime").hasClass("disabled"));
+                } },
+                { "type": "formEditMarker_descriptionHTMLAddButton", "loc": "markers:formEditMarker_descriptionHTMLAddButton", callback: function(){
+                    $("#descriptionHTMLRow").toggleClass("hide");
+                } },            
+              
+                // Not added fields
+                { "type": "formEditMarker_altitude",       "name": "altitude", "val": vals.altitude, "loc": "markers:formEditMarker_altitude", "description": "altitude" },
+                { "type": "formEditMarker_speed",          "name": "speed", "val": vals.speed, "loc": "markers:formEditMarker_speed", "description": "speed" },
+                { "type": "formEditMarker_velocity",       "name": "velocity", "val": vals.velocity, "loc": "markers:formEditMarker_velocity", "description": "velocity" },
+                { "type": "formEditMarker_autor",          "name": "autor", "val": vals.autor, "loc": "markers:formEditMarker_autor", "description": "autor" },
+                { "type": "formEditMarker_type",           "name": "type", "val": vals.type, "loc": "markers:formEditMarker_type", "description": "type" },
+                { "type": "formEditMarker_circleRadius",   "name": "circleRadius", "val": vals.circleRadius, "loc": "markers:formEditMarker_circleRadius", "description": "circleRadius" },
+                { "type": "formEditMarker_iconHover",      "name": "iconHover", "val": vals.iconHover, "loc": "markers:formEditMarker_iconHover", "description": "iconHover" },
+                { "type": "formEditMarker_iconHoverScale", "name": "iconHoverScale", "val": vals.iconHoverScale, "loc": "markers:formEditMarker_iconHoverScale", "description": "iconHoverScale" },
+                { "type": "formEditMarker_iconScale",      "name": "iconScale", "val": vals.iconScale, "loc": "markers:formEditMarker_iconScale", "description": "iconScale" },
+                { "type": "formEditMarker_heading",        "name": "heading", "val": vals.heading, "loc": "markers:formEditMarker_heading", "description": "heading" },
+                { "type": "formEditMarker_tilt",           "name": "tilt", "val": vals.tilt, "loc": "markers:formEditMarker_tilt", "description": "tilt" },
+                { "type": "formEditMarker_addsObj",        "name": "addsObj", "val": vals.addsObj, "loc": "markers:formEditMarker_addsObj", "description": "addsObj" },
 
 
-            { "type": "formEditMarker_submit", "loc": "markers:formEditMarker_submit", callback: function(form){
-                if (!form.checkFormFlag){
-                    alert(loc("markers:errorCheckForm"));
-                    return;
-                } else {
+                { "type": "formEditMarker_submit", "loc": "markers:formEditMarker_submit", callback: function(form){
+                    if (!form.checkFormFlag){
+                        alert(loc("markers:errorCheckForm"));
+                        return;
+                    } else {
 
-                    // Update marker on every window after adding
-                    _this.updateAllMapsView(form.data);
-                    console.log(form.data)
+                        // Update marker on every window after adding
+                        _this.updateAllMapsView(form.data);
+                        console.log(form.data)
+                        form.hideForm();
+                    }
+                }},
+                { "type": "formEditMarker_delete", "loc": "markers:formEditMarker_delete", callback: function(form){
+                     _this.deleteMarkerData(form.data, function(){eform.hideForm()});
+                }},
+                { "type": "formEditMarker_cancel", "loc": "markers:formEditMarker_cancel", callback: function(form){
                     form.hideForm();
+                }},
+            ];
+
+            console.log(vals);
+
+            var eform = new FoundationForm(
+                arr, 
+                "formEditMarker", 
+                function(){
+                    CKEDITOR.replace("formEditMarker_descriptionHTML", {baseFloatZIndex: 200000000000});
+                },
+                function(){
+                    if (CKEDITOR.instances.formEditMarker_descriptionHTML) {
+                        CKEDITOR.instances.formEditMarker_descriptionHTML.destroy();    
+                    }
                 }
-            }},
-            { "type": "formEditMarker_delete", "loc": "markers:formEditMarker_delete", callback: function(form){
-                 _this.deleteMarkerData(form.data, function(){eform.hideForm()});
-            }},
-            { "type": "formEditMarker_cancel", "loc": "markers:formEditMarker_cancel", callback: function(form){
-                form.hideForm();
-            }},
-        ];
+            );
 
-        var eform = new FoundationForm(
-            arr, 
-            "formEditMarker", 
-            function(){
-                CKEDITOR.replace("formEditMarker_description", {baseFloatZIndex: 200000000000});
-            },
-            function(){
-                if (CKEDITOR.instances.formEditMarker_description) {
-                    CKEDITOR.instances.formEditMarker_description.destroy();    
-                }
-            }
-        );
+            vals.dateEnd ? $("#addDateFinalRow").removeClass("hide"): $("#addDateFinalRow").addClass("hide");
+            vals.descriptionHTML ? $("#descriptionHTMLRow").removeClass("hide"): $("#descriptionHTMLRow").addClass("hide");
 
+            _this._createDataPicker(false);
+            _this._createIconPanelInForm(eform);
+            _this._createTagsPanelInForm(eform);
 
-        vals.dateEnd ? $("#addDateFinalRow").removeClass("hide"): $("#addDateFinalRow").addClass("hide");
-
-        this._createDataPicker(false);
-        this._createIconPanelInForm(eform);
-        this._createTagsPanelInForm(eform);
+        });
 
      };
 
@@ -378,10 +405,6 @@ var Markers = function(map) {
             mapsInstance[i].markers.init();
             mapsInstance[i].markers.showMarkers();
         };
-     };
-
-    this.updateAllMapsView = function(data) {
-        this.updateMarkerData(data, function(){_this.refreshView()});
      };
 
     this.showMarkers = function(callback, options) {
