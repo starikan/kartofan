@@ -312,7 +312,7 @@ var Options = (function(){
         bases.db[collection].get(option, function(err, doc){
             var data = doc ? doc.val : "";
             callback(data);
-            console.log(err, doc);
+            // console.log(err, doc);
         })
      }     
 
@@ -449,17 +449,53 @@ var Options = (function(){
 
     // *************** JSON ****************
 
-    this.exportAllInJSON = function(bases, fileName, options){
+            // opt.getOptionAsync("markersDescriptions", this.id, function(descriptionHTML){
+            //     $markerDescription.append(descriptionHTML);
+            // })
 
-        fileName = fileName ? fileName : "exportData.json";
+    this.exportAllInJSON = function(basesList, fileName, options){
 
         var data = {};
+        // Need to export with async loaded bases
+        var basesPrepared = 0;
+
         $.each(opt.getOption("appVars", "baseNames"), function(i, v){
             // Filter by bases names
-            if (bases && bases.indexOf(v) == -1) return;
-            data[v] = parent[v];
+            if (basesList && basesList.indexOf(v) == -1) return;
+            if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(v) == -1) {
+                data[v] = parent[v];
+                basesPrepared++;
+            }
+            else {
+                bases.db[v].allDocs({include_docs: true}, function(err, doc){
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        data[v] = {};
+                    }
+
+                    $.each(doc.rows, function(di, dv){
+                        data[v][dv.id] = dv.doc.val;
+                    });
+
+                    basesPrepared++;
+                    if (basesPrepared == opt.getOption("appVars", "baseNames").length){
+                        opt.saveFileJSON(fileName, data);
+                    }
+                });
+            }
         })
 
+        if (basesPrepared == opt.getOption("appVars", "baseNames").length){
+            opt.saveFileJSON(fileName, data);
+        }
+     };
+
+    this.saveFileJSON = function(fileName, data) {
+        
+        fileName = fileName ? fileName : "exportData.json";
+        
         var dataJSON = JSON.stringify(data, null, 4);
     
         var blob = new Blob( 
@@ -467,7 +503,7 @@ var Options = (function(){
             { type: "text/plain;charset=utf-8" }
         );
         saveAs(blob, fileName);
-     }
+     };
 
     this.getAllDataFromJSON = function(baseJson, url){
 

@@ -171,8 +171,6 @@ var Markers = function(map) {
                 }},
             ];
 
-            console.log(vals);
-
             var eform = new FoundationForm(
                 arr, 
                 "formEditMarker", 
@@ -375,8 +373,12 @@ var Markers = function(map) {
             var data = opt.getOption("markers", this.id)
             var $markerDescription = $("#markerDescription");
             $markerDescription.empty();
-            $markerDescription.append(data.description);
             $markerDescription.arcticmodal();
+            $markerDescription.append(data.description);
+            $markerDescription.append("<hr/>");
+            opt.getOptionAsync("markersDescriptions", this.id, function(descriptionHTML){
+                $markerDescription.append(descriptionHTML);
+            })
         } 
         // Else dragg marker
         else {
