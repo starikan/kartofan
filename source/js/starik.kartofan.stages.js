@@ -423,9 +423,7 @@ var StageEditor = (function(){
         ];
 
         var eform = new FoundationForm(arr, "formEditStage");
-
-        // eform = new EditableForm(mapvents.stageEditForm);
-        // eform.fillForm(stageVals);     
+    
      }
 
     this.editStageMenu = function() {
