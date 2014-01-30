@@ -453,27 +453,68 @@ html(manifest="offline/cache.appcache")
             table#markersTable_table
                 thead
                     tr
-                        th Id
-                        th Name
-                        th Tags
-                        th Icon
-                        th Group
-                        th Time
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
                 tbody
                     tr
-                        td Row1
-                        td Row1
-                        td Row1
-                        td Row1
-                        td Row1
-                        td Row1
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
 
-        div#markersTable_colSelectForm.foundationForm.hide
+        div#markersTable_columnsSelect.foundationForm.hide
             div.box-modal
                 form(data-abide)
                     div.row.collapse 
-                        div.small-3.columns: span.prefix.markersTable_colSelectForm_id ID
-                        div.small-9.columns: input.markersTable_colSelectForm_id(type="text", required)
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_id ID
+                        div.small-2.columns: input.markersTable_columnsSelect_id.text-center(type="checkbox")                        
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_title Title
+                        div.small-2.columns: input.markersTable_columnsSelect_title.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_tags Tags
+                        div.small-2.columns: input.markersTable_columnsSelect_tags.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_icon Icon
+                        div.small-2.columns: input.markersTable_columnsSelect_icon.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_layer Layer
+                        div.small-2.columns: input.markersTable_columnsSelect_layer.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateStart DateStart
+                        div.small-2.columns: input.markersTable_columnsSelect_dateStart.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateEnd DateEnd
+                        div.small-2.columns: input.markersTable_columnsSelect_dateEnd.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_links Links
+                        div.small-2.columns: input.markersTable_columnsSelect_links.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_latlng Latlng
+                        div.small-2.columns: input.markersTable_columnsSelect_latlng.text-center(type="checkbox") 
+
+                    div.row.collapse 
+                        div.small-12.small-centered.columns.text-center: a.small.button.markersTable_columnsSelect_submit Submit
 
         div#disqus_thread
         |<script type="text/javascript">

@@ -240,7 +240,6 @@ var Options = (function(){
             gps.startGPS();
         }
 
-        console.log(opt.getOption("current", "setLang"))
         if (!opt.getOption("current", "setLang")){
             opt.setLang();
         }

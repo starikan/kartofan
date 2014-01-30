@@ -675,16 +675,15 @@ var FoundationForm = function(arr, id, onOpen, onClose) {
         this.$form.removeClass("hide");
         this.$form.arcticmodal({
             afterClose: function(){
-                _this.hideForm();
+                _this.$form.addClass("hide");
+                _this.onClose ? _this.onClose() : undefined;
             }
         });        
         this.onOpen ? this.onOpen() : undefined;
      }
 
     this.hideForm = function() {
-        this.$form.addClass("hide");
         this.$form.arcticmodal("close");
-        this.onClose ? this.onClose() : undefined;
      }
 
     this._initForm();

@@ -1,4 +1,9 @@
 {
+  "univers": {
+    "submit": "Отправить",
+    "delete": "Удалить",
+    "cancel": "Отмена"
+  },    
   "topMenu": {
     "topMenuMenu": "Меню",
     "topMenuMaps": "Карты",

@@ -616,6 +616,39 @@ var MarkersTable = (function(){
 
      };
 
+    this.colsSelectForm = function() {
+
+        var vals = {};
+        var arr = [];
+        $.each(this.$table.fnSettings().aoColumns, function(i, v){
+            arr.push(
+                { 
+                    "type": "markersTable_columnsSelect_" + v.mData,   
+                    "name": v.mData, 
+                    "val": v.bVisible, 
+                    "loc": "markers:formEditMarker_" + v.mData,
+                    "description": v.mData
+                }
+            )
+        })
+
+        arr.push(
+            { "type": "markersTable_columnsSelect_submit", "loc": "univers:submit", callback: function(form){
+                _this.setColsVisible(form.data);
+                form.hideForm();
+            }}
+        );     
+
+        var eform = new FoundationForm(arr, "markersTable_columnsSelect");   
+     };
+
+    this.setColsVisible = function(data) {
+        console.log(data);
+        $.each(this.$table.fnSettings().aoColumns, function(i, v){
+            _this.$table.fnSetColumnVis( i, data[v.mData] ? true : false );
+        });
+     };
+
     this.showTable = function() {
 
         var data = opt.getOption("markers");
@@ -623,34 +656,46 @@ var MarkersTable = (function(){
         for (var i in data) {
             var mark = {
                 id: data[i].id,
-                title: data[i].title || "",
-                tags: data[i].tags || "",
-                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): "",
-                layer: data[i].layer || "",
-                time: data[i].time || "",
+                title: data[i].title || " ",
+                tags: data[i].tags || " ",
+                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): " ",
+                layer: data[i].layer || " ",
+                dateStart: data[i].dateStart || " ",
+                dateEnd: data[i].dateEnd || " ",
+                links: data[i].links || " ",
+                latlng: data[i].latlng || " ",                
             }
 
             dataNormalize.push(mark);
         };
+
+        // Add more cols:
+        // - Add here
+        // - Add dataNormalize
+        // - Add #markersTable cols
+        // - Add #markersTable_columnsSelect row
 
         _this.$table.dataTable({
             "bRetrieve": true,
             "sScrollX": "100%",
             "bScrollCollapse": true,       
             "aoColumns": [
-                { "mData": "id",  "bVisible": false, "bSearchable": false,},
-                { "mData": "title", "sTitle": "Name", "bSortable": true},
-                { "mData": "tags", "sTitle": "Tags", "bSortable": true},
-                { "mData": "icon", "sTitle": "Icon", "bSortable": true, },
-                { "mData": "layer", "sTitle": "Layer", "bSortable": true, },
-                { "mData": "time", "sTitle": "Time", "bSortable": true, },
+                { "mData": "id",         "sTitle": loc("markers:formEditMarker_id"),    "bVisible": false, "bSearchable": false,},
+                { "mData": "title",      "sTitle": loc("markers:formEditMarker_title"),      "bSortable": true },
+                { "mData": "tags",       "sTitle": loc("markers:formEditMarker_tags"),       "bSortable": true },
+                { "mData": "icon",       "sTitle": loc("markers:formEditMarker_icon"),       "bSortable": true },
+                { "mData": "layer",      "sTitle": loc("markers:formEditMarker_layer"),      "bSortable": true },
+                { "mData": "dateStart",  "sTitle": loc("markers:formEditMarker_dateStart"),  "bSortable": true, "bVisible": false, "bSearchable": false },
+                { "mData": "dateEnd",    "sTitle": loc("markers:formEditMarker_dateEnd"),    "bSortable": true, "bVisible": false, "bSearchable": false },
+                { "mData": "links",      "sTitle": loc("markers:formEditMarker_links"),      "bSortable": true, "bVisible": false },
+                { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bVisible": false, "bSearchable": false },
             ],
             "aaData": dataNormalize,
-            "sDom": '<"top"fl<"button markersTable_colsSelect">>t<"bottom"ip>',
+            "sDom": '<"top"fl<"button markersTable_columnsSelect_button">>t<"bottom"ip>',
         });
 
-        $(".markersTable_colsSelect").click(function(){
-            console.log(123)
+        $(".markersTable_columnsSelect_button").click(function(){
+            _this.colsSelectForm();
         })
 
         // TODO: touch
@@ -677,3 +722,4 @@ var MarkersTable = (function(){
     this.init();
 
  }}());
+ 

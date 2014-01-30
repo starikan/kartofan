@@ -133,6 +133,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .foundationForm {
     background-color: white;
     padding: 5px;
+    min-width: 240px;
 }
 
 .foundationForm input,

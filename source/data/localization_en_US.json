@@ -1,4 +1,9 @@
 {
+  "univers": {
+    "submit": "Submit",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
   "topMenu": {
     "topMenuMenu": "Menu",
     "topMenuMaps": "Maps",
