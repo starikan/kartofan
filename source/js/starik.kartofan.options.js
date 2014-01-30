@@ -319,7 +319,8 @@ var Options = (function(){
      }     
 
     this.deleteOption = function(collection, option, callback){
-        delete this[collection][option];
+        
+        if (this[collection][option]) delete this[collection][option];
 
         if (!bases.db[collection]) {return}
         bases.db[collection].get(option, function(err, doc) {
@@ -450,10 +451,6 @@ var Options = (function(){
      }     
 
     // *************** JSON ****************
-
-            // opt.getOptionAsync("markersDescriptions", this.id, function(descriptionHTML){
-            //     $markerDescription.append(descriptionHTML);
-            // })
 
     this.exportAllInJSON = function(basesList, fileName, options){
 
