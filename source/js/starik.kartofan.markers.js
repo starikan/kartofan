@@ -24,7 +24,7 @@ var Markers = function(map) {
      };
 
     this.getMarkersData = function() {
-        this.allData = $.extend({}, opt.getOption("markers"));
+        this.allData = $.extend(true, {}, opt.getOption("markers"));
 
         for (var i in  this.allData) {
             if (this.allDataLayers.indexOf(this.allData[i].layer) == -1){
@@ -640,6 +640,7 @@ var MarkersTable = (function(){
 
     this.$tableContainer = $("#markersTable");
     this.$table = $("#markersTable_table");
+    this.visible = false;
 
     this.init = function(){
 
@@ -716,70 +717,73 @@ var MarkersTable = (function(){
 
     this.saveFilter = function(filter) {
 
-        if (!filter || $.isEmptyObject(filter)) {
-            if (_this.$table) {
-                var filter = {};
-                $.each(this.$table.fnSettings().aoColumns, function(i, v){
-                    var val = $('#dataTable_input_' + v.mData).val();
-                    if (v.bVisible && val) {
-                        filter[v.mData] = val;
-                    }
-                });                
-            }
+        if (!filter && _this.$table && _this.visible) {
+            var filter = {};
+            $.each(this.$table.fnSettings().aoColumns, function(i, v){
+                var val = $('#dataTable_input_' + v.mData).val();
+                if (v.bVisible && val) {
+                    filter[v.mData] = val;
+                }
+            });
         }
 
-        if (filter && !$.isEmptyObject(filter)) {
+        if (typeof filter === "object") {
             opt.setOption("current", "markersFilter", filter);
+        }
+        else {
+            opt.setOption("current", "markersFilter", {});
         }
 
      };
 
     this.storeFilter = function(filter) {
-        if (!filter || $.isEmptyObject(filter)) {
+        if (!filter) {
             filter = opt.getOption("current", "markersFilter");
         }
 
-        var name = prompt(loc("markers:setNameFilter"));
-        if (!name) return;
-        var group = prompt(loc("markers:setGroupFilter"));
+        var title = prompt(loc("markers:setNameFilter"));
+        if (!title) return;
+        var group = prompt(loc("markers:setGroupFilter")) || "undefined";
 
         var allFilters = opt.getOption("global", "markersFilterList");
-        allFilters.push({
+        !allFilters[group] ? allFilters[group] = {}: null;
+        allFilters[group][title] = {
+            title: title,
             filter: filter,
-            name: name,
-            group: group,
-        });
+        };
         opt.setOption("global", "markersFilterList", allFilters);
 
      };
 
-    this.deleteFilter = function(filter) {
+    this.deleteFilterMenu = function() {
 
-        if (!filter || $.isEmptyObject(filter)) {
-            filter = opt.getOption("current", "markersFilter");
-        }
+        var arr = $.extend(true, {}, opt.getOption("global", "markersFilterList"));
 
-        var allFilters = opt.getOption("global", "markersFilterList");
+        $.each(arr, function(g, vg){
+            $.each(vg, function(i, vi){
+                console.log(i)
+                arr[g][i].callback = function(){
+                    if (confirm(loc("markers:deleteMarker"))) {
+                        var allFilters = $.extend(true, {}, opt.getOption("global", "markersFilterList"));
+                        delete allFilters[g][i];
+                        if ($.isEmptyObject(allFilters[g])) delete allFilters[g];
+                        opt.setOption("global", "markersFilterList", allFilters);
+                    }
+                }
+            })
+        })
 
-        for (var i in allFilters){
-            if (JSON.stringify(filter) == JSON.stringify(allFilters[i].filter)){
-                console.log(filter)
-                allFilters.splice(i, 1);
-                break;
-            }
-        };
-
-        opt.setOption("global", "markersFilterList", allFilters);
+        var deleteMenu = new AccordionMenu(arr, "filterDelMenu");        
 
      };    
 
     this.loadFilter = function(filter) {
 
-        if (!filter || $.isEmptyObject(filter)) return;
+        if (!filter) filter = {};
 
         this.saveFilter(filter);
 
-        if (!_this.$table) {
+        if (!_this.$table && _this.visible) {
             // Refresh all markers to apply filter
             for (var i = mapsInstance.length - 1; i >= 0; i--) {
                 mapsInstance[i].markers.refreshView();
@@ -793,6 +797,20 @@ var MarkersTable = (function(){
 
     this.loadFilterMenu = function() {
 
+        console.log(opt.getOption("global", "markersFilterList"));
+
+        var arr = $.extend(true, {}, opt.getOption("global", "markersFilterList"));
+
+        $.each(arr, function(g, vg){
+            $.each(vg, function(i, vi){
+                console.log(i)
+                arr[g][i].callback = function(){
+                    _this.loadFilter(arr[g][i].filter);
+                }
+            })
+        })
+
+        var loadMenu = new AccordionMenu(arr, "filterMenu");
      };  
 
     //*********** TABLE ***********//
@@ -871,11 +889,15 @@ var MarkersTable = (function(){
         })
 
         _this.$tableContainer.arcticmodal({
+            afterOpen: function(){
+                _this.visible = true;
+            },
             afterClose: function(){
                 // Refresh all markers to apply filter
                 for (var i = mapsInstance.length - 1; i >= 0; i--) {
                     mapsInstance[i].markers.refreshView();
                 };
+                _this.visible = false;
             }
         });
 

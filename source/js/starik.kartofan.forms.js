@@ -53,7 +53,7 @@ var TopMenu = (function(){
         { type: "topMenuMarkersAddMarker", loc: "topMenu:topMenuMarkersAddMarker", callback: function(){opt.setAddMarkerOn()} },
         { type: "topMenuMarkersSaveFilter", loc: "topMenu:topMenuMarkersSaveFilter", callback: function(){markerstable.storeFilter()} },
         { type: "topMenuMarkersLoadFilter", loc: "topMenu:topMenuMarkersLoadFilter", callback: function(){markerstable.loadFilterMenu()} },
-        { type: "topMenuMarkersDeleteFilter", loc: "topMenu:topMenuMarkersDeleteFilter", callback: function(){markerstable.deleteFilter()} },
+        { type: "topMenuMarkersDeleteFilter", loc: "topMenu:topMenuMarkersDeleteFilter", callback: function(){markerstable.deleteFilterMenu()} },
         // { type: "topMenuMarkersEdit", loc: "topMenu:topMenuMarkersEdit", callback: function(){} },
         // { type: "topMenuMarkersExternal", loc: "topMenu:topMenuMarkersExternal", callback: function(){} },
         // { type: "topMenuMarkersEditView", loc: "topMenu:topMenuMarkersEditView", callback: function(){} },
@@ -471,7 +471,7 @@ var InfoMenu = (function(){
         }
     ]
 */
-var AccordionMenu = function(arr, id, required) {
+var AccordionMenu = function(arr, id, closeOnEsc) {
 
     if (arr == undefined || typeof arr != "object" || $.isEmptyObject(arr)){ return }
     if (!id) {id = "nonamemenu"}
@@ -494,8 +494,8 @@ var AccordionMenu = function(arr, id, required) {
         this.$container.append("<dl class='accordion' data-accordion></dl>");
 
         this.$container.arcticmodal({
-            closeOnEsc: required ? false : true,
-            closeOnOverlayClick: required ? false : true,
+            closeOnEsc: closeOnEsc ? false : true,
+            closeOnOverlayClick: closeOnEsc ? false : true,
             afterClose: function(){
                 _this.$container.empty();
             }
@@ -533,7 +533,7 @@ var AccordionMenu = function(arr, id, required) {
         $.each(this.arr, function(i, v){
             $.each(v, function(j, data){
                 $("#menuItem"+count).click(function(){
-                    if (!required) _this.$container.arcticmodal('close');
+                    if (!closeOnEsc) _this.$container.arcticmodal('close');
                     data.callback(j);
                 })
                 count++;
