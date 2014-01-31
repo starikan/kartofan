@@ -39,6 +39,8 @@ var Markers = function(map) {
     this.filterMarkersData = function(filter) {
         filter = filter ? filter : opt.getOption("current", "markersFilter");
 
+        this.filteredData = {};
+
         if (!filter || (typeof filter === "object" && $.isEmptyObject(filter))){
             this.filteredData = this.allData;
         }
@@ -678,7 +680,9 @@ var MarkersTable = (function(){
         console.log(data);
 
         if (!data || typeof data !== "object") data = opt.getOption("current", "markersTableColumns");
-        if ($.isEmptyObject(data)) data = {"id": true};
+        if ($.isEmptyObject(data)) data = {"id": true, "title": true, "layer": true};
+
+        data.id = true;
 
         $.each(this.$table.fnSettings().aoColumns, function(i, v){
             _this.$table.fnSetColumnVis( i, data[v.mData] ? true : false );
@@ -819,6 +823,13 @@ var MarkersTable = (function(){
         var loadMenu = new AccordionMenu(arr, "filterMenu");
      };  
 
+    this.getSelectRowsIds = function() {
+        if (!_this.$table) return;
+
+        var $rows = $("tr.row_selected");
+        console.log($rows)
+     };
+
     //*********** TABLE ***********//
 
     this.updateTable = function(dataNormalize) {
@@ -863,14 +874,21 @@ var MarkersTable = (function(){
         })
 
         // TODO: touch
-        _this.$table.find('tbody tr').click(function(){
+        _this.$table.find('tbody tr').dblclick(function(){
             var nTds = $('td', this);
             var id = $(nTds[0]).text();
             
             var latlng = opt.getOption("markers", id).latlng;
 
             mapsInstance[opt.getOption("appVars", "activeMapNum")].moveAllMaps(latlng);
-        })
+
+        });
+
+        // TODO: touch
+        _this.$table.find('tbody tr').click(function(){
+            $(this).toggleClass('row_selected');
+        });
+
      };
 
     this.showTable = function() {
@@ -891,15 +909,15 @@ var MarkersTable = (function(){
             "sScrollX": "100%",
             "bScrollCollapse": true,       
             "aoColumns": [
-                { "mData": "id",         "sTitle": loc("markers:formEditMarker_id"),    "bVisible": false, "bSearchable": false,},
+                { "mData": "id",         "sTitle": loc("markers:formEditMarker_id"), "bSearchable": false,},
                 { "mData": "title",      "sTitle": loc("markers:formEditMarker_title"),      "bSortable": true },
                 { "mData": "tags",       "sTitle": loc("markers:formEditMarker_tags"),       "bSortable": true },
                 { "mData": "icon",       "sTitle": loc("markers:formEditMarker_icon"),       "bSortable": true },
                 { "mData": "layer",      "sTitle": loc("markers:formEditMarker_layer"),      "bSortable": true },
-                { "mData": "dateStart",  "sTitle": loc("markers:formEditMarker_dateStart"),  "bSortable": true, "bVisible": false, "bSearchable": false },
-                { "mData": "dateEnd",    "sTitle": loc("markers:formEditMarker_dateEnd"),    "bSortable": true, "bVisible": false, "bSearchable": false },
-                { "mData": "links",      "sTitle": loc("markers:formEditMarker_links"),      "bSortable": true, "bVisible": false },
-                { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bVisible": false, "bSearchable": false },
+                { "mData": "dateStart",  "sTitle": loc("markers:formEditMarker_dateStart"),  "bSortable": true, "bSearchable": false },
+                { "mData": "dateEnd",    "sTitle": loc("markers:formEditMarker_dateEnd"),    "bSortable": true, "bSearchable": false },
+                { "mData": "links",      "sTitle": loc("markers:formEditMarker_links"),      "bSortable": true },
+                { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bSearchable": false },
             ],
             "aaData": dataNormalize,
             "sDom": '<"top"fl<"button markersTable_columnsSelect_button">>t<"bottom"ip>',

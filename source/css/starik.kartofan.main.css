@@ -324,3 +324,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 .dataTables_wrapper .button {
     margin: 0 15px;
 }
+
+tr.row_selected {
+    background-color: grey !important;
+}
