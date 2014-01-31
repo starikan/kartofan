@@ -85,7 +85,7 @@ var Markers = function(map) {
      };
 
     this.updateAllMapsView = function(data) {
-        this.saveMarkerData(data, function(){_this.refreshView()});
+        this.saveMarkerData(data, function(){_this.refreshAllView()});
      };
 
     this.editMarkerForm = function(data) {
@@ -294,7 +294,7 @@ var Markers = function(map) {
         console.log(data);
         if (confirm(loc("markers:deleteMarker"))){
             opt.deleteOption("markers", data.id, function(){
-                _this.refreshView();
+                _this.refreshAllView();
             });
             callback ? callback() : undefined;
         }
@@ -402,12 +402,16 @@ var Markers = function(map) {
         }, 1000)        
      }  
 
-    this.refreshView = function(){
+    this.refreshAllView = function(){
         for (var i = mapsInstance.length - 1; i >= 0; i--) {
-            mapsInstance[i].markers.init();
-            mapsInstance[i].markers.showMarkers();
+            mapsInstance[i].markers.refreshView();
         };
      };
+
+    this.refreshView = function(){
+        this.init();
+        this.showMarkers();
+     };     
 
     this.showMarkers = function(callback, options) {
 
@@ -794,10 +798,10 @@ var MarkersTable = (function(){
 
         _this.$tableContainer.arcticmodal({
             afterClose: function(){
-                // _this.$table.dataTable({
-                //     "bFilter": false,
-                //     "bDestroy": true
-                // });
+                // Refresh all markers to apply filter
+                for (var i = mapsInstance.length - 1; i >= 0; i--) {
+                    mapsInstance[i].markers.refreshView();
+                };
             }
         });
 
