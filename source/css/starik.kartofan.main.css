@@ -100,6 +100,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     background: transparent;
 }
 
+.accordion {
+    min-width: 240px;
+}
+
 .accordion .content {
     padding: 0px;
 }

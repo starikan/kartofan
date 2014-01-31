@@ -171,7 +171,7 @@ var Options = (function(){
         "setLang": false, 
         "showTourFirst": false, 
        
-        "version": "3.1.1",  
+        "version": "3.2.0",  
      };
 
     this.gps = {
@@ -205,7 +205,7 @@ var Options = (function(){
         "activeMap": "map0",
         "activeMapNum": 0,   
         "measuringOn": false, 
-        "version": "3.1.1",  
+        "version": "3.2.0",  
         "cursorLatLng": undefined,
         "markerAddModeOn": false,
         "markerIconsObjects": {},
