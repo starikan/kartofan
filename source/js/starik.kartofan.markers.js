@@ -672,6 +672,60 @@ var MarkersTable = (function(){
         $.each(this.$table.fnSettings().aoColumns, function(i, v){
             _this.$table.fnSetColumnVis( i, data[v.mData] ? true : false );
         });
+        _this.addColsInputs();
+     };
+
+    this.saveFilter = function() {
+        if (!_this.$table) return;
+        var newFilter = {};
+        $.each(this.$table.fnSettings().aoColumns, function(i, v){
+            var val = $('#dataTable_input_' + v.mData).val();
+            if (v.bVisible && val) {
+                newFilter[v.mData] = val;
+            }
+        });
+        opt.setOption("current", "markersFilter", newFilter);
+     };
+
+    this.addColsSelect = function(){
+
+     };
+
+    this.addColsInputs = function(){
+
+        if (!_this.$table) return;
+
+        var $headers = $(".dataTables_scrollHeadInner thead");
+
+        $.each(this.$table.fnSettings().aoColumns, function(i, v){
+
+            if (v.bVisible) {
+                var $currHead = $headers.find("th:containsExact('" + v.sTitle + "')");
+                var $currInput = $('#dataTable_input_' + v.mData);
+                var currFilter = opt.getOption("current", "markersFilter");
+                var $newInput = $("<input type='text'>").attr("id", "dataTable_input_" + v.mData).val(currFilter[v.mData]);
+
+                $currInput.remove();
+                $currHead.append($newInput);
+                $newInput.change( function () {
+                    var regExpFilter = opt.getOption("global", "markersFilterRegExp");
+                    _this.$table.fnFilter( $(this).val(), i, regExpFilter, !regExpFilter );
+                    _this.saveFilter();
+                });
+
+                console.log($newInput)
+            }
+        });
+
+     };
+
+    this.updateTable = function(dataNormalize) {
+        try {
+            _this.$table.fnClearTable();
+            _this.$table.fnAddData(dataNormalize);
+            _this.$table.fnDraw();
+            console.log("Update Table")
+        } catch(e) {}
      };
 
     this.showTable = function() {
@@ -681,14 +735,14 @@ var MarkersTable = (function(){
         for (var i in data) {
             var mark = {
                 id: data[i].id,
-                title: data[i].title || " ",
-                tags: data[i].tags || " ",
-                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): " ",
-                layer: data[i].layer || " ",
-                dateStart: data[i].dateStart || " ",
-                dateEnd: data[i].dateEnd || " ",
-                links: data[i].links || " ",
-                latlng: data[i].latlng || " ",                
+                title: data[i].title || "",
+                tags: data[i].tags || "",
+                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): "",
+                layer: data[i].layer || "",
+                dateStart: data[i].dateStart || "",
+                dateEnd: data[i].dateEnd || "",
+                links: data[i].links || "",
+                latlng: data[i].latlng || "",                
             }
 
             dataNormalize.push(mark);
@@ -699,6 +753,8 @@ var MarkersTable = (function(){
         // - Add dataNormalize
         // - Add #markersTable cols
         // - Add #markersTable_columnsSelect row
+
+        _this.updateTable(dataNormalize);
 
         _this.$table.dataTable({
             "bRetrieve": true,
@@ -717,6 +773,9 @@ var MarkersTable = (function(){
             ],
             "aaData": dataNormalize,
             "sDom": '<"top"fl<"button markersTable_columnsSelect_button">>t<"bottom"ip>',
+            "fnInitComplete": function(){
+                _this.addColsInputs();
+            }
         });
 
         $(".markersTable_columnsSelect_button").click(function(){

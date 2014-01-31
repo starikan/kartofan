@@ -51,6 +51,8 @@ var Options = (function(){
             "hk_markersTable": "Alt+T",
         },
 
+        "markersFilterList": {},
+        "markersFilterRegExp": false,
         "markersIdPrefix": "",
         "markersIcons": [
             "/images/marker_akr.png",

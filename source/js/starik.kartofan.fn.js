@@ -1,3 +1,7 @@
+$.expr[":"].containsExact = function (obj, index, meta, stack) {
+  return (obj.textContent || obj.innerText || $(obj).text() || "") == meta[3];
+};
+
 $.pluck = function(arr, key) { 
     return $.map(arr, function(e) { return e[key]; }) 
  };
