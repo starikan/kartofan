@@ -676,10 +676,16 @@ var MarkersTable = (function(){
 
     this.setColsVisible = function(data) {
         console.log(data);
+
+        if (!data || typeof data !== "object") data = opt.getOption("current", "markersTableColumns");
+        if ($.isEmptyObject(data)) data = {"id": true};
+
         $.each(this.$table.fnSettings().aoColumns, function(i, v){
             _this.$table.fnSetColumnVis( i, data[v.mData] ? true : false );
         });
         _this.addColsInputs();
+
+        opt.setOption("current", "markersTableColumns", data);
      };
     
     this.addColsSelect = function(){
@@ -824,9 +830,10 @@ var MarkersTable = (function(){
         } catch(e) {}
      };
 
-    this.showTable = function() {
+    this.normalizeData = function(data) {
 
-        var data = opt.getOption("markers");
+        if (!data || typeof data !== "object") return [];
+
         var dataNormalize = [];
         for (var i in data) {
             var mark = {
@@ -843,6 +850,33 @@ var MarkersTable = (function(){
 
             dataNormalize.push(mark);
         };
+
+        return dataNormalize;
+     };
+
+    this.setTableEvents = function() {
+
+        if (!_this.$table) return;
+
+        $(".markersTable_columnsSelect_button").click(function(){
+            _this.colsSelectForm();
+        })
+
+        // TODO: touch
+        _this.$table.find('tbody tr').click(function(){
+            var nTds = $('td', this);
+            var id = $(nTds[0]).text();
+            
+            var latlng = opt.getOption("markers", id).latlng;
+
+            mapsInstance[opt.getOption("appVars", "activeMapNum")].moveAllMaps(latlng);
+        })
+     };
+
+    this.showTable = function() {
+
+        var data = opt.getOption("markers");
+        var dataNormalize = _this.normalizeData(data);
 
         // Add more cols:
         // - Add here
@@ -874,20 +908,10 @@ var MarkersTable = (function(){
             }
         });
 
-        $(".markersTable_columnsSelect_button").click(function(){
-            _this.colsSelectForm();
-        })
+        _this.setColsVisible();
 
-        // TODO: touch
-        _this.$table.find('tbody tr').click(function(){
-            var nTds = $('td', this);
-            var id = $(nTds[0]).text();
-            
-            var latlng = opt.getOption("markers", id).latlng;
-
-            mapsInstance[opt.getOption("appVars", "activeMapNum")].moveAllMaps(latlng);
-        })
-
+        _this.setTableEvents();
+        
         _this.$tableContainer.arcticmodal({
             afterOpen: function(){
                 _this.visible = true;

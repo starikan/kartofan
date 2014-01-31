@@ -113,6 +113,7 @@ var Options = (function(){
 
         "markersShow": true,
         "markersFilter": {},
+        "markersTableColumns": {},
 
         "stage": {
             "title": "current",
