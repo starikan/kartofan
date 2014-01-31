@@ -50,7 +50,10 @@ var TopMenu = (function(){
         { type: "topMenuStageExport", loc: "topMenu:topMenuStageExport", callback: stage.exportImageView },
         
         { type: "topMenuMarkers", loc: "topMenu:topMenuMarkers" },
-        { type: "topMenuMarkersAddMarker", loc: "topMenu:topMenuMarkersAddMarker", callback: function(){opt.setAddMarkerOn();} },
+        { type: "topMenuMarkersAddMarker", loc: "topMenu:topMenuMarkersAddMarker", callback: function(){opt.setAddMarkerOn()} },
+        { type: "topMenuMarkersSaveFilter", loc: "topMenu:topMenuMarkersSaveFilter", callback: function(){markerstable.storeFilter()} },
+        { type: "topMenuMarkersLoadFilter", loc: "topMenu:topMenuMarkersLoadFilter", callback: function(){markerstable.loadFilterMenu()} },
+        { type: "topMenuMarkersDeleteFilter", loc: "topMenu:topMenuMarkersDeleteFilter", callback: function(){markerstable.deleteFilter()} },
         // { type: "topMenuMarkersEdit", loc: "topMenu:topMenuMarkersEdit", callback: function(){} },
         // { type: "topMenuMarkersExternal", loc: "topMenu:topMenuMarkersExternal", callback: function(){} },
         // { type: "topMenuMarkersEditView", loc: "topMenu:topMenuMarkersEditView", callback: function(){} },

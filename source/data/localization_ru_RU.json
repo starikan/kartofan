@@ -20,6 +20,9 @@
     "topMenuStageExport": "Сохранить набор как изображение",
     "topMenuMarkers": "Метки",
     "topMenuMarkersAddMarker": "Добавить метку",
+    "topMenuMarkersSaveFilter": "Сохранить фильтр",
+    "topMenuMarkersLoadFilter": "Загрузить фильтр",
+    "topMenuMarkersDeleteFilter": "Удалить фильтр",
     "topMenuMarkersExport": "Экспорт меток",    
     "topMenuUtils": "Полезности",
     "topMenuUtilsToggleFulscreen": "Переключение активной карты на весь экран",
@@ -189,6 +192,8 @@
   "markers": {
     "errorCheckForm": "Ошибка в форме. Проверьте значения.",
     "deleteMarker": "Вы действительно хотите удалить этот маркер?",
+    "setNameFilter": "Введите название фильтра",
+    "setGroupFilter": "Введите группу фильтра",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Заголовок",
     "formEditMarker_icon": "Значок",

@@ -51,7 +51,7 @@ var Options = (function(){
             "hk_markersTable": "Alt+T",
         },
 
-        "markersFilterList": {},
+        "markersFilterList": [],
         "markersFilterRegExp": false,
         "markersIdPrefix": "",
         "markersIcons": [

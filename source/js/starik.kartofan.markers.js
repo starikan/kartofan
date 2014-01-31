@@ -645,6 +645,8 @@ var MarkersTable = (function(){
 
      };
 
+    //*********** COLS ***********//
+
     this.colsSelectForm = function() {
 
         var vals = {};
@@ -678,19 +680,7 @@ var MarkersTable = (function(){
         });
         _this.addColsInputs();
      };
-
-    this.saveFilter = function() {
-        if (!_this.$table) return;
-        var newFilter = {};
-        $.each(this.$table.fnSettings().aoColumns, function(i, v){
-            var val = $('#dataTable_input_' + v.mData).val();
-            if (v.bVisible && val) {
-                newFilter[v.mData] = val;
-            }
-        });
-        opt.setOption("current", "markersFilter", newFilter);
-     };
-
+    
     this.addColsSelect = function(){
 
      };
@@ -717,11 +707,95 @@ var MarkersTable = (function(){
                     _this.saveFilter();
                 });
 
-                console.log($newInput)
             }
         });
 
      };
+
+    //*********** FILTERS ***********//
+
+    this.saveFilter = function(filter) {
+
+        if (!filter || $.isEmptyObject(filter)) {
+            if (_this.$table) {
+                var filter = {};
+                $.each(this.$table.fnSettings().aoColumns, function(i, v){
+                    var val = $('#dataTable_input_' + v.mData).val();
+                    if (v.bVisible && val) {
+                        filter[v.mData] = val;
+                    }
+                });                
+            }
+        }
+
+        if (filter && !$.isEmptyObject(filter)) {
+            opt.setOption("current", "markersFilter", filter);
+        }
+
+     };
+
+    this.storeFilter = function(filter) {
+        if (!filter || $.isEmptyObject(filter)) {
+            filter = opt.getOption("current", "markersFilter");
+        }
+
+        var name = prompt(loc("markers:setNameFilter"));
+        if (!name) return;
+        var group = prompt(loc("markers:setGroupFilter"));
+
+        var allFilters = opt.getOption("global", "markersFilterList");
+        allFilters.push({
+            filter: filter,
+            name: name,
+            group: group,
+        });
+        opt.setOption("global", "markersFilterList", allFilters);
+
+     };
+
+    this.deleteFilter = function(filter) {
+
+        if (!filter || $.isEmptyObject(filter)) {
+            filter = opt.getOption("current", "markersFilter");
+        }
+
+        var allFilters = opt.getOption("global", "markersFilterList");
+
+        for (var i in allFilters){
+            if (JSON.stringify(filter) == JSON.stringify(allFilters[i].filter)){
+                console.log(filter)
+                allFilters.splice(i, 1);
+                break;
+            }
+        };
+
+        opt.setOption("global", "markersFilterList", allFilters);
+
+     };    
+
+    this.loadFilter = function(filter) {
+
+        if (!filter || $.isEmptyObject(filter)) return;
+
+        this.saveFilter(filter);
+
+        if (!_this.$table) {
+            // Refresh all markers to apply filter
+            for (var i = mapsInstance.length - 1; i >= 0; i--) {
+                mapsInstance[i].markers.refreshView();
+            };
+        }
+        else {
+            _this.updateTable();
+        }
+
+     };     
+
+    this.loadFilterMenu = function() {
+
+     };  
+
+    //*********** TABLE ***********//
 
     this.updateTable = function(dataNormalize) {
         try {
@@ -806,6 +880,8 @@ var MarkersTable = (function(){
         });
 
      };
+
+
 
     this.init();
 

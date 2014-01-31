@@ -20,6 +20,9 @@
     "topMenuStageExport": "Export Stage Like Image",
     "topMenuMarkers": "Markers",
     "topMenuMarkersAddMarker": "Add Marker",
+    "topMenuMarkersSaveFilter": "Save Filter",
+    "topMenuMarkersLoadFilter": "Load Filter",
+    "topMenuMarkersDeleteFilter": "Delete Filter",
     "topMenuMarkersExport": "Export Markers Data",
     "topMenuUtils": "Utils",
     "topMenuUtilsToggleFulscreen": "Toggle Fullscreen Select Map",
@@ -207,6 +210,8 @@
   "markers": {
     "errorCheckForm": "Errors in form! Check values.",
     "deleteMarker": "Do you realy want to delete this marker?",
+    "setNameFilter": "Type Filter Name",
+    "setGroupFilter": "Type Filter Group",
     "formEditMarker_id": "ID",
     "formEditMarker_title": "Title",
     "formEditMarker_icon": "Icon",
