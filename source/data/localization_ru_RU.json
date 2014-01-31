@@ -211,6 +211,15 @@
     "formEditMarker_dateEndAddTime": "+Время",    
     "formEditMarker_submit": "Отправить",
     "formEditMarker_delete": "Удалить",
-    "formEditMarker_cancel": "Отмена"
+    "formEditMarker_cancel": "Отмена",
+    "markersTable_columnsSelect_button": "Столбцы",
+    "markersTable_deleteSelect_button": "Удалить",
+    "markersTable_getFilter_button": "Фильтр выбор",
+    "markersTable_filterFromSelect_button": "Фильтр выделение",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": ""    
   }
 }

@@ -298,13 +298,10 @@ var Markers = function(map) {
             opt.deleteOption("markers", data.id, function(){
                 _this.refreshAllView();
             });
+            opt.deleteOption("markersDescriptions", data.id);
             callback ? callback() : undefined;
         }
      };     
-
-    this.removeMarkers = function(filter, callback) {
-
-     };
 
     this.cacheIconsObjects = function(iconSrc, callback) {
         var iconsL = opt.getOption("appVars", "markerIconsObjects");
@@ -677,7 +674,6 @@ var MarkersTable = (function(){
      };
 
     this.setColsVisible = function(data) {
-        console.log(data);
 
         if (!data || typeof data !== "object") data = opt.getOption("current", "markersTableColumns");
         if ($.isEmptyObject(data)) data = {"id": true, "title": true, "layer": true};
@@ -826,13 +822,23 @@ var MarkersTable = (function(){
     this.getSelectRowsIds = function() {
         if (!_this.$table) return;
 
+        var ids = [];
         var $rows = $("tr.row_selected");
-        console.log($rows)
+        $.each($rows, function(i, v){
+            ids.push($(v).find("td")[0].innerText);
+        })
+
+        return ids;
      };
 
     //*********** TABLE ***********//
 
     this.updateTable = function(dataNormalize) {
+
+        if (!dataNormalize){
+            var data = opt.getOption("markers");
+            dataNormalize = _this.normalizeData(data);
+        }
         try {
             _this.$table.fnClearTable();
             _this.$table.fnAddData(dataNormalize);
@@ -871,7 +877,22 @@ var MarkersTable = (function(){
 
         $(".markersTable_columnsSelect_button").click(function(){
             _this.colsSelectForm();
-        })
+        });
+
+        $(".markersTable_deleteSelect_button").click(function(){
+            $.each(_this.getSelectRowsIds(), function(i, v){
+                mapsInstance[opt.getOption("appVars", "activeMapNum")].markers.deleteMarkerData({id: v}, function(){_this.updateTable();});
+            })
+        });        
+
+        $(".markersTable_getFilter_button").click(function(){
+            _this.loadFilterMenu();
+        }); 
+
+        $(".markersTable_filterFromSelect_button").click(function(){
+            _this.saveFilter({id: _this.getSelectRowsIds().join("|")});
+            _this.$tableContainer.arcticmodal("close");
+        });         
 
         // TODO: touch
         _this.$table.find('tbody tr').dblclick(function(){
@@ -889,6 +910,13 @@ var MarkersTable = (function(){
             $(this).toggleClass('row_selected');
         });
 
+     };
+
+    this.setButtonsLabels = function() {
+        $(".markersTable_columnsSelect_button").text(loc("markers:markersTable_columnsSelect_button"));
+        $(".markersTable_deleteSelect_button").text(loc("markers:markersTable_deleteSelect_button"));
+        $(".markersTable_getFilter_button").text(loc("markers:markersTable_getFilter_button"));
+        $(".markersTable_filterFromSelect_button").text(loc("markers:markersTable_filterFromSelect_button"));
      };
 
     this.showTable = function() {
@@ -920,7 +948,7 @@ var MarkersTable = (function(){
                 { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bSearchable": false },
             ],
             "aaData": dataNormalize,
-            "sDom": '<"top"fl<"button markersTable_columnsSelect_button">>t<"bottom"ip>',
+            "sDom": '<"top"fl<"button tiny markersTable_columnsSelect_button"><"button tiny markersTable_deleteSelect_button"><"button tiny markersTable_getFilter_button"><"button tiny markersTable_filterFromSelect_button">>t<"bottom"ip>',
             "fnInitComplete": function(){
                 _this.addColsInputs();
             }
@@ -930,6 +958,8 @@ var MarkersTable = (function(){
 
         _this.setTableEvents();
         
+        _this.setButtonsLabels();
+
         _this.$tableContainer.arcticmodal({
             afterOpen: function(){
                 _this.visible = true;
@@ -944,8 +974,6 @@ var MarkersTable = (function(){
         });
 
      };
-
-
 
     this.init();
 

@@ -229,6 +229,15 @@
     "formEditMarker_dateEndAddTime": "+Time",
     "formEditMarker_submit": "Submit",
     "formEditMarker_delete": "Delete",
-    "formEditMarker_cancel": "Cancel"
+    "formEditMarker_cancel": "Cancel",
+    "markersTable_columnsSelect_button": "Set Cols",
+    "markersTable_deleteSelect_button": "Del Sel",
+    "markersTable_getFilter_button": "Get Filter",
+    "markersTable_filterFromSelect_button": "Filter From Sel",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": ""
   }
 }

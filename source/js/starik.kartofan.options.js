@@ -323,7 +323,7 @@ var Options = (function(){
 
     this.deleteOption = function(collection, option, callback){
         
-        if (this[collection][option]) delete this[collection][option];
+        if (this[collection] && this[collection][option]) delete this[collection][option];
 
         if (!bases.db[collection]) {return}
         bases.db[collection].get(option, function(err, doc) {
