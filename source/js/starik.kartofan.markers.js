@@ -108,7 +108,6 @@ var Markers = function(map) {
         var tagsSugg = [];
 
         $.each(opt.getOption("markers"), function(i, v){
-            console.log(v)
             v.layer ? layerSugg.push(v.layer) : null;
             v.tags ? tagsSugg = tagsSugg.concat(v.tags.split(",")) : null;
         });
@@ -116,7 +115,6 @@ var Markers = function(map) {
         tagsSugg = unique(tagsSugg.map(fulltrim)).sort();
         layerSugg = unique(layerSugg.map(fulltrim)).sort();
 
-        console.log(layerSugg, tagsSugg);
         console.log(data)
 
         opt.getOptionAsync("markersDescriptions", vals.id, function(descriptionHTML){
