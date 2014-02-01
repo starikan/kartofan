@@ -87,7 +87,7 @@ var Markers = function(map) {
      };
 
     this.updateAllMapsView = function(data) {
-        this.saveMarkerData(data, function(){_this.refreshAllView()});
+        this.saveMarkerData(data, function(){opt.refreshAllMarkers();});
      };
 
     this.editMarkerForm = function(data) {
@@ -296,7 +296,7 @@ var Markers = function(map) {
         console.log(data);
         if (confirm(loc("markers:deleteMarker"))){
             opt.deleteOption("markers", data.id, function(){
-                _this.refreshAllView();
+                opt.refreshAllMarkers();
             });
             opt.deleteOption("markersDescriptions", data.id);
             callback ? callback() : undefined;
@@ -400,12 +400,6 @@ var Markers = function(map) {
             }
         }, 1000)        
      }  
-
-    this.refreshAllView = function(){
-        for (var i = mapsInstance.length - 1; i >= 0; i--) {
-            mapsInstance[i].markers.refreshView();
-        };
-     };
 
     this.refreshView = function(){
         this.init();
@@ -791,9 +785,7 @@ var MarkersTable = (function(){
 
         if (!_this.$table && _this.visible) {
             // Refresh all markers to apply filter
-            for (var i = mapsInstance.length - 1; i >= 0; i--) {
-                mapsInstance[i].markers.refreshView();
-            };
+            opt.refreshAllMarkers();
         }
         else {
             _this.updateTable();
@@ -803,13 +795,10 @@ var MarkersTable = (function(){
 
     this.loadFilterMenu = function() {
 
-        console.log(opt.getOption("global", "markersFilterList"));
-
         var arr = $.extend(true, {}, opt.getOption("global", "markersFilterList"));
 
         $.each(arr, function(g, vg){
             $.each(vg, function(i, vi){
-                console.log(i)
                 arr[g][i].callback = function(){
                     _this.loadFilter(arr[g][i].filter);
                 }
@@ -966,9 +955,7 @@ var MarkersTable = (function(){
             },
             afterClose: function(){
                 // Refresh all markers to apply filter
-                for (var i = mapsInstance.length - 1; i >= 0; i--) {
-                    mapsInstance[i].markers.refreshView();
-                };
+                opt.refreshAllMarkers();
                 _this.visible = false;
             }
         });

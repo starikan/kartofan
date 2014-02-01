@@ -52,7 +52,7 @@ var Options = (function(){
         },
 
         "markersFilterList": {},
-        "markersFilterRegExp": false,
+        "markersFilterRegExp": true,
         "markersIdPrefix": "",
         "markersIcons": [
             "/images/marker_akr.png",
@@ -455,18 +455,53 @@ var Options = (function(){
 
     // *************** JSON ****************
 
+    this.exportMarkersFilteredJSON = function(fileName) {
+
+        fileName = fileName ? fileName : "markers.json";
+        var markers = mapsInstance[0].markers.filteredData;
+        var markersDescriptions = {};
+        var markersPrepared = 0;
+
+        $.each(markers, function(i, v){
+            bases.db.markersDescriptions.get(i, function(err, doc){
+                if (err) {
+                    console.log(err);
+                    markersPrepared++;
+                }
+                else {
+                    markersDescriptions[i] = doc.val;
+                    markersPrepared++;
+
+                    if (markersPrepared == Object.keys(markers).length){
+                        opt.saveFileJSON(fileName, {markers: markers, markersDescriptions: markersDescriptions});
+                    }
+                }
+            });
+        });
+     };
+
     this.exportAllInJSON = function(basesList, fileName, options){
 
         var data = {};
         // Need to export with async loaded bases
         var basesPrepared = 0;
+        var filter = {};
+
+        var basesLength = basesList.length ? basesList.length : opt.getOption("appVars", "baseNames").length;
+
+        if (options && typeof options === "object" && options.filter) filter = options.filter;
 
         $.each(opt.getOption("appVars", "baseNames"), function(i, v){
             // Filter by bases names
             if (basesList && basesList.indexOf(v) == -1) return;
+
             if (opt.getOption("appVars", "baseNamesNotLoaded").indexOf(v) == -1) {
                 data[v] = parent[v];
                 basesPrepared++;
+                if (basesPrepared == basesLength){
+                    opt.saveFileJSON(fileName, data);
+                }
+
             }
             else {
                 bases.db[v].allDocs({include_docs: true}, function(err, doc){
@@ -482,20 +517,19 @@ var Options = (function(){
                     });
 
                     basesPrepared++;
-                    if (basesPrepared == opt.getOption("appVars", "baseNames").length){
+                    if (basesPrepared == basesLength){
                         opt.saveFileJSON(fileName, data);
                     }
                 });
             }
         })
 
-        if (basesPrepared == opt.getOption("appVars", "baseNames").length){
-            opt.saveFileJSON(fileName, data);
-        }
      };
 
     this.saveFileJSON = function(fileName, data) {
         
+        console.log(fileName, data)
+
         fileName = fileName ? fileName : "exportData.json";
         
         var dataJSON = JSON.stringify(data, null, 4);
@@ -695,6 +729,12 @@ var Options = (function(){
     this.setAddMarkerOff = function() {
         opt.setOption("appVars", "markerAddModeOn", false);
         $(".topMenuMarkersAddMarker").parent().removeClass("active");
+     };
+
+    this.refreshAllMarkers = function() {
+        for (var i = mapsInstance.length - 1; i >= 0; i--) {
+            mapsInstance[i].markers.refreshView();
+        };
      };
 
     // *************** FART NOTES ****************

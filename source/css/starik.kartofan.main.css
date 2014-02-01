@@ -127,6 +127,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 .arcticmodal-container_i2 { 
     /*width: 100%;*/
+    padding: 0px;
 }
 
 .arcticmodal-container { 
@@ -287,6 +288,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 #markersTable {
     background-color: white;
     padding: 15px;
+    width: 100%;
 }
 
 
