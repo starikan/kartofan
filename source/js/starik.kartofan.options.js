@@ -737,6 +737,33 @@ var Options = (function(){
         };
      };
 
+    this.makeAllImagesBase64 = function() {
+        var markers = opt.getOption("markers");
+        $.each(markers, function(i, v){
+            bases.db.markersDescriptions.get(i, function(err, doc){
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    var html = doc.val;
+                    var $links = $(html).find("img");
+                    var links = [];
+                    $.each($links, function(i, v){
+                        var src = $(v).attr("src");
+                        $.getJSON(opt.getOption("global", "mapCachedService")+"?url="+ escape(src) + "&callback=?", function(data){
+                            if(data){
+                                console.log(data);
+                            }
+                        })                         
+                    });
+
+                    // console.log(i, links);
+                                   
+                }
+            });
+        });        
+     }
+
     // *************** FART NOTES ****************
 
     this.fastNotesEditor = function(){

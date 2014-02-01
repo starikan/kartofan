@@ -86,7 +86,7 @@ var Markers = function(map) {
 
      };
 
-    this.updateAllMapsView = function(data) {
+    this.saveMarkerAndUpdateAllMapsView = function(data) {
         this.saveMarkerData(data, function(){opt.refreshAllMarkers();});
      };
 
@@ -173,7 +173,7 @@ var Markers = function(map) {
                     } else {
 
                         // Update marker on every window after adding
-                        _this.updateAllMapsView(form.data);
+                        _this.saveMarkerAndUpdateAllMapsView(form.data);
                         console.log(form.data)
                         form.hideForm();
                     }
@@ -402,7 +402,7 @@ var Markers = function(map) {
     this.onMarkerDragend = function(e){
         var data = opt.getOption("markers", this.id);
         data.latlng = e.target._latlng.toNormalString();
-        _this.updateAllMapsView(data);
+        _this.saveMarkerAndUpdateAllMapsView(data);
      }
 
     this.onMarkerMouseout = function(e){
