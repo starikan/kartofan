@@ -677,7 +677,9 @@ var MarkersTable = (function(){
         $.each(this.$table.fnSettings().aoColumns, function(i, v){
             _this.$table.fnSetColumnVis( i, data[v.mData] ? true : false );
         });
+        
         _this.addColsInputs();
+        _this.filterApply();
 
         opt.setOption("current", "markersTableColumns", data);
      };
@@ -698,7 +700,7 @@ var MarkersTable = (function(){
                 var $currHead = $headers.find("th:containsExact('" + v.sTitle + "')");
                 var $currInput = $('#dataTable_input_' + v.mData);
                 var currFilter = opt.getOption("current", "markersFilter");
-                var $newInput = $("<input type='text'>").attr("id", "dataTable_input_" + v.mData).val(currFilter[v.mData]);
+                var $newInput = $("<input type='text'>").addClass("dataTable_input").attr("id", "dataTable_input_" + v.mData).val(currFilter[v.mData]);
 
                 $currInput.remove();
                 $currHead.append($newInput);
@@ -714,6 +716,19 @@ var MarkersTable = (function(){
      };
 
     //*********** FILTERS ***********//
+
+    this.filterApply = function(){
+        if (!_this.$table) return;
+
+        var $inputs = _this.$table.find(".dataTable_input");
+        var regExpFilter = opt.getOption("global", "markersFilterRegExp");
+        
+        $.each(this.$table.fnSettings().aoColumns, function(i, v){
+            if (v.bVisible) {
+                _this.$table.fnFilter( $("#dataTable_input_" + v.mData).val(), i, regExpFilter, !regExpFilter );
+            }
+        })
+     }
 
     this.saveFilter = function(filter) {
 
@@ -846,7 +861,7 @@ var MarkersTable = (function(){
                 id: data[i].id,
                 title: data[i].title || "",
                 tags: data[i].tags || "",
-                icon: data[i].icon ? "<img src='{0}'></img>".format(data[i].icon): "",
+                icon: data[i].icon ? '<img src="{0}" title="{0}"></img>'.format(data[i].icon) : '<div title=""></div>',
                 layer: data[i].layer || "",
                 dateStart: data[i].dateStart || "",
                 dateEnd: data[i].dateEnd || "",
@@ -869,7 +884,9 @@ var MarkersTable = (function(){
         });
 
         $(".markersTable_deleteSelect_button").click(function(){
-            $.each(_this.getSelectRowsIds(), function(i, v){
+            var ids = _this.getSelectRowsIds();
+            if (!ids.length) return;
+            $.each(ids, function(i, v){
                 mapsInstance[opt.getOption("appVars", "activeMapNum")].markers.deleteMarkerData({id: v}, function(){_this.updateTable();});
             })
         });        
@@ -882,6 +899,13 @@ var MarkersTable = (function(){
             _this.saveFilter({id: _this.getSelectRowsIds().join("|")});
             _this.$tableContainer.arcticmodal("close");
         });         
+
+        $(".markersTable_dropFilter_button").click(function(){
+            _this.saveFilter({});
+            $(".dataTable_input").val("");
+            _this.filterApply();
+            _this.updateTable();
+        });  
 
         // TODO: touch
         _this.$table.find('tbody tr').dblclick(function(){
@@ -906,6 +930,7 @@ var MarkersTable = (function(){
         $(".markersTable_deleteSelect_button").text(loc("markers:markersTable_deleteSelect_button"));
         $(".markersTable_getFilter_button").text(loc("markers:markersTable_getFilter_button"));
         $(".markersTable_filterFromSelect_button").text(loc("markers:markersTable_filterFromSelect_button"));
+        $(".markersTable_dropFilter_button").text(loc("markers:markersTable_dropFilter_button"));
      };
 
     this.showTable = function() {
@@ -929,7 +954,7 @@ var MarkersTable = (function(){
                 { "mData": "id",         "sTitle": loc("markers:formEditMarker_id"), "bSearchable": false,},
                 { "mData": "title",      "sTitle": loc("markers:formEditMarker_title"),      "bSortable": true },
                 { "mData": "tags",       "sTitle": loc("markers:formEditMarker_tags"),       "bSortable": true },
-                { "mData": "icon",       "sTitle": loc("markers:formEditMarker_icon"),       "bSortable": true },
+                { "mData": "icon",       "sTitle": loc("markers:formEditMarker_icon"),       "bSortable": true, "sType": "title-string" },
                 { "mData": "layer",      "sTitle": loc("markers:formEditMarker_layer"),      "bSortable": true },
                 { "mData": "dateStart",  "sTitle": loc("markers:formEditMarker_dateStart"),  "bSortable": true, "bSearchable": false },
                 { "mData": "dateEnd",    "sTitle": loc("markers:formEditMarker_dateEnd"),    "bSortable": true, "bSearchable": false },
@@ -937,9 +962,10 @@ var MarkersTable = (function(){
                 { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bSearchable": false },
             ],
             "aaData": dataNormalize,
-            "sDom": '<"top"fl<"button tiny markersTable_columnsSelect_button"><"button tiny markersTable_deleteSelect_button"><"button tiny markersTable_getFilter_button"><"button tiny markersTable_filterFromSelect_button">>t<"bottom"ip>',
+            "sDom": '<"top"fl<"button tiny markersTable_columnsSelect_button"><"button tiny markersTable_deleteSelect_button"><"button tiny markersTable_dropFilter_button"><"button tiny markersTable_getFilter_button"><"button tiny markersTable_filterFromSelect_button">>t<"bottom"ip>',
             "fnInitComplete": function(){
                 _this.addColsInputs();
+                _this.filterApply();
             }
         });
 
