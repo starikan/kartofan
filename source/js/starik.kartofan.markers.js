@@ -103,6 +103,20 @@ var Markers = function(map) {
 
         vals = $.extend({}, vals, data);
 
+        // Suggestions
+        var layerSugg = [];
+        var tagsSugg = [];
+
+        $.each(opt.getOption("markers"), function(i, v){
+            console.log(v)
+            v.layer ? layerSugg.push(v.layer) : null;
+            v.tags ? tagsSugg = tagsSugg.concat(v.tags.split(",")) : null;
+        });
+
+        tagsSugg = unique(tagsSugg.map(fulltrim)).sort();
+        layerSugg = unique(layerSugg.map(fulltrim)).sort();
+
+        console.log(layerSugg, tagsSugg);
         console.log(data)
 
         opt.getOptionAsync("markersDescriptions", vals.id, function(descriptionHTML){
@@ -112,12 +126,13 @@ var Markers = function(map) {
             var arr = [
                 { "type": "formEditMarker_id",            "name": "id",     "val": vals.id, "loc": "markers:formEditMarker_id", "description": "id"},
                 { "type": "formEditMarker_title",         "name": "title",  "val": vals.title, "loc": "markers:formEditMarker_title", "description": "title" },
-                { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "loc": "markers:formEditMarker_layer", "description": "layer" },
+                { "type": "formEditMarker_layer",         "name": "layer",  "val": vals.layer, "options": layerSugg, "loc": "markers:formEditMarker_layer", "description": "layer" },
                 { "type": "formEditMarker_icon",          "name": "icon",   "val": vals.icon, "loc": "markers:formEditMarker_icon", "description": "icon" },
                 { "type": "formEditMarker_description",   "name": "description",   "val": vals.description, "loc": "markers:formEditMarker_description", "description": "description" },
                 { "type": "formEditMarker_descriptionHTML",  "name": "descriptionHTML",   "val": vals.descriptionHTML, "loc": "markers:formEditMarker_descriptionHTML", "description": "descriptionHTML" },
                 { "type": "formEditMarker_links",         "name": "links",   "val": vals.links, "loc": "markers:formEditMarker_links", "description": "links" },
                 { "type": "formEditMarker_tags",          "name": "tags",   "val": vals.tags, "loc": "markers:formEditMarker_tags", "description": "tags" },
+                { "type": "formEditMarker_tagsAddInput",  "options": tagsSugg },
                 { "type": "formEditMarker_latlng",        "name": "latlng", "val": vals.latlng, "loc": "markers:formEditMarker_latlng", "description": "latlng" },
                 
                 { "type": "formEditMarker_dateStart", "name": "dateStart", "val": vals.dateStart, "loc": "markers:formEditMarker_dateStart" },
@@ -962,7 +977,7 @@ var MarkersTable = (function(){
                 { "mData": "latlng",     "sTitle": loc("markers:formEditMarker_latlng"),     "bSortable": true, "bSearchable": false },
             ],
             "aaData": dataNormalize,
-            "sDom": '<"top"fl<"button tiny markersTable_columnsSelect_button"><"button tiny markersTable_deleteSelect_button"><"button tiny markersTable_dropFilter_button"><"button tiny markersTable_getFilter_button"><"button tiny markersTable_filterFromSelect_button">>t<"bottom"ip>',
+            "sDom": '<"top"l<"button tiny markersTable_columnsSelect_button"><"button tiny markersTable_deleteSelect_button"><"button tiny markersTable_dropFilter_button"><"button tiny markersTable_getFilter_button"><"button tiny markersTable_filterFromSelect_button">>t<"bottom"ip>',
             "fnInitComplete": function(){
                 _this.addColsInputs();
                 _this.filterApply();
