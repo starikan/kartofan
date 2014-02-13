@@ -44,7 +44,7 @@ var StageMaps = (function(){
             .appendTo(parent.$container)
             .attr("id", "map"+i)
             .addClass("maps")
-            .css("position", "relative")
+            .css("position", "absolute")
             .css("left", v[0]+"%")
             .css("top", v[1]+"%")
             .css("width", v[2]+"%")

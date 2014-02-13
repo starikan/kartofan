@@ -32,6 +32,10 @@ html, body {
         padding: 0px;
     }
 
+#kf_mapsContainer {
+    position: relative;
+}
+
 #kf_leftMenu {
     width: 100px;
 }
@@ -54,7 +58,7 @@ html, body {
 
 .maps {
     /*position: absolute !important;*/
-    padding: 0px;
+    /*padding: 0px;*/
 }
 
 .activemap .active-selector {
