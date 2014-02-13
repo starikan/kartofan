@@ -44,7 +44,7 @@ var StageMaps = (function(){
             .appendTo(parent.$container)
             .attr("id", "map"+i)
             .addClass("maps")
-            .css("position", "absolute")
+            .css("position", "relative")
             .css("left", v[0]+"%")
             .css("top", v[1]+"%")
             .css("width", v[2]+"%")
@@ -210,7 +210,7 @@ var StageEditor = (function(){
 
     var _getPersentPosition = function(div){
 
-        var $container = $("#containerKartofan");
+        var $container = $("#kf_mapsContainer");
 
         var widthContainer = $container.width();
         var heightContainer = $container.height();

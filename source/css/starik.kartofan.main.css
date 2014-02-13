@@ -2,40 +2,15 @@
 /*TODO: что-то делать с курсорами на планшете*/
 * {
     cursor: url("../images/mainCursor.png"), auto !important;
-}
-
-html {
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
     margin: 0px;
     padding: 0px;
 }
 
-#topMenuKartofan {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    height: 0px;
-}
-
-.mapContainer {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-}
-
-.maps {
-    position: absolute !important;
-    padding: 0px;
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #e6e6fa;
 }
 
 .hide {
@@ -44,6 +19,42 @@ body {
 
 .show {
     display: inline;
+}
+
+/*Main Panels*/
+
+#kf_mainLayout {
+    width: 100%;
+    height: 100%;
+}
+    #kf_mainLayout, #kf_mainLayout td, #kf_mainLayout tr {
+        margin: 0px;
+        padding: 0px;
+    }
+
+#kf_leftMenu {
+    width: 100px;
+}
+
+#kf_rightMenu {
+    width: 100px;
+}
+
+#kf_infoMenu {
+    background-color: black;
+}
+
+
+
+
+
+
+
+
+
+.maps {
+    /*position: absolute !important;*/
+    padding: 0px;
 }
 
 .activemap .active-selector {
@@ -210,22 +221,12 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 
-#infoMenuKartofan {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 100%;
-    height: 15px;
-    background-color: black;
-}
-
-#infoMenuKartofan .row {
+#kf_infoMenu .row {
     max-width: 100%;
     width: 100%;
 }
 
-#infoMenuKartofan h6, #infoMenuKartofan h6 span {
+#kf_infoMenu h6, #kf_infoMenu h6 span {
     color: #727272;
     margin: 0px;
     line-height: 1;

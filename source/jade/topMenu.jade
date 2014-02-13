@@ -1,0 +1,153 @@
+nav.top-bar(data-topbar, data-options="is_hover: false")
+    ul.title-area 
+        li.name: h1: a#canvasDownload Kartofan
+        li.toggle-topbar.menu-icon: a: span.topMenuMenu Menu
+
+    section.top-bar-section
+
+        ul.left
+            li#topMenuMapSetTour: a.topMenuMapSet: span.icon-map
+            li#topMenuStageSetTour: a.topMenuStageSet: span.icon-grid
+            li#topMenuMoveMoveTour: a.topMenuMoveMove: span.icon-aim
+            li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
+            li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
+            li: a.topMenuSetCache: span.icon-picture-streamline-1
+            //li: a.topMenuStageExport Export Stage Like Image
+            li: a.topMenuMarkersAddMarker: span.icon-pin
+
+        ul.right
+            li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
+                a: span.topMenuStageEditor Stage Editor
+                ul.dropdown 
+                    li: a.topMenuStageEditorSaveView Save View
+                    li: a.topMenuStageEditorAddMap Add Map To Stage
+                    li: a.topMenuStageEditorRemoveMap Remove Map From Stage
+                    li: a.topMenuStageEditorEditControls Edit Controls On Selected Map
+                    li: a.topMenuStageEditorToggleBlockZoom Toggle Blocking Zoom on Active Map
+
+            li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuCoordsCorrection
+                a: span.topMenuCoordsCorrection Coords Correction
+                ul.dropdown 
+                    li: a.topMenuCoordsCorrectionAddRight Add Right Coord
+                    li: a.topMenuCoordsCorrectionAddWrong Add Wrong Coord
+                    li: a.topMenuCoordsCorrectionRemoveMarkers Remove Markers
+                    li: a.topMenuCoordsCorrectionSaveCorrections Save corrections
+                    li: a.topMenuCoordsCorrectionDropCorrectionSelect Drop Correction on Visible Maps
+                    li: a.topMenuCoordsCorrectionClose Close Menu
+
+            li: a.topMenuHelpTourMain.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge TourMain
+            li.divider
+            li: a.topMenuHelpUpdates.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge Updates
+
+            li.has-dropdown#topMenuMenuTour
+                a: span.topMenuMenu Menu
+                ul.dropdown 
+                    li.has-dropdown
+                        a.topMenuMaps Maps 
+                        ul.dropdown
+                            li: a.topMenuMapSet Set Map
+                            li: a.topMenuMapEdit Edit Map
+                            li: a.topMenuMapExternal Get External Map
+                            li: a.topMenuMapSave Save Map
+                    li.has-dropdown
+                        a.topMenuStages Stages 
+                        ul.dropdown 
+                            li: a.topMenuStageSet Set Stage
+                            li: a.topMenuStageEdit Edit Stage
+                            li: a.topMenuStageExternal Get External Stage
+                            li: a.topMenuStageEditView Edit This Stage View
+                            li: a.topMenuStageSave Save This Stage
+                            li: a.topMenuStageExport Export Stage Like Image
+                    li.has-dropdown
+                        a.topMenuMarkers Markers 
+                        ul.dropdown 
+                            li: a.topMenuMarkersAddMarker Add Marker
+                            li: a.topMenuMarkersSaveFilter Save Filter
+                            li: a.topMenuMarkersLoadFilter Load Filter
+                            li: a.topMenuMarkersDeleteFilter Delete Filter
+                            li: a.topMenuMarkersDeleteReset Reset Filter
+                            //li: a.topMenuMarkersEdit Edit Markers
+                            //li: a.topMenuMarkersExternal Get External Markers
+                            //li: a.topMenuMarkersEditView Edit This Markers View
+                            //li: a.topMenuMarkersSave Save This Markers
+                            li: a.topMenuMarkersExport Export Markers
+                            li: a.topMenuMarkersExportAll Export Markers All
+                    li.has-dropdown
+                        a.topMenuUtils Utils
+                        ul.dropdown 
+                            li: a.topMenuUtilsToggleFulscreen Toggle Fullscreen Select Map
+                            li: a.topMenuUtilsToggleMeasuring Measuring
+                            li: a.topMenuUtilsFastNotes Fast Notes
+                            li: a.topMenuUtilsCoordsCorrection Coords Correction
+                            li: a.topMenuUtilsMarkersTable Editing Markers Table
+                    li.has-dropdown
+                        a.topMenuMove Moves 
+                        ul.dropdown 
+                            li: a.topMenuMoveMove Move To
+                            li: a.topMenuMoveAdd Add Move
+                            li: a.topMenuMoveEdit Edit Move
+                    li.has-dropdown#topMenuOpt
+                        a.topMenuOpt Settings
+                        ul.dropdown 
+                            li: a.topMenuOptUpdate Update Options From External Base
+                            li: a.topMenuOptLang Set Language 
+                            li: a.topMenuOptReset Reset All Settings
+                            li.divider
+                            li: a.topMenuOptHashChange Addres Bar Coords Change
+                            li: a.topMenuOptMapsSyncMoving Maps Sync Moving
+                            li: a.topMenuOptMapSyncZooming Map Sync Zooming 
+                            li: a.topMenuOptMapCursorAllMapsVisible Map Cursor On All Maps Visible 
+                            li: a.topMenuOptViewInfoPanelShowAlways Info Panel Show Always 
+                            li: a.topMenuOptDbSyncIn Db Sync In 
+                            li: a.topMenuOptDbSyncOut Db Sync Out 
+                            li: a.topMenuOptGpsAutoStart GPS Auto Start
+                            li: a.topMenuOptSHowMarkers Show Markers
+                            li: a.topMenuOptSaveCorrections Save Coords Corrections
+                            li.divider
+                            li: a.topMenuSetCache Map Cached Type
+                            li: a.topMenuMapCachedService Set Map Cached Service
+                            li: a.topMenuMapDefaultCenterLatLng Set Map Default Center LatLng 
+                            li: a.topMenuMapDefaultURL Set Map Default URL
+                            li: a.topMenuMainFeed Set Main Feed
+
+                    li.has-dropdown
+                        a.topMenuJSON JSON 
+                        ul.dropdown 
+                            li: a.topMenuJSONMaps Get All External Maps
+                            li: a.topMenuJSONStages Get All External Stages
+                            li: a.topMenuJSONMoves Get All External Moves 
+                            li: a.topMenuJSONAll Get All From JSON
+                            li: a.topMenuJSONExport Export All Data To JSON
+                            li: a.topMenuJSONRawText Get Data From Text
+                    li.has-dropdown
+                        a.topMenuGPS GPS 
+                        ul.dropdown 
+                            li: a.topMenuGPSStart GPS Start
+                            li: a.topMenuGPSStop GPS Stop
+                    li.has-dropdown
+                        a.topMenuHelp Help 
+                        ul.dropdown 
+                            li: a.topMenuHelpComments Add Comment On Site  
+                            li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog
+                            li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
+                            li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
+                            li: a.topMenuHelpHotkeys Hotkeys List
+                            li: a.topMenuHelpTourMain TourMain
+                            li: a.topMenuHelpUpdates Updates
+                            li: a.topMenuOptLang Set Language
+                            li: a.topMenuVersion Version
+                
+                li.has-dropdown#topMenuHelp
+                    a.icon-iconic-10.topMenuHelp
+                    ul.dropdown 
+                        li: a.topMenuHelpComments Add Comment On Site   
+                        li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog
+                        //li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
+                        li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
+                        li: a.topMenuHelpHotkeys Hotkeys List
+                        li: a.topMenuHelpTourMain Tour Main  
+                        li: a.topMenuHelpUpdates Updates
+                        li: a.topMenuOptLang Set Language
+                        li: a.topMenuVersion Version
+
+                li#topMenuPin: a.icon-iconic.topMenu

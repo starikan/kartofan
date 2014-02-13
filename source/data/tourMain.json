@@ -51,7 +51,7 @@
         "top": "45px",
         "left": "50%",
         "width": "50%",  
-        "target": "#topMenuKartofan>nav",
+        "target": "#kf_topMenu>nav",
         "targetAddClass": "animated pulse",
         "opacityLayer": 0.7,
         "buttons": [
@@ -243,7 +243,7 @@
     {
         "top": "45px",
         "width": "50%",  
-        "target": "#topMenuKartofan>nav",
+        "target": "#kf_topMenu>nav",
         "opacityLayer": 0.7,
         "zindex": 999,
         "buttons": [
@@ -278,7 +278,7 @@
         "left": "50%",
         "dleft": "-50%",
         "width": "50%",
-        "target": "#topMenuKartofan>nav li.name",
+        "target": "#kf_topMenu>nav li.name",
         "opacityLayer": 0.7,
         "buttons": [
             { "title": "X", "func": "cancel", "appendTo": "#close" },

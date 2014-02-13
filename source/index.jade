@@ -71,165 +71,107 @@ html(manifest="offline/cache.appcache")
 
     body
 
-        div#loaderText(style="font: 30px fantasy !important; text-align: center;")
+        // LOADER
+        div#kf_loader(style="font: 30px fantasy !important; text-align: center;")
             h1 Loading... about 2MB. Be patient it`s dev version.
             h1 Загружается... около 2Мб. Будьте терпеливы это же тестовая версия.
 
-        div#topMenuKartofan.hide
-            nav.top-bar(data-topbar, data-options="is_hover: false")
-                ul.title-area 
-                    li.name: h1: a#canvasDownload Kartofan
-                    li.toggle-topbar.menu-icon: a: span.topMenuMenu Menu
+        table#kf_mainLayout.hide
+            thead: tr: td(colspan=3)#kf_topMenu:  include jade/topMenu
+            tfoot: tr: td(colspan=3)#kf_infoMenu: include jade/infoMenu
+            tbody
+                tr
+                    td#kf_leftMenu
+                    td#kf_mapsContainer: //Dynamicaly generate in Stage object
+                    td#kf_rightMenu
 
-                section.top-bar-section
 
-                    ul.left
-                        li#topMenuMapSetTour: a.topMenuMapSet: span.icon-map
-                        li#topMenuStageSetTour: a.topMenuStageSet: span.icon-grid
-                        li#topMenuMoveMoveTour: a.topMenuMoveMove: span.icon-aim
-                        li#topMenuUtilsToggleFulscreenTour: a.topMenuUtilsToggleFulscreen: span.icon-arrows-out
-                        li#topMenuUtilsToggleMeasuringTour: a.topMenuUtilsToggleMeasuring: span.icon-crop-streamline
-                        li: a.topMenuSetCache: span.icon-picture-streamline-1
-                        //li: a.topMenuStageExport Export Stage Like Image
-                        li: a.topMenuMarkersAddMarker: span.icon-pin
+        div#updatesInfo.hide
+        div#hotkeysInfo.hide
+        div#markerDescription.hide
+        canvas#exportView.hide
+        canvas#cutterView.hide
+        //a#canvasDownload
 
-                    ul.right
-                        li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuStageEditor
-                            a: span.topMenuStageEditor Stage Editor
-                            ul.dropdown 
-                                li: a.topMenuStageEditorSaveView Save View
-                                li: a.topMenuStageEditorAddMap Add Map To Stage
-                                li: a.topMenuStageEditorRemoveMap Remove Map From Stage
-                                li: a.topMenuStageEditorEditControls Edit Controls On Selected Map
-                                li: a.topMenuStageEditorToggleBlockZoom Toggle Blocking Zoom on Active Map
+        div#formRawJSON.foundationForm.hide
+            div.box-modal
+                form(data-abide)
+                    div.row 
+                        div.small-11.columns.small-centered: textarea.formRawJSON_rawJSON
 
-                        li.has-dropdown.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge-up.hide-for-xxlarge-up#topMenuCoordsCorrection
-                            a: span.topMenuCoordsCorrection Coords Correction
-                            ul.dropdown 
-                                li: a.topMenuCoordsCorrectionAddRight Add Right Coord
-                                li: a.topMenuCoordsCorrectionAddWrong Add Wrong Coord
-                                li: a.topMenuCoordsCorrectionRemoveMarkers Remove Markers
-                                li: a.topMenuCoordsCorrectionSaveCorrections Save corrections
-                                li: a.topMenuCoordsCorrectionDropCorrectionSelect Drop Correction on Visible Maps
-                                li: a.topMenuCoordsCorrectionClose Close Menu
+                    div.row.center
+                        div.small-6.columns.text-right: a.small.button.formRawJSON_submit Send 
+                        div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
 
-                        li: a.topMenuHelpTourMain.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge TourMain
-                        li.divider
-                        li: a.topMenuHelpUpdates.button.alert.hide-for-small-only.hide-for-medium-up.hide-for-large-up.hide-for-xlarge Updates
+        div#fastNotes.hide
+            textarea#fastNotes_textarea
 
-                        li.has-dropdown#topMenuMenuTour
-                            a: span.topMenuMenu Menu
-                            ul.dropdown 
-                                li.has-dropdown
-                                    a.topMenuMaps Maps 
-                                    ul.dropdown
-                                        li: a.topMenuMapSet Set Map
-                                        li: a.topMenuMapEdit Edit Map
-                                        li: a.topMenuMapExternal Get External Map
-                                        li: a.topMenuMapSave Save Map
-                                li.has-dropdown
-                                    a.topMenuStages Stages 
-                                    ul.dropdown 
-                                        li: a.topMenuStageSet Set Stage
-                                        li: a.topMenuStageEdit Edit Stage
-                                        li: a.topMenuStageExternal Get External Stage
-                                        li: a.topMenuStageEditView Edit This Stage View
-                                        li: a.topMenuStageSave Save This Stage
-                                        li: a.topMenuStageExport Export Stage Like Image
-                                li.has-dropdown
-                                    a.topMenuMarkers Markers 
-                                    ul.dropdown 
-                                        li: a.topMenuMarkersAddMarker Add Marker
-                                        li: a.topMenuMarkersSaveFilter Save Filter
-                                        li: a.topMenuMarkersLoadFilter Load Filter
-                                        li: a.topMenuMarkersDeleteFilter Delete Filter
-                                        li: a.topMenuMarkersDeleteReset Reset Filter
-                                        //li: a.topMenuMarkersEdit Edit Markers
-                                        //li: a.topMenuMarkersExternal Get External Markers
-                                        //li: a.topMenuMarkersEditView Edit This Markers View
-                                        //li: a.topMenuMarkersSave Save This Markers
-                                        li: a.topMenuMarkersExport Export Markers
-                                        li: a.topMenuMarkersExportAll Export Markers All
-                                li.has-dropdown
-                                    a.topMenuUtils Utils
-                                    ul.dropdown 
-                                        li: a.topMenuUtilsToggleFulscreen Toggle Fullscreen Select Map
-                                        li: a.topMenuUtilsToggleMeasuring Measuring
-                                        li: a.topMenuUtilsFastNotes Fast Notes
-                                        li: a.topMenuUtilsCoordsCorrection Coords Correction
-                                        li: a.topMenuUtilsMarkersTable Editing Markers Table
-                                li.has-dropdown
-                                    a.topMenuMove Moves 
-                                    ul.dropdown 
-                                        li: a.topMenuMoveMove Move To
-                                        li: a.topMenuMoveAdd Add Move
-                                        li: a.topMenuMoveEdit Edit Move
-                                li.has-dropdown#topMenuOpt
-                                    a.topMenuOpt Settings
-                                    ul.dropdown 
-                                        li: a.topMenuOptUpdate Update Options From External Base
-                                        li: a.topMenuOptLang Set Language 
-                                        li: a.topMenuOptReset Reset All Settings
-                                        li.divider
-                                        li: a.topMenuOptHashChange Addres Bar Coords Change
-                                        li: a.topMenuOptMapsSyncMoving Maps Sync Moving
-                                        li: a.topMenuOptMapSyncZooming Map Sync Zooming 
-                                        li: a.topMenuOptMapCursorAllMapsVisible Map Cursor On All Maps Visible 
-                                        li: a.topMenuOptViewInfoPanelShowAlways Info Panel Show Always 
-                                        li: a.topMenuOptDbSyncIn Db Sync In 
-                                        li: a.topMenuOptDbSyncOut Db Sync Out 
-                                        li: a.topMenuOptGpsAutoStart GPS Auto Start
-                                        li: a.topMenuOptSHowMarkers Show Markers
-                                        li: a.topMenuOptSaveCorrections Save Coords Corrections
-                                        li.divider
-                                        li: a.topMenuSetCache Map Cached Type
-                                        li: a.topMenuMapCachedService Set Map Cached Service
-                                        li: a.topMenuMapDefaultCenterLatLng Set Map Default Center LatLng 
-                                        li: a.topMenuMapDefaultURL Set Map Default URL
-                                        li: a.topMenuMainFeed Set Main Feed
+        div#markersTable.hide
+            table#markersTable_table
+                thead
+                    tr
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                        th
+                tbody
+                    tr
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
+                        td
 
-                                li.has-dropdown
-                                    a.topMenuJSON JSON 
-                                    ul.dropdown 
-                                        li: a.topMenuJSONMaps Get All External Maps
-                                        li: a.topMenuJSONStages Get All External Stages
-                                        li: a.topMenuJSONMoves Get All External Moves 
-                                        li: a.topMenuJSONAll Get All From JSON
-                                        li: a.topMenuJSONExport Export All Data To JSON
-                                        li: a.topMenuJSONRawText Get Data From Text
-                                li.has-dropdown
-                                    a.topMenuGPS GPS 
-                                    ul.dropdown 
-                                        li: a.topMenuGPSStart GPS Start
-                                        li: a.topMenuGPSStop GPS Stop
-                                li.has-dropdown
-                                    a.topMenuHelp Help 
-                                    ul.dropdown 
-                                        li: a.topMenuHelpComments Add Comment On Site  
-                                        li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog                                        
-                                        li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
-                                        li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
-                                        li: a.topMenuHelpHotkeys Hotkeys List
-                                        li: a.topMenuHelpTourMain TourMain
-                                        li: a.topMenuHelpUpdates Updates
-                                        li: a.topMenuOptLang Set Language
-                                        li: a.topMenuVersion Version
-                            
-                            li.has-dropdown#topMenuHelp
-                                a.icon-iconic-10.topMenuHelp
-                                ul.dropdown 
-                                    li: a.topMenuHelpComments Add Comment On Site   
-                                    li: a.topMenuHelpBlog(href="http://kartofan-blog.blogspot.com/", target="_blank") Blog
-                                    //li: a.topMenuHelpFAQ(href="http://kartofan.comuf.com/qa/", target="_blank") Site Questions And Answers
-                                    li: a.topMenuHelpSource(href="https://github.com/starikan/kartofan", target="_blank") Sources on GitHub
-                                    li: a.topMenuHelpHotkeys Hotkeys List
-                                    li: a.topMenuHelpTourMain Tour Main  
-                                    li: a.topMenuHelpUpdates Updates
-                                    li: a.topMenuOptLang Set Language
-                                    li: a.topMenuVersion Version
+        // Table Of Markers Column Selector
+        div#markersTable_columnsSelect.foundationForm.hide
+            div.box-modal
+                form(data-abide)
 
-                            li#topMenuPin: a.icon-iconic.topMenuPin
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_title Title
+                        div.small-2.columns: input.markersTable_columnsSelect_title.text-center(type="checkbox")  
 
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_tags Tags
+                        div.small-2.columns: input.markersTable_columnsSelect_tags.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_icon Icon
+                        div.small-2.columns: input.markersTable_columnsSelect_icon.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_layer Layer
+                        div.small-2.columns: input.markersTable_columnsSelect_layer.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateStart DateStart
+                        div.small-2.columns: input.markersTable_columnsSelect_dateStart.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateEnd DateEnd
+                        div.small-2.columns: input.markersTable_columnsSelect_dateEnd.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_links Links
+                        div.small-2.columns: input.markersTable_columnsSelect_links.text-center(type="checkbox")  
+
+                    div.row.collapse 
+                        div.small-10.columns: span.prefix.markersTable_columnsSelect_latlng Latlng
+                        div.small-2.columns: input.markersTable_columnsSelect_latlng.text-center(type="checkbox") 
+
+                    div.row.collapse 
+                        div.small-12.small-centered.columns.text-center: a.small.button.markersTable_columnsSelect_submit Submit
+
+        // Form Edit Map Info
         div#formEditMap.foundationForm.hide
             div.box-modal
                 form(data-abide)
@@ -282,6 +224,7 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditMap_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditMap_cancel Cancel
 
+        // Form Edit Stage
         div#formEditStage.foundationForm.hide
             div.box-modal
                 form(data-abide)
@@ -302,6 +245,7 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditStage_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditStage_cancel Cancel
 
+        // Form Edit Stage Controls
         div#formEditStage_editMapsControls.foundationForm.hide
             div.box-modal
                 form(data-abide)
@@ -329,7 +273,7 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-6.columns.text-center: a.small.button.formEditStage_submit Submit
                         div.small-12.medium-6.columns.text-center: a.small.button.formEditStage_cancel Cancel
 
-
+        // Form Edit Fast Moving
         div#formEditPoint.foundationForm.hide
             div.box-modal
                 form(data-abide)
@@ -354,6 +298,7 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditPoint_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditPoint_cancel Cancel
 
+        // Form Edit Marker
         div#formEditMarker.foundationForm.hide
             div.box-modal
                 form(data-abide)
@@ -426,106 +371,9 @@ html(manifest="offline/cache.appcache")
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditMarker_delete Delete
                         div.small-12.medium-4.columns.text-center: a.small.button.formEditMarker_cancel Cancel
 
-        div#infoMenuKartofan.hide
-            div.row
-                div.columns.hide-for-small-only.medium-4: h6.infoMenuLatLng Coords
-                div.columns.small-6.medium-4.text-center: h6.infoMenuTime Time
-                div.columns.small-6.medium-4.text-right
-                    h6.infoMenuVersion.right Version
-                    h6.right |
-                    h6.infoMenuCache.right Cache
-                        
 
-        div.mapContainer#containerKartofan.hide
 
-        div#updatesInfo
-        
-        div#hotkeysInfo
-        
-        div#markerDescription
-
-        canvas#exportView.hide
-        canvas#cutterView.hide
-        //a#canvasDownload
-
-        div#formRawJSON.foundationForm.hide
-            div.box-modal
-                form(data-abide)
-                    div.row 
-                        div.small-11.columns.small-centered: textarea.formRawJSON_rawJSON
-
-                    div.row.center
-                        div.small-6.columns.text-right: a.small.button.formRawJSON_submit Send 
-                        div.small-6.columns.text-left: a.small.button.formRawJSON_cancel Cancel 
-
-        div#fastNotes.hide
-            textarea#fastNotes_textarea
-
-        div#markersTable
-            table#markersTable_table
-                thead
-                    tr
-                        th
-                        th
-                        th
-                        th
-                        th
-                        th
-                        th
-                        th
-                        th
-                tbody
-                    tr
-                        td
-                        td
-                        td
-                        td
-                        td
-                        td
-                        td
-                        td
-                        td
-
-        div#markersTable_columnsSelect.foundationForm.hide
-            div.box-modal
-                form(data-abide)
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_title Title
-                        div.small-2.columns: input.markersTable_columnsSelect_title.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_tags Tags
-                        div.small-2.columns: input.markersTable_columnsSelect_tags.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_icon Icon
-                        div.small-2.columns: input.markersTable_columnsSelect_icon.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_layer Layer
-                        div.small-2.columns: input.markersTable_columnsSelect_layer.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateStart DateStart
-                        div.small-2.columns: input.markersTable_columnsSelect_dateStart.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_dateEnd DateEnd
-                        div.small-2.columns: input.markersTable_columnsSelect_dateEnd.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_links Links
-                        div.small-2.columns: input.markersTable_columnsSelect_links.text-center(type="checkbox")  
-
-                    div.row.collapse 
-                        div.small-10.columns: span.prefix.markersTable_columnsSelect_latlng Latlng
-                        div.small-2.columns: input.markersTable_columnsSelect_latlng.text-center(type="checkbox") 
-
-                    div.row.collapse 
-                        div.small-12.small-centered.columns.text-center: a.small.button.markersTable_columnsSelect_submit Submit
-
-        div#disqus_thread
+        div#disqus_thread.hide
         |<script type="text/javascript">
         |    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         |    var disqus_shortname = 'kartofan'; // required: replace example with your forum shortname

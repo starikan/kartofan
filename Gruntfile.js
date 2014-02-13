@@ -71,14 +71,14 @@ module.exports = function(grunt) {
             src: [ "production" ]
           },
           temp: {
-            src: [ "dev/*.jade", "production/*.jade" ]
+            src: [ "dev/*.jade", "production/*.jade", "dev/jade", "production/jade" ]
           }
          },
 
         copy: {
           dev: {
             cwd: "source",
-            src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**', "LICENSE", "server/**" ],
+            src: [ 'data/**', 'css_vendor/**', 'css/**', 'js_vendor/**', 'js/**', 'images/**', "LICENSE", "server/**", "jade/**" ],
             dest: "dev",
             expand: true
           },

@@ -28,9 +28,10 @@ var TopMenu = (function(){
     var _this = this;
 
     this.topMenuId = arguments[0];
-    this.mapsContainerId = arguments[1];
+    // this.mapsContainerId = arguments[1];
 
-    if (!this.topMenuId || !this.mapsContainerId) return;
+    // if (!this.topMenuId || !this.mapsContainerId) return;
+    if (!this.topMenuId) return;
 
     this.topMenuArray = [
         { type: "topMenuMenu", loc: "topMenu:topMenuMenu" },
@@ -264,11 +265,12 @@ var TopMenu = (function(){
      ];
 
     this.showTopMenuView = function() {
-        var $mapsContainer = $("#"+_this.mapsContainerId);
+        // var $mapsContainer = $("#"+_this.mapsContainerId);
         var $topMenuContainer = $("#"+_this.topMenuId);
 
-        $mapsContainer.css({"top": 45+"px"});
-        $topMenuContainer.css({"z-index": 9999, "top": 0+"px"});
+        // $mapsContainer.css({"top": 45+"px"});
+        // $topMenuContainer.css({"z-index": 9999, "top": 0+"px"});
+        $topMenuContainer.removeClass("hide");
 
         // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
         window.onresize();        
@@ -277,11 +279,13 @@ var TopMenu = (function(){
     this.hideTopMenuView = function() {
         if (opt.getOption("current", "viewTopMenuShowAlways")) return;
 
-        var $mapsContainer = $("#"+_this.mapsContainerId);
+        // var $mapsContainer = $("#"+_this.mapsContainerId);
         var $topMenuContainer = $("#"+_this.topMenuId);
 
-        $mapsContainer.css({"top": "0px"});
-        $topMenuContainer.css({"z-index": 0, "top": "-45px"});
+        // $mapsContainer.css({"top": "0px"});
+        // $topMenuContainer.css({"z-index": 0, "top": "-45px"});
+
+        $topMenuContainer.addClass("hide");
 
         // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
         window.onresize();        
@@ -363,7 +367,7 @@ var TopMenu = (function(){
     // Collapse when click on menu
     // TODO: touch
     this.closeOnClickEvent = function(){
-        $('.top-bar section ul, .mapContainer').click(function() {
+        $('.top-bar section ul, #kf_mapsContainer').click(function() {
             $('.top-bar, [data-topbar]').css('height', '').removeClass('expanded');
         });
         $('.top-bar section ul li').click(function() {
@@ -398,9 +402,9 @@ var InfoMenu = (function(){
     var _this = this;
 
     this.infoMenuArray = [];
-    this.$coords = $("#infoMenuKartofan .infoMenuLatLng");
-    this.$version = $("#infoMenuKartofan .infoMenuVersion");
-    this.$cache = $("#infoMenuKartofan .infoMenuCache");
+    this.$coords = $("#kf_infoMenu .infoMenuLatLng");
+    this.$version = $("#kf_infoMenu .infoMenuVersion");
+    this.$cache = $("#kf_infoMenu .infoMenuCache");
 
     this._init = function() {
         this._updateInfoMenuView();
@@ -421,11 +425,12 @@ var InfoMenu = (function(){
 
         var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
-        var $mapsContainer = $("#containerKartofan");
-        var $infoContainer = $("#infoMenuKartofan");
+        // var $mapsContainer = $("#containerKartofan");
+        var $infoContainer = $("#kf_infoMenu");
 
-        var bottom = infoVisible ? 15 : 0;
-        $mapsContainer.css({"bottom": bottom+"px"});
+        // var bottom = infoVisible ? 15 : 0;
+        // $mapsContainer.css({"bottom": bottom+"px"});
+        infoVisible ? $infoContainer.removeClass('hide') : $infoContainer.addClass('hide');
 
         // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
         window.onresize();

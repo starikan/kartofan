@@ -162,6 +162,15 @@ var Options = (function(){
             ]
          },
 
+        "layout": {
+            "#kf_topMenu": {
+                "visible": true,
+            },
+            "#kf_infoMenu": {
+                "visible": true,
+            }
+        },
+
         "viewTopMenuShowAlways": true,
         "viewInfoPanelShowAlways": true,   
 
@@ -221,7 +230,7 @@ var Options = (function(){
     this._afterInitProcessing = function () {
 
         window.stage = new StageMaps();
-        window.topmenu = new TopMenu("topMenuKartofan", "containerKartofan");
+        window.topmenu = new TopMenu("kf_topMenu", "kf_mapsContainer");
         window.gps = new GPS();
         window.mapseditor = new MapsEditor();
         window.stageeditor = new StageEditor();
@@ -238,7 +247,7 @@ var Options = (function(){
 
         // opt.updateIconsObjects();
 
-        stage.initContainer("containerKartofan");
+        stage.initContainer("kf_mapsContainer");
 
         if (opt.getOption("gps", "gpsAutoStart")){
             gps.startGPS();
@@ -640,11 +649,11 @@ var Options = (function(){
         })
      }
 
+    // *************** LOADER ****************
+
     this.closeLoader = function() {
-        $("#loaderText").addClass("hide");
-        $("#topMenuKartofan").removeClass("hide");
-        $("#infoMenuKartofan").removeClass("hide");
-        $("#containerKartofan").removeClass("hide");
+        $("#kf_loader").addClass("hide");
+        $("#kf_mainLayout").removeClass("hide");
      }
 
     // *************** VERSIONS ****************
@@ -781,6 +790,7 @@ var Options = (function(){
         }
 
         // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
+        // TODO: заебенить все в модальном окне
         window.onresize();
 
      }

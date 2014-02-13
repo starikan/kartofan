@@ -29,10 +29,11 @@ window.onresize = function() {
         v.refreshMapAfterResize();
     });
 
+    // TODO: сделать все в модальном окне
     // Fast Notes
     var $fastNotes = $("#fastNotes");
     if ($fastNotes.is(':visible')){
-        var $containerMaps = $("#containerKartofan");
+        var $containerMaps = $("#kf_mapsContainer");
         var offset = $containerMaps.offset();
         var newOffset = {
             top: offset.top + $containerMaps.height() * 0.02,
