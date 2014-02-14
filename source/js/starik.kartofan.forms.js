@@ -402,9 +402,9 @@ var InfoMenu = (function(){
     var _this = this;
 
     this.infoMenuArray = [];
-    this.$coords = $("#kf_infoMenu .infoMenuLatLng");
-    this.$version = $("#kf_infoMenu .infoMenuVersion");
-    this.$cache = $("#kf_infoMenu .infoMenuCache");
+    this.$coords = $("#kf_bottomMenu .infoMenuLatLng");
+    this.$version = $("#kf_bottomMenu .infoMenuVersion");
+    this.$cache = $("#kf_bottomMenu .infoMenuCache");
 
     this._init = function() {
         this._updateInfoMenuView();
@@ -426,7 +426,7 @@ var InfoMenu = (function(){
         var infoVisible = opt.getOption("appVars", "viewInfoPanel") == undefined ? opt.getOption("current", "viewInfoPanelShowAlways") : opt.getOption("appVars", "viewInfoPanel");
 
         // var $mapsContainer = $("#containerKartofan");
-        var $infoContainer = $("#kf_infoMenu");
+        var $infoContainer = $("#kf_bottomMenu");
 
         // var bottom = infoVisible ? 15 : 0;
         // $mapsContainer.css({"bottom": bottom+"px"});

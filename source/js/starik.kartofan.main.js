@@ -1,10 +1,15 @@
 "use strict"
 
+window.mapsInstance = [];
+window.opt = new Options();        // Options
+
 $(document).foundation({
     live_validate : true,
 });
 
 document.oncontextmenu = function(){ return false };
+
+console.log($("#kf_mainLayout").height());
 
 // ********** ONLINE/OFFLINE EVENT **********
 
@@ -23,6 +28,8 @@ if (window.navigator.onLine != undefined){
 // TODO: этот ресайз сделать чтобы действовал на фрейм когда встроено в окно
 window.onresize = function() {
     console.log("resize");
+
+    opt.updateInterfacePanelsPosition();
 
     // Maps
     $.each(mapsInstance, function(i, v){
@@ -80,6 +87,4 @@ window.onresize = function() {
     requestAnimFrame(clockloop);
  })();
 
-window.mapsInstance = [];
 
-window.opt = new Options();        // Options

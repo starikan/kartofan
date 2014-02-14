@@ -26,28 +26,26 @@ html, body {
 #kf_mainLayout {
     width: 100%;
     height: 100%;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: 0px;
+    left: 0px;
 }
-    #kf_mainLayout, #kf_mainLayout td, #kf_mainLayout tr {
-        margin: 0px;
-        padding: 0px;
-    }
+
+#kf_mainLayout > div {
+    position: absolute;
+}
 
 #kf_mapsContainer {
+    width: 100%;
+    height: 100%;
     position: relative;
 }
 
-#kf_leftMenu {
-    width: 100px;
-}
-
-#kf_rightMenu {
-    width: 100px;
-}
-
-#kf_infoMenu {
+#kf_bottomMenu {
     background-color: black;
 }
-
 
 
 
@@ -225,12 +223,12 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 
 
-#kf_infoMenu .row {
+#kf_bottomMenu .row {
     max-width: 100%;
     width: 100%;
 }
 
-#kf_infoMenu h6, #kf_infoMenu h6 span {
+#kf_bottomMenu h6, #kf_bottomMenu h6 span {
     color: #727272;
     margin: 0px;
     line-height: 1;

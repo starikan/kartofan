@@ -76,14 +76,14 @@ html(manifest="offline/cache.appcache")
             h1 Loading... about 2MB. Be patient it`s dev version.
             h1 Загружается... около 2Мб. Будьте терпеливы это же тестовая версия.
 
-        table#kf_mainLayout.hide
-            thead: tr: td(colspan=3)#kf_topMenu:  include jade/topMenu
-            tfoot: tr: td(colspan=3)#kf_infoMenu: include jade/infoMenu
-            tbody
-                tr
-                    td#kf_leftMenu
-                    td#kf_mapsContainer: //Dynamicaly generate in Stage object
-                    td#kf_rightMenu
+        div#kf_mainLayout
+            div#kf_topMenu.hide:  include jade/topMenu
+            div#kf_bottomMenu.hide: include jade/infoMenu
+            div#kf_leftMenu.hide 1111111111111
+            div#kf_rightMenu.hide 2222222222222
+            div#kf_leftPanel.hide 33333333333333
+            div#kf_rightPanel.hide 3333333333333            
+            div#kf_mapsContainer_correct.hide: div#kf_mapsContainer: //Dynamicaly generate in Stage object
 
 
         div#updatesInfo.hide

@@ -163,12 +163,41 @@ var Options = (function(){
          },
 
         "layout": {
-            "#kf_topMenu": {
+            "topMenu": {
+                "id": "#kf_topMenu",
                 "visible": true,
+                "showNow": true,
             },
-            "#kf_infoMenu": {
+            "bottomMenu": {
+                "id": "#kf_bottomMenu",
                 "visible": true,
-            }
+                "showNow": true,
+            },
+            "leftMenu": {
+                "id": "#kf_leftMenu",
+                "visible": true,
+                "showNow": true,
+            },
+            "rightMenu": {
+                "id": "#kf_rightMenu",
+                "visible": true,
+                "showNow": true,
+            },
+            "leftPanel": {
+                "id": "#kf_leftPanel",
+                "visible": true,
+                "showNow": true,
+            },
+            "rightPanel": {
+                "id": "#kf_rightPanel",
+                "visible": true,
+                "showNow": true,
+            },
+            "mapsContainer": {
+                "id": "#kf_mapsContainer_correct",
+                "visible": true,
+                "showNow": true,
+            },
         },
 
         "viewTopMenuShowAlways": true,
@@ -242,6 +271,8 @@ var Options = (function(){
         window.markerstable = new MarkersTable();
 
         opt.getHash();
+
+        opt.updateInterfacePanelsPosition();
 
         opt.closeLoader();
 
@@ -795,6 +826,77 @@ var Options = (function(){
 
      }
 
+    // *************** INTERFACE ****************
+
+    this.updateInterfacePanelsPosition = function() {
+        var WIDTH = $("#kf_mainLayout").width(),
+            HEIGHT = $("#kf_mainLayout").height(),
+            e = opt.getOption("current", "layout"),
+            $e = {};
+
+        if (!e) return;
+
+        // Create panels objects
+        $.each(e, function(i,v) {
+            $e[i] = v.id && v.showNow && v.visible ? $(v.id) : $("<div></div>");
+        })
+
+        // leftMenu
+        if (e.leftMenu.showNow && e.leftMenu.visible){
+            $e.leftMenu.width( e.leftMenu.width ? e.leftMenu.width : 100 );
+            $e.leftMenu.height( HEIGHT );
+            $e.leftMenu.css("top", 0);
+            $e.leftMenu.css("left", 0);
+        }
+
+        // rightMenu
+        if (e.rightMenu.showNow && e.rightMenu.visible){
+            $e.rightMenu.width( e.rightMenu.width ? e.rightMenu.width : 100 );
+            $e.rightMenu.height( HEIGHT );
+            $e.rightMenu.css("top", 0);
+            $e.rightMenu.css("left", WIDTH - $e.rightMenu.width());
+        }
+
+        // topMenu
+        if (e.topMenu.showNow && e.topMenu.visible){
+            $e.topMenu.width( WIDTH - $e.leftMenu.width() - $e.rightMenu.width() );
+            $e.topMenu.height( e.topMenu.height ? e.topMenu.height : 45 );
+            $e.topMenu.css("top", 0);
+            $e.topMenu.css("left", $e.leftMenu.width());
+        }
+
+        // bottomMenu
+        if (e.bottomMenu.showNow && e.bottomMenu.visible){
+            $e.bottomMenu.width( WIDTH - $e.leftMenu.width() - $e.rightMenu.width() );
+            $e.bottomMenu.height( e.bottomMenu.height ? e.bottomMenu.height : 15 );
+            $e.bottomMenu.css("top", HEIGHT - $e.bottomMenu.height());
+            $e.bottomMenu.css("left", $e.leftMenu.width());
+        }
+
+        // leftPanel
+        if (e.leftPanel.showNow && e.leftPanel.visible){
+            $e.leftPanel.width( e.leftPanel.width ? e.leftPanel.width : 100 );
+            $e.leftPanel.height( HEIGHT - $e.topMenu.height() - $e.bottomMenu.height() );
+            $e.leftPanel.css("top", $e.topMenu.height());
+            $e.leftPanel.css("left", $e.leftMenu.width());
+        }
+
+        // rightPanel
+        if (e.rightPanel.showNow && e.rightPanel.visible){
+            $e.rightPanel.width( e.rightPanel.width ? e.rightPanel.width : 100 );
+            $e.rightPanel.height( HEIGHT - $e.topMenu.height() - $e.bottomMenu.height() );
+            $e.rightPanel.css("top", $e.topMenu.height());
+            $e.rightPanel.css("left", WIDTH - $e.rightMenu.width() - $e.rightPanel.width());
+        }
+
+        // mapsContainer
+        if (e.mapsContainer.showNow && e.mapsContainer.visible){
+            $e.mapsContainer.width( WIDTH - $e.rightMenu.width() - $e.rightPanel.width() -$e.leftMenu.width() - $e.leftPanel.width() );
+            $e.mapsContainer.height( HEIGHT - $e.topMenu.height() - $e.bottomMenu.height() );
+            $e.mapsContainer.css("top", $e.topMenu.height());
+            $e.mapsContainer.css("left", $e.leftMenu.width() + $e.leftPanel.width());
+        }
+     }
 
     this._init();
 
